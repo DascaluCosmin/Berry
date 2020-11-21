@@ -24,32 +24,6 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        //Configuration
-//        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
-//        String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
-//        String fileNameMessage = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.messages");
-//        String fileNameConversation = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.conversation");
-//        String fileNameFriendshipRequests = ApplicationContext.getPROPERTIES()
-//                .getProperty("data.socialnetwork.friendshipRequests");
-//
-//        // Repositories
-//        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
-//        Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
-//                new FriendshipValidator(userFileRepository), userFileRepository);
-//        Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
-//                new MessageValidator(), userFileRepository);
-//        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
-//                new ValidatorReplyMessage(), userFileRepository);
-//        Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
-//                fileNameFriendshipRequests, new FriendshipRequestValidator(), userFileRepository);
-//
-//        // Services
-//        UserService userService = new UserService(userFileRepository, friendshipFileRepository);
-//        FriendshipService friendshipService = new FriendshipService(friendshipFileRepository, userFileRepository);
-//        MessageService messageService = new MessageService(messageFileRepository);
-//        ReplyMessageService replyMessageService = new ReplyMessageService(replyMessageFileRepository);
-//        FriendshipRequestService friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
-//                friendshipFileRepository);
         MainFX.main(args);
     }
 }

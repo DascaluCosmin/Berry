@@ -2,16 +2,25 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="467.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserController">
+<AnchorPane prefHeight="464.0" prefWidth="424.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/accountUser.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserController">
    <children>
-      <TableView fx:id="tableViewAccountUser" layoutX="21.0" layoutY="14.0" prefHeight="434.0" prefWidth="303.0">
+      <TableView fx:id="tableViewAccountUser" layoutX="40.0" layoutY="92.0" prefHeight="285.0" prefWidth="354.0" stylesheets="@../css/accountUser.css">
         <columns>
-          <TableColumn fx:id="tableColumnFirstName" prefWidth="143.20001602172852" text="First name" />
-          <TableColumn fx:id="tableColumnLastName" prefWidth="224.7999725341797" text="Last name" />
+            <TableColumn prefWidth="75.0" text="Your friends">
+               <columns>
+                <TableColumn fx:id="tableColumnFirstName" prefWidth="164.99999618530273" text="First name" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="203.80003356933594" text="Last name" />
+               </columns>
+            </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="buttonAddFriendship" layoutX="760.0" layoutY="326.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="97.0" text="Add friendship" />
-      <Button fx:id="buttonDeleteFriendship" layoutX="760.0" layoutY="406.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="98.0" text="Delete friendship" />
+      <Button fx:id="buttonAddFriendship" layoutX="40.0" layoutY="391.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" stylesheets="@../css/accountUser.css" text="Add friendship" />
+      <Button fx:id="buttonDeleteFriendship" layoutX="285.0" layoutY="391.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" stylesheets="@../css/accountUser.css" text="Delete friendship" />
+      <Label fx:id="labelUserName" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="46.0" prefWidth="158.0" stylesheets="@../css/accountUser.css" text="NameUser">
+         <font>
+            <Font size="22.0" />
+         </font></Label>
    </children>
 </AnchorPane>

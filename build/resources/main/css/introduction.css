@@ -1,0 +1,49 @@
+.label {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #572aba;
+}
+
+#labelWelcomeIntroduction {
+    -fx-border-color: linear-gradient(#572aba, #9f73ac, #932ed9);
+    -fx-text-fill: linear-gradient(#572aba, #9f73ac, #932ed9);
+    -fx-border-width: 5 0 5 0;
+    -fx-border-radius: 20px;
+}
+
+#labelWelcomeIntroduction:hover {
+    -fx-border-color: linear-gradient(#932ed9, #9f73ac, #572aba);
+}
+
+#tableColumnLastName {
+    -fx-font-size: 12px;
+    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-font-weight: bold;
+}
+
+#tableColumnFirstName {
+    -fx-font-size: 12px;
+    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-font-weight: bold;
+}
+
+#tableColumnWrapperUser:hover {
+    -fx-text-fill: white;
+}
+
+#tableColumnLastName:hover {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#tableColumnFirstName:hover {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+.table-view:focused .table-row-cell:focused {
+    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+#tableViewUserDTO {
+    -fx-background-color: linear-gradient(#aba2a2, #7b28ac);
+}

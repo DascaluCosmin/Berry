@@ -2,15 +2,23 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="608.0" prefWidth="696.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
+<AnchorPane prefHeight="608.0" prefWidth="577.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/introduction.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
    <children>
-      <TableView fx:id="tableViewUserDTO" layoutX="7.0" layoutY="14.0" onMouseClicked="#selectFriendsUser" prefHeight="575.0" prefWidth="309.0">
+      <TableView fx:id="tableViewUserDTO" layoutX="28.0" layoutY="88.0" onMouseClicked="#selectFriendsUser" prefHeight="501.0" prefWidth="532.0" stylesheets="@../css/introduction.css">
         <columns>
-          <TableColumn fx:id="tableColumnFirstName" prefWidth="156.7999849319458" text="First Name" />
-          <TableColumn fx:id="tableColumnLastName" prefWidth="152.00000915527346" text="Surname" />
+            <TableColumn fx:id="tableColumnWrapperUser" prefWidth="75.0" text="Users">
+               <columns>
+                <TableColumn fx:id="tableColumnFirstName" prefWidth="263.4000153541565" text="First Name" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="268.5999755859375" text="Surname" />
+               </columns>
+            </TableColumn>
         </columns>
       </TableView>
-      <Label layoutX="600.0" layoutY="14.0" prefHeight="18.0" prefWidth="81.0" text="Welcome!" />
+      <Label fx:id="labelWelcomeIntroduction" alignment="CENTER" layoutX="13.0" layoutY="19.0" prefHeight="44.0" prefWidth="552.0" stylesheets="@../css/introduction.css" text="Royaledia">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
    </children>
 </AnchorPane>

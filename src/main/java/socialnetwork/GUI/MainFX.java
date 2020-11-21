@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -33,8 +34,10 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         initView(primaryStage);
-        primaryStage.setWidth(650);
-        primaryStage.setTitle("Welcome");
+        primaryStage.setWidth(600);
+        primaryStage.setTitle("Royaledia");
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
         primaryStage.show();
     }
 
@@ -74,7 +77,7 @@ public class MainFX extends Application {
         AnchorPane layout = loader.load();
         primaryStage.setScene(new Scene(layout));
         IntroductionController introductionController = loader.getController();
-        introductionController.setUserService(userService);
+        introductionController.setUserService(userService, primaryStage);
         introductionController.setFriendshipService(friendshipService);
     }
 }

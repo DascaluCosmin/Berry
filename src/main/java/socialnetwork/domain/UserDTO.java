@@ -27,9 +27,6 @@ public class UserDTO extends Entity<Long>{
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return firstName + " " + lastName;
     }
 }

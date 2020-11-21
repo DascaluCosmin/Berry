@@ -55,7 +55,7 @@ public class AccountUserController {
                 listFriends.add(userService.getUserDTO(friendship.getId().getRight()));
             });
             if (!friendships.iterator().hasNext()) {
-                tableViewAccountUser.setPlaceholder(new Label("You have no added friends!"));
+                tableViewAccountUser.setPlaceholder(new Label("You have no added friends"));
             } else {
                 model.setAll(listFriends);
             }

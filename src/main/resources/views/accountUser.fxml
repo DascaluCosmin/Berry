@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="467.0" prefWidth="881.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserController">
+   <children>
+      <TableView fx:id="tableViewAccountUser" layoutX="21.0" layoutY="14.0" prefHeight="434.0" prefWidth="303.0">
+        <columns>
+          <TableColumn fx:id="tableColumnFirstName" prefWidth="143.20001602172852" text="First name" />
+          <TableColumn fx:id="tableColumnLastName" prefWidth="224.7999725341797" text="Last name" />
+        </columns>
+      </TableView>
+      <Button fx:id="buttonAddFriendship" layoutX="760.0" layoutY="326.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="97.0" text="Add friendship" />
+      <Button fx:id="buttonDeleteFriendship" layoutX="760.0" layoutY="406.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="98.0" text="Delete friendship" />
+   </children>
+</AnchorPane>

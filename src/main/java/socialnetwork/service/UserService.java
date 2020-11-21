@@ -3,12 +3,16 @@ package socialnetwork.service;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.User;
+import socialnetwork.domain.UserDTO;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.service.validators.ValidatorService;
 import socialnetwork.service.validators.ValidatorUserService;
 
-public class UserService {
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserService{
     private final Repository<Long, User> repositoryUser;
     private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
     private final ValidatorService<User> validatorUserService = new ValidatorUserService();
@@ -70,12 +74,42 @@ public class UserService {
     }
 
     /**
+     * Method that gets all the existing Users (in DTO format)
+     * @return List<UserDTO>, representing all the existing Users (in DTO format)
+     */
+    public List<UserDTO> getAllUserDTO() {
+        List<UserDTO> userDTOsList = new ArrayList<>();
+        getAll().forEach(user -> {
+            UserDTO userDTO = new UserDTO(user.getFirstName(), user.getLastName());
+            userDTO.setId(user.getId());
+            userDTOsList.add(userDTO);
+        });
+        return userDTOsList;
+    }
+
+    /**
      * Method that gets one specific User
-     * @param userID Long, representing the id of the User to be selected
+     * @param userID Long, representing the ID of the User to be selected
      * @return non-null User, representing the selected User (if the ID of the user exists)
      *         null, otherwise
      */
     public User getUser(Long userID) {
         return repositoryUser.findOne(userID);
+    }
+
+    /**
+     * Method that gets one specific User (in DTO format)
+     * @param userID Long, representing the ID of the User to be selected
+     * @return non-null UserDTO, representing the selected User (in DTO format, if the ID of the user exists)
+     *         null, otherwise
+     */
+    public UserDTO getUserDTO(Long userID) {
+        User user = getUser(userID);
+        if (user == null) {
+            return null;
+        }
+        UserDTO userDTO = new UserDTO(user.getFirstName(), user.getLastName());
+        userDTO.setId(userID);
+        return userDTO;
     }
 }

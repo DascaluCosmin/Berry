@@ -19,10 +19,12 @@ import socialnetwork.service.FriendshipService;
 import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import javafx.collections.ObservableList;
+import socialnetwork.utils.events.UserChangeEvent;
+import socialnetwork.utils.observer.Observer;
 
 import java.io.IOException;
 
-public class IntroductionController {
+public class IntroductionController implements Observer<UserChangeEvent> {
     UserService userService;
     FriendshipService friendshipService;
     FriendshipRequestService friendshipRequestService;
@@ -34,8 +36,6 @@ public class IntroductionController {
     @FXML
     TableColumn<UserDTO, String> tableColumnLastName;
     @FXML
-    HBox horizontalBox;
-    @FXML
     TableView<UserDTO> tableViewUserDTO;
     Stage introductionStage;
 
@@ -46,13 +46,18 @@ public class IntroductionController {
         tableViewUserDTO.setItems(modelUserDTO);
     }
 
-    public void setUserService(UserService userService, Stage introductionStage) {
-        this.userService = userService;
-        this.introductionStage = introductionStage;
+    private void initModel() {
         modelUserDTO.setAll(this.userService.getAllUserDTO());
         if (modelUserDTO.size() == 0) {
             tableViewUserDTO.setPlaceholder(new Label("There are no users in the social network"));
         }
+    }
+
+    public void setUserService(UserService userService, Stage introductionStage) {
+        this.userService = userService;
+        this.userService.addObserver(this);
+        this.introductionStage = introductionStage;
+        initModel();
     }
 
     public void setFriendshipService(FriendshipService friendshipService) {
@@ -98,7 +103,32 @@ public class IntroductionController {
         }
     }
 
+    public void addNewUser() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/addNewUserView.fxml"));
+            AnchorPane root = loader.load();
+            Stage addNewUserStage = new Stage();
+            addNewUserStage.setTitle("Add new User");
+            addNewUserStage.setResizable(false);
+            addNewUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            addNewUserStage.setScene(new Scene(root));
+            AddNewUserController addNewUserController = loader.getController();
+            addNewUserController.setUserService(userService);
+            addNewUserController.setProfilePhotoUserService(profilePhotoUserService);
+            addNewUserController.setAddNewUserStage(addNewUserStage);
+            addNewUserStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setFriendshipRequestService(FriendshipRequestService friendshipRequestService) {
         this.friendshipRequestService = friendshipRequestService;
+    }
+
+    @Override
+    public void update(UserChangeEvent userChangeEvent) {
+        initModel();
     }
 }

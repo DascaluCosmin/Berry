@@ -8,14 +8,20 @@ import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.service.validators.ValidatorService;
 import socialnetwork.service.validators.ValidatorUserService;
+import socialnetwork.utils.events.ChangeEventType;
+import socialnetwork.utils.events.UserChangeEvent;
+import socialnetwork.utils.observer.Observable;
+import socialnetwork.utils.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class UserService{
+public class UserService implements Observable<UserChangeEvent> {
     private final Repository<Long, User> repositoryUser;
     private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
     private final ValidatorService<User> validatorUserService = new ValidatorUserService();
+    private List<Observer<UserChangeEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new UserService
@@ -39,8 +45,12 @@ public class UserService{
     public User addUser(User userParam) throws ValidationException {
         User user = repositoryUser.save(userParam);
         validatorUserService.validateAdd(user);
+        if (user == null) {
+            notifyAll(new UserChangeEvent(ChangeEventType.ADD));
+        }
         return user;
     }
+
 
     /**
      * Method that deletes an User
@@ -111,5 +121,29 @@ public class UserService{
         UserDTO userDTO = new UserDTO(user.getFirstName(), user.getLastName());
         userDTO.setId(userID);
         return userDTO;
+    }
+
+    public Long getMaximumUserID() {
+        AtomicReference<Long> maximumUserID = new AtomicReference(-1L);
+        getAll().forEach(user -> {
+            if (user.getId() > maximumUserID.get()) {
+                maximumUserID.set(user.getId());
+            }
+        });
+        return maximumUserID.get();
+    }
+
+    @Override
+    public void addObserver(Observer<UserChangeEvent> e) {
+        observers.add(e);
+    }
+
+    @Override
+    public void removeObserver(Observer<UserChangeEvent> e) {
+    }
+
+    @Override
+    public void notifyAll(UserChangeEvent userChangeEvent) {
+        observers.forEach(observer -> observer.update(userChangeEvent));
     }
 }

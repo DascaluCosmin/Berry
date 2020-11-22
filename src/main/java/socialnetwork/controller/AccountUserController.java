@@ -48,8 +48,8 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
 
     @FXML
     void initialize() {
-        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory<UserDTO, String>("firstName"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory<UserDTO, String>("lastName"));
+        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        tableColumnLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tableViewAccountUser.setItems(model);
     }
 
@@ -69,9 +69,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
     private void initModel() {
         Iterable<Friendship> friendships = this.friendshipService.getAllFriendshipsUser(selectedUserDTO.getId());
         List<UserDTO> listFriends = new ArrayList();
-        friendships.forEach(friendship -> {
-            listFriends.add(userService.getUserDTO(friendship.getId().getRight()));
-        });
+        friendships.forEach(friendship -> listFriends.add(userService.getUserDTO(friendship.getId().getRight())));
         if (!friendships.iterator().hasNext()) {
             // Need model.setAll() because the setPlaceholder can't write over a model that has data
             model.setAll(listFriends);
@@ -99,7 +97,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             AnchorPane root = loader.load();
 
             Stage addFriendshipRequestStage = new Stage();
-            addFriendshipRequestStage.setTitle("Send friendship request");
+            addFriendshipRequestStage.setTitle("Send friendship requests");
             addFriendshipRequestStage.setResizable(false);
             addFriendshipRequestStage.initModality(Modality.APPLICATION_MODAL);
             addFriendshipRequestStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));

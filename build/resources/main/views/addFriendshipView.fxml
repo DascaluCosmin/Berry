@@ -3,22 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="468.0" prefWidth="552.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/addFriendshipView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AddFriendshipViewController">
+<AnchorPane prefHeight="289.0" prefWidth="552.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/addFriendshipView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AddFriendshipViewController">
    <children>
-      <TableView fx:id="tableViewStrangers" layoutX="27.0" layoutY="43.0" prefHeight="414.0" prefWidth="275.0" stylesheets="@../css/addFriendshipView.css">
+      <TableView fx:id="tableViewStrangers" layoutX="22.0" layoutY="22.0" prefHeight="245.0" prefWidth="275.0" stylesheets="@../css/addFriendshipView.css">
         <columns>
-            <TableColumn prefWidth="274.40000076293944" text="User">
+            <TableColumn prefWidth="274.40000076293944" text="Users">
                <columns>
                 <TableColumn fx:id="tableColumnFirstName" prefWidth="138.79999160766602" text="First name" />
-                <TableColumn fx:id="tableColumnLastName" prefWidth="137.59996032714844" text="Surname" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="135.1999969482422" text="Surname" />
                </columns>
             </TableColumn>
         </columns>
       </TableView>
-      <TextField fx:id="textFieldMessage" layoutX="374.0" layoutY="92.0" />
-      <TextField fx:id="textFieldSearch" layoutX="374.0" layoutY="43.0" />
-      <Label fx:id="labelSearch" layoutX="320.0" layoutY="47.0" text="Search" />
-      <Label fx:id="labelMessage" layoutX="320.0" layoutY="96.0" text="Message" />
-      <Button fx:id="buttonSendFriendshipRequest" layoutX="320.0" layoutY="136.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="203.0" text="Send friendship request" onMouseClicked="#sendFriendshipRequest"/>
+      <TextField fx:id="textFieldMessage" layoutX="373.0" layoutY="71.0" />
+      <TextField fx:id="textFieldSearch" layoutX="373.0" layoutY="22.0" />
+      <Label fx:id="labelSearch" layoutX="331.0" layoutY="26.0" stylesheets="@../css/addFriendshipView.css" text="Search" />
+      <Label fx:id="labelMessage" layoutX="319.0" layoutY="75.0" stylesheets="@../css/addFriendshipView.css" text="Message" />
+      <Button fx:id="buttonSendFriendshipRequest" layoutX="350.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#sendFriendshipRequest" prefHeight="54.0" prefWidth="179.0" stylesheets="@../css/addFriendshipView.css" text="Send friendship request" />
    </children>
 </AnchorPane>

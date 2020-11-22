@@ -16,6 +16,10 @@
     -fx-background-color: linear-gradient(#916698, #DAE2F8);
 }
 
+.table-row-cell:selected {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+}
+
 #tableColumnLastName {
     -fx-font-size: 12px;
     -fx-text-fill: linear-gradient(#572aba, #9f73ac);
@@ -39,10 +43,25 @@
 }
 
 .table-view:focused .table-row-cell:focused {
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
     -fx-background-insets: 0, 0 0 1 0;
 }
 
 #tableViewStrangers {
     -fx-background-color: linear-gradient(#aba2a2, #7b28ac);
+}
+
+#textFieldSearch {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#textFieldMessage {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#textFieldSearch:focused {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+}
+
+#textFieldMessage:focused {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
 }

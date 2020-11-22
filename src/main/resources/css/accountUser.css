@@ -50,7 +50,6 @@
 }
 
 .table-view:focused .table-row-cell:focused {
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
     -fx-background-insets: 0, 0 0 1 0;
 }
 
@@ -58,4 +57,8 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-border-color: linear-gradient(#aba2a2, #7b28ac);
     -fx-border-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
 }

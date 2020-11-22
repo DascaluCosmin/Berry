@@ -88,6 +88,16 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
         return listFriendshipsUser;
     }
 
+    public Iterable<Friendship> getAllNonFriendshipsUser(Long userID) {
+        Iterable<Friendship> allFriendships = this.getAll();
+        List<Friendship> listNonFriendshipsUser = new ArrayList<>();
+        allFriendships.forEach(friendship ->  {
+            if (!friendship.getId().getLeft().equals(userID))
+                listNonFriendshipsUser.add(friendship);
+        });
+        return listNonFriendshipsUser;
+    }
+
     public Friendship findOne(Long idLeft, Long idRight) {
         return repositoryFriendship.findOne(new Tuple<>(idLeft, idRight));
     }

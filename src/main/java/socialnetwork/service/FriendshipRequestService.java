@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendshipRequestService {
-    Repository<Long, FriendshipRequest> friendshipRequestRepository;
-    Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
-    ValidatorFriendshipRequest validatorFriendshipRequestService = new ValidatorFriendshipRequest();
+    private Repository<Long, FriendshipRequest> friendshipRequestRepository;
+    private Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
+    private ValidatorFriendshipRequest validatorFriendshipRequestService = new ValidatorFriendshipRequest();
 
     /**
      * Constructor that creates a new FriendshipRequestService

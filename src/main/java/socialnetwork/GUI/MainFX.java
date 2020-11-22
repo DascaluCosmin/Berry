@@ -79,5 +79,6 @@ public class MainFX extends Application {
         IntroductionController introductionController = loader.getController();
         introductionController.setUserService(userService, primaryStage);
         introductionController.setFriendshipService(friendshipService);
+        introductionController.setFriendshipRequestService(friendshipRequestService);
     }
 }

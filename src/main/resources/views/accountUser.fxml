@@ -11,13 +11,13 @@
             <TableColumn prefWidth="75.0" text="Your friends">
                <columns>
                 <TableColumn fx:id="tableColumnFirstName" prefWidth="164.99999618530273" text="First name" />
-                <TableColumn fx:id="tableColumnLastName" prefWidth="203.80003356933594" text="Last name" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="203.80003356933594" text="Surname" />
                </columns>
             </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="buttonAddFriendship" layoutX="40.0" layoutY="391.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" stylesheets="@../css/accountUser.css" text="Add friendship" />
-      <Button fx:id="buttonDeleteFriendship" layoutX="285.0" layoutY="391.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="110.0" stylesheets="@../css/accountUser.css" text="Delete friendship" onMouseClicked="#deleteFriendship"/>
+      <Button fx:id="buttonAddFriendship" layoutX="40.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#addFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Add friendship request" />
+      <Button fx:id="buttonDeleteFriendship" layoutX="285.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" prefHeight="46.0" prefWidth="110.0" stylesheets="@../css/accountUser.css" text="Delete friendship" />
       <Label fx:id="labelUserName" alignment="CENTER" layoutX="131.0" layoutY="14.0" prefHeight="46.0" prefWidth="158.0" stylesheets="@../css/accountUser.css" text="NameUser">
          <font>
             <Font size="22.0" />

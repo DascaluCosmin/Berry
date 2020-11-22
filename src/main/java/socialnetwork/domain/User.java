@@ -105,6 +105,10 @@ public class User extends Entity<Long>{
                 getFriends().equals(that.getFriends());
     }
 
+    public boolean equals(UserDTO userDTO) {
+        return getId().equals(userDTO.getId());
+    }
+
     /**
      * Method that gets the hashCode of the User
      * @return int, representing the hashCode of the User

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.IntroductionController;
 import socialnetwork.domain.Friendship;
+import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.User;
 import socialnetwork.domain.messages.FriendshipRequest;
@@ -30,6 +31,7 @@ public class MainFX extends Application {
     private static MessageService messageService;
     private static ReplyMessageService replyMessageService;
     private static FriendshipRequestService friendshipRequestService;
+    private static ProfilePhotoUserService profilePhotoUserService;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -49,6 +51,8 @@ public class MainFX extends Application {
         String fileNameConversation = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.conversation");
         String fileNameFriendshipRequests = ApplicationContext.getPROPERTIES()
                 .getProperty("data.socialnetwork.friendshipRequests");
+        String fileNameUserProfilePhotos = ApplicationContext.getPROPERTIES().
+                getProperty("data.socialnetwork.userProfilePhotos");
 
         // Repositories
         Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
@@ -60,6 +64,8 @@ public class MainFX extends Application {
                 new ValidatorReplyMessage(), userFileRepository);
         Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userFileRepository);
+        Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
+                fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
 
         // Services
         userService = new UserService(userFileRepository, friendshipFileRepository);
@@ -68,6 +74,7 @@ public class MainFX extends Application {
         replyMessageService = new ReplyMessageService(replyMessageFileRepository);
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
                 friendshipFileRepository);
+        profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
         launch(args);
     }
 
@@ -80,5 +87,6 @@ public class MainFX extends Application {
         introductionController.setUserService(userService, primaryStage);
         introductionController.setFriendshipService(friendshipService);
         introductionController.setFriendshipRequestService(friendshipRequestService);
+        introductionController.setProfilePhotoUserService(profilePhotoUserService);
     }
 }

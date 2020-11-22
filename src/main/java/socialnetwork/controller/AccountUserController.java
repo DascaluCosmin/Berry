@@ -11,18 +11,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import socialnetwork.domain.Friendship;
+import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.UserDTO;
 import socialnetwork.service.FriendshipRequestService;
 import socialnetwork.service.FriendshipService;
+import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import socialnetwork.utils.events.FriendshipChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +40,9 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
     UserService userService;
     FriendshipService friendshipService;
     FriendshipRequestService friendshipRequestService;
+    ProfilePhotoUserService profilePhotoUserService;
     UserDTO selectedUserDTO;
+    Stage accountUserStage;
     @FXML
     Button buttonAddFriendship;
     @FXML
@@ -45,6 +55,10 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
     TableColumn<UserDTO, String> tableColumnLastName;
     @FXML
     TableView<UserDTO> tableViewAccountUser;
+    @FXML
+    Button buttonChangeProfilePhoto;
+    @FXML
+    ImageView profilePhotoImageView;
 
     @FXML
     void initialize() {
@@ -53,16 +67,36 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
         tableViewAccountUser.setItems(model);
     }
 
+    private void changeProfilePhoto() {
+        ProfilePhotoUser profilePhotoUser = profilePhotoUserService.findOne(selectedUserDTO.getId());
+        String pathProfilePhoto = "C:\\Users\\dasco\\IdeaProjects\\proiect-lab-schelet\\src\\main\\resources\\images\\noProfilePhoto.png";
+        if (profilePhotoUser != null) {
+            pathProfilePhoto = profilePhotoUser.getPathProfilePhoto();
+        }
+        try {
+            FileInputStream fileInputStream = new FileInputStream(pathProfilePhoto);
+            Image newImage = new Image(fileInputStream, profilePhotoImageView.getFitWidth(),
+                    profilePhotoImageView.getFitHeight(), false, true);
+            profilePhotoImageView.setImage(newImage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setAttributes(FriendshipService friendshipService, UserService userService,
-                              FriendshipRequestService friendshipRequestService,  UserDTO selectedUserDTO) {
+                              FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
+                              UserDTO selectedUserDTO, Stage accountUserStage) {
         this.friendshipService = friendshipService;
         this.friendshipService.addObserver(this);
         this.userService = userService;
-        this.selectedUserDTO = selectedUserDTO;
         this.friendshipRequestService = friendshipRequestService;
+        this.profilePhotoUserService = profilePhotoUserService;
+        this.selectedUserDTO = selectedUserDTO;
+        this.accountUserStage = accountUserStage;
         if (selectedUserDTO != null) {
             labelUserName.setText("Hello, " + selectedUserDTO.getFirstName());
             initModel();
+            changeProfilePhoto();
         }
     }
 
@@ -113,6 +147,21 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void changeProfilePhotoEvent() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"),
+                new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
+        File file = fileChooser.showOpenDialog(accountUserStage);
+        if (file != null) {
+            String pathProfilePhoto = file.toString();
+            ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(pathProfilePhoto);
+            newProfilePhotoUser.setId(selectedUserDTO.getId());
+            profilePhotoUserService.updateProfilePhotoUser(newProfilePhotoUser);
+            changeProfilePhoto();
         }
     }
 

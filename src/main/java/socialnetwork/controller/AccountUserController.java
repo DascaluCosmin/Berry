@@ -70,7 +70,6 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
     private void changeProfilePhoto() {
         ProfilePhotoUser profilePhotoUser = profilePhotoUserService.findOne(selectedUserDTO.getId());
         String pathProfilePhoto = "C:\\Users\\dasco\\IdeaProjects\\proiect-lab-schelet\\src\\main\\resources\\images\\noProfilePhoto.png";
-        System.out.println(pathProfilePhoto);
         if (profilePhotoUser != null) {
             pathProfilePhoto = profilePhotoUser.getPathProfilePhoto();
         }
@@ -78,9 +77,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             FileInputStream fileInputStream = new FileInputStream(pathProfilePhoto);
             Image newImage = new Image(fileInputStream, profilePhotoImageView.getFitWidth(),
                     profilePhotoImageView.getFitHeight(), false, true);
-            System.out.println(newImage.getHeight() + " " + newImage.getWidth());
             profilePhotoImageView.setImage(newImage);
-            System.out.println(profilePhotoImageView.getFitHeight() + " " + profilePhotoImageView.getFitWidth());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

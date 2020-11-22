@@ -29,7 +29,6 @@
     -fx-font-weight: bold;
 }
 
-
 #tableColumnLastName:hover {
     -fx-text-fill: linear-gradient(#3608a2, #5f4866);
 }

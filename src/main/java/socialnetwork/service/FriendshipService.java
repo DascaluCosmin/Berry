@@ -7,14 +7,19 @@ import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.service.validators.ValidatorFriendshipService;
 import socialnetwork.service.validators.ValidatorService;
+import socialnetwork.utils.events.ChangeEventType;
+import socialnetwork.utils.events.FriendshipChangeEvent;
+import socialnetwork.utils.observer.Observable;
+import socialnetwork.utils.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendshipService {
+public class FriendshipService implements Observable<FriendshipChangeEvent> {
     private final Repository<Tuple<Long, Long>, Friendship> repositoryFriendship;
     private final Repository<Long, User> repositoryUser;
     private final ValidatorService<Friendship> validatorFriendshipService = new ValidatorFriendshipService();
+    private List<Observer<FriendshipChangeEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new FriendshipService
@@ -54,6 +59,9 @@ public class FriendshipService {
     public Friendship deleteFriendship(Tuple<Long, Long> ids) throws ValidationException {
         Friendship friendship = repositoryFriendship.delete(ids);
         validatorFriendshipService.validateDelete(friendship);
+        if (friendship != null) {
+            notifyObserver(new FriendshipChangeEvent(ChangeEventType.DELETE, friendship));
+        }
         return friendship;
     }
 
@@ -78,5 +86,24 @@ public class FriendshipService {
                 listFriendshipsUser.add(friendship);
         });
         return listFriendshipsUser;
+    }
+
+    public Friendship findOne(Long idLeft, Long idRight) {
+        return repositoryFriendship.findOne(new Tuple<>(idLeft, idRight));
+    }
+
+    @Override
+    public void addObserver(Observer<FriendshipChangeEvent> e) {
+        observers.add(e);
+    }
+
+    @Override
+    public void removeObserver(Observer<FriendshipChangeEvent> e) {
+        //observers.remove(e);
+    }
+
+    @Override
+    public void notifyObserver(FriendshipChangeEvent friendshipChangeEvent) {
+        observers.stream().forEach(observer -> observer.update(friendshipChangeEvent));
     }
 }

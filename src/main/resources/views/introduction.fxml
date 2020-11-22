@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="608.0" prefWidth="577.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/introduction.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
+<AnchorPane prefHeight="608.0" prefWidth="577.0" style="-fx-background-color: linear-gradient(#dae2f8, #916698);" stylesheets="/css/introduction.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
    <children>
       <TableView fx:id="tableViewUserDTO" layoutX="28.0" layoutY="90.0" onMouseClicked="#selectFriendsUser" prefHeight="500.0" prefWidth="532.0" stylesheets="@../css/introduction.css">
         <columns>

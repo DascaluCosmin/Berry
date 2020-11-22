@@ -124,9 +124,9 @@ public abstract class AbstractFileRepository<ID, E extends Entity<ID>> extends I
     @Override
     public E update(E entity) {
         E e = super.update(entity);
-       /* if (e == null) {
-            writeToFile(entity);
-        }*/
+//        if (e == null) {
+//            writeToFile(entity);
+//        }
         return e;
     }
 

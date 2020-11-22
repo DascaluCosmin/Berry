@@ -11,7 +11,7 @@
             <TableColumn fx:id="tableColumnWrapperUser" prefWidth="75.0" text="Users">
                <columns>
                 <TableColumn fx:id="tableColumnFirstName" prefWidth="263.4000153541565" text="First Name" />
-                <TableColumn fx:id="tableColumnLastName" prefWidth="268.5999755859375" text="Surname" />
+                <TableColumn fx:id="tableColumnLastName" prefWidth="268.5999755859375" text="Last name" />
                </columns>
             </TableColumn>
         </columns>

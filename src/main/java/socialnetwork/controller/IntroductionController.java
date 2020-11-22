@@ -8,12 +8,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import socialnetwork.domain.UserDTO;
 import socialnetwork.service.FriendshipRequestService;
 import socialnetwork.service.FriendshipService;
+import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import javafx.collections.ObservableList;
 
@@ -23,11 +26,15 @@ public class IntroductionController {
     UserService userService;
     FriendshipService friendshipService;
     FriendshipRequestService friendshipRequestService;
+    ProfilePhotoUserService profilePhotoUserService;
+
     ObservableList<UserDTO> modelUserDTO = FXCollections.observableArrayList();
     @FXML
     TableColumn<UserDTO, String> tableColumnFirstName;
     @FXML
     TableColumn<UserDTO, String> tableColumnLastName;
+    @FXML
+    HBox horizontalBox;
     @FXML
     TableView<UserDTO> tableViewUserDTO;
     Stage introductionStage;
@@ -59,6 +66,10 @@ public class IntroductionController {
         }
     }
 
+    public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
+        this.profilePhotoUserService = profilePhotoUserService;
+    }
+
     private void showAccountUserStage(UserDTO selectedUserDTO) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -78,7 +89,8 @@ public class IntroductionController {
             Scene scene = new Scene(root);
             accountUserStage.setScene(scene);
             AccountUserController accountUserController = loader.getController();
-            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, selectedUserDTO);
+            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
+                    selectedUserDTO, accountUserStage);
             introductionStage.hide();
             accountUserStage.show();
         } catch (IOException e) {

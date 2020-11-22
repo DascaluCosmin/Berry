@@ -53,7 +53,7 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
      * Method that deletes a Friendship
      * @param ids Tuple<Long, Long>, representing the IDs of the Friendship to be deleted
      * @return null, if the Friendship to be deleted doesn't exist
-     *         non-null Friendship, representing the deleted Friendship, otherise
+     *         non-null Friendship, representing the deleted Friendship, otherwise
      * @throws ValidationException, if the Friendship doesn't exist
      */
     public Friendship deleteFriendship(Tuple<Long, Long> ids) throws ValidationException {
@@ -66,7 +66,7 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
     }
 
     /**
-     * Metohd that gets all the existing Friendships
+     * Method that gets all the existing Friendships
      * @return Iterable<Friendship>, representing all the existing Friendships
      */
     public Iterable<Friendship> getAll() {
@@ -98,6 +98,13 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
         return listNonFriendshipsUser;
     }
 
+    /**
+     * Method that gets one specific Friendship
+     * @param idLeft Long, representing the ID of the left User forming the Friendship pair
+     * @param idRight Long, representing the ID of the right User forming the Friendship pair
+     * @return non-null Friendship, representing the selected Friendship (if the pair of ids of the Friendship exists)
+     *         null, otherwise
+     */
     public Friendship findOne(Long idLeft, Long idRight) {
         return repositoryFriendship.findOne(new Tuple<>(idLeft, idRight));
     }

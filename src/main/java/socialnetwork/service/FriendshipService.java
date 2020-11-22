@@ -60,7 +60,7 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
         Friendship friendship = repositoryFriendship.delete(ids);
         validatorFriendshipService.validateDelete(friendship);
         if (friendship != null) {
-            notifyObserver(new FriendshipChangeEvent(ChangeEventType.DELETE, friendship));
+            notifyAll(new FriendshipChangeEvent(ChangeEventType.DELETE, friendship));
         }
         return friendship;
     }
@@ -120,7 +120,7 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
     }
 
     @Override
-    public void notifyObserver(FriendshipChangeEvent friendshipChangeEvent) {
+    public void notifyAll(FriendshipChangeEvent friendshipChangeEvent) {
         observers.stream().forEach(observer -> observer.update(friendshipChangeEvent));
     }
 }

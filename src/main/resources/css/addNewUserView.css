@@ -1,0 +1,34 @@
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #572aba;
+}
+
+.button {
+    -fx-text-fill:  linear-gradient(#572aba, #4f3b56);
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#DAE2F8, #916698);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#916698, #DAE2F8);
+}
+
+#textFieldFirstName {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#textFieldLastName {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#textFieldFirstName:focused {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+}
+
+#textFieldLastName:focused {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+}

@@ -13,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -162,6 +161,28 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             newProfilePhotoUser.setId(selectedUserDTO.getId());
             profilePhotoUserService.updateProfilePhotoUser(newProfilePhotoUser);
             changeProfilePhoto();
+        }
+    }
+
+    public void viewFriendshipRequests() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/friendshipRequestsView.fxml"));
+            AnchorPane root = loader.load();
+
+            Stage friendshipRequestsViewStage = new Stage();
+            friendshipRequestsViewStage.setScene(new Scene(root));
+            friendshipRequestsViewStage.setTitle("Friendship Requests");
+            friendshipRequestsViewStage.setResizable(false);
+            friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
+            friendshipRequestsViewController.setSelectedUser(selectedUserDTO);
+            friendshipRequestsViewController.setFriendshipRequestService(friendshipRequestService);
+            friendshipRequestsViewController.setFriendshipService(friendshipService);
+
+            friendshipRequestsViewStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

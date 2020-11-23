@@ -6,6 +6,10 @@ public class FriendshipChangeEvent implements Event {
     private ChangeEventType eventType;
     private Friendship oldFriendship, newFriendship;
 
+    public FriendshipChangeEvent(ChangeEventType eventType) {
+        this.eventType = eventType;
+    }
+
     public FriendshipChangeEvent(ChangeEventType eventType, Friendship oldFriendship) {
         this.eventType = eventType;
         this.oldFriendship = oldFriendship;

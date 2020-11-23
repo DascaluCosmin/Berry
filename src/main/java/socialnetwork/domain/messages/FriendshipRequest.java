@@ -3,6 +3,7 @@ package socialnetwork.domain.messages;
 import socialnetwork.domain.User;
 import socialnetwork.utils.Constants;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,6 +35,18 @@ public class FriendshipRequest extends Message {
      */
     public void setStatusRequest(String statusRequest) {
         this.statusRequest = statusRequest;
+    }
+
+    public String getFirstName() {
+        return getFrom().getFirstName();
+    }
+
+    public String getLastName() {
+        return getFrom().getLastName();
+    }
+
+    public String getFormatedDate() {
+        return getDate().format(Constants.DATE_TIME_FORMATTER);
     }
 
     /**

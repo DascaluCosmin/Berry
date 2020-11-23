@@ -7,7 +7,7 @@
    <children>
       <TableView fx:id="tableViewStrangers" layoutX="22.0" layoutY="22.0" prefHeight="245.0" prefWidth="275.0" stylesheets="@../css/addFriendshipView.css">
         <columns>
-            <TableColumn prefWidth="274.40000076293944" text="Users">
+            <TableColumn fx:id="tableColumnHeadTable" prefWidth="274.40000076293944" text="Users">
                <columns>
                 <TableColumn fx:id="tableColumnFirstName" prefWidth="138.79999160766602" text="First name" />
                 <TableColumn fx:id="tableColumnLastName" prefWidth="135.1999969482422" text="Last name" />

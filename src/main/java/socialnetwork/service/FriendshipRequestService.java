@@ -1,19 +1,26 @@
 package socialnetwork.service;
 
+import javafx.collections.ObservableList;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.service.validators.ValidatorFriendshipRequest;
+import socialnetwork.utils.events.ChangeEventType;
+import socialnetwork.utils.events.FriendshipRequestChangeEvent;
+import socialnetwork.utils.observer.Observable;
+import socialnetwork.utils.observer.Observer;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendshipRequestService {
+public class FriendshipRequestService implements Observable<FriendshipRequestChangeEvent> {
     private Repository<Long, FriendshipRequest> friendshipRequestRepository;
     private Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
     private ValidatorFriendshipRequest validatorFriendshipRequestService = new ValidatorFriendshipRequest();
+    private List<Observer<FriendshipRequestChangeEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new FriendshipRequestService
@@ -38,8 +45,7 @@ public class FriendshipRequestService {
     public FriendshipRequest addFriendshipRequest(FriendshipRequest friendshipRequestParam) throws ValidationException {
         validatorFriendshipRequestService.validateBeforeAdding(friendshipRequestParam,
                 getAll(), friendshipRepository.findAll());
-        FriendshipRequest friendshipRequest = friendshipRequestRepository.save(friendshipRequestParam);
-        return friendshipRequestParam;
+        return friendshipRequestRepository.save(friendshipRequestParam);
     }
 
     /**
@@ -53,6 +59,16 @@ public class FriendshipRequestService {
         FriendshipRequest friendshipRequest = friendshipRequestRepository.delete(idFriendshipRequest);
         validatorFriendshipRequestService.validateDelete(friendshipRequest);
         return friendshipRequest;
+    }
+
+    public void updateFriendshipRequest(FriendshipRequest friendshipRequestToBeUpdated, String newStatus) {
+        FriendshipRequest friendshipRequest = deleteFriendshipRequest(friendshipRequestToBeUpdated.getId());
+        friendshipRequest.setStatusRequest(newStatus);
+        friendshipRequest.setDate(LocalDateTime.now());
+        friendshipRequest = addFriendshipRequest(friendshipRequest);
+        if (friendshipRequest == null){
+            notifyAll(new FriendshipRequestChangeEvent(ChangeEventType.UPDATE));
+        }
     }
 
     /**
@@ -70,6 +86,22 @@ public class FriendshipRequestService {
             }
         });
         return listPendingRequestsUser;
+    }
+
+    /**
+     * Method that gets all the Friendship Requests of some User
+     * @param idUser Long, representing the ID of the User
+     * @return Iterable<FriendshipRequest>, representing the pending Friendship Requests
+     */
+    public List<FriendshipRequest> getFriendshipRequestsUser(Long idUser) {
+        Iterable<FriendshipRequest> listFriendshipRequests = friendshipRequestRepository.findAll();
+        List<FriendshipRequest> listFriendshipRequestsUser = new ArrayList<>();
+        listFriendshipRequests.forEach(friendshipRequest -> {
+            if (friendshipRequest.getTo().get(0).getId().equals(idUser)) {
+                listFriendshipRequestsUser.add(friendshipRequest);
+            }
+        });
+        return listFriendshipRequestsUser;
     }
 
     /**
@@ -105,5 +137,20 @@ public class FriendshipRequestService {
      */
     public Iterable<FriendshipRequest> getAll() {
         return friendshipRequestRepository.findAll();
+    }
+
+    @Override
+    public void addObserver(Observer<FriendshipRequestChangeEvent> e) {
+        observers.add(e);
+    }
+
+    @Override
+    public void removeObserver(Observer<FriendshipRequestChangeEvent> e) {
+
+    }
+
+    @Override
+    public void notifyAll(FriendshipRequestChangeEvent friendshipRequestChangeEvent) {
+        observers.forEach(observer -> observer.update(friendshipRequestChangeEvent));
     }
 }

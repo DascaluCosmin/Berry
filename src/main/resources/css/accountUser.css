@@ -50,14 +50,16 @@
     -fx-text-fill: linear-gradient(#3608a2, #5f4866);
 }
 
+#tableColumnHeadTable {
+    -fx-background-color: linear-gradient(#916698, #DAE2F8);
+}
+
 .table-view:focused .table-row-cell:focused {
     -fx-background-insets: 0, 0 0 1 0;
 }
 
 #tableViewAccountUser {
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-border-color: linear-gradient(#aba2a2, #7b28ac);
-    -fx-border-insets: 0, 0 0 1 0;
+    -fx-background-color: linear-gradient(#aba2a2, #7b28ac);
 }
 
 .table-row-cell:selected {

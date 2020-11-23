@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="370.0" prefWidth="569.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/friendshipRequestsView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.FriendshipRequestsViewController">
+   <children>
+      <TableView fx:id="tableViewFriendshipRequests" layoutX="14.0" layoutY="14.0" prefHeight="275.0" prefWidth="535.0" stylesheets="@../css/friendshipRequestsView.css">
+        <columns>
+            <TableColumn prefWidth="532.7999965667725" text="Friendship Requests">
+               <columns>
+                <TableColumn prefWidth="73.60000896453857" text="From">
+                     <columns>
+                        <TableColumn fx:id="tableColumnFirstName" prefWidth="75.0" text="First Name" />
+                        <TableColumn fx:id="tableColumnLastName" prefWidth="75.0" text="Last Name" />
+                     </columns>
+                  </TableColumn>
+                <TableColumn fx:id="tableColumnMessage" prefWidth="171.5999755859375" text="Message" />
+                  <TableColumn fx:id="tableColumnSentDate" prefWidth="135.0" text="Sent Date" />
+                  <TableColumn fx:id="tableColumnStatus" prefWidth="76.99996948242188" text="Status" />
+               </columns>
+            </TableColumn>
+        </columns>
+      </TableView>
+      <Button fx:id="buttonAcceptFriendshipRequest" layoutX="14.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Accept" onMouseClicked="#acceptPendingFriendshipRequest"/>
+      <Button fx:id="buttonDeclineFriendshipRequest" layoutX="417.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Decline" onMouseClicked="#declinePendingFriendshipRequest"/>
+   </children>
+</AnchorPane>

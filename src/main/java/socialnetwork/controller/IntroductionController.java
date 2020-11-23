@@ -163,6 +163,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
     public void deleteUser() {
         UserDTO selectedUser = tableViewUserDTO.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
+            // TODO: DELETE ALL FriendshipRequests involving the deleted USER.
             userService.deleteUser(selectedUser.getId());
             profilePhotoUserService.deleteProfilePhotoUser(selectedUser.getId());
         }

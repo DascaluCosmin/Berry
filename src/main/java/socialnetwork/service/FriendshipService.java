@@ -46,6 +46,9 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
         User userRight = repositoryUser.findOne(friendshipParam.getId().getRight());
         userLeft.getFriends().add(userRight);
         userRight.getFriends().add(userLeft);
+        if (friendship == null) {
+            notifyAll(new FriendshipChangeEvent(ChangeEventType.ADD));
+        }
         return friendship;
     }
 

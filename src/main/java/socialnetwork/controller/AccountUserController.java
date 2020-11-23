@@ -173,6 +173,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             Stage friendshipRequestsViewStage = new Stage();
             friendshipRequestsViewStage.setScene(new Scene(root));
             friendshipRequestsViewStage.setTitle("Friendship Requests");
+            friendshipRequestsViewStage.setResizable(false);
             friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
             FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
             friendshipRequestsViewController.setSelectedUser(selectedUserDTO);

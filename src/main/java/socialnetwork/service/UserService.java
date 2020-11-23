@@ -72,6 +72,9 @@ public class UserService implements Observable<UserChangeEvent> {
         }
         User user = repositoryUser.delete(userIDParam);
         validatorUserService.validateDelete(user);
+        if (user != null) {
+            notifyAll(new UserChangeEvent(ChangeEventType.DELETE, userToGetDeleted));
+        }
         return user;
     }
 

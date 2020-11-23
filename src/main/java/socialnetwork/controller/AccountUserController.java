@@ -25,6 +25,7 @@ import socialnetwork.service.FriendshipService;
 import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import socialnetwork.utils.events.FriendshipChangeEvent;
+import socialnetwork.utils.events.ProfilePhotoUserChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
 import java.io.File;
@@ -34,7 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountUserController implements Observer<FriendshipChangeEvent> {
+public class AccountUserController implements Observer<FriendshipChangeEvent>{
     ObservableList<UserDTO> model = FXCollections.observableArrayList();
     UserService userService;
     FriendshipService friendshipService;
@@ -181,6 +182,29 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             friendshipRequestsViewController.setFriendshipService(friendshipService);
 
             friendshipRequestsViewStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showUserProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/userProfileView.fxml"));
+            AnchorPane root = loader.load();
+
+            Stage userProfileStage = new Stage();
+            userProfileStage.setScene(new Scene(root));
+            userProfileStage.setResizable(false);
+            userProfileStage.setTitle("User profile");
+            userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+
+            UserProfileController userProfileController = loader.getController();
+            userProfileController.setUser(userService.getUser(selectedUserDTO.getId()));
+            userProfileController.setProfilePhotoUserService(profilePhotoUserService);
+            userProfileController.initializeImageViewUserProfile();
+
+            userProfileStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

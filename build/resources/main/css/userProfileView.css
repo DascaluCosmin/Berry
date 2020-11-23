@@ -1,0 +1,21 @@
+.label {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #572aba;
+}
+
+#labelUserName {
+    -fx-text-fill: linear-gradient(#572aba, #9f73ac, #932ed9);
+    -fx-font-size: 35px;
+    -fx-underline: true;
+}
+
+#stackPaneImageView {
+    -fx-border-color: #4f3b56;
+    -fx-border-color: linear-gradient(#572aba, #9f73ac, #932ed9);
+    -fx-border-color: #572aba;
+    -fx-border-color: linear-gradient(#9f73ac, #572aba);
+    -fx-padding: 0;
+    -fx-border-width: 10;
+    -fx-border-radius: 400;
+}

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -21,11 +20,7 @@
             </columns>
         </TableView>
         <Button fx:id="buttonAddFriendship" layoutX="377.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#addFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Add friendship request" />
-        <Button fx:id="buttonDeleteFriendship" layoutX="591.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" prefHeight="46.0" prefWidth="132.0" text="Delete friendship">
-         <stylesheets>
-            <URL value="@../css/accountUser.css" />
-            <URL value="@../css/accountUser.css" />
-         </stylesheets></Button>
+        <Button fx:id="buttonDeleteFriendship" layoutX="591.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Delete friendship" />
         <Label fx:id="labelUserName" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="226.0" stylesheets="@../css/accountUser.css" text="UserName">
             <font>
                 <Font size="22.0" />
@@ -35,7 +30,7 @@
             <image>
                 <Image url="@../images/noProfilePhoto.png" />
             </image></ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" layoutX="288.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: linear-gradient(#b5a3d2, #ab9bb3)linear-gradient(#b5a3d2, #ab9bb3);" width="33.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="350.0" layoutX="304.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: linear-gradient(#b5a3d2, #ab9bb3)linear-gradient(#b5a3d2, #ab9bb3);" width="33.0">
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -53,5 +48,6 @@
             </LinearGradient>
          </fill>
       </Rectangle>
+      <Button fx:id="buttonFriendshipRequests" layoutX="156.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#viewFriendshipRequests" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Friendship Requests" />
     </children>
 </AnchorPane>

@@ -73,6 +73,22 @@ public class FriendshipRequestService {
     }
 
     /**
+     * Method that gets all the Friendship Requests of some User
+     * @param idUser Long, representing the ID of the User
+     * @return Iterable<FriendshipRequest>, representing the pending Friendship Requests
+     */
+    public List<FriendshipRequest> getFriendshipRequestsUser(Long idUser) {
+        Iterable<FriendshipRequest> listFriendshipRequests = friendshipRequestRepository.findAll();
+        List<FriendshipRequest> listFriendshipRequestsUser = new ArrayList<>();
+        listFriendshipRequests.forEach(friendshipRequest -> {
+            if (friendshipRequest.getTo().get(0).getId().equals(idUser)) {
+                listFriendshipRequestsUser.add(friendshipRequest);
+            }
+        });
+        return listFriendshipRequestsUser;
+    }
+
+    /**
      * Method that gets one specific Friendship Request
      * @param idFriendshipRequest Long, representing the ID of the Friendship Request to be selected
      * @return non-null FriendshipRequest, representing

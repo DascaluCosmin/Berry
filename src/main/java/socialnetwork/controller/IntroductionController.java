@@ -39,6 +39,9 @@ public class IntroductionController implements Observer<UserChangeEvent> {
     TableView<UserDTO> tableViewUserDTO;
     Stage introductionStage;
 
+    /**
+     * Method that initializes the Controller
+     */
     @FXML
     public void initialize() {
         tableColumnFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -46,6 +49,9 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         tableViewUserDTO.setItems(modelUserDTO);
     }
 
+    /**
+     * Method that initializes the model
+     */
     private void initModel() {
         modelUserDTO.setAll(this.userService.getAllUserDTO());
         if (modelUserDTO.size() == 0) {
@@ -53,6 +59,11 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         }
     }
 
+    /**
+     * @param userService UserService, representing the new UserService
+     * @param introductionStage Stage, representing the Stage corresponding
+     *                          to the one where the Controller is initialized
+     */
     public void setUserService(UserService userService, Stage introductionStage) {
         this.userService = userService;
         this.userService.addObserver(this);
@@ -60,10 +71,30 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         initModel();
     }
 
+    /**
+     * @param friendshipService FriendshipService, representing the new FriendshipService
+     */
     public void setFriendshipService(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
     }
 
+    /**
+     * @param friendshipRequestService FriendshipRequestService, representing the new FriendshipRequestService
+     */
+    public void setFriendshipRequestService(FriendshipRequestService friendshipRequestService) {
+        this.friendshipRequestService = friendshipRequestService;
+    }
+
+    /**
+     * @param profilePhotoUserService ProfilePhotoUserService, representing the new ProfilePhotoUserService
+     */
+    public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
+        this.profilePhotoUserService = profilePhotoUserService;
+    }
+
+    /**
+     * Event Handler for the Show User Account Event
+     */
     public void selectFriendsUser() {
         UserDTO selectedUserDTO = tableViewUserDTO.getSelectionModel().getSelectedItem();
         if (selectedUserDTO != null) {
@@ -71,10 +102,10 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         }
     }
 
-    public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
-        this.profilePhotoUserService = profilePhotoUserService;
-    }
-
+    /**
+     * Method that shows the account of a User
+     * @param selectedUserDTO UserDTO, representing the selected User whose account needs to be shown
+     */
     private void showAccountUserStage(UserDTO selectedUserDTO) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -103,6 +134,9 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         }
     }
 
+    /**
+     * Event Handler for the Add New User Event
+     */
     public void addNewUser() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -123,10 +157,21 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         }
     }
 
-    public void setFriendshipRequestService(FriendshipRequestService friendshipRequestService) {
-        this.friendshipRequestService = friendshipRequestService;
+    /**
+     * Event Handler for the Delete User Event
+     */
+    public void deleteUser() {
+        UserDTO selectedUser = tableViewUserDTO.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            userService.deleteUser(selectedUser.getId());
+            profilePhotoUserService.deleteProfilePhotoUser(selectedUser.getId());
+        }
     }
 
+    /**
+     * Method that updates the Controller when a UserChangeEvent event is occurring
+     * @param userChangeEvent UserChangeEvent, representing the occurring event
+     */
     @Override
     public void update(UserChangeEvent userChangeEvent) {
         initModel();

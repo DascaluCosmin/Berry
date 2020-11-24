@@ -10,9 +10,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import socialnetwork.controller.imageViewController.ImageViewUserProfileController;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.User;
 import socialnetwork.service.ProfilePhotoUserService;
+import socialnetwork.utils.ChangeProfilePhotoRound;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +22,7 @@ import java.io.FileNotFoundException;
 
 public class UserProfileController {
     ProfilePhotoUserService profilePhotoUserService;
+    ImageViewUserProfileController imageViewUserProfileController = new ImageViewUserProfileController();
     User user;
     Stage userProfileStage;
 
@@ -34,10 +37,13 @@ public class UserProfileController {
 
     void setUser(User user) {
         this.user = user;
+        imageViewUserProfileController.setUser(this.user);
     }
 
     public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
         this.profilePhotoUserService = profilePhotoUserService;
+        this.profilePhotoUserService.addObserver(imageViewUserProfileController);
+        imageViewUserProfileController.setProfilePhotoUserService(this.profilePhotoUserService);
     }
 
     public void setUserProfileStage(Stage userProfileStage) {
@@ -46,8 +52,10 @@ public class UserProfileController {
 
     public void initializeImageViewUserProfile() {
         if (user != null) {
-            changeProfilePhoto();
+            ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
+            changeProfilePhotoRound.changeProfilePhoto(profilePhotoUserService, imageViewUserProfile, user);
             labelUserName.setText(user.getFirstName() + " " + user.getLastName());
+            imageViewUserProfileController.setImageViewUserProfile(imageViewUserProfile);
         }
     }
 
@@ -62,27 +70,8 @@ public class UserProfileController {
             ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(pathProfilePhoto);
             newProfilePhotoUser.setId(user.getId());
             profilePhotoUserService.updateProfilePhotoUser(newProfilePhotoUser);
-            changeProfilePhoto();
-        }
-    }
-
-    private void changeProfilePhoto() {
-        String pathProfilePhoto = profilePhotoUserService.findOne(user.getId()).getPathProfilePhoto();
-        try {
-            FileInputStream fileInputStream = new FileInputStream(pathProfilePhoto);
-            Image image = new Image(
-                    fileInputStream, 400, 400, false, false
-            );
-            imageViewUserProfile.setImage(image);
-            Circle clip = new Circle(120, 120, 100);
-            imageViewUserProfile.setClip(clip);
-            SnapshotParameters parameters = new SnapshotParameters();
-            parameters.setFill(Color.TRANSPARENT);
-            WritableImage writableImage = imageViewUserProfile.snapshot(parameters, null);
-            imageViewUserProfile.setClip(null);
-            imageViewUserProfile.setImage(writableImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
+            changeProfilePhotoRound.changeProfilePhoto(profilePhotoUserService, imageViewUserProfile, user);
         }
     }
 }

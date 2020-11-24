@@ -2,6 +2,7 @@ package socialnetwork.service;
 
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.repository.Repository;
+import socialnetwork.utils.events.ChangeEventType;
 import socialnetwork.utils.events.ProfilePhotoUserChangeEvent;
 import socialnetwork.utils.observer.Observable;
 import socialnetwork.utils.observer.Observer;
@@ -49,6 +50,7 @@ public class ProfilePhotoUserService implements Observable<ProfilePhotoUserChang
     public void updateProfilePhotoUser(ProfilePhotoUser newProfilePhotoUser) {
         deleteProfilePhotoUser(newProfilePhotoUser.getId());
         addProfilePhotoUser(newProfilePhotoUser);
+        notifyAll(new ProfilePhotoUserChangeEvent(ChangeEventType.UPDATE));
     }
 
     /**

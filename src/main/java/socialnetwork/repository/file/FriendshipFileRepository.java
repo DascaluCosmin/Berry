@@ -54,10 +54,12 @@ public class FriendshipFileRepository extends AbstractFileRepository<Tuple<Long,
      */
     private void createListsFriends() {
         entities.forEach((ids, element) -> {
-            User userLeft = repositoryUser.findOne(ids.getLeft());
-            User userRight = repositoryUser.findOne(ids.getRight());
-            userLeft.getFriends().add(userRight);
-            userRight.getFriends().add(userLeft);
+            {
+                User userLeft = repositoryUser.findOne(ids.getLeft());
+                User userRight = repositoryUser.findOne(ids.getRight());
+                userLeft.getFriends().add(userRight);
+                userRight.getFriends().add(userLeft);
+            }
         });
     }
 }

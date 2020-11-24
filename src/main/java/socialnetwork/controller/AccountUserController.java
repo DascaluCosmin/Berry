@@ -171,12 +171,15 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             Stage friendshipRequestsViewStage = new Stage();
             friendshipRequestsViewStage.setScene(new Scene(root));
             friendshipRequestsViewStage.setTitle("Friendship Requests");
+            friendshipRequestsViewStage.initModality(Modality.APPLICATION_MODAL);
             friendshipRequestsViewStage.setResizable(false);
             friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
             FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
             friendshipRequestsViewController.setSelectedUser(selectedUserDTO);
             friendshipRequestsViewController.setFriendshipRequestService(friendshipRequestService);
             friendshipRequestsViewController.setFriendshipService(friendshipService);
+            friendshipRequestsViewController.setUserService(userService);
+            friendshipRequestsViewController.setProfilePhotoUserService(profilePhotoUserService);
 
             friendshipRequestsViewStage.show();
         } catch (IOException e) {
@@ -193,14 +196,15 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             Stage userProfileStage = new Stage();
             userProfileStage.setScene(new Scene(root));
             userProfileStage.setResizable(false);
-            userProfileStage.setTitle("User profile");
+            userProfileStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + " profile");
             userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
 
             UserProfileController userProfileController = loader.getController();
             userProfileController.setUser(userService.getUser(selectedUserDTO.getId()));
             userProfileController.setProfilePhotoUserService(profilePhotoUserService);
+            userProfileController.setUserService(userService);
             userProfileController.setUserProfileStage(userProfileStage);
-            userProfileController.initializeImageViewUserProfile();
+            userProfileController.initializeUserProfile();
 
             userProfileStage.show();
         } catch (IOException e) {

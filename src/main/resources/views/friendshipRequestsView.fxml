@@ -22,7 +22,8 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="buttonAcceptFriendshipRequest" layoutX="14.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Accept" onMouseClicked="#acceptPendingFriendshipRequest"/>
-      <Button fx:id="buttonDeclineFriendshipRequest" layoutX="417.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Decline" onMouseClicked="#declinePendingFriendshipRequest"/>
+      <Button fx:id="buttonAcceptFriendshipRequest" layoutX="14.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#acceptPendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Accept" />
+      <Button fx:id="buttonDeclineFriendshipRequest" layoutX="160.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#declinePendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Decline" />
+      <Button fx:id="buttonViewUserProfile" layoutX="417.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="View User Profile" onMouseClicked="#showUserProfile"/>
    </children>
 </AnchorPane>

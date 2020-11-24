@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import socialnetwork.controller.imageViewController.ImageViewAccountUserController;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
@@ -24,17 +25,17 @@ import socialnetwork.service.FriendshipRequestService;
 import socialnetwork.service.FriendshipService;
 import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
+import socialnetwork.utils.ChangeProfilePhoto;
+import socialnetwork.utils.ChangeProfilePhotoRectangle;
 import socialnetwork.utils.events.FriendshipChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountUserController implements Observer<FriendshipChangeEvent> {
+public class AccountUserController implements Observer<FriendshipChangeEvent>{
     ObservableList<UserDTO> model = FXCollections.observableArrayList();
     UserService userService;
     FriendshipService friendshipService;
@@ -42,6 +43,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
     ProfilePhotoUserService profilePhotoUserService;
     UserDTO selectedUserDTO;
     Stage accountUserStage;
+    ImageViewAccountUserController imageViewAccountUserController = new ImageViewAccountUserController();
     @FXML
     Button buttonAddFriendship;
     @FXML
@@ -66,22 +68,6 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
         tableViewAccountUser.setItems(model);
     }
 
-    private void changeProfilePhoto() {
-        ProfilePhotoUser profilePhotoUser = profilePhotoUserService.findOne(selectedUserDTO.getId());
-        String pathProfilePhoto = "C:\\Users\\dasco\\IdeaProjects\\proiect-lab-schelet\\src\\main\\resources\\images\\noProfilePhoto.png";
-        if (profilePhotoUser != null) {
-            pathProfilePhoto = profilePhotoUser.getPathProfilePhoto();
-        }
-        try {
-            FileInputStream fileInputStream = new FileInputStream(pathProfilePhoto);
-            Image newImage = new Image(fileInputStream, profilePhotoImageView.getFitWidth(),
-                    profilePhotoImageView.getFitHeight(), false, true);
-            profilePhotoImageView.setImage(newImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void setAttributes(FriendshipService friendshipService, UserService userService,
                               FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
                               UserDTO selectedUserDTO, Stage accountUserStage) {
@@ -92,10 +78,19 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
         this.profilePhotoUserService = profilePhotoUserService;
         this.selectedUserDTO = selectedUserDTO;
         this.accountUserStage = accountUserStage;
+
+        // Set the ImageViewUserProfileController attributes
+        imageViewAccountUserController.setProfilePhotoUserService(profilePhotoUserService);
+        imageViewAccountUserController.setProfilePhotoImageView(profilePhotoImageView);
+        imageViewAccountUserController.setUser(userService.getUser(selectedUserDTO.getId()));
+        this.profilePhotoUserService.addObserver(imageViewAccountUserController);
         if (selectedUserDTO != null) {
             labelUserName.setText("Hello, " + selectedUserDTO.getFirstName());
             initModel();
-            changeProfilePhoto();
+            ChangeProfilePhoto changeProfilePhoto = new ChangeProfilePhotoRectangle();
+            changeProfilePhoto.changeProfilePhoto(
+                    profilePhotoUserService, profilePhotoImageView, userService.getUser(selectedUserDTO.getId())
+            );
         }
     }
 
@@ -160,7 +155,10 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(pathProfilePhoto);
             newProfilePhotoUser.setId(selectedUserDTO.getId());
             profilePhotoUserService.updateProfilePhotoUser(newProfilePhotoUser);
-            changeProfilePhoto();
+            ChangeProfilePhoto changeProfilePhoto = new ChangeProfilePhotoRectangle();
+            changeProfilePhoto.changeProfilePhoto(
+                    profilePhotoUserService, profilePhotoImageView, userService.getUser(selectedUserDTO.getId())
+            );
         }
     }
 
@@ -173,14 +171,42 @@ public class AccountUserController implements Observer<FriendshipChangeEvent> {
             Stage friendshipRequestsViewStage = new Stage();
             friendshipRequestsViewStage.setScene(new Scene(root));
             friendshipRequestsViewStage.setTitle("Friendship Requests");
+            friendshipRequestsViewStage.initModality(Modality.APPLICATION_MODAL);
             friendshipRequestsViewStage.setResizable(false);
             friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
             FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
             friendshipRequestsViewController.setSelectedUser(selectedUserDTO);
             friendshipRequestsViewController.setFriendshipRequestService(friendshipRequestService);
             friendshipRequestsViewController.setFriendshipService(friendshipService);
+            friendshipRequestsViewController.setUserService(userService);
+            friendshipRequestsViewController.setProfilePhotoUserService(profilePhotoUserService);
 
             friendshipRequestsViewStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showUserProfile() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/userProfileView.fxml"));
+            AnchorPane root = loader.load();
+
+            Stage userProfileStage = new Stage();
+            userProfileStage.setScene(new Scene(root));
+            userProfileStage.setResizable(false);
+            userProfileStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + " profile");
+            userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+
+            UserProfileController userProfileController = loader.getController();
+            userProfileController.setUser(userService.getUser(selectedUserDTO.getId()));
+            userProfileController.setProfilePhotoUserService(profilePhotoUserService);
+            userProfileController.setUserService(userService);
+            userProfileController.setUserProfileStage(userProfileStage);
+            userProfileController.initializeUserProfile();
+
+            userProfileStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

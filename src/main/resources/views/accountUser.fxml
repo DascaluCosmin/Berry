@@ -21,7 +21,7 @@
         </TableView>
         <Button fx:id="buttonAddFriendship" layoutX="377.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#addFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Add friendship request" />
         <Button fx:id="buttonDeleteFriendship" layoutX="591.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/accountUser.css" text="Delete friendship" />
-        <Label fx:id="labelUserName" alignment="CENTER" layoutX="49.0" layoutY="15.0" prefHeight="40.0" prefWidth="226.0" stylesheets="@../css/accountUser.css" text="UserName">
+        <Label fx:id="labelUserName" alignment="CENTER" layoutX="49.0" layoutY="15.0" prefHeight="40.0" prefWidth="226.0" stylesheets="@../css/accountUser.css" text="UserName" onMouseClicked="#showUserProfile">
             <font>
                 <Font size="22.0" />
             </font></Label>

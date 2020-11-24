@@ -40,6 +40,8 @@
     -fx-text-fill: linear-gradient(#572aba, #9f73ac);
     -fx-alignment: center;
     -fx-font-weight: bold;
+
+
 }
 
 #tableColumnLastName:hover {

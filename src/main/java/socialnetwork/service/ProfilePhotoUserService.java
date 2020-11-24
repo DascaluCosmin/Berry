@@ -2,9 +2,17 @@ package socialnetwork.service;
 
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.repository.Repository;
+import socialnetwork.utils.events.ChangeEventType;
+import socialnetwork.utils.events.ProfilePhotoUserChangeEvent;
+import socialnetwork.utils.observer.Observable;
+import socialnetwork.utils.observer.Observer;
 
-public class ProfilePhotoUserService {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProfilePhotoUserService implements Observable<ProfilePhotoUserChangeEvent> {
     Repository<Long, ProfilePhotoUser> profilePhotoUserRepository;
+    List<Observer<ProfilePhotoUserChangeEvent>> observers = new ArrayList();
 
     /**
      * Constructor that creates a new ProfilePhotoUserService
@@ -42,6 +50,7 @@ public class ProfilePhotoUserService {
     public void updateProfilePhotoUser(ProfilePhotoUser newProfilePhotoUser) {
         deleteProfilePhotoUser(newProfilePhotoUser.getId());
         addProfilePhotoUser(newProfilePhotoUser);
+        notifyAll(new ProfilePhotoUserChangeEvent(ChangeEventType.UPDATE));
     }
 
     /**
@@ -60,5 +69,19 @@ public class ProfilePhotoUserService {
      */
     public Iterable<ProfilePhotoUser> getAll() {
         return profilePhotoUserRepository.findAll();
+    }
+
+    @Override
+    public void addObserver(Observer<ProfilePhotoUserChangeEvent> e) {
+        observers.add(e);
+    }
+
+    @Override
+    public void removeObserver(Observer<ProfilePhotoUserChangeEvent> e) {
+    }
+
+    @Override
+    public void notifyAll(ProfilePhotoUserChangeEvent profilePhotoUserChangeEvent) {
+        observers.forEach(observer -> observer.update(profilePhotoUserChangeEvent));
     }
 }

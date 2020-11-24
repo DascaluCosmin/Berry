@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="717.0" prefWidth="698.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.UserProfileController">
+   <children>
+      <StackPane fx:id="stackPaneImageView" layoutX="228.0" layoutY="14.0" prefHeight="59.0" prefWidth="30.0" stylesheets="@../css/userProfileView.css">
+         <children>
+            <ImageView fx:id="imageViewUserProfile" fitHeight="219.0" fitWidth="330.0" onMouseClicked="#changeProfilePhotoEvent" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/noProfilePhoto.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Label fx:id="labelUserName" alignment="CENTER" layoutX="178.0" layoutY="246.0" prefHeight="36.0" prefWidth="342.0" stylesheets="@../css/userProfileView.css" text="Label" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="350.0" layoutX="423.0" layoutY="359.0" stroke="BLACK" strokeType="INSIDE" width="261.0" />
+      <Label layoutX="520.0" layoutY="534.0" stylesheets="@../css/userProfileView.css" text="No Posts" />
+      <Pane fx:id="paneUserFriends" layoutX="26.0" layoutY="358.0" prefHeight="350.0" prefWidth="350.0" stylesheets="@../css/userProfileView.css">
+         <children>
+            <HBox fx:id="hBoxProfilePhotoFriendsSt" prefHeight="175.0" prefWidth="350.0">
+               <children>
+                  <ImageView fx:id="imageViewStUser" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/noProfilePhoto.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageViewNdUser" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/noProfilePhoto.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxProfilePhotoFriendsNd" layoutY="176.0" prefHeight="175.0" prefWidth="350.0">
+               <children>
+                  <ImageView fx:id="imageViewRdUser" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/noProfilePhoto.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="imageView4thUser" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/noProfilePhoto.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <Label fx:id="labelUserFriends" alignment="CENTER" layoutX="103.0" layoutY="325.0" prefHeight="28.0" prefWidth="196.0" stylesheets="@../css/userProfileView.css" text="Friends" />
+   </children>
+</AnchorPane>

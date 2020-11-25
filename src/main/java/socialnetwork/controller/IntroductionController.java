@@ -19,10 +19,12 @@ import socialnetwork.service.FriendshipService;
 import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import javafx.collections.ObservableList;
+import socialnetwork.utils.MatchingString;
 import socialnetwork.utils.events.UserChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
 import java.io.IOException;
+import java.util.List;
 
 public class IntroductionController implements Observer<UserChangeEvent> {
     UserService userService;
@@ -37,6 +39,8 @@ public class IntroductionController implements Observer<UserChangeEvent> {
     TableColumn<UserDTO, String> tableColumnLastName;
     @FXML
     TableView<UserDTO> tableViewUserDTO;
+    @FXML
+    TextField textFieldSearch;
     Stage introductionStage;
 
     /**
@@ -151,6 +155,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             addNewUserController.setUserService(userService);
             addNewUserController.setProfilePhotoUserService(profilePhotoUserService);
             addNewUserController.setAddNewUserStage(addNewUserStage);
+            addNewUserController.setTextFieldSearchIntroduction(textFieldSearch);
             addNewUserStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,6 +171,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             // TODO: DELETE ALL FriendshipRequests involving the deleted USER.
             userService.deleteUser(selectedUser.getId());
             profilePhotoUserService.deleteProfilePhotoUser(selectedUser.getId());
+            textFieldSearch.clear();
         }
     }
 
@@ -176,5 +182,18 @@ public class IntroductionController implements Observer<UserChangeEvent> {
     @Override
     public void update(UserChangeEvent userChangeEvent) {
         initModel();
+    }
+
+    public void searchUserEvent() {
+        String textFieldText = textFieldSearch.getText();
+        String firstNameString = textFieldText;
+        if (textFieldText.contains(" "))
+            firstNameString = textFieldText.substring(0, textFieldText.indexOf(' '));
+        List<UserDTO> nonFriendsFirstNameMatch = MatchingString.getListUserDTOMatching(userService.getAllUserDTO(), "firstName", firstNameString);
+        modelUserDTO.setAll(nonFriendsFirstNameMatch);
+        if (!firstNameString.equals(textFieldText)) {
+            String lastNameString = textFieldText.substring(textFieldText.indexOf(' ') + 1).trim();
+            modelUserDTO.setAll(MatchingString.getListUserDTOMatching(nonFriendsFirstNameMatch, "lastName", lastNameString));
+        }
     }
 }

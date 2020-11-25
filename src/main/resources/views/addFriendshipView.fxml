@@ -16,7 +16,7 @@
         </columns>
       </TableView>
       <TextField fx:id="textFieldMessage" layoutX="373.0" layoutY="71.0" />
-      <TextField fx:id="textFieldSearch" layoutX="373.0" layoutY="22.0" />
+      <TextField fx:id="textFieldSearch" layoutX="373.0" layoutY="22.0" onKeyTyped="#searchUserEvent"/>
       <Label fx:id="labelSearch" layoutX="331.0" layoutY="26.0" stylesheets="@../css/addFriendshipView.css" text="Search" />
       <Label fx:id="labelMessage" layoutX="319.0" layoutY="75.0" stylesheets="@../css/addFriendshipView.css" text="Message" />
       <Button fx:id="buttonSendFriendshipRequest" layoutX="350.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#sendFriendshipRequest" prefHeight="54.0" prefWidth="179.0" stylesheets="@../css/addFriendshipView.css" text="Send friendship request" />

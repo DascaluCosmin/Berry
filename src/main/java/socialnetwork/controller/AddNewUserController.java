@@ -14,6 +14,7 @@ public class AddNewUserController {
     private UserService userService;
     private ProfilePhotoUserService profilePhotoUserService;
     private Stage addNewUserStage;
+    private TextField textFieldSearchIntroduction;
 
     @FXML
     TextField textFieldFirstName;
@@ -30,6 +31,10 @@ public class AddNewUserController {
 
     public void setAddNewUserStage(Stage addNewUserStage) {
         this.addNewUserStage = addNewUserStage;
+    }
+
+    public void setTextFieldSearchIntroduction(TextField textFieldSearchIntroduction) {
+        this.textFieldSearchIntroduction = textFieldSearchIntroduction;
     }
 
     public void addNewUser() {
@@ -50,6 +55,7 @@ public class AddNewUserController {
             profilePhotoUserService.addProfilePhotoUser(profilePhotoUser);
             textFieldFirstName.clear();
             textFieldLastName.clear();
+            textFieldSearchIntroduction.clear();
             addNewUserStage.close();
         }
     }

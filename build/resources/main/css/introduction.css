@@ -63,3 +63,11 @@
 .table-row-cell:selected {
     -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
 }
+
+#textFieldSearch {
+    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+}
+
+#textFieldSearch:focused {
+    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+}

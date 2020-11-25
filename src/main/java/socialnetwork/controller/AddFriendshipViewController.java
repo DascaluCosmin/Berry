@@ -7,16 +7,25 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import socialnetwork.domain.User;
 import socialnetwork.domain.UserDTO;
+import socialnetwork.domain.getter.Getter;
+import socialnetwork.domain.getter.GetterUserDTO;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.service.FriendshipRequestService;
 import socialnetwork.service.FriendshipService;
 import socialnetwork.service.UserService;
+import socialnetwork.utils.MatchingString;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddFriendshipViewController {
     ObservableList<UserDTO> modelUserDTO = FXCollections.observableArrayList();
@@ -33,6 +42,8 @@ public class AddFriendshipViewController {
     TableColumn<UserDTO, String> tableColumnLastName;
     @FXML
     TextField textFieldMessage;
+    @FXML
+    TextField textFieldSearch;
 
     @FXML
     public void initialize() {
@@ -56,6 +67,16 @@ public class AddFriendshipViewController {
     }
 
     private void initModel() {
+        List<UserDTO> nonFriends = getNonFriends();
+        if (nonFriends.size() == 0) {
+            modelUserDTO.setAll(nonFriends);
+            tableViewStrangers.setPlaceholder(new Label("You are a friend of all users!"));
+        } else {
+            modelUserDTO.setAll(nonFriends);
+        }
+    }
+
+    private List<UserDTO> getNonFriends() {
         Iterable<User> users = userService.getAll();
         List<UserDTO> nonFriends = new ArrayList<>();
         users.forEach(user -> {
@@ -65,12 +86,7 @@ public class AddFriendshipViewController {
                 nonFriends.add(userDTO);
             }
         });
-        if (nonFriends.size() == 0) {
-            modelUserDTO.setAll(nonFriends);
-            tableViewStrangers.setPlaceholder(new Label("You are a friend of all users!"));
-        } else {
-            modelUserDTO.setAll(nonFriends);
-        }
+        return nonFriends;
     }
 
     public void sendFriendshipRequest() {
@@ -92,6 +108,19 @@ public class AddFriendshipViewController {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "You have already sent a friendship request");
                 alert.show();
             }
+        }
+    }
+
+    public void searchUserEvent() {
+        String textFieldText = textFieldSearch.getText();
+        String firstNameString = textFieldText;
+        if (textFieldText.contains(" "))
+            firstNameString = textFieldText.substring(0, textFieldText.indexOf(' '));
+        List<UserDTO> nonFriendsFirstNameMatch = MatchingString.getListUserDTOMatching(getNonFriends(), "firstName", firstNameString);
+        modelUserDTO.setAll(nonFriendsFirstNameMatch);
+        if (!firstNameString.equals(textFieldText)) {
+            String lastNameString = textFieldText.substring(textFieldText.indexOf(' ') + 1).trim();
+            modelUserDTO.setAll(MatchingString.getListUserDTOMatching(nonFriendsFirstNameMatch, "lastName", lastNameString));
         }
     }
 }

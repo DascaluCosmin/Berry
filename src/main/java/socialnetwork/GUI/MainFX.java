@@ -20,6 +20,7 @@ import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.UserDBRepository;
 import socialnetwork.repository.file.*;
 import socialnetwork.service.*;
 
@@ -45,7 +46,7 @@ public class MainFX extends Application {
 
     public static void main(String[] args) {
         //Configuration
-        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
+//        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
         String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
         String fileNameMessage = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.messages");
         String fileNameConversation = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.conversation");
@@ -53,23 +54,26 @@ public class MainFX extends Application {
                 .getProperty("data.socialnetwork.friendshipRequests");
         String fileNameUserProfilePhotos = ApplicationContext.getPROPERTIES().
                 getProperty("data.socialnetwork.userProfilePhotos");
-
+        String username = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.username");
+        String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
+        String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
         // Repositories
-        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
+//        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
+        Repository<Long, User> userRepository = new UserDBRepository(url, username, password, new UserValidator());
         Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
-                new FriendshipValidator(userFileRepository), userFileRepository);
+                new FriendshipValidator(userRepository), userRepository);
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
-                new MessageValidator(), userFileRepository);
+                new MessageValidator(), userRepository);
         Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
-                new ValidatorReplyMessage(), userFileRepository);
+                new ValidatorReplyMessage(), userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
-                fileNameFriendshipRequests, new FriendshipRequestValidator(), userFileRepository);
+                fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
                 fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
 
         // Services
-        userService = new UserService(userFileRepository, friendshipFileRepository);
-        friendshipService = new FriendshipService(friendshipFileRepository, userFileRepository);
+        userService = new UserService(userRepository, friendshipFileRepository);
+        friendshipService = new FriendshipService(friendshipFileRepository, userRepository);
         messageService = new MessageService(messageFileRepository);
         replyMessageService = new ReplyMessageService(replyMessageFileRepository);
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,

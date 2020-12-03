@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit',
             version: '4.12'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.18'
 }
 javafx {
     version = "13"

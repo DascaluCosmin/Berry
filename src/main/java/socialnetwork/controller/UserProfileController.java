@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import socialnetwork.controller.imageViewController.ImageViewUserProfileController;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.User;
+import socialnetwork.service.FriendshipService;
 import socialnetwork.service.ProfilePhotoUserService;
 import socialnetwork.service.UserService;
 import socialnetwork.utils.ChangeProfilePhoto;
@@ -27,6 +28,7 @@ import java.util.*;
 public class UserProfileController {
     private ProfilePhotoUserService profilePhotoUserService;
     private UserService userService;
+    private FriendshipService friendshipService;
     private ImageViewUserProfileController imageViewUserProfileController = new ImageViewUserProfileController();
     private User user;
     private Stage userProfileStage;
@@ -55,6 +57,7 @@ public class UserProfileController {
     void setUser(User user) {
         this.user = user;
         imageViewUserProfileController.setUser(this.user);
+        labelUserName.setText(user.getFirstName() + " " + user.getLastName());
     }
 
     public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
@@ -75,17 +78,9 @@ public class UserProfileController {
         if (user != null) {
             ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
             changeProfilePhotoRound.changeProfilePhoto(profilePhotoUserService, imageViewUserProfile, user);
-            labelUserName.setText(user.getFirstName() + " " + user.getLastName());
             imageViewUserProfileController.setImageViewUserProfile(imageViewUserProfile);
-            List<User> friendsUser = user.getFriends();
-            Map<Long, User> friendsUserUnique = new HashMap<>();
-            for (User currentUser : friendsUser) {
-                if (!friendsUserUnique.containsKey(currentUser.getId())) {
-                    friendsUserUnique.put(currentUser.getId(), currentUser);
-                }
-            }
             List<Long> idsFriends = new ArrayList<>();
-            friendsUserUnique.keySet().forEach(idUser -> idsFriends.add(idUser));
+            userService.getAllFriends(user.getId()).forEach(friendUser -> idsFriends.add(friendUser.getId()));
             Collections.shuffle(idsFriends);
                User stUserFriend = null, ndUserFriend = null, rdUserFriend = null, fourthUserFriend = null;
             if (idsFriends.size() >= 1)

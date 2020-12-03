@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="289.0" prefWidth="552.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" stylesheets="/css/addFriendshipView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AddFriendshipViewController">
+<AnchorPane prefHeight="289.0" prefWidth="552.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" stylesheets="/css/addFriendshipView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AddFriendshipViewController">
    <children>
       <TableView fx:id="tableViewStrangers" layoutX="22.0" layoutY="22.0" prefHeight="245.0" prefWidth="275.0" stylesheets="@../css/addFriendshipView.css">
         <columns>

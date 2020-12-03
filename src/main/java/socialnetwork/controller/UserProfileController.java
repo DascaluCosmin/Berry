@@ -55,6 +55,7 @@ public class UserProfileController {
     void setUser(User user) {
         this.user = user;
         imageViewUserProfileController.setUser(this.user);
+        labelUserName.setText(user.getFirstName() + " " + user.getLastName());
     }
 
     public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
@@ -75,7 +76,6 @@ public class UserProfileController {
         if (user != null) {
             ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
             changeProfilePhotoRound.changeProfilePhoto(profilePhotoUserService, imageViewUserProfile, user);
-            labelUserName.setText(user.getFirstName() + " " + user.getLastName());
             imageViewUserProfileController.setImageViewUserProfile(imageViewUserProfile);
             List<User> friendsUser = user.getFriends();
             Map<Long, User> friendsUserUnique = new HashMap<>();

@@ -128,7 +128,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             addFriendshipRequestStage.setTitle("Send friendship requests");
             addFriendshipRequestStage.setResizable(false);
             addFriendshipRequestStage.initModality(Modality.APPLICATION_MODAL);
-            addFriendshipRequestStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            addFriendshipRequestStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
 
             Scene scene = new Scene(root);
             addFriendshipRequestStage.setScene(scene);
@@ -149,6 +149,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
         fileChooser.setInitialDirectory(new File("C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"),
                 new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
+        fileChooser.setTitle("Choose Profile Photo");
         File file = fileChooser.showOpenDialog(accountUserStage);
         if (file != null) {
             String pathProfilePhoto = file.toString();
@@ -173,7 +174,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             friendshipRequestsViewStage.setTitle("Friendship Requests");
             friendshipRequestsViewStage.initModality(Modality.APPLICATION_MODAL);
             friendshipRequestsViewStage.setResizable(false);
-            friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
             FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
             friendshipRequestsViewController.setSelectedUser(selectedUserDTO);
             friendshipRequestsViewController.setFriendshipRequestService(friendshipRequestService);
@@ -197,7 +198,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             userProfileStage.setScene(new Scene(root));
             userProfileStage.setResizable(false);
             userProfileStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + " profile");
-            userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
 
             UserProfileController userProfileController = loader.getController();
             userProfileController.setUser(userService.getUser(selectedUserDTO.getId()));

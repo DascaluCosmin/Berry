@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane prefHeight="717.0" prefWidth="698.0" style="-fx-background-color: linear-gradient(#DAE2F8, #916698);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.UserProfileController">
+<AnchorPane prefHeight="717.0" prefWidth="698.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.UserProfileController">
    <children>
       <StackPane fx:id="stackPaneImageView" layoutX="228.0" layoutY="14.0" prefHeight="59.0" prefWidth="30.0" stylesheets="@../css/userProfileView.css">
          <children>

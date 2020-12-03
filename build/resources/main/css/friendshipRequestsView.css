@@ -1,24 +1,24 @@
 .button {
-    -fx-text-fill:  linear-gradient(#572aba, #4f3b56);
+    -fx-text-fill: #dae2f8;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#DAE2F8, #916698);
+    -fx-background-color: #4a56e2;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
     -fx-font-size: 12px;
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#916698, #DAE2F8);
+    -fx-background-color: #1b2498;
 }
 
 .label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: #572aba;
+    -fx-text-fill: #4a56e2;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: linear-gradient(#b5a3d2, #ab9bb3);
+    -fx-background-color: #dae2f8;
 }
 
 .table-view:focused .table-row-cell:focused {
@@ -27,61 +27,61 @@
 
 #tableViewFriendshipRequests {
     -fx-background-insets: 0, 0 0 1 0;
-    -fx-border-color: linear-gradient(#aba2a2, #7b28ac);
+    -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
     -fx-border-insets: 0, 0 0 1 0;
 }
 
 #tableColumnFirstName {
     -fx-font-size: 12px;
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
 #tableColumnLastName {
     -fx-font-size: 12px;
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
 #tableColumnMessage {
     -fx-font-size: 12px;
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
 #tableColumnSentDate {
     -fx-font-size: 12px;
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
 #tableColumnStatus {
     -fx-font-size: 12px;
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac);
+    -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
 #tableColumnMessage:hover {
-    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+    -fx-text-fill: #1b2498;
 }
 
 #tableColumnSentDate:hover {
-    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+    -fx-text-fill: #1b2498;
 }
 
 #tableColumnStatus:hover {
-    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+    -fx-text-fill: #1b2498;
 }
 
 #tableColumnLastName:hover {
-    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+    -fx-text-fill: #1b2498;
 }
 
 #tableColumnFirstName:hover {
-    -fx-text-fill: linear-gradient(#3608a2, #5f4866);
+    -fx-text-fill: #1b2498;
 }

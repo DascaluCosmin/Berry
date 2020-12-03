@@ -1,36 +1,28 @@
 .label {
     -fx-font-size: 19.5px;
     -fx-font-weight: bold;
-    -fx-text-fill: #572aba;
+    -fx-text-fill: #4a56e2;
 }
 
 #labelUserName {
-    -fx-text-fill: linear-gradient(#572aba, #9f73ac, #932ed9);
+    -fx-text-fill: #4a56e2;
     -fx-font-size: 35px;
     -fx-underline: true;
 }
 
-#labelUserName:hover {
-    -fx-text-fill: linear-gradient(#932ed9, #9f73ac, #572aba);
-}
-
 #labelUserFriends {
-    -fx-border-color: linear-gradient(#7356ba, #9f73ac, #932ed9);
+    -fx-border-color: #4a56e2;
     -fx-border-width: 5 5 0 5;
     -fx-border-radius: 10px;
 }
 
-#labelUserFriends:hover {
-    -fx-border-color: linear-gradient(#932ed9, #9f73ac, #7356ba);
-}
-
 #stackPaneImageView {
-    -fx-border-color: linear-gradient(#9f73ac, #572aba);
+    -fx-border-color: linear-gradient(#4a56e2, #dae2f8);
     -fx-padding: 0;
     -fx-border-width: 10;
     -fx-border-radius: 400;
 }
 
 #stackPaneImageView:hover {
-    -fx-border-color: linear-gradient(#572aba,#9f73ac);
+    -fx-border-color: linear-gradient(#dae2f8,#4a56e2);
 }

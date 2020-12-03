@@ -131,7 +131,7 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
                 userProfileStage.setScene(new Scene(root));
                 userProfileStage.setResizable(false);
                 userProfileStage.setTitle(userFrom.getFirstName() + " " + userFrom.getLastName() + " profile");
-                userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+                userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
 
                 UserProfileController userProfileController = loader.getController();
                 userProfileController.setUser(userFrom);

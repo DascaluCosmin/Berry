@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="609.0" prefWidth="577.0" style="-fx-background-color: linear-gradient(#dae2f8, #916698);" stylesheets="/css/introduction.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
+<AnchorPane prefHeight="609.0" prefWidth="577.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" stylesheets="/css/introduction.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.IntroductionController">
    <children>
       <TableView fx:id="tableViewUserDTO" layoutX="28.0" layoutY="122.0" prefHeight="420.0" prefWidth="532.0" stylesheets="@../css/introduction.css">
         <columns>
@@ -16,14 +16,13 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Label fx:id="labelWelcomeIntroduction" alignment="CENTER" layoutX="13.0" layoutY="19.0" prefHeight="44.0" prefWidth="552.0" stylesheets="@../css/introduction.css" text="Royaledia">
+      <Label fx:id="labelWelcomeIntroduction" alignment="CENTER" layoutX="13.0" layoutY="19.0" prefHeight="44.0" prefWidth="552.0" stylesheets="@../css/introduction.css" text="Berry!">
          <font>
             <Font size="23.0" />
          </font></Label>
       <Button fx:id="buttonAddNewUserIntroduction" layoutX="28.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#addNewUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="Add new User" />
       <Button fx:id="buttonDeleteUserIntroduction" layoutX="172.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#deleteUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="Delete User" />
       <Button fx:id="buttonUserAccount" layoutX="428.0" layoutY="555.0" mnemonicParsing="false" onMouseClicked="#selectFriendsUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="User Account" />
-       <TextField fx:id="textFieldSearch" layoutX="98.0" layoutY="93.0" onKeyTyped="#searchUserEvent" />
-       <Label fx:id="labelSearch" layoutX="28.0" layoutY="93.0" stylesheets="@../css/introduction.css" text="Search" />
+       <TextField fx:id="textFieldSearch" layoutX="28.0" layoutY="94.0" onKeyTyped="#searchUserEvent" promptText="Search" />
    </children>
 </AnchorPane>

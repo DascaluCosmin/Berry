@@ -37,9 +37,9 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) throws Exception {
         initView(primaryStage);
         primaryStage.setWidth(600);
-        primaryStage.setTitle("Royaledia");
+        primaryStage.setTitle("Berry!");
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
         primaryStage.show();
     }
 

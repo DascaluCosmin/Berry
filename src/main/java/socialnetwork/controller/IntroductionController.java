@@ -120,7 +120,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             accountUserStage.setResizable(false);
             accountUserStage.hide();
             accountUserStage.setTitle("Your account");
-            accountUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            accountUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
             accountUserStage.initModality(Modality.APPLICATION_MODAL);
             accountUserStage.setOnCloseRequest(event -> {
                 introductionStage.show();
@@ -149,7 +149,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             Stage addNewUserStage = new Stage();
             addNewUserStage.setTitle("Add new User");
             addNewUserStage.setResizable(false);
-            addNewUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/royalLogo.jpg")));
+            addNewUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
             addNewUserStage.setScene(new Scene(root));
             AddNewUserController addNewUserController = loader.getController();
             addNewUserController.setUserService(userService);

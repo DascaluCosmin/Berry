@@ -1,5 +1,6 @@
 package socialnetwork.repository.database;
 
+import org.postgresql.util.PSQLException;
 import socialnetwork.domain.User;
 import socialnetwork.domain.validators.Validator;
 import socialnetwork.repository.Repository;
@@ -23,6 +24,24 @@ public class UserDBRepository implements Repository<Long, User> {
 
     @Override
     public User findOne(Long aLong) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command =
+                    "SELECT * " +
+                    "FROM users " +
+                    "WHERE id = " + aLong;
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Long idUser = resultSet.getLong("id");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                User user = new User(firstName, lastName);
+                user.setId(idUser);
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
@@ -30,7 +49,7 @@ public class UserDBRepository implements Repository<Long, User> {
     public Iterable<User> findAll() {
         List<User> userList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM domain.users");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Long idUser = resultSet.getLong("id");
@@ -49,16 +68,68 @@ public class UserDBRepository implements Repository<Long, User> {
 
     @Override
     public User save(User entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "";
+            if (entity.getId() == null) {
+                command = "INSERT INTO users (\"firstName\", \"lastName\") VALUES " +
+                          "('" + entity.getFirstName() + "', '" + entity.getLastName() + "') " +
+                          "RETURNING *";
+            } else {
+                command = "INSERT INTO users (id, \"firstName\", \"lastName\") VALUES " +
+                          "(" + entity.getId() + ", '" + entity.getFirstName() + "', '" + entity.getLastName() + "') " +
+                          "RETURNING *";
+
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return null;
+                }
+            } catch (PSQLException e) {
+                return entity;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
     }
 
     @Override
     public User delete(Long aLong) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "DELETE FROM users WHERE id = " + aLong + " RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                User user = new User(firstName, lastName);
+                user.setId(aLong);
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public User update(User entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "UPDATE users SET " +
+                             "\"firstName\" = '" + entity.getFirstName() + "', " +
+                             "\"lastName\" = '" + entity.getLastName() + "' " +
+                             "WHERE id = " + entity.getId() + " RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return null;
+            }
+            return entity;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
     }
 }

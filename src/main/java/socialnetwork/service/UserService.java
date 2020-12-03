@@ -51,7 +51,6 @@ public class UserService implements Observable<UserChangeEvent> {
         return user;
     }
 
-
     /**
      * Method that deletes an User
      * @param userIDParam Long, representing the id of the User to be deleted
@@ -98,6 +97,24 @@ public class UserService implements Observable<UserChangeEvent> {
             userDTOsList.add(userDTO);
         });
         return userDTOsList;
+    }
+
+    /**
+     * Method that gets the friends of a User
+     * @param idUser Long, representing the ID of the User
+     * @return Iterable<User>, representing the friends of the User
+     */
+    public Iterable<User> getAllFriends(Long idUser) {
+        List<User> friendsUser = new ArrayList<>();
+        List<Long> idsFriendsUser = new ArrayList<>();
+        friendshipRepository.findAll().forEach(ids -> {
+            if (ids.getId().getLeft().equals(idUser))
+                idsFriendsUser.add(ids.getId().getRight());
+        });
+        idsFriendsUser.forEach(id -> {
+            friendsUser.add(getUser(id));
+        });
+        return friendsUser;
     }
 
     /**

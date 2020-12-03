@@ -46,7 +46,7 @@ public class MainFX extends Application {
 
     public static void main(String[] args) {
         //Configuration
-        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
+//        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
         String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
         String fileNameMessage = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.messages");
         String fileNameConversation = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.conversation");
@@ -60,27 +60,26 @@ public class MainFX extends Application {
         // Repositories
 //        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
         Repository<Long, User> userRepository = new UserDBRepository(url, username, password, new UserValidator());
-        userRepository.findAll().forEach(System.out::println);
-//        Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
-//                new FriendshipValidator(userFileRepository), userFileRepository);
-//        Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
-//                new MessageValidator(), userFileRepository);
-//        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
-//                new ValidatorReplyMessage(), userFileRepository);
-//        Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
-//                fileNameFriendshipRequests, new FriendshipRequestValidator(), userFileRepository);
-//        Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
-//                fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
-//
-//        // Services
-//        userService = new UserService(userFileRepository, friendshipFileRepository);
-//        friendshipService = new FriendshipService(friendshipFileRepository, userFileRepository);
-//        messageService = new MessageService(messageFileRepository);
-//        replyMessageService = new ReplyMessageService(replyMessageFileRepository);
-//        friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
-//                friendshipFileRepository);
-//        profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
-//        launch(args);
+        Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
+                new FriendshipValidator(userRepository), userRepository);
+        Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
+                new MessageValidator(), userRepository);
+        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
+                new ValidatorReplyMessage(), userRepository);
+        Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
+                fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
+        Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
+                fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
+
+        // Services
+        userService = new UserService(userRepository, friendshipFileRepository);
+        friendshipService = new FriendshipService(friendshipFileRepository, userRepository);
+        messageService = new MessageService(messageFileRepository);
+        replyMessageService = new ReplyMessageService(replyMessageFileRepository);
+        friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
+                friendshipFileRepository);
+        profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
+        launch(args);
     }
 
     private void initView(Stage primaryStage) throws IOException {

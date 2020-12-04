@@ -57,7 +57,9 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
      */
     public FriendshipRequest deleteFriendshipRequest(Long idFriendshipRequest) throws ValidationException {
         FriendshipRequest friendshipRequest = friendshipRequestRepository.delete(idFriendshipRequest);
-        validatorFriendshipRequestService.validateDelete(friendshipRequest);
+        if (friendshipRequest != null) {
+            notifyAll(new FriendshipRequestChangeEvent(ChangeEventType.DELETE));
+        }
         return friendshipRequest;
     }
 
@@ -98,6 +100,17 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
         List<FriendshipRequest> listFriendshipRequestsUser = new ArrayList<>();
         listFriendshipRequests.forEach(friendshipRequest -> {
             if (friendshipRequest.getTo().get(0).getId().equals(idUser)) {
+                listFriendshipRequestsUser.add(friendshipRequest);
+            }
+        });
+        return listFriendshipRequestsUser;
+    }
+
+    public List<FriendshipRequest> getFriendshipRequestsUserFrom(Long idUser) {
+        Iterable<FriendshipRequest> listFriendshipRequests = friendshipRequestRepository.findAll();
+        List<FriendshipRequest> listFriendshipRequestsUser = new ArrayList<>();
+        listFriendshipRequests.forEach(friendshipRequest -> {
+            if (friendshipRequest.getFrom().getId().equals(idUser)) {
                 listFriendshipRequestsUser.add(friendshipRequest);
             }
         });

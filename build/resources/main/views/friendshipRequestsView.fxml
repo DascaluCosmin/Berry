@@ -3,13 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="370.0" prefWidth="569.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" stylesheets="/css/friendshipRequestsView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.FriendshipRequestsViewController">
+<AnchorPane prefHeight="393.0" prefWidth="569.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" stylesheets="/css/friendshipRequestsView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.FriendshipRequestsViewController">
    <children>
-      <TableView fx:id="tableViewFriendshipRequests" layoutX="14.0" layoutY="14.0" prefHeight="275.0" prefWidth="535.0" stylesheets="@../css/friendshipRequestsView.css">
+      <Button fx:id="buttonUnsend" layoutX="19.0" layoutY="332.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Unsend" onMouseClicked="#pressButtonUnsend"/>
+      <TableView fx:id="tableViewFriendshipRequests" layoutX="19.0" layoutY="39.0" prefHeight="275.0" prefWidth="535.0" stylesheets="@../css/friendshipRequestsView.css">
         <columns>
             <TableColumn prefWidth="532.7999965667725" text="Friendship Requests">
                <columns>
-                <TableColumn prefWidth="73.60000896453857" text="From">
+                <TableColumn fx:id="tableColumnHeadFromTo" prefWidth="73.60000896453857" text="From">
                      <columns>
                         <TableColumn fx:id="tableColumnFirstName" prefWidth="75.0" text="First Name" />
                         <TableColumn fx:id="tableColumnLastName" prefWidth="75.0" text="Last Name" />
@@ -22,8 +23,10 @@
             </TableColumn>
         </columns>
       </TableView>
-      <Button fx:id="buttonAcceptFriendshipRequest" layoutX="14.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#acceptPendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Accept" />
-      <Button fx:id="buttonDeclineFriendshipRequest" layoutX="160.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#declinePendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Decline" />
-      <Button fx:id="buttonViewUserProfile" layoutX="417.0" layoutY="309.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="View User Profile" onMouseClicked="#showUserProfile"/>
+      <Button fx:id="buttonAcceptFriendshipRequest" layoutX="19.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#acceptPendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Accept" />
+      <Button fx:id="buttonDeclineFriendshipRequest" layoutX="165.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#declinePendingFriendshipRequest" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="Decline" />
+      <Button fx:id="buttonViewUserProfile" layoutX="422.0" layoutY="332.0" mnemonicParsing="false" onMouseClicked="#showUserProfile" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/friendshipRequestsView.css" text="View User Profile" />
+      <Button fx:id="buttonFrom" layoutX="19.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#pressButtonFrom" stylesheets="@../css/friendshipRequestsView.css" text="From" />
+      <Button fx:id="buttonTo" layoutX="60.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#pressButtonTo" stylesheets="@../css/friendshipRequestsView.css" text="To" />
    </children>
 </AnchorPane>

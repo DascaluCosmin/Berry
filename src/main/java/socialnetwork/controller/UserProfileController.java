@@ -54,6 +54,9 @@ public class UserProfileController {
         this.userService = userService;
     }
 
+    /**
+     * @param user User, representing the new User
+     */
     void setUser(User user) {
         this.user = user;
         imageViewUserProfileController.setUser(this.user);

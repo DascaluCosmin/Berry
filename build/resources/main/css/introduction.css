@@ -1,7 +1,11 @@
 .label {
-    -fx-font-size: 19.5px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
     -fx-text-fill: #4a56e2;
+}
+
+#labelAddNewUser #labelDeleteUserIntroduction #labelUserAccount {
+    -fx-font-size: 12px;
 }
 
 .button {

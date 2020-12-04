@@ -4,13 +4,17 @@ import com.sun.org.apache.bcel.internal.generic.FMUL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import jdk.internal.loader.Loader;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.IntroductionController;
+import socialnetwork.controller.LoginController;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
@@ -36,11 +40,19 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        initView(primaryStage);
-        primaryStage.setWidth(600);
-        primaryStage.setTitle("Berry!");
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/views/login.fxml"));
+        Parent root = loader.load();
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(scene);
+        LoginController loginController = loader.getController();
+        loginController.setFriendshipRequestService(friendshipRequestService);
+        loginController.setFriendshipService(friendshipService);
+        loginController.setUserService(userService);
+        loginController.setProfilePhotoUserService(profilePhotoUserService);
+        loginController.setLoginStage(primaryStage);
         primaryStage.show();
     }
 
@@ -80,17 +92,5 @@ public class MainFX extends Application {
                 friendshipFileRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
         launch(args);
-    }
-
-    private void initView(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/views/introduction.fxml"));
-        AnchorPane layout = loader.load();
-        primaryStage.setScene(new Scene(layout));
-        IntroductionController introductionController = loader.getController();
-        introductionController.setUserService(userService, primaryStage);
-        introductionController.setFriendshipService(friendshipService);
-        introductionController.setFriendshipRequestService(friendshipRequestService);
-        introductionController.setProfilePhotoUserService(profilePhotoUserService);
     }
 }

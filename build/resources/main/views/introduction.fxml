@@ -21,9 +21,6 @@
          <font>
             <Font size="23.0" />
          </font></Label>
-      <Button fx:id="buttonAddNewUserIntroduction" layoutX="397.0" layoutY="71.0" mnemonicParsing="false" onMouseClicked="#addNewUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="Add new User" />
-      <Button fx:id="buttonDeleteUserIntroduction" layoutX="228.0" layoutY="63.0" mnemonicParsing="false" onMouseClicked="#deleteUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="Delete User" />
-      <Button fx:id="buttonUserAccount" layoutX="70.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#selectFriendsUser" prefHeight="46.0" prefWidth="132.0" stylesheets="@../css/introduction.css" text="User Account" />
        <TextField fx:id="textFieldSearch" layoutX="28.0" layoutY="94.0" onKeyTyped="#searchUserEvent" promptText="Search" />
       <Label fx:id="labelAddNewUser" contentDisplay="CENTER" layoutX="30.0" layoutY="559.0" onMouseClicked="#addNewUser" prefHeight="38.0" prefWidth="142.0" stylesheets="@../css/introduction.css" text="Add new User">
          <graphic>
@@ -34,7 +31,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Label fx:id="labelDeleteUserIntroduction" contentDisplay="CENTER" layoutX="202.0" layoutY="559.0" onMouseClicked="#deleteUser" prefHeight="38.0" prefWidth="142.0" stylesheets="@../css/introduction.css" text="Add new User">
+      <Label fx:id="labelDeleteUserIntroduction" contentDisplay="CENTER" layoutX="202.0" layoutY="559.0" onMouseClicked="#deleteUser" prefHeight="38.0" prefWidth="142.0" stylesheets="@../css/introduction.css" text="Delete User">
          <graphic>
             <ImageView fitHeight="42.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -43,7 +40,7 @@
             </ImageView>
          </graphic>
       </Label>
-      <Label fx:id="labelUserAccount" contentDisplay="CENTER" layoutX="416.0" layoutY="559.0" onMouseClicked="#selectFriendsUser" prefHeight="38.0" prefWidth="142.0" stylesheets="@../css/introduction.css" text="Add new User">
+      <Label fx:id="labelUserAccount" contentDisplay="CENTER" layoutX="416.0" layoutY="559.0" onMouseClicked="#selectFriendsUser" prefHeight="38.0" prefWidth="142.0" stylesheets="@../css/introduction.css" text="User Account">
          <graphic>
             <ImageView fitHeight="42.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -26,6 +26,7 @@ import socialnetwork.utils.events.FriendshipRequestChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FriendshipRequestsViewController implements Observer<FriendshipRequestChangeEvent> {
     UserDTO selectedUserDTO;
@@ -38,6 +39,12 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     @FXML
     Button buttonViewUserProfile;
     @FXML
+    Button buttonAcceptFriendshipRequest;
+    @FXML
+    Button buttonDeclineFriendshipRequest;
+    @FXML
+    Button buttonUnsend;
+    @FXML
     TableView<FriendshipRequest> tableViewFriendshipRequests;
     @FXML
     TableColumn<FriendshipRequest, String> tableColumnFirstName;
@@ -49,11 +56,13 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     TableColumn<FriendshipRequest, String> tableColumnSentDate;
     @FXML
     TableColumn<FriendshipRequest, String> tableColumnStatus;
+    @FXML
+    TableColumn<TableColumn<Friendship, String>, TableColumn<Friendship, String>> tableColumnHeadFromTo;
 
     @FXML
     public void initialize() {
-        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstName"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastName"));
+        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameFrom"));
+        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameFrom"));
         tableColumnMessage.setCellValueFactory(new PropertyValueFactory("message"));
         tableColumnSentDate.setCellValueFactory(new PropertyValueFactory("formatedDate"));
         tableColumnStatus.setCellValueFactory(new PropertyValueFactory("statusRequest"));
@@ -79,7 +88,11 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     }
 
     private void initModel() {
-        model.setAll(friendshipRequestService.getFriendshipRequestsUser(selectedUserDTO.getId()));
+        if (tableColumnHeadFromTo.getText().equals("From")) {
+            model.setAll(friendshipRequestService.getFriendshipRequestsUser(selectedUserDTO.getId()));
+        } else if (tableColumnHeadFromTo.getText().equals("To")) {
+            model.setAll(friendshipRequestService.getFriendshipRequestsUserFrom(selectedUserDTO.getId()));
+        }
     }
 
     public void setSelectedUser(UserDTO selectedUserDTO) {
@@ -149,6 +162,35 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
                 });
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public void pressButtonFrom() {
+        buttonUnsend.setVisible(false);
+        buttonAcceptFriendshipRequest.setVisible(true);
+        buttonDeclineFriendshipRequest.setVisible(true);
+        tableColumnHeadFromTo.setText("From");
+        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameFrom"));
+        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameFrom"));
+        initModel();
+    }
+
+    public void pressButtonTo() {
+        buttonUnsend.setVisible(true);
+        buttonAcceptFriendshipRequest.setVisible(false);
+        buttonDeclineFriendshipRequest.setVisible(false);
+        tableColumnHeadFromTo.setText("To");
+        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameTo"));
+        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameTo"));
+        initModel();
+    }
+
+    public void pressButtonUnsend() {
+        FriendshipRequest friendshipRequest = tableViewFriendshipRequests.getSelectionModel().getSelectedItem();
+        if (friendshipRequest != null) {
+            if (friendshipRequest.getStatusRequest().equals("pending")) {
+                friendshipRequestService.deleteFriendshipRequest(friendshipRequest.getId());
             }
         }
     }

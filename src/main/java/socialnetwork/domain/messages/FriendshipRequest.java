@@ -37,12 +37,20 @@ public class FriendshipRequest extends Message {
         this.statusRequest = statusRequest;
     }
 
-    public String getFirstName() {
+    public String getFirstNameFrom() {
         return getFrom().getFirstName();
     }
 
-    public String getLastName() {
+    public String getLastNameFrom() {
         return getFrom().getLastName();
+    }
+
+    public String getFirstNameTo() {
+        return getTo().get(0).getFirstName();
+    }
+
+    public String getLastNameTo() {
+        return getTo().get(0).getLastName();
     }
 
     public String getFormatedDate() {

@@ -60,4 +60,8 @@ public class LoginController {
         loginStage.hide();
         introductionStage.show();
     }
+
+    public void exit() {
+        System.exit(0);
+    }
 }

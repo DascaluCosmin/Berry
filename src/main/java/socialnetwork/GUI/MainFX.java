@@ -2,11 +2,13 @@ package socialnetwork.GUI;
 
 import com.sun.org.apache.bcel.internal.generic.FMUL;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -31,6 +33,9 @@ import socialnetwork.service.*;
 import java.io.IOException;
 
 public class MainFX extends Application {
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     private static UserService userService;
     private static FriendshipService friendshipService;
     private static MessageService messageService;
@@ -39,14 +44,11 @@ public class MainFX extends Application {
     private static ProfilePhotoUserService profilePhotoUserService;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/login.fxml"));
-        Parent root = loader.load();
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        primaryStage.setScene(scene);
+        initView(primaryStage, loader);
+
         LoginController loginController = loader.getController();
         loginController.setFriendshipRequestService(friendshipRequestService);
         loginController.setFriendshipService(friendshipService);
@@ -92,5 +94,28 @@ public class MainFX extends Application {
                 friendshipFileRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
         launch(args);
+    }
+
+    private void initView(Stage primaryStage, FXMLLoader loader) throws IOException {
+        Parent root = loader.load();
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setScene(scene);
     }
 }

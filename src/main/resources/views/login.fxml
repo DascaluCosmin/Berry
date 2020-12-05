@@ -17,21 +17,35 @@
          </graphic></Label>
       <AnchorPane layoutX="284.0" layoutY="61.0" prefHeight="275.0" prefWidth="367.0">
          <children>
-            <TextField layoutX="33.0" layoutY="51.0" prefHeight="26.0" prefWidth="266.0" promptText="ID">
+            <TextField layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="ID">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <PasswordField layoutX="33.0" layoutY="107.0" prefHeight="26.0" prefWidth="266.0" promptText="Password">
+            <PasswordField layoutX="28.0" layoutY="131.0" prefHeight="30.0" prefWidth="310.0" promptText="Password">
                <font>
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Label layoutX="152.0" layoutY="160.0" prefHeight="68.0" prefWidth="257.0">
+            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="311.0" onMouseClicked="#exit" prefHeight="46.0" prefWidth="53.0">
                <graphic>
-                  <ImageView fitHeight="68.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Exit.png" />
+                     </image>
+                  </ImageView>
                </graphic></Label>
-            <Button fx:id="buttonLogin" layoutX="103.0" layoutY="189.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="126.0" text="Login" textFill="#4a56e2" onMouseClicked="#loginEvent"/>
+            <Label fx:id="labelLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="205.0" onMouseClicked="#loginEvent" prefHeight="46.0" prefWidth="121.0" text="Login" textFill="#4a56e2">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonLogin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
          </children>
       </AnchorPane>
    </children>

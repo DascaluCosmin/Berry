@@ -17,15 +17,13 @@ import jdk.internal.loader.Loader;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.IntroductionController;
 import socialnetwork.controller.LoginController;
-import socialnetwork.domain.Friendship;
-import socialnetwork.domain.ProfilePhotoUser;
-import socialnetwork.domain.Tuple;
-import socialnetwork.domain.User;
+import socialnetwork.domain.*;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.UserCredentialsDBRepository;
 import socialnetwork.repository.database.UserDBRepository;
 import socialnetwork.repository.file.*;
 import socialnetwork.service.*;
@@ -85,6 +83,8 @@ public class MainFX extends Application {
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
                 fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
+        UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password,
+                new ValidatorUserCredentials());
 
         // Services
         userService = new UserService(userRepository, friendshipFileRepository);
@@ -94,7 +94,7 @@ public class MainFX extends Application {
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
                 friendshipFileRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
-        launch(args);
+        //launch(args);
     }
 
     private void initView(Stage primaryStage, FXMLLoader loader) throws IOException {

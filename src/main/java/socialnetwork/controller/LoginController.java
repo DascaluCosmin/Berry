@@ -4,12 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import socialnetwork.service.FriendshipRequestService;
-import socialnetwork.service.FriendshipService;
-import socialnetwork.service.ProfilePhotoUserService;
-import socialnetwork.service.UserService;
+import socialnetwork.service.*;
 
 import java.io.IOException;
 
@@ -21,6 +19,7 @@ public class LoginController {
     private FriendshipService friendshipService;
     private FriendshipRequestService friendshipRequestService;
     private ProfilePhotoUserService profilePhotoUserService;
+    private MessageService messageService;
     private Stage loginStage;
 
     public void setLoginStage(Stage loginStage) {
@@ -43,12 +42,18 @@ public class LoginController {
         this.profilePhotoUserService = profilePhotoUserService;
     }
 
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
     public void loginEvent() throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/introduction.fxml"));
         AnchorPane layout = loader.load();
         Stage introductionStage = new Stage();
         introductionStage.setScene(new Scene(layout));
+        introductionStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+        introductionStage.setTitle("Berry!");
         introductionStage.setOnCloseRequest(event -> {
             loginStage.show();
         });
@@ -57,6 +62,7 @@ public class LoginController {
         introductionController.setFriendshipService(friendshipService);
         introductionController.setFriendshipRequestService(friendshipRequestService);
         introductionController.setProfilePhotoUserService(profilePhotoUserService);
+        introductionController.setMessageService(messageService);
         loginStage.hide();
         introductionStage.show();
     }

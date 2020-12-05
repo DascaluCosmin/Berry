@@ -54,6 +54,7 @@ public class MainFX extends Application {
         loginController.setFriendshipService(friendshipService);
         loginController.setUserService(userService);
         loginController.setProfilePhotoUserService(profilePhotoUserService);
+        loginController.setMessageService(messageService);
         loginController.setLoginStage(primaryStage);
         primaryStage.show();
     }
@@ -116,6 +117,7 @@ public class MainFX extends Application {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
         primaryStage.setScene(scene);
     }
 }

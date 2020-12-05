@@ -14,10 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import socialnetwork.domain.UserDTO;
-import socialnetwork.service.FriendshipRequestService;
-import socialnetwork.service.FriendshipService;
-import socialnetwork.service.ProfilePhotoUserService;
-import socialnetwork.service.UserService;
+import socialnetwork.service.*;
 import javafx.collections.ObservableList;
 import socialnetwork.utils.MatchingString;
 import socialnetwork.utils.events.UserChangeEvent;
@@ -27,10 +24,11 @@ import java.io.IOException;
 import java.util.List;
 
 public class IntroductionController implements Observer<UserChangeEvent> {
-    UserService userService;
-    FriendshipService friendshipService;
-    FriendshipRequestService friendshipRequestService;
-    ProfilePhotoUserService profilePhotoUserService;
+    private UserService userService;
+    private FriendshipService friendshipService;
+    private FriendshipRequestService friendshipRequestService;
+    private ProfilePhotoUserService profilePhotoUserService;
+    private MessageService messageService;
 
     ObservableList<UserDTO> modelUserDTO = FXCollections.observableArrayList();
     @FXML
@@ -75,6 +73,10 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         initModel();
     }
 
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
     /**
      * @param friendshipService FriendshipService, representing the new FriendshipService
      */
@@ -106,6 +108,8 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         }
     }
 
+
+
     /**
      * Method that shows the account of a User
      * @param selectedUserDTO UserDTO, representing the selected User whose account needs to be shown
@@ -130,7 +134,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             accountUserStage.setScene(scene);
             AccountUserController accountUserController = loader.getController();
             accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-                    selectedUserDTO, accountUserStage);
+                    selectedUserDTO, accountUserStage, messageService);
             introductionStage.hide();
             accountUserStage.show();
         } catch (IOException e) {

@@ -2,15 +2,21 @@ package socialnetwork.GUI;
 
 import com.sun.org.apache.bcel.internal.generic.FMUL;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import jdk.internal.loader.Loader;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.IntroductionController;
+import socialnetwork.controller.LoginController;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
@@ -27,6 +33,9 @@ import socialnetwork.service.*;
 import java.io.IOException;
 
 public class MainFX extends Application {
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     private static UserService userService;
     private static FriendshipService friendshipService;
     private static MessageService messageService;
@@ -35,12 +44,17 @@ public class MainFX extends Application {
     private static ProfilePhotoUserService profilePhotoUserService;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        initView(primaryStage);
-        primaryStage.setWidth(600);
-        primaryStage.setTitle("Berry!");
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/views/login.fxml"));
+        initView(primaryStage, loader);
+
+        LoginController loginController = loader.getController();
+        loginController.setFriendshipRequestService(friendshipRequestService);
+        loginController.setFriendshipService(friendshipService);
+        loginController.setUserService(userService);
+        loginController.setProfilePhotoUserService(profilePhotoUserService);
+        loginController.setLoginStage(primaryStage);
         primaryStage.show();
     }
 
@@ -82,15 +96,26 @@ public class MainFX extends Application {
         launch(args);
     }
 
-    private void initView(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/views/introduction.fxml"));
-        AnchorPane layout = loader.load();
-        primaryStage.setScene(new Scene(layout));
-        IntroductionController introductionController = loader.getController();
-        introductionController.setUserService(userService, primaryStage);
-        introductionController.setFriendshipService(friendshipService);
-        introductionController.setFriendshipRequestService(friendshipRequestService);
-        introductionController.setProfilePhotoUserService(profilePhotoUserService);
+    private void initView(Stage primaryStage, FXMLLoader loader) throws IOException {
+        Parent root = loader.load();
+        root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                primaryStage.setX(event.getScreenX() - xOffset);
+                primaryStage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.setScene(scene);
     }
 }

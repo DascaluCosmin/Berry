@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="403.0" prefWidth="698.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.LoginController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="36.0" prefHeight="331.0" prefWidth="611.0">
+         <graphic>
+            <ImageView fitHeight="331.0" fitWidth="662.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Login.png" />
+               </image>
+            </ImageView>
+         </graphic></Label>
+      <AnchorPane layoutX="284.0" layoutY="61.0" prefHeight="275.0" prefWidth="367.0">
+         <children>
+            <TextField layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="ID">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <PasswordField layoutX="28.0" layoutY="131.0" prefHeight="30.0" prefWidth="310.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="311.0" onMouseClicked="#exit" prefHeight="46.0" prefWidth="53.0">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
+            <Label fx:id="labelLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="205.0" onMouseClicked="#loginEvent" prefHeight="46.0" prefWidth="121.0" text="Login" textFill="#4a56e2">
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonLogin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

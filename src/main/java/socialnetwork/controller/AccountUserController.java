@@ -21,10 +21,7 @@ import socialnetwork.domain.Friendship;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.UserDTO;
-import socialnetwork.service.FriendshipRequestService;
-import socialnetwork.service.FriendshipService;
-import socialnetwork.service.ProfilePhotoUserService;
-import socialnetwork.service.UserService;
+import socialnetwork.service.*;
 import socialnetwork.utils.ChangeProfilePhoto;
 import socialnetwork.utils.ChangeProfilePhotoRectangle;
 import socialnetwork.utils.events.FriendshipChangeEvent;
@@ -36,14 +33,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountUserController implements Observer<FriendshipChangeEvent>{
-    ObservableList<UserDTO> model = FXCollections.observableArrayList();
-    UserService userService;
-    FriendshipService friendshipService;
-    FriendshipRequestService friendshipRequestService;
-    ProfilePhotoUserService profilePhotoUserService;
-    UserDTO selectedUserDTO;
-    Stage accountUserStage;
-    ImageViewAccountUserController imageViewAccountUserController = new ImageViewAccountUserController();
+    private ObservableList<UserDTO> model = FXCollections.observableArrayList();
+    private UserService userService;
+    private FriendshipService friendshipService;
+    private FriendshipRequestService friendshipRequestService;
+    private ProfilePhotoUserService profilePhotoUserService;
+    private MessageService messageService;
+    private UserDTO selectedUserDTO;
+    private Stage accountUserStage;
+    private ImageViewAccountUserController imageViewAccountUserController = new ImageViewAccountUserController();
     @FXML
     Button buttonAddFriendship;
     @FXML
@@ -70,12 +68,13 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
 
     public void setAttributes(FriendshipService friendshipService, UserService userService,
                               FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
-                              UserDTO selectedUserDTO, Stage accountUserStage) {
+                              UserDTO selectedUserDTO, Stage accountUserStage, MessageService messageService) {
         this.friendshipService = friendshipService;
         this.friendshipService.addObserver(this);
         this.userService = userService;
         this.friendshipRequestService = friendshipRequestService;
         this.profilePhotoUserService = profilePhotoUserService;
+        this.messageService = messageService;
         this.selectedUserDTO = selectedUserDTO;
         this.accountUserStage = accountUserStage;
 
@@ -208,6 +207,26 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             userProfileController.initializeUserProfile();
 
             userProfileStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eventShowMessages() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/messageView.fxml"));
+
+            AnchorPane root = loader.load();
+            Stage messageViewStage = new Stage();
+            messageViewStage.setScene(new Scene(root));
+            MessageController messageController = loader.getController();
+            messageController.setSelectedUserDTO(selectedUserDTO);
+            messageController.setFriendshipService(friendshipService);
+            messageController.setUserService(userService);
+            messageController.setMessageService(messageService);
+
+            messageViewStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

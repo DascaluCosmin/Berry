@@ -17,6 +17,7 @@
          </graphic></Label>
       <AnchorPane layoutX="284.0" layoutY="61.0" prefHeight="275.0" prefWidth="367.0">
          <children>
+            <TextField opacity="0.0" />
             <TextField layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="ID">
                <font>
                   <Font size="14.0" />

@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.User;
 import socialnetwork.domain.UserCredentials;
 import socialnetwork.domain.UserDTO;
@@ -162,10 +163,13 @@ public class LoginController {
             alert.show();
         } else {
             User userToBeAdded = userService.addUser(new User(firstName, lastName));
-            Long idCredentials = userToBeAdded.getId();
+            Long idUser = userToBeAdded.getId();
             UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);
-            userCredentialsToBeAdded.setId(idCredentials);
+            userCredentialsToBeAdded.setId(idUser);
             userCredentialsService.addUserCredentials(userCredentialsToBeAdded);
+            ProfilePhotoUser profilePhotoUser = new ProfilePhotoUser();
+            profilePhotoUser.setId(idUser);
+            profilePhotoUserService.addProfilePhotoUser(profilePhotoUser);
             anchorPaneLogin.setVisible(true);
             anchorPaneSignup.setVisible(false);
         }

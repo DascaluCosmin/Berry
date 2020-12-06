@@ -55,4 +55,20 @@ public class ReplyMessage extends Message {
         messageString += "}";
         return messageString;
     }
+
+    public String toStringFormatted() {
+        return getFormattedDate() + "\t|\t" + getFirstNameFrom() + " " + getLastNameFrom() + ": " + getMessage();
+    }
+
+    public String getFormattedDate() {
+        return getDate().format(Constants.DATE_TIME_FORMATTER);
+    }
+
+    public String getFirstNameFrom() {
+        return getFrom().getLastName();
+    }
+
+    public String getLastNameFrom() {
+        return getFrom().getFirstName();
+    }
 }

@@ -44,10 +44,7 @@ public class UserService implements Observable<UserChangeEvent> {
      */
     public User addUser(User userParam) throws ValidationException {
         User user = repositoryUser.save(userParam);
-        validatorUserService.validateAdd(user);
-        if (user == null) {
-            notifyAll(new UserChangeEvent(ChangeEventType.ADD));
-        }
+        notifyAll(new UserChangeEvent(ChangeEventType.ADD));
         return user;
     }
 

@@ -40,6 +40,7 @@ public class MainFX extends Application {
     private static ReplyMessageService replyMessageService;
     private static FriendshipRequestService friendshipRequestService;
     private static ProfilePhotoUserService profilePhotoUserService;
+    private static UserCredentialsService userCredentialsService;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -54,6 +55,7 @@ public class MainFX extends Application {
         loginController.setProfilePhotoUserService(profilePhotoUserService);
         loginController.setMessageService(messageService);
         loginController.setLoginStage(primaryStage);
+        loginController.setUserCredentialsService(userCredentialsService);
         primaryStage.show();
     }
 
@@ -94,7 +96,8 @@ public class MainFX extends Application {
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
                 friendshipFileRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
-        //launch(args);
+        userCredentialsService = new UserCredentialsService(userCredentialsRepository);
+        launch(args);
     }
 
     private void initView(Stage primaryStage, FXMLLoader loader) throws IOException {

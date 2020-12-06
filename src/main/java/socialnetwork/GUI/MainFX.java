@@ -74,7 +74,7 @@ public class MainFX extends Application {
         String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
         // Repositories
 //        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
-        Repository<Long, User> userRepository = new UserDBRepository(url, username, password, new UserValidator());
+        Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
         Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
                 new FriendshipValidator(userRepository), userRepository);
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
@@ -85,8 +85,7 @@ public class MainFX extends Application {
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
                 fileNameUserProfilePhotos, new ValidatorProfilePhotoUser());
-        UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password,
-                new ValidatorUserCredentials());
+        UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
 
         // Services
         userService = new UserService(userRepository, friendshipFileRepository);

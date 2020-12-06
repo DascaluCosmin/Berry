@@ -1,5 +1,6 @@
 package socialnetwork.repository.database;
 
+import org.postgresql.util.PSQLException;
 import socialnetwork.domain.Entity;
 import socialnetwork.domain.User;
 import socialnetwork.domain.UserCredentials;
@@ -14,13 +15,11 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
     private String url;
     private String username;
     private String password;
-    private Validator<UserCredentials> validator;
 
-    public UserCredentialsDBRepository(String url, String username, String password, Validator<UserCredentials> validator) {
+    public UserCredentialsDBRepository(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
-        this.validator = validator;
     }
 
     public UserCredentials findOne(String username) {
@@ -82,7 +81,22 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
 
     @Override
     public UserCredentials save(UserCredentials entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)){
+            String command = "INSERT INTO \"userCredentials\" (\"idUser\", username, password) VALUES " +
+                    "(" + entity.getId() + ", '" + entity.getUsername() + "', '" + entity.getPassword() + "')";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return null;
+                }
+            } catch (PSQLException e) {
+                return entity;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
     }
 
     @Override

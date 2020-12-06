@@ -10,6 +10,10 @@ public class UserCredentialsService {
         this.userCredentialsRepository = userCredentialsRepository;
     }
 
+    public UserCredentials addUserCredentials(UserCredentials userCredentialsParam) {
+        return userCredentialsRepository.save(userCredentialsParam);
+    }
+
     public Iterable<UserCredentials> getAll() {
         return userCredentialsRepository.findAll();
     }

@@ -4,12 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import socialnetwork.domain.User;
 import socialnetwork.domain.UserCredentials;
 import socialnetwork.domain.UserDTO;
 import socialnetwork.service.*;
@@ -21,6 +21,18 @@ public class LoginController {
     TextField textFieldUsername;
     @FXML
     PasswordField passwordField;
+    @FXML
+    TextField textFieldFirstname;
+    @FXML
+    TextField textFieldLastname;
+    @FXML
+    TextField textFieldUsernameSignup;
+    @FXML
+    PasswordField passwordFieldSignup;
+    @FXML
+    AnchorPane anchorPaneSignup;
+    @FXML
+    AnchorPane anchorPaneLogin;
 
     private UserService userService;
     private FriendshipService friendshipService;
@@ -61,6 +73,11 @@ public class LoginController {
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
+        if (username.matches("[ ]*") || password.matches("[ ]*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please introduce the credentials!");
+            alert.show();
+            return;
+        }
         UserCredentials userCredentials = userCredentialsService.findOne(username);
         if (userCredentials != null) {
             if (userCredentials.getPassword().equals(password)) {
@@ -105,5 +122,56 @@ public class LoginController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void eventCreateAccount() {
+        anchorPaneLogin.setVisible(false);
+        anchorPaneSignup.setVisible(true);
+        textFieldUsername.clear();
+        passwordField.clear();
+    }
+
+    public void exitSignup() {
+        anchorPaneSignup.setVisible(false);
+        anchorPaneLogin.setVisible(true);
+        textFieldFirstname.clear();
+        textFieldLastname.clear();
+        textFieldUsernameSignup.clear();
+        passwordFieldSignup.clear();
+    }
+
+    public void signupEvent() {
+        String firstName = textFieldFirstname.getText();
+        String lastName = textFieldLastname.getText();
+        String username = textFieldUsernameSignup.getText();
+        String password = passwordFieldSignup.getText();
+        if (firstName.equals("") || lastName.equals("") || username.equals("") || password.equals("")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please complete all fields!");
+            alert.show();
+        } else if (firstName.matches(".*\\d.*") || firstName.contains(" ")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The first name can't contain blank spaces or digits!");
+            alert.show();
+        } else if (lastName.matches(".*\\d.*") || lastName.contains(" ")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The last name can't contain blank spaces or digits!");
+            alert.show();
+        } else if (username.contains(" ")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The username can't contain blank spaces!");
+            alert.show();
+        } else if (password.contains(" ")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The password can't contain blank spaces!");
+            alert.show();
+        } else {
+            User userToBeAdded = userService.addUser(new User(firstName, lastName));
+            Long idCredentials = userToBeAdded.getId();
+            UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);
+            userCredentialsToBeAdded.setId(idCredentials);
+            userCredentialsService.addUserCredentials(userCredentialsToBeAdded);
+            anchorPaneLogin.setVisible(true);
+            anchorPaneSignup.setVisible(false);
+        }
+        textFieldFirstname.clear();
+        textFieldLastname.clear();
+        textFieldUsernameSignup.clear();
+        passwordFieldSignup.clear();
     }
 }

@@ -15,7 +15,53 @@
                </image>
             </ImageView>
          </graphic></Label>
-      <AnchorPane layoutX="284.0" layoutY="61.0" prefHeight="275.0" prefWidth="367.0">
+      <AnchorPane fx:id="anchorPaneSignup" layoutX="295.0" layoutY="71.0" prefHeight="275.0" prefWidth="367.0" visible="false">
+         <children>
+            <TextField layoutX="8.0" layoutY="2.0" opacity="0.0" />
+            <TextField fx:id="textFieldFirstname" layoutX="27.0" layoutY="37.0" prefHeight="30.0" prefWidth="271.0" promptText="First name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="textFieldLastname" layoutX="27.0" layoutY="79.0" prefHeight="30.0" prefWidth="271.0" promptText="Last name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="textFieldUsernameSignup" layoutX="27.0" layoutY="121.0" prefHeight="30.0" prefWidth="271.0" promptText="Username">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="passwordFieldSignup" layoutX="27.0" layoutY="163.0" prefHeight="30.0" prefWidth="271.0" promptText="Password">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <Label fx:id="labelExitSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="-9.0" onMouseClicked="#exitSignup" prefHeight="46.0" prefWidth="53.0">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="214.0" onMouseClicked="#signupEvent" prefHeight="30.0" prefWidth="105.0" text="Signup" textFill="#4a56e2">
+               <graphic>
+                  <ImageView fitHeight="39.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonLogin.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="anchorPaneLogin" layoutX="295.0" layoutY="71.0" prefHeight="275.0" prefWidth="367.0">
          <children>
             <TextField opacity="0.0" />
             <TextField fx:id="textFieldUsername" layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="Username">
@@ -28,7 +74,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="311.0" onMouseClicked="#exit" prefHeight="46.0" prefWidth="53.0">
+            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="-9.0" onMouseClicked="#exit" prefHeight="46.0" prefWidth="53.0">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -47,6 +93,11 @@
                <font>
                   <Font size="24.0" />
                </font></Label>
+            <Label fx:id="labelCreateAccount" layoutX="28.0" layoutY="53.0" onMouseClicked="#eventCreateAccount" text="Create account" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

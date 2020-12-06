@@ -13,13 +13,11 @@ public class UserDBRepository implements Repository<Long, User> {
     private String url;
     private String username;
     private String password;
-    private Validator<User> validator;
 
-    public UserDBRepository(String url, String username, String password, Validator<User> validator) {
+    public UserDBRepository(String url, String username, String password) {
         this.url = url;
         this.username = username;
         this.password = password;
-        this.validator = validator;
     }
 
     @Override
@@ -84,7 +82,12 @@ public class UserDBRepository implements Repository<Long, User> {
             try {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    return null;
+                    Long idUser = resultSet.getLong("id");
+                    String firstName = resultSet.getString("firstName");
+                    String lastName = resultSet.getString("lastName");
+                    User addedUser = new User(firstName, lastName);
+                    addedUser.setId(idUser);
+                    return addedUser;
                 }
             } catch (PSQLException e) {
                 return entity;

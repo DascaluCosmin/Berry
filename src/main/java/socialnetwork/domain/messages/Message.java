@@ -74,6 +74,14 @@ public class Message extends Entity<Long> {
         return from;
     }
 
+    public String getFirstNameFrom() {
+        return getFrom().getFirstName();
+    }
+
+    public String getLastNameFrom() {
+        return getFrom().getLastName();
+    }
+
     /**
      * @return List<User>, representing the list of Users that receive the Message
      */
@@ -93,6 +101,10 @@ public class Message extends Entity<Long> {
      */
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public String getFormattedDate() {
+        return getDate().format(Constants.DATE_TIME_FORMATTER);
     }
 
     /**

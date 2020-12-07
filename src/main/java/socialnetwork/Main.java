@@ -28,30 +28,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        MainFXTest.main(args);
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-//        Thread t = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                while (true) {
-//                    System.out.println("Thread continues...");
-//                    try {
-//                        userService.getAll().forEach(System.out::println);
-//                        Thread.sleep(4000);
-//                    } catch (InterruptedException e) {
-//                        break;
-//                    }
-//                }
-//            }
-//        });
-//        t.start();
-//        while(true) {
-//            String command = bufferedReader.readLine();
-//            if (command.equals("x")) {
-//                break;
-//            }
-//        }
-//        t.interrupt();
+        MainFX.main(args);
     }
 }
 

@@ -15,11 +15,13 @@ import socialnetwork.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MessageController {
     private ObservableList<UserDTO> modelSelected = FXCollections.observableArrayList();
     private ObservableList<UserDTO> modelUnselected = FXCollections.observableArrayList();
+    private ObservableList<Message> modelMessages = FXCollections.observableArrayList();
     private UserService userService;
     private MessageService messageService;
     private FriendshipService friendshipService;
@@ -32,6 +34,8 @@ public class MessageController {
     @FXML
     TableView<UserDTO> tableViewSelected;
     @FXML
+    TableView<Message> tableViewMessage;
+    @FXML
     TableColumn<UserDTO, String> tableColumnFirstNameUnselected;
     @FXML
     TableColumn<UserDTO, String> tableColumnLastNameUnselected;
@@ -40,16 +44,32 @@ public class MessageController {
     @FXML
     TableColumn<UserDTO, String> tableColumnLastNameSelected;
     @FXML
+    TableColumn<Message, String> tableColumnDate;
+    @FXML
+    TableColumn<Message, String> tableColumnFirstName;
+    @FXML
+    TableColumn<Message, String> tableColumnLastName;
+    @FXML
+    TableColumn<Message, String> tableColumnMessage;
+    @FXML
     TextField textFieldMessageCompose;
+    @FXML
+    TextField textFieldMessageReply;
 
     @FXML
     public void initialize() {
-        tableColumnFirstNameSelected.setCellValueFactory(new PropertyValueFactory("firstName"));
-        tableColumnLastNameSelected.setCellValueFactory(new PropertyValueFactory("lastName"));
-        tableColumnFirstNameUnselected.setCellValueFactory(new PropertyValueFactory("firstName"));
-        tableColumnLastNameUnselected.setCellValueFactory(new PropertyValueFactory("lastName"));
+        tableColumnFirstNameSelected.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        tableColumnLastNameSelected.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        tableColumnFirstNameUnselected.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        tableColumnLastNameUnselected.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tableViewSelected.setItems(modelSelected);
         tableViewUnselected.setItems(modelUnselected);
+
+        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("formattedDate"));
+        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory<>("firstNameFrom"));
+        tableColumnLastName.setCellValueFactory(new PropertyValueFactory<>("lastNameFrom"));
+        tableColumnMessage.setCellValueFactory(new PropertyValueFactory<>("message"));
+        tableViewMessage.setItems(modelMessages);
     }
 
     public void setFriendshipService(FriendshipService friendshipService) {
@@ -67,6 +87,7 @@ public class MessageController {
 
     public void setMessageService(MessageService messageService) {
         this.messageService = messageService;
+        initModelMessages();
     }
 
     private void initModel() {
@@ -84,6 +105,13 @@ public class MessageController {
             modelUnselected.setAll(listUsersUnselected);
             modelSelected.setAll(listUsersSelected);
         }
+    }
+
+    private void initModelMessages() {
+        Iterable<Message> messages = messageService.getAllMessagesToUser(selectedUserDTO.getId());
+        List<Message> listMessages = new ArrayList<>();
+        messages.forEach(listMessages::add);
+        modelMessages.setAll(listMessages);
     }
 
     public void eventButtonSelect() {
@@ -131,6 +159,29 @@ public class MessageController {
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Please enter a text message!");
+            alert.show();
+        }
+    }
+
+    public void eventButtonReply() {
+        String textMessage = textFieldMessageReply.getText();
+        Message messageToReplyTo = tableViewMessage.getSelectionModel().getSelectedItem();
+        textFieldMessageReply.clear();
+        if (messageToReplyTo != null) {
+            if (!textMessage.matches("[ ]*")) {
+                User userFrom = userService.getUser(selectedUserDTO.getId());
+                User userTo = messageToReplyTo.getFrom();
+                Message message = new Message(userFrom, Arrays.asList(userTo), textMessage, LocalDateTime.now());
+                messageService.addMessage(message);
+                tableViewMessage.getSelectionModel().clearSelection();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The messages has been sent!");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please introduce a text message!");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a message to reply to!");
             alert.show();
         }
     }

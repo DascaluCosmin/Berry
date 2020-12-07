@@ -95,6 +95,19 @@ public class Message extends Entity<Long> {
         return date;
     }
 
+
+    public String getFormattedDate() {
+        return getDate().format(Constants.DATE_TIME_FORMATTER);
+    }
+
+    public String getFirstNameFrom() {
+        return getFrom().getLastName();
+    }
+
+    public String getLastNameFrom() {
+        return getFrom().getFirstName();
+    }
+
     /**
      * @param from User, representing the new User that sends the Message
      */

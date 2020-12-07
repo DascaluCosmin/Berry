@@ -23,9 +23,9 @@
                             <TableColumn fx:id="tableColumnLastNameSelected" minWidth="0.0" prefWidth="237.60003662109375" text="Last name" />
                           </columns>
                         </TableView>
-                        <Button fx:id="buttonSelect" layoutX="396.0" layoutY="20.0" mnemonicParsing="false" text="&gt;" onMouseClicked="#eventButtonSelect"/>
-                        <Button fx:id="butttonUnselect" layoutX="396.0" layoutY="89.0" mnemonicParsing="false" text="&lt;" onMouseClicked="#eventButtonUnselect"/>
-                        <Button layoutX="731.0" layoutY="356.0" mnemonicParsing="false" text="Send" onMouseClicked="#sendMessage"/>
+                        <Button fx:id="buttonSelect" layoutX="396.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#eventButtonSelect" text="&gt;" />
+                        <Button fx:id="butttonUnselect" layoutX="396.0" layoutY="89.0" mnemonicParsing="false" onMouseClicked="#eventButtonUnselect" text="&lt;" />
+                        <Button layoutX="731.0" layoutY="356.0" mnemonicParsing="false" onMouseClicked="#sendMessage" text="Send" />
                         <TextField fx:id="textFieldMessageCompose" layoutX="731.0" layoutY="319.0" prefHeight="26.0" prefWidth="202.0" promptText="Message" />
                      </children>
                   </AnchorPane>
@@ -44,7 +44,7 @@
                           </columns>
                         </TableView>
                         <TextField fx:id="textFieldMessageReply" layoutX="763.0" layoutY="20.0" prefHeight="26.0" prefWidth="200.0" promptText="Message" />
-                        <Button fx:id="buttonReply" layoutX="764.0" layoutY="336.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="99.0" text="Button" />
+                        <Button fx:id="buttonReply" layoutX="764.0" layoutY="336.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="99.0" text="Reply" onMouseClicked="#eventButtonReply"/>
                      </children>
                   </AnchorPane>
             </content>

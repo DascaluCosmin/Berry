@@ -1,6 +1,7 @@
 package socialnetwork;
 
 import socialnetwork.GUI.MainFX;
+import socialnetwork.GUI.MainFXTest;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.Tuple;
@@ -10,6 +11,7 @@ import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.UserDBRepository;
 import socialnetwork.repository.file.*;
 import socialnetwork.service.FriendshipService;
 import socialnetwork.service.MessageService;
@@ -18,13 +20,38 @@ import socialnetwork.service.UserService;
 import socialnetwork.service.FriendshipRequestService;
 import socialnetwork.ui.UI;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        MainFX.main(args);
+        MainFXTest.main(args);
+//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+//        Thread t = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    System.out.println("Thread continues...");
+//                    try {
+//                        userService.getAll().forEach(System.out::println);
+//                        Thread.sleep(4000);
+//                    } catch (InterruptedException e) {
+//                        break;
+//                    }
+//                }
+//            }
+//        });
+//        t.start();
+//        while(true) {
+//            String command = bufferedReader.readLine();
+//            if (command.equals("x")) {
+//                break;
+//            }
+//        }
+//        t.interrupt();
     }
 }
 

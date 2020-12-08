@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +23,6 @@ import socialnetwork.utils.events.FriendshipRequestChangeEvent;
 import socialnetwork.utils.observer.Observer;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class FriendshipRequestsViewController implements Observer<FriendshipRequestChangeEvent> {
     UserDTO selectedUserDTO;
@@ -34,10 +30,11 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     FriendshipService friendshipService;
     UserService userService;
     ProfilePhotoUserService profilePhotoUserService;
-    ObservableList<FriendshipRequest> model = FXCollections.observableArrayList();
+    ObservableList<FriendshipRequest> modelFrom = FXCollections.observableArrayList();
+    ObservableList<FriendshipRequest> modelTo = FXCollections.observableArrayList();
 
     @FXML
-    Button buttonViewUserProfile;
+    Button buttonViewUserProfileFrom;
     @FXML
     Button buttonAcceptFriendshipRequest;
     @FXML
@@ -45,28 +42,47 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     @FXML
     Button buttonUnsend;
     @FXML
-    TableView<FriendshipRequest> tableViewFriendshipRequests;
+    TableView<FriendshipRequest> tableViewFriendshipRequestsFrom;
     @FXML
-    TableColumn<FriendshipRequest, String> tableColumnFirstName;
+    TableView<FriendshipRequest> tableViewFriendshipRequestsTo;
     @FXML
-    TableColumn<FriendshipRequest, String> tableColumnLastName;
+    TableColumn<FriendshipRequest, String> tableColumnFirstNameFrom;
     @FXML
-    TableColumn<FriendshipRequest, String> tableColumnMessage;
+    TableColumn<FriendshipRequest, String> tableColumnLastNameFrom;
     @FXML
-    TableColumn<FriendshipRequest, String> tableColumnSentDate;
+    TableColumn<FriendshipRequest, String> tableColumnMessageFrom;
     @FXML
-    TableColumn<FriendshipRequest, String> tableColumnStatus;
+    TableColumn<FriendshipRequest, String> tableColumnSentDateFrom;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnStatusFrom;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnFirstNameTo;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnLastNameTo;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnMessageTo;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnSentDateTo;
+    @FXML
+    TableColumn<FriendshipRequest, String> tableColumnStatusTo;
     @FXML
     TableColumn<TableColumn<Friendship, String>, TableColumn<Friendship, String>> tableColumnHeadFromTo;
 
     @FXML
     public void initialize() {
-        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameFrom"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameFrom"));
-        tableColumnMessage.setCellValueFactory(new PropertyValueFactory("message"));
-        tableColumnSentDate.setCellValueFactory(new PropertyValueFactory("formatedDate"));
-        tableColumnStatus.setCellValueFactory(new PropertyValueFactory("statusRequest"));
-        tableViewFriendshipRequests.setItems(model);
+        tableColumnFirstNameFrom.setCellValueFactory(new PropertyValueFactory<>("firstNameFrom"));
+        tableColumnLastNameFrom.setCellValueFactory(new PropertyValueFactory<>("lastNameFrom"));
+        tableColumnMessageFrom.setCellValueFactory(new PropertyValueFactory<>("message"));
+        tableColumnSentDateFrom.setCellValueFactory(new PropertyValueFactory<>("formattedDate"));
+        tableColumnStatusFrom.setCellValueFactory(new PropertyValueFactory<>("statusRequest"));
+        tableViewFriendshipRequestsFrom.setItems(modelFrom);
+
+        tableColumnFirstNameTo.setCellValueFactory(new PropertyValueFactory<>("firstNameTo"));
+        tableColumnLastNameTo.setCellValueFactory(new PropertyValueFactory<>("lastNameTo"));
+        tableColumnMessageTo.setCellValueFactory(new PropertyValueFactory<>("message"));
+        tableColumnSentDateTo.setCellValueFactory(new PropertyValueFactory<>("formattedDate"));
+        tableColumnStatusTo.setCellValueFactory(new PropertyValueFactory<>("statusRequest"));
+        tableViewFriendshipRequestsTo.setItems(modelTo);
     }
 
     public void setFriendshipRequestService(FriendshipRequestService friendshipRequestService) {
@@ -88,10 +104,13 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     }
 
     private void initModel() {
-        if (tableColumnHeadFromTo.getText().equals("From")) {
-            model.setAll(friendshipRequestService.getFriendshipRequestsUser(selectedUserDTO.getId()));
-        } else if (tableColumnHeadFromTo.getText().equals("To")) {
-            model.setAll(friendshipRequestService.getFriendshipRequestsUserFrom(selectedUserDTO.getId()));
+        modelFrom.setAll(friendshipRequestService.getFriendshipRequestsUser(selectedUserDTO.getId()));
+        modelTo.setAll(friendshipRequestService.getFriendshipRequestsUserFrom(selectedUserDTO.getId()));
+        if (modelFrom.size() == 0) {
+            tableViewFriendshipRequestsFrom.setPlaceholder(new Label("There are no friendship requests sent to you!"));
+        }
+        if (modelTo.size() == 0) {
+            tableViewFriendshipRequestsTo.setPlaceholder(new Label("There are no friendship requests sent by you!"));
         }
     }
 
@@ -100,7 +119,7 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     }
 
     public void acceptPendingFriendshipRequest() {
-        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequests.getSelectionModel().getSelectedItem();
+        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequestsFrom.getSelectionModel().getSelectedItem();
         if (selectedFriendshipRequest != null) {
             if (selectedFriendshipRequest.getStatusRequest().equals("pending")) {
                 friendshipRequestService.updateFriendshipRequest(selectedFriendshipRequest, "accepted");
@@ -117,7 +136,7 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     }
 
     public void declinePendingFriendshipRequest() {
-        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequests.getSelectionModel().getSelectedItem();
+        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequestsFrom.getSelectionModel().getSelectedItem();
         if (selectedFriendshipRequest != null) {
             if (selectedFriendshipRequest.getStatusRequest().equals("pending")) {
                 friendshipRequestService.updateFriendshipRequest(selectedFriendshipRequest, "declined");
@@ -132,7 +151,7 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
     }
 
     public void showUserProfile() {
-        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequests.getSelectionModel().getSelectedItem();
+        FriendshipRequest selectedFriendshipRequest = tableViewFriendshipRequestsFrom.getSelectionModel().getSelectedItem();
         if (selectedFriendshipRequest != null) {
             User userFrom = selectedFriendshipRequest.getFrom();
             try {
@@ -153,11 +172,11 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
                 userProfileController.setUserProfileStage(userProfileStage);
                 userProfileController.initializeUserProfile();
                 userProfileStage.show();
-                buttonViewUserProfile.setDisable(true);
+                buttonViewUserProfileFrom.setDisable(true);
                 userProfileController.getImageViewUserProfile().setDisable(true);
 
                 userProfileStage.setOnCloseRequest(event -> {
-                    buttonViewUserProfile.setDisable(false);
+                    buttonViewUserProfileFrom.setDisable(false);
                     userProfileController.getImageViewUserProfile().setDisable(false);
                 });
             } catch (IOException e) {
@@ -166,28 +185,8 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
         }
     }
 
-    public void pressButtonFrom() {
-        buttonUnsend.setVisible(false);
-        buttonAcceptFriendshipRequest.setVisible(true);
-        buttonDeclineFriendshipRequest.setVisible(true);
-        tableColumnHeadFromTo.setText("From");
-        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameFrom"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameFrom"));
-        initModel();
-    }
-
-    public void pressButtonTo() {
-        buttonUnsend.setVisible(true);
-        buttonAcceptFriendshipRequest.setVisible(false);
-        buttonDeclineFriendshipRequest.setVisible(false);
-        tableColumnHeadFromTo.setText("To");
-        tableColumnFirstName.setCellValueFactory(new PropertyValueFactory("firstNameTo"));
-        tableColumnLastName.setCellValueFactory(new PropertyValueFactory("lastNameTo"));
-        initModel();
-    }
-
     public void pressButtonUnsend() {
-        FriendshipRequest friendshipRequest = tableViewFriendshipRequests.getSelectionModel().getSelectedItem();
+        FriendshipRequest friendshipRequest = tableViewFriendshipRequestsTo.getSelectionModel().getSelectedItem();
         if (friendshipRequest != null) {
             if (friendshipRequest.getStatusRequest().equals("pending")) {
                 friendshipRequestService.deleteFriendshipRequest(friendshipRequest.getId());

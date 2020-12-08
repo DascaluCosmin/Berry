@@ -121,7 +121,6 @@
 }
 
 #tabCompose {
-    -fx-text-fill: #dae2f8;
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: bold;
     -fx-background-color: #4a56e2;
@@ -133,7 +132,6 @@
     -fx-font-weight: bold;
     -fx-background-color: #4a56e2;
     -fx-font-size: 12px;
-    -fx-text-fill: #dae2f8;
 }
 
 .table-view:focused .table-row-cell:focused {

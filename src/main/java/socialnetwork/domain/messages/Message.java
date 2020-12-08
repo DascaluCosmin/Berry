@@ -95,7 +95,6 @@ public class Message extends Entity<Long> {
         return date;
     }
 
-
     public String getFormattedDate() {
         return getDate().format(Constants.DATE_TIME_FORMATTER);
     }

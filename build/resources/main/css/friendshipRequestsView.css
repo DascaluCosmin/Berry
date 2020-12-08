@@ -25,63 +25,102 @@
     -fx-background-insets: 0, 0 0 1 0;
 }
 
-#tableViewFriendshipRequests {
+#tableViewFriendshipRequestsFrom {
     -fx-background-insets: 0, 0 0 1 0;
     -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
     -fx-border-insets: 0, 0 0 1 0;
 }
 
-#tableColumnFirstName {
+#tableViewFriendshipRequestsTo {
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
+    -fx-border-insets: 0, 0 0 1 0;
+}
+
+#tableColumnFirstNameFrom {
     -fx-font-size: 12px;
     -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#tableColumnLastName {
+#tableColumnLastNameFrom {
     -fx-font-size: 12px;
     -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#tableColumnMessage {
+#tableColumnMessageFrom {
     -fx-font-size: 12px;
     -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#tableColumnSentDate {
+#tableColumnSentDateFrom {
     -fx-font-size: 12px;
     -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#tableColumnStatus {
+#tableColumnStatusFrom {
     -fx-font-size: 12px;
     -fx-text-fill: #4a56e2;
     -fx-alignment: center;
     -fx-font-weight: bold;
 }
 
-#tableColumnMessage:hover {
-    -fx-text-fill: #1b2498;
+#tableColumnFirstNameTo {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
 }
 
-#tableColumnSentDate:hover {
-    -fx-text-fill: #1b2498;
+#tableColumnLastNameTo {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
 }
 
-#tableColumnStatus:hover {
-    -fx-text-fill: #1b2498;
+#tableColumnMessageTo {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
 }
 
-#tableColumnLastName:hover {
-    -fx-text-fill: #1b2498;
+#tableColumnSentDateTo {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
 }
 
-#tableColumnFirstName:hover {
-    -fx-text-fill: #1b2498;
+#tableColumnStatusTo {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tabFrom {
+    fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-font-size: 12px;
+}
+
+#tabTo {
+    fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-font-size: 12px;
+}
+
+.tab-label {
+    -fx-text-fill: #dae2f8;
 }

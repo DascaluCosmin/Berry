@@ -1,0 +1,149 @@
+.label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a56e2;
+}
+
+.button {
+    -fx-text-fill: #dae2f8;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: #1b2498;
+}
+
+#textFieldMessageCompose:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}
+
+#textFieldMessageReply:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}
+
+#tableViewUnselected {
+    -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
+}
+
+#tableViewSelected {
+    -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
+}
+
+#tableViewMessage {
+    -fx-background-color: linear-gradient(#4a56e2, #dae2f8);
+}
+
+#tableColumnUnselectedUsers {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnFirstNameUnselected {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnLastNameUnselected {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnSelectedUsers {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnFirstNameSelected {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnLastNameSelected {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnDate {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnFromInbox {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnFirstName {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnLastName {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tableColumnMessage {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a56e2;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+#tabPaneComposeInbox {
+    -fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);
+}
+
+#tabCompose {
+    -fx-text-fill: #dae2f8;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-font-size: 12px;
+}
+
+#tabInbox {
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-font-size: 12px;
+    -fx-text-fill: #dae2f8;
+}
+
+.table-view:focused .table-row-cell:focused {
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #dae2f8;
+}
+
+.tab-label {
+    -fx-text-fill: #dae2f8;
+}

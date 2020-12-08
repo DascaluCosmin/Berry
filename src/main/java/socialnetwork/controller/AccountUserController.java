@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,6 +35,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
     private FriendshipService friendshipService;
     private FriendshipRequestService friendshipRequestService;
     private ProfilePhotoUserService profilePhotoUserService;
+    private ReplyMessageService replyMessageService;
     private MessageService messageService;
     private UserDTO selectedUserDTO;
     private Stage accountUserStage;
@@ -78,7 +76,8 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
      */
     public void setAttributes(FriendshipService friendshipService, UserService userService,
                               FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
-                              UserDTO selectedUserDTO, Stage accountUserStage, MessageService messageService) {
+                              UserDTO selectedUserDTO, Stage accountUserStage, MessageService messageService,
+                              ReplyMessageService replyMessageService) {
         this.friendshipService = friendshipService;
         this.friendshipService.addObserver(this);
         this.userService = userService;
@@ -87,6 +86,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
         this.messageService = messageService;
         this.selectedUserDTO = selectedUserDTO;
         this.accountUserStage = accountUserStage;
+        this.replyMessageService = replyMessageService;
 
         // Set the ImageViewUserProfileController attributes
         imageViewAccountUserController.setProfilePhotoUserService(profilePhotoUserService);
@@ -136,8 +136,8 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             Stage addFriendshipRequestStage = new Stage();
             addFriendshipRequestStage.setTitle("Send friendship requests");
             addFriendshipRequestStage.setResizable(false);
-            addFriendshipRequestStage.initModality(Modality.APPLICATION_MODAL);
             addFriendshipRequestStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            addFriendshipRequestStage.setOnCloseRequest(event -> accountUserStage.show());
 
             Scene scene = new Scene(root);
             addFriendshipRequestStage.setScene(scene);
@@ -146,8 +146,8 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             addFriendshipViewController.setUserService(userService, selectedUserDTO);
             addFriendshipViewController.setFriendshipRequestService(friendshipRequestService);
 
+            accountUserStage.hide();
             addFriendshipRequestStage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,9 +181,10 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             Stage friendshipRequestsViewStage = new Stage();
             friendshipRequestsViewStage.setScene(new Scene(root));
             friendshipRequestsViewStage.setTitle("Friendship Requests");
-            friendshipRequestsViewStage.initModality(Modality.APPLICATION_MODAL);
             friendshipRequestsViewStage.setResizable(false);
             friendshipRequestsViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            friendshipRequestsViewStage.setOnCloseRequest(event -> accountUserStage.show());
+
             FriendshipRequestsViewController friendshipRequestsViewController = loader.getController();
             friendshipRequestsViewController.setSelectedUser(selectedUserDTO);
             friendshipRequestsViewController.setFriendshipRequestService(friendshipRequestService);
@@ -191,6 +192,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             friendshipRequestsViewController.setUserService(userService);
             friendshipRequestsViewController.setProfilePhotoUserService(profilePhotoUserService);
 
+            accountUserStage.hide();
             friendshipRequestsViewStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -208,6 +210,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             userProfileStage.setResizable(false);
             userProfileStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + " profile");
             userProfileStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            userProfileStage.setOnCloseRequest(event -> accountUserStage.show());
 
             UserProfileController userProfileController = loader.getController();
             userProfileController.setUser(userService.getUser(selectedUserDTO.getId()));
@@ -216,6 +219,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             userProfileController.setUserProfileStage(userProfileStage);
             userProfileController.initializeUserProfile();
 
+            accountUserStage.hide();
             userProfileStage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -230,15 +234,53 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             AnchorPane root = loader.load();
             Stage messageViewStage = new Stage();
             messageViewStage.setScene(new Scene(root));
+            messageViewStage.setTitle("Your messages");
+            messageViewStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            messageViewStage.setResizable(false);
+            messageViewStage.setOnCloseRequest(event -> accountUserStage.show());
             MessageController messageController = loader.getController();
             messageController.setSelectedUserDTO(selectedUserDTO);
             messageController.setFriendshipService(friendshipService);
             messageController.setUserService(userService);
             messageController.setMessageService(messageService);
-
+            accountUserStage.hide();
             messageViewStage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void eventConversation() {
+        UserDTO conversationUserDTO = tableViewAccountUser.getSelectionModel().getSelectedItem();
+        if (conversationUserDTO != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/views/chatView.fxml"));
+                AnchorPane root = loader.load();
+                Stage conversationStage = new Stage();
+                conversationStage.setScene(new Scene(root));
+                conversationStage.setResizable(false);
+                conversationStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+                conversationStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + "'s chat");
+                conversationStage.setOnCloseRequest(event -> {
+                    accountUserStage.show();
+                    tableViewAccountUser.getSelectionModel().clearSelection();
+                });
+                ChatViewController chatViewController = loader.getController();
+                chatViewController.setStages(conversationStage, accountUserStage);
+                chatViewController.setLoggedInUser(selectedUserDTO);
+                chatViewController.setSelectedUserForConversation(conversationUserDTO);
+                chatViewController.setUserService(userService);
+                chatViewController.setReplyMessageService(replyMessageService);
+                accountUserStage.hide();
+                conversationStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please select an User to start a conversation with!");
+            alert.show();
         }
     }
 

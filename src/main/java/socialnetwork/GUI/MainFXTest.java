@@ -34,12 +34,12 @@ public class MainFXTest extends Application {
         AnchorPane root = loader.load();
         primaryStage.setScene(new Scene(root));
         ChatViewController chatViewController = loader.getController();
-        UserDTO loggedInUserDTO = new UserDTO("Cosmin", "Dascalu");
-        loggedInUserDTO.setId(3L);
+        UserDTO loggedInUserDTO = new UserDTO("Sergiu", "Breaban");
+        loggedInUserDTO.setId(1L);
         chatViewController.setLoggedInUser(loggedInUserDTO);
 
-        UserDTO selectedUserForConversationDTO = new UserDTO("Sergiu", "Breaban");
-        selectedUserForConversationDTO.setId(1L);
+        UserDTO selectedUserForConversationDTO = new UserDTO("Cosmin", "Dascalu");
+        selectedUserForConversationDTO.setId(3L);
         chatViewController.setSelectedUserForConversation(selectedUserForConversationDTO);
         chatViewController.setUserService(userService);
         chatViewController.setReplyMessageService(replyMessageService);

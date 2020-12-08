@@ -191,6 +191,9 @@ public class FriendshipRequestsViewController implements Observer<FriendshipRequ
         if (friendshipRequest != null) {
             if (friendshipRequest.getStatusRequest().equals("pending")) {
                 friendshipRequestService.deleteFriendshipRequest(friendshipRequest.getId());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Please select a pending friendship request to unsend!");
+                alert.show();
             }
         }
     }

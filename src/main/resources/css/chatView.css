@@ -1,0 +1,23 @@
+.button {
+    -fx-text-fill: #dae2f8;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: #1b2498;
+}
+
+#textFieldMessage:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}
+
+#listViewConversation {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+

@@ -29,6 +29,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
     private FriendshipRequestService friendshipRequestService;
     private ProfilePhotoUserService profilePhotoUserService;
     private MessageService messageService;
+    private ReplyMessageService replyMessageService;
 
     ObservableList<UserDTO> modelUserDTO = FXCollections.observableArrayList();
     @FXML
@@ -98,6 +99,10 @@ public class IntroductionController implements Observer<UserChangeEvent> {
         this.profilePhotoUserService = profilePhotoUserService;
     }
 
+    public void setReplyMessageService(ReplyMessageService replyMessageService) {
+        this.replyMessageService = replyMessageService;
+    }
+
     /**
      * Event Handler for the Show User Account Event
      */
@@ -134,7 +139,7 @@ public class IntroductionController implements Observer<UserChangeEvent> {
             accountUserStage.setScene(scene);
             AccountUserController accountUserController = loader.getController();
             accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-                    selectedUserDTO, accountUserStage, messageService);
+                    selectedUserDTO, accountUserStage, messageService, replyMessageService);
             introductionStage.hide();
             accountUserStage.show();
         } catch (IOException e) {

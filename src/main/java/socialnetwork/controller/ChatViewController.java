@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import socialnetwork.domain.User;
 import socialnetwork.domain.UserDTO;
 import socialnetwork.domain.messages.ReplyMessage;
@@ -20,17 +21,18 @@ import java.util.List;
 
 public class ChatViewController {
     @FXML
-    ListView<String> listViewConversation;
+    private ListView<String> listViewConversation;
     @FXML
-    TextField textFieldMessage;
+    private TextField textFieldMessage;
     @FXML
-    Label labelUsername;
-    ObservableList<String> model = FXCollections.observableArrayList();
-    ReplyMessageService replyMessageService;
-    UserService userService;
-    UserDTO loggedInUserDTO;
-    UserDTO selectedUserForConversationDTO;
-    Thread thread;
+    private ObservableList<String> model = FXCollections.observableArrayList();
+    private ReplyMessageService replyMessageService;
+    private UserService userService;
+    private UserDTO loggedInUserDTO;
+    private UserDTO selectedUserForConversationDTO;
+    private Thread thread;
+    private Stage conversationStage;
+    private Stage accountUserViewStage;
 
     @FXML
     public void initialize() {
@@ -45,6 +47,15 @@ public class ChatViewController {
         this.selectedUserForConversationDTO = selectedUserForConversationDTO;
     }
 
+    public void setStages(Stage chatViewStage, Stage accountUserViewStage) {
+        this.conversationStage = chatViewStage;
+        this.accountUserViewStage = accountUserViewStage;
+        chatViewStage.setOnCloseRequest(event -> {
+            accountUserViewStage.show();
+            thread.interrupt();
+        });
+    }
+
     public void setReplyMessageService(ReplyMessageService replyMessageService) {
         this.replyMessageService = replyMessageService;
         initModel();
@@ -54,7 +65,7 @@ public class ChatViewController {
                 while (true) {
                     initModel();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         break;
                     }
@@ -66,7 +77,6 @@ public class ChatViewController {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
-        labelUsername.setText("Hello, " + loggedInUserDTO.getFirstName() + " " + loggedInUserDTO.getLastName() + "!");
     }
 
     public void sendMessage() {
@@ -76,10 +86,6 @@ public class ChatViewController {
         ReplyMessage replyMessage = new ReplyMessage(loggedInUser, Arrays.asList(selectedUserForConversation), messageText, LocalDateTime.now(), null);
         replyMessageService.addMessage(replyMessage);
         textFieldMessage.clear();
-    }
-
-    public void interruptEvent() {
-        thread.interrupt();
     }
 
     private void initModel() {

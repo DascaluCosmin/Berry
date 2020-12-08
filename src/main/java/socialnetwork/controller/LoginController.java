@@ -41,6 +41,7 @@ public class LoginController {
     private ProfilePhotoUserService profilePhotoUserService;
     private MessageService messageService;
     private UserCredentialsService userCredentialsService;
+    private ReplyMessageService replyMessageService;
     private Stage loginStage;
 
     public void setLoginStage(Stage loginStage) {
@@ -69,6 +70,10 @@ public class LoginController {
 
     public void setUserCredentialsService(UserCredentialsService userCredentialsService) {
         this.userCredentialsService = userCredentialsService;
+    }
+
+    public void setReplyMessageService(ReplyMessageService replyMessageService) {
+        this.replyMessageService = replyMessageService;
     }
 
     public void loginEvent() throws IOException {
@@ -113,9 +118,10 @@ public class LoginController {
             accountUserStage.setScene(new Scene(root));
             accountUserStage.setTitle(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "'s account");
             accountUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            accountUserStage.setResizable(false);
             AccountUserController accountUserController = loader.getController();
             accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-                    loggedInUser, accountUserStage, messageService);
+                    loggedInUser, accountUserStage, messageService, replyMessageService);
             loginStage.hide();
             accountUserStage.show();
             textFieldUsername.clear();

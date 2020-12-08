@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="403.0" prefWidth="698.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.LoginController">
+<AnchorPane prefHeight="403.0" prefWidth="698.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.LoginController" stylesheets="/css/login.css">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="36.0" prefHeight="331.0" prefWidth="611.0">
          <graphic>

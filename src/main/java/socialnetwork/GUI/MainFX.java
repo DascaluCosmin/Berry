@@ -23,6 +23,7 @@ import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.ReplyMessageDBRepository;
 import socialnetwork.repository.database.UserCredentialsDBRepository;
 import socialnetwork.repository.database.UserDBRepository;
 import socialnetwork.repository.file.*;
@@ -56,6 +57,7 @@ public class MainFX extends Application {
         loginController.setMessageService(messageService);
         loginController.setLoginStage(primaryStage);
         loginController.setUserCredentialsService(userCredentialsService);
+        loginController.setReplyMessageService(replyMessageService);
         primaryStage.show();
     }
 
@@ -79,8 +81,9 @@ public class MainFX extends Application {
                 new FriendshipValidator(userRepository), userRepository);
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
                 new MessageValidator(), userRepository);
-        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
-                new ValidatorReplyMessage(), userRepository);
+//        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
+//                new ValidatorReplyMessage(), userRepository);
+        Repository<Long, ReplyMessage> replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserFileRepository = new ProfilePhotoUserFileRepository(
@@ -91,7 +94,7 @@ public class MainFX extends Application {
         userService = new UserService(userRepository, friendshipFileRepository);
         friendshipService = new FriendshipService(friendshipFileRepository, userRepository);
         messageService = new MessageService(messageFileRepository);
-        replyMessageService = new ReplyMessageService(replyMessageFileRepository);
+        replyMessageService = new ReplyMessageService(replyMessageRepository);
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
                 friendshipFileRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);

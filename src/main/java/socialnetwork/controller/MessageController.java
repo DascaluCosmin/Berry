@@ -104,6 +104,7 @@ public class MessageController {
             listUsersUnselected.addAll(listFriends);
             modelUnselected.setAll(listUsersUnselected);
             modelSelected.setAll(listUsersSelected);
+            tableViewSelected.setPlaceholder(new Label("You have no selected friends to send a message to!"));
         }
     }
 
@@ -152,6 +153,8 @@ public class MessageController {
                 listUsersSelected.forEach(userDTO -> usersTo.add(userService.getUser(userDTO.getId())));
                 Message message = new Message(userFrom, usersTo,textMessage, LocalDateTime.now());
                 messageService.addMessage(message);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The message has been sent!");
+                alert.show();
                 initModel();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Please select users to send a message to!");

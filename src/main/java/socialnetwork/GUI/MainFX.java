@@ -23,6 +23,7 @@ import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.FriendshipDBRepository;
 import socialnetwork.repository.database.ReplyMessageDBRepository;
 import socialnetwork.repository.database.UserCredentialsDBRepository;
 import socialnetwork.repository.database.UserDBRepository;
@@ -30,6 +31,8 @@ import socialnetwork.repository.file.*;
 import socialnetwork.service.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MainFX extends Application {
     private double xOffset = 0;
@@ -75,14 +78,12 @@ public class MainFX extends Application {
         String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
         String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
         // Repositories
-//        Repository<Long, User> userFileRepository = new UserFileRepository(fileNameUsers, new UserValidator());
         Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
+        Repository<Tuple<Long, Long>, Friendship> friendshipDBRepository = new FriendshipDBRepository(url, username, password);
         Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
                 new FriendshipValidator(userRepository), userRepository);
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
                 new MessageValidator(), userRepository);
-//        Repository<Long, ReplyMessage> replyMessageFileRepository = new ReplyMessageFileRepository(fileNameConversation,
-//                new ValidatorReplyMessage(), userRepository);
         Repository<Long, ReplyMessage> replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
@@ -91,12 +92,12 @@ public class MainFX extends Application {
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
 
         // Services
-        userService = new UserService(userRepository, friendshipFileRepository);
-        friendshipService = new FriendshipService(friendshipFileRepository, userRepository);
+        userService = new UserService(userRepository, friendshipDBRepository);
+        friendshipService = new FriendshipService(friendshipDBRepository, userRepository);
         messageService = new MessageService(messageFileRepository);
         replyMessageService = new ReplyMessageService(replyMessageRepository);
         friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
-                friendshipFileRepository);
+                friendshipDBRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserFileRepository);
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
         launch(args);

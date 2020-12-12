@@ -261,7 +261,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
                 conversationStage.setScene(new Scene(root));
                 conversationStage.setResizable(false);
                 conversationStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
-                conversationStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + "'s chat");
+                conversationStage.setTitle("Chat with " + conversationUserDTO.getFirstName() + " " + conversationUserDTO.getLastName());
                 conversationStage.setOnCloseRequest(event -> {
                     accountUserStage.show();
                     tableViewAccountUser.getSelectionModel().clearSelection();

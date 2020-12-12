@@ -168,6 +168,7 @@ public class LoginController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "The password can't contain blank spaces!");
             alert.show();
         } else {
+            // TODO: Solve username unique
             User userToBeAdded = userService.addUser(new User(firstName, lastName));
             Long idUser = userToBeAdded.getId();
             UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);

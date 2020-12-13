@@ -77,8 +77,9 @@ public class MainFX extends Application {
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
                 new MessageValidator(), userRepository);
         ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
-        Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
-                fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
+        Repository<Long, FriendshipRequest> friendshipRequestDBRepository = new FriendshipRequestsDBRepository(url, username,
+                password, userRepository);
+
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
 
@@ -87,7 +88,7 @@ public class MainFX extends Application {
         friendshipService = new FriendshipService(friendshipRepository, userRepository);
         messageService = new MessageService(messageFileRepository);
         replyMessageService = new ReplyMessageService(replyMessageRepository);
-        friendshipRequestService = new FriendshipRequestService(friendshipRequestFileRepository,
+        friendshipRequestService = new FriendshipRequestService(friendshipRequestDBRepository,
                 friendshipRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserRepository);
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);

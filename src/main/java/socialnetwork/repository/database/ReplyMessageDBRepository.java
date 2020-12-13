@@ -28,6 +28,16 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
 
     @Override
     public ReplyMessage findOne(Long aLong) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM conversations WHERE id = " + aLong;
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return getReplyMessage(resultSet);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
@@ -39,17 +49,7 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Long idReplyMessage = resultSet.getLong("id");
-                Long idUserFrom = resultSet.getLong("idUserFrom");
-                Long idUserTo = resultSet.getLong("idUserTo");
-                String message = resultSet.getString("message");
-                String dateStringFormat = resultSet.getString("date");
-                User userFrom = userDBRepository.findOne(idUserFrom);
-                User userTo = userDBRepository.findOne(idUserTo);
-                LocalDateTime date = LocalDateTime.parse(dateStringFormat, Constants.DATE_TIME_FORMATTER);
-                ReplyMessage replyMessage = new ReplyMessage(userFrom, Arrays.asList(userTo), message, date, null);
-                replyMessage.setId(idReplyMessage);
-                listReplyMessages.add(replyMessage);
+                listReplyMessages.add(getReplyMessage(resultSet));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -81,11 +81,51 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
 
     @Override
     public ReplyMessage delete(Long aLong) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "DELETE FROM conversations WHERE id = " + aLong + " " +
+                    "RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return getReplyMessage(resultSet);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public ReplyMessage update(ReplyMessage entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "UPDATE conversations SET " +
+                    "\"idUserFrom\" = " + entity.getFrom().getId() + ", " +
+                    "\"idUserTo\" = " + entity.getTo().get(0).getId() + ", " +
+                    "message = '" + entity.getMessage() + "', " +
+                    "date = '" + entity.getDate().format(Constants.DATE_TIME_FORMATTER)+ "' WHERE id = " + entity.getId() + " " +
+                    "RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
+    }
+
+    private ReplyMessage getReplyMessage(ResultSet resultSet) throws SQLException {
+        Long idReplyMessage = resultSet.getLong("id");
+        Long idUserFrom = resultSet.getLong("idUserFrom");
+        Long idUserTo = resultSet.getLong("idUserTo");
+        String message = resultSet.getString("message");
+        String dateStringFormat = resultSet.getString("date");
+        User userFrom = userDBRepository.findOne(idUserFrom);
+        User userTo = userDBRepository.findOne(idUserTo);
+        LocalDateTime date = LocalDateTime.parse(dateStringFormat, Constants.DATE_TIME_FORMATTER);
+        ReplyMessage replyMessage = new ReplyMessage(userFrom, Arrays.asList(userTo), message, date, null);
+        replyMessage.setId(idReplyMessage);
+        return replyMessage;
     }
 }

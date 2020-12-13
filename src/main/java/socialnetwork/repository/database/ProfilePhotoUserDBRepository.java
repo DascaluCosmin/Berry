@@ -101,7 +101,6 @@ public class ProfilePhotoUserDBRepository implements Repository<Long, ProfilePho
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return entity;
     }
 

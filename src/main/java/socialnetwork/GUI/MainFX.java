@@ -31,7 +31,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainFX extends Application {
     private double xOffset = 0;
@@ -65,28 +67,23 @@ public class MainFX extends Application {
 
     public static void main(String[] args) {
         //Configuration
-        String fileNameMessage = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.messages");
-        String fileNameFriendshipRequests = ApplicationContext.getPROPERTIES()
-                .getProperty("data.socialnetwork.friendshipRequests");
         String username = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.username");
         String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
         String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
         // Repositories
         Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
         Repository<Tuple<Long, Long>, Friendship> friendshipRepository = new FriendshipDBRepository(url, username, password);
-        Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
-                new MessageValidator(), userRepository);
+        MessagesDBRepository messageRepository = new MessagesDBRepository(url, username, password, userRepository);
         ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestDBRepository = new FriendshipRequestsDBRepository(url, username,
                 password, userRepository);
-
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
 
         // Services
         userService = new UserService(userRepository, friendshipRepository);
         friendshipService = new FriendshipService(friendshipRepository, userRepository);
-        messageService = new MessageService(messageFileRepository);
+        messageService = new MessageService(messageRepository);
         replyMessageService = new ReplyMessageService(replyMessageRepository);
         friendshipRequestService = new FriendshipRequestService(friendshipRequestDBRepository,
                 friendshipRepository);

@@ -65,14 +65,9 @@ public class MainFX extends Application {
 
     public static void main(String[] args) {
         //Configuration
-//        String fileNameUsers = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.users");
-        String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
         String fileNameMessage = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.messages");
-        String fileNameConversation = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.conversation");
         String fileNameFriendshipRequests = ApplicationContext.getPROPERTIES()
                 .getProperty("data.socialnetwork.friendshipRequests");
-        String fileNameUserProfilePhotos = ApplicationContext.getPROPERTIES().
-                getProperty("data.socialnetwork.userProfilePhotos");
         String username = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.username");
         String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
         String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
@@ -81,7 +76,7 @@ public class MainFX extends Application {
         Repository<Tuple<Long, Long>, Friendship> friendshipRepository = new FriendshipDBRepository(url, username, password);
         Repository<Long, Message> messageFileRepository = new MessagesFileRepository(fileNameMessage,
                 new MessageValidator(), userRepository);
-        Repository<Long, ReplyMessage> replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
+        ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestFileRepository = new FriendshipRequestFileRepository(
                 fileNameFriendshipRequests, new FriendshipRequestValidator(), userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);

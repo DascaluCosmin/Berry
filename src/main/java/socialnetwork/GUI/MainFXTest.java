@@ -55,7 +55,7 @@ public class MainFXTest extends Application {
         Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
                 new FriendshipValidator(userRepository), userRepository);
         userService = new UserService(userRepository, friendshipFileRepository);
-        Repository<Long, ReplyMessage> replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
+        ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         replyMessageService = new ReplyMessageService(replyMessageRepository);
         launch(args);
     }

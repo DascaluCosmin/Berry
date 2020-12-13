@@ -43,9 +43,26 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
 
     @Override
     public Iterable<ReplyMessage> findAll() {
-        List<ReplyMessage> listReplyMessages = new ArrayList();
+        List<ReplyMessage> listReplyMessages = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String command = "SELECT * FROM conversations";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                listReplyMessages.add(getReplyMessage(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listReplyMessages;
+    }
+
+    public Iterable<ReplyMessage> findAll(Long idUserFrom, Long idUserTo) {
+        List<ReplyMessage> listReplyMessages = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM conversations WHERE " +
+                    "(\"idUserFrom\" = " + idUserFrom + " AND " + "\"idUserTo\" = " + idUserTo +")" + " OR " +
+                    "(\"idUserFrom\" = " + idUserTo + " AND " + "\"idUserTo\" = " + idUserFrom + ")";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

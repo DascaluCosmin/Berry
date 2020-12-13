@@ -133,7 +133,7 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
      * @param idUser Long, representing the ID of the User
      * @param idFriendshipRequest Long, representing the ID of the Friendship Request
      * @return non-null FriendshipRequest,
-     *      if the Friendship Request exists (the User has that pending Friendship Request)
+     *       if the Friendship Request exists (the User has that pending Friendship Request)
      *         null, otherwise
      */
     public FriendshipRequest getPendingFriendshipRequest(Long idUser, Long idFriendshipRequest) {

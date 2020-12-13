@@ -28,11 +28,7 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Long idUser = resultSet.getLong("idUser");
-                String password = resultSet.getString("password");
-                UserCredentials userCredentials = new UserCredentials(username, password);
-                userCredentials.setId(idUser);
-                return userCredentials;
+                return getUserCredentials(resultSet);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -47,11 +43,7 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                UserCredentials userCredentials = new UserCredentials(username, password);
-                userCredentials.setId(aLong);
-                return userCredentials;
+                return getUserCredentials(resultSet);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -66,12 +58,7 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM \"userCredentials\"");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Long idUser = resultSet.getLong("idUser");
-                String username = resultSet.getString("username");
-                String password = resultSet.getString("password");
-                UserCredentials userCredentials = new UserCredentials(username, password);
-                userCredentials.setId(idUser);
-                userCredentialsList.add(userCredentials);
+                userCredentialsList.add(getUserCredentials(resultSet));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -83,7 +70,8 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
     public UserCredentials save(UserCredentials entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             String command = "INSERT INTO \"userCredentials\" (\"idUser\", username, password) VALUES " +
-                    "(" + entity.getId() + ", '" + entity.getUsername() + "', '" + entity.getPassword() + "')";
+                    "(" + entity.getId() + ", '" + entity.getUsername() + "', '" + entity.getPassword() + "') " +
+                    "RETURNING *";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             try {
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -101,11 +89,48 @@ public class UserCredentialsDBRepository implements Repository<Long, UserCredent
 
     @Override
     public UserCredentials delete(Long aLong) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "DELETE FROM \"userCredentials\" WHERE \"idUser\" = " + aLong + " " +
+                    "RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return getUserCredentials(resultSet);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public UserCredentials update(UserCredentials entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "UPDATE \"userCredentials\" SET " +
+                    "username = '" +  entity.getUsername() +"', " +
+                    "password = '" + entity.getPassword() + "' WHERE \"idUser\" = " + entity.getId() + " " +
+                    "RETURNING *";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return null;
+                }
+            } catch (PSQLException e) {
+                return entity;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
+    }
+
+    private UserCredentials getUserCredentials(ResultSet resultSet) throws SQLException {
+        Long id = resultSet.getLong("idUser");
+        String username = resultSet.getString("username");
+        String password = resultSet.getString("password");
+        UserCredentials userCredentials = new UserCredentials(username, password);
+        userCredentials.setId(id);
+        return userCredentials;
     }
 }

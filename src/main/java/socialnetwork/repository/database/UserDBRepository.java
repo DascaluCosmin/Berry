@@ -129,7 +129,6 @@ public class UserDBRepository implements Repository<Long, User> {
             if (resultSet.next()) {
                 return null;
             }
-            return entity;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

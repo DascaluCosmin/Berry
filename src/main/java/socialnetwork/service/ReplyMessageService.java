@@ -3,6 +3,7 @@ package socialnetwork.service;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.ReplyMessageDBRepository;
 import socialnetwork.service.validators.ValidatorReplyMessageService;
 import socialnetwork.service.validators.ValidatorService;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReplyMessageService {
-    private final Repository<Long, ReplyMessage> replyMessageRepository;
+    private final ReplyMessageDBRepository replyMessageRepository;
     private final ValidatorService<ReplyMessage> validatorReplyMessageService = new ValidatorReplyMessageService();
 
     /**
@@ -18,7 +19,7 @@ public class ReplyMessageService {
      * @param replyMessageRepository Repository<Long, ReplyMessage>, representing the Repository that handles
      *                               that ReplyMessage data
      */
-    public ReplyMessageService(Repository<Long, ReplyMessage> replyMessageRepository) {
+    public ReplyMessageService(ReplyMessageDBRepository replyMessageRepository) {
         this.replyMessageRepository = replyMessageRepository;
     }
 
@@ -53,14 +54,6 @@ public class ReplyMessageService {
      * @return Iterable<ReplyMessage>, representing the list containing the Reply Messages between the two users
      */
     public Iterable<ReplyMessage> getConversation(Long idLeftUser, Long idRightUser) {
-        Iterable<ReplyMessage> listReplyMessages = replyMessageRepository.findAll();
-        List<ReplyMessage> conversation = new ArrayList<>();
-        listReplyMessages.forEach(replyMessage -> {
-            if (replyMessage.getFrom().getId().equals(idLeftUser) &&
-                    replyMessage.getTo().get(0).getId().equals(idRightUser)) conversation.add(replyMessage);
-            else if (replyMessage.getFrom().getId().equals(idRightUser) &&
-                    replyMessage.getTo().get(0).getId().equals(idLeftUser)) conversation.add(replyMessage);
-        });
-        return conversation;
+        return replyMessageRepository.findAll(idLeftUser, idRightUser);
     }
 }

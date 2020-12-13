@@ -4,6 +4,7 @@ import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.MessagesDBRepository;
 import socialnetwork.service.validators.ValidatorMessageService;
 import socialnetwork.service.validators.ValidatorService;
 
@@ -11,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageService {
-    private final Repository<Long, Message> messagesFileRepository;
+    private final MessagesDBRepository messagesRepository;
     private final ValidatorMessageService validatorMessageService = new ValidatorMessageService();
 
     /**
      * Constructor that creates a new MessageService
-     * @param messagesFileRepository Repository<Long, Message>, representing the Repository that handles
+     * @param messagesRepository Repository<Long, Message>, representing the Repository that handles
      *                               the Message data
      */
-    public MessageService(Repository<Long, Message> messagesFileRepository) {
-        this.messagesFileRepository = messagesFileRepository;
+    public MessageService(MessagesDBRepository messagesRepository) {
+        this.messagesRepository = messagesRepository;
     }
 
     /**
@@ -32,7 +33,7 @@ public class MessageService {
      */
     public Message addMessage(Message messageParam) throws ValidationException {
         validatorMessageService.validateBeforeAdding(messageParam);
-        Message message = messagesFileRepository.save(messageParam);
+        Message message = messagesRepository.save(messageParam);
         validatorMessageService.validateAdd(message);
         return message;
     }
@@ -43,14 +44,6 @@ public class MessageService {
      * @return Iterable<Message>, representing the list of messages
      */
     public Iterable<Message> getAllMessagesToUser(Long idUser) {
-        List<Message> listMessagesUser = new ArrayList<>();
-        Iterable<Message> listAllMessages = messagesFileRepository.findAll();
-        listAllMessages.forEach(message -> {
-            message.getTo().forEach(userReceiver -> {
-                if (userReceiver.getId().equals(idUser))
-                    listMessagesUser.add(message);
-            });
-        });
-        return listMessagesUser;
+        return messagesRepository.findAll(idUser);
     }
 }

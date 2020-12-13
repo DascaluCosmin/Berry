@@ -33,6 +33,13 @@ public class Friendship extends Entity<Tuple<Long,Long>> {
     }
 
     /**
+     * @param date LocalDate, representing the new date the friendship was created on
+     */
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    /**
      * Method that serializes the Entity
      * @return String, representing the serialization of the Entity
      */

@@ -172,12 +172,17 @@ public class LoginController {
             Long idUser = userToBeAdded.getId();
             UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);
             userCredentialsToBeAdded.setId(idUser);
-            userCredentialsService.addUserCredentials(userCredentialsToBeAdded);
-            ProfilePhotoUser profilePhotoUser = new ProfilePhotoUser();
-            profilePhotoUser.setId(idUser);
-            profilePhotoUserService.addProfilePhotoUser(profilePhotoUser);
-            anchorPaneLogin.setVisible(true);
-            anchorPaneSignup.setVisible(false);
+            if (userCredentialsService.addUserCredentials(userCredentialsToBeAdded) != null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "The username is already taken! Please choose another one!");
+                alert.show();
+                userService.deleteUser(idUser);
+            } else {
+                ProfilePhotoUser profilePhotoUser = new ProfilePhotoUser();
+                profilePhotoUser.setId(idUser);
+                profilePhotoUserService.addProfilePhotoUser(profilePhotoUser);
+                anchorPaneLogin.setVisible(true);
+                anchorPaneSignup.setVisible(false);
+            }
         }
         textFieldFirstname.clear();
         textFieldLastname.clear();

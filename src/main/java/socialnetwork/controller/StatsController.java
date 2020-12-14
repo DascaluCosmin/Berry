@@ -1,8 +1,12 @@
 package socialnetwork.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
@@ -15,6 +19,7 @@ import socialnetwork.service.MessageService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +36,10 @@ public class StatsController {
     DatePicker datePickerStartDate;
     @FXML
     DatePicker datePickerEndDate;
+    @FXML
+    PieChart pieChartMessages;
+    @FXML
+    TextField textFieldYear;
 
     public void setSelectedUserDTO(UserDTO selectedUserDTO) {
         this.selectedUserDTO = selectedUserDTO;
@@ -86,5 +95,36 @@ public class StatsController {
             return false;
         }
         return true;
+    }
+
+    public void eventShowPieChart() {
+        if (textFieldYear.getText().length() >= 4) {
+            try {
+                Integer year = Integer.parseInt(textFieldYear.getText());
+                ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                        new PieChart.Data("January", 5),
+                        new PieChart.Data("February", 3),
+                        new PieChart.Data("March", 4),
+                        new PieChart.Data("April", 5),
+                        new PieChart.Data("May", 10),
+                        new PieChart.Data("June", 9),
+                        new PieChart.Data("July", 8),
+                        new PieChart.Data("August", 7),
+                        new PieChart.Data("September", 3),
+                        new PieChart.Data("October", 4),
+                        new PieChart.Data("November", 2),
+                        new PieChart.Data("December", 0)
+                );
+                pieChartMessages.setData(pieChartData);
+                pieChartMessages.setClockwise(true);
+                pieChartMessages.setStartAngle(180);
+                pieChartMessages.setLabelLineLength(50);
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Introduce a valid year!");
+                alert.show();
+            }
+        } else {
+            pieChartMessages.setData(FXCollections.emptyObservableList());
+        }
     }
 }

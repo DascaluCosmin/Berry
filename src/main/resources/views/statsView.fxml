@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="94.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
+<AnchorPane prefHeight="519.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
    <children>
       <Button fx:id="buttonGeneratePDFReport" layoutX="441.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="64.0" prefWidth="145.0" text="Generate PDF Report" />
-      <DatePicker fx:id="datePickerStartDate" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" promptText="Start Date" />
-      <DatePicker fx:id="datePickerEndDate" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="206.0" promptText="End Date" />
+      <DatePicker fx:id="datePickerStartDate" layoutX="87.0" layoutY="15.0" prefHeight="18.0" prefWidth="206.0" promptText="Start Date" />
+      <DatePicker fx:id="datePickerEndDate" layoutX="87.0" layoutY="50.0" prefHeight="26.0" prefWidth="206.0" promptText="End Date" />
+      <PieChart fx:id="pieChartMessages" layoutX="149.0" layoutY="164.0" prefHeight="300.0" prefWidth="633.0" />
+      <Label layoutX="22.0" layoutY="18.0" text="Start Date" />
+      <Label layoutX="22.0" layoutY="54.0" text="End Date" />
+      <Label layoutX="22.0" layoutY="94.0" text="Year " />
+      <TextField fx:id="textFieldYear" layoutX="87.0" layoutY="90.0" onKeyTyped="#eventShowPieChart" prefHeight="26.0" prefWidth="206.0" promptText="Year Pie Chart" />
    </children>
 </AnchorPane>

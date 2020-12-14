@@ -17,6 +17,10 @@ public class UserDTO extends Entity<Long>{
         return lastName;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

@@ -107,6 +107,10 @@ public class Message extends Entity<Long> {
         return getFrom().getFirstName();
     }
 
+    public String getNameFrom() {
+        return getFirstNameFrom() + " " + getLastNameFrom();
+    }
+
     /**
      * @param from User, representing the new User that sends the Message
      */

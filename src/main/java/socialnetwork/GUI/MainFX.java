@@ -14,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import jdk.internal.loader.Loader;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.util.ResourceUtils;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.IntroductionController;
 import socialnetwork.controller.LoginController;
@@ -27,13 +30,13 @@ import socialnetwork.repository.database.*;
 import socialnetwork.repository.file.*;
 import socialnetwork.service.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MainFX extends Application {
     private double xOffset = 0;

@@ -284,6 +284,30 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
         }
     }
 
+    public void viewStatistics() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/statsView.fxml"));
+            AnchorPane root = loader.load();
+            Stage statisticsStage = new Stage();
+            statisticsStage.setScene(new Scene(root));
+            statisticsStage.setResizable(false);
+            statisticsStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+            statisticsStage.setTitle(selectedUserDTO.getFirstName() + " " + selectedUserDTO.getLastName() + "'s statistics");
+            statisticsStage.setOnCloseRequest(event -> {
+                accountUserStage.show();
+            });
+            StatsController statsController = loader.getController();
+            statsController.setSelectedUserDTO(selectedUserDTO);
+            statsController.setMessageService(messageService);
+            statsController.setFriendshipService(friendshipService);
+            statisticsStage.hide();
+            statisticsStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void update(FriendshipChangeEvent friendshipChangeEvent) {
         initModel();

@@ -6,7 +6,7 @@
 <AnchorPane prefHeight="94.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
    <children>
       <Button fx:id="buttonGeneratePDFReport" layoutX="441.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="64.0" prefWidth="145.0" text="Generate PDF Report" />
-      <DatePicker layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" />
-      <DatePicker layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="206.0" />
+      <DatePicker fx:id="datePickerStartDate" layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" promptText="Start Date" />
+      <DatePicker fx:id="datePickerEndDate" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="206.0" promptText="End Date" />
    </children>
 </AnchorPane>

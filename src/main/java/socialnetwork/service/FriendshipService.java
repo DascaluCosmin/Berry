@@ -12,8 +12,10 @@ import socialnetwork.utils.events.FriendshipChangeEvent;
 import socialnetwork.utils.observer.Observable;
 import socialnetwork.utils.observer.Observer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FriendshipService implements Observable<FriendshipChangeEvent> {
     private final Repository<Tuple<Long, Long>, Friendship> repositoryFriendship;
@@ -91,6 +93,33 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
                 listFriendshipsUser.add(friendship);
         });
         return listFriendshipsUser;
+    }
+
+    /**
+     * Method that gets the list of all the existing Friendships of a specific User
+     * @param userID Long, representing the ID of the User
+     * @return List<Friendship>, representing all the existing Friendships of an User
+     */
+    public List<Friendship> getListAllFriendshipsUser(Long userID) {
+        List<Friendship> friendshipList = new ArrayList<>();
+        getAllFriendshipsUser(userID).forEach(friendshipList::add);
+        return friendshipList;
+    }
+
+    /**
+     * Method that gets the list of all the existing Friendships of a specific User, created in an interval of time
+     * @param userID Long, representing the ID of the User
+     * @param startDate LocalDate, representing the start date of the interval
+     * @param endDate LocalDate, representing the end date of the interval
+     * @return List<Friendship>, representing all the existing Friendships of an User, created in an interval of time
+     */
+    public List<Friendship> getListAllFriendshipsUserTimeInterval(Long userID, LocalDate startDate, LocalDate endDate) {
+        List<Friendship> friendshipList = getListAllFriendshipsUser(userID);
+        return friendshipList
+                .stream()
+                .filter(friendship -> (startDate.compareTo(friendship.getDate()) <= 0) &&
+                    (friendship.getDate().compareTo(endDate) <= 0))
+                .collect(Collectors.toList());
     }
 
     public Iterable<Friendship> getAllNonFriendshipsUser(Long userID) {

@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import socialnetwork.domain.ProfilePhotoUser;
@@ -43,6 +44,17 @@ public class LoginController {
     private UserCredentialsService userCredentialsService;
     private ReplyMessageService replyMessageService;
     private Stage loginStage;
+
+    @FXML
+    public void initialize() {
+        passwordField.setOnKeyPressed(event -> {
+            try {
+                escapeKeyPressed(event.getCode());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
     public void setLoginStage(Stage loginStage) {
         this.loginStage = loginStage;
@@ -188,5 +200,11 @@ public class LoginController {
         textFieldLastname.clear();
         textFieldUsernameSignup.clear();
         passwordFieldSignup.clear();
+    }
+
+    private void escapeKeyPressed(KeyCode keyCode) throws IOException {
+        if (keyCode == KeyCode.ENTER) {
+            loginEvent();
+        }
     }
 }

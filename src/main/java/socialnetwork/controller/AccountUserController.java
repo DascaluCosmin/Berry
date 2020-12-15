@@ -301,7 +301,7 @@ public class AccountUserController implements Observer<FriendshipChangeEvent>{
             statsController.setSelectedUserDTO(selectedUserDTO);
             statsController.setMessageService(messageService);
             statsController.setFriendshipService(friendshipService);
-            statisticsStage.hide();
+            accountUserStage.hide();
             statisticsStage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="94.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
+<AnchorPane prefHeight="535.0" prefWidth="1163.0" style="-fx-background-color: linear-gradient(#f9f9fa, #FFFFFF);" stylesheets="/css/statsView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
    <children>
-      <Button fx:id="buttonGeneratePDFReport" layoutX="441.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="64.0" prefWidth="145.0" text="Generate PDF Report" />
-      <DatePicker layoutX="14.0" layoutY="14.0" prefHeight="18.0" prefWidth="206.0" />
-      <DatePicker layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="206.0" />
+      <Button fx:id="buttonGeneratePDFReport" layoutX="961.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="59.0" prefWidth="187.0" stylesheets="@../css/statsView.css" text="Generate PDF Report" />
+      <DatePicker fx:id="datePickerStartDate" layoutX="98.0" layoutY="46.0" prefHeight="18.0" prefWidth="206.0" promptText="Start Date" />
+      <DatePicker fx:id="datePickerEndDate" layoutX="98.0" layoutY="81.0" prefHeight="26.0" prefWidth="206.0" promptText="End Date" />
+      <PieChart fx:id="pieChartMessages" layoutX="32.0" layoutY="228.0" prefHeight="300.0" prefWidth="550.0" />
+      <Label fx:id="labelStartDate" layoutX="22.0" layoutY="49.0" stylesheets="@../css/statsView.css" text="Start Date" />
+      <Label fx:id="labelEndDate" layoutX="22.0" layoutY="85.0" stylesheets="@../css/statsView.css" text="End Date" />
+      <Label fx:id="labelYear" layoutX="25.0" layoutY="183.0" stylesheets="@../css/statsView.css" text="Year " />
+      <TextField fx:id="textFieldYear" layoutX="101.0" layoutY="179.0" onKeyTyped="#eventShowGraphs" prefHeight="26.0" prefWidth="206.0" promptText="Year Pie Chart" />
+      <PieChart fx:id="pieChartFriendships" layoutX="613.0" layoutY="221.0" prefHeight="300.0" prefWidth="549.0" />
+      <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="144.0" prefHeight="28.0" prefWidth="491.0" stylesheets="@../css/statsView.css" text="Introduce a year to get stats about that specific year" />
+      <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="14.0" prefHeight="28.0" prefWidth="491.0" stylesheets="@../css/statsView.css" text="Introduce a time interval to generate activity report" />
+      <Button fx:id="buttonHTMLReport" layoutX="961.0" layoutY="94.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="59.0" prefWidth="187.0" stylesheets="@../css/statsView.css" text="Generate HTML Report" />
    </children>
 </AnchorPane>

@@ -7,6 +7,8 @@ import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
 import socialnetwork.service.validators.ValidatorFriendshipService;
 import socialnetwork.service.validators.ValidatorService;
+import socialnetwork.utils.Constants;
+import socialnetwork.utils.DateConverter;
 import socialnetwork.utils.events.ChangeEventType;
 import socialnetwork.utils.events.FriendshipChangeEvent;
 import socialnetwork.utils.observer.Observable;
@@ -14,7 +16,9 @@ import socialnetwork.utils.observer.Observer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FriendshipService implements Observable<FriendshipChangeEvent> {
@@ -130,6 +134,25 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
                 listNonFriendshipsUser.add(friendship);
         });
         return listNonFriendshipsUser;
+    }
+
+    /**
+     * Method that gets the number of new friends of a User for each month in a specific Year
+     * @param idUser Long, representing the ID of the User
+     * @param year Integer, representing the year to determine the number of new friends for
+     * @return Map<String, Integer>, representing the MAP containing pairs of (Month, # new friends in that month)
+     */
+    public Map<String, Integer> getNewFriendsUserYear(Long idUser, Integer year) {
+        List<Friendship> friendshipList = getListAllFriendshipsUser(idUser);
+        Map<String, Integer> mapNewFriends = new HashMap<>();
+        Constants.months.forEach(month -> {
+            long numberNewFriends = friendshipList.stream()
+                    .filter(friendship -> friendship.getDate().getYear() == year &&
+                            friendship.getDate().getMonthValue() == DateConverter.convertMonthStringToInteger(month))
+                    .count();
+            mapNewFriends.put(month, (int) numberNewFriends);
+        });
+        return mapNewFriends;
     }
 
     /**

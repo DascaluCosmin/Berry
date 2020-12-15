@@ -3,7 +3,7 @@ package socialnetwork.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -19,13 +19,9 @@ import socialnetwork.service.MessageService;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StatsController {
     private UserDTO selectedUserDTO;
@@ -38,6 +34,8 @@ public class StatsController {
     DatePicker datePickerEndDate;
     @FXML
     PieChart pieChartMessages;
+    @FXML
+    PieChart pieChartFriendships;
     @FXML
     TextField textFieldYear;
 
@@ -97,34 +95,41 @@ public class StatsController {
         return true;
     }
 
-    public void eventShowPieChart() {
+    public void eventShowGraphs() {
         if (textFieldYear.getText().length() >= 4) {
             try {
                 Integer year = Integer.parseInt(textFieldYear.getText());
-                ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                        new PieChart.Data("January", 5),
-                        new PieChart.Data("February", 3),
-                        new PieChart.Data("March", 4),
-                        new PieChart.Data("April", 5),
-                        new PieChart.Data("May", 10),
-                        new PieChart.Data("June", 9),
-                        new PieChart.Data("July", 8),
-                        new PieChart.Data("August", 7),
-                        new PieChart.Data("September", 3),
-                        new PieChart.Data("October", 4),
-                        new PieChart.Data("November", 2),
-                        new PieChart.Data("December", 0)
-                );
-                pieChartMessages.setData(pieChartData);
-                pieChartMessages.setClockwise(true);
-                pieChartMessages.setStartAngle(180);
-                pieChartMessages.setLabelLineLength(50);
+                setPieChart(pieChartMessages, messageService.getMessagesToUserYear(selectedUserDTO.getId(), year), year, "messages");
+                setPieChart(pieChartFriendships, friendshipService.getNewFriendsUserYear(selectedUserDTO.getId(), year), year, "friendships");
             } catch (NumberFormatException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Introduce a valid year!");
                 alert.show();
             }
         } else {
+            pieChartMessages.setTitle("");
             pieChartMessages.setData(FXCollections.emptyObservableList());
+            pieChartFriendships.setTitle("");
+            pieChartFriendships.setData(FXCollections.emptyObservableList());
+        }
+    }
+
+    private void setPieChart(PieChart pieChart, Map<String, Integer> mapData, Integer year, String entitiesString) {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        mapData.entrySet().removeIf(entry -> entry.getValue() == 0); // Remove the months with 0 entities
+        mapData.keySet().forEach(key -> {
+            int number = mapData.get(key);
+            String text = key + ": " + number + " " + entitiesString;
+            pieChartData.add(new PieChart.Data(text, number));
+        });
+        if (mapData.keySet().size() == 0) { // Don't show the pie chart if there is no data for that year
+            pieChart.setTitle("");
+            pieChart.setData(FXCollections.emptyObservableList());
+        } else {
+            pieChart.setData(pieChartData);
+            pieChart.setClockwise(true);
+            pieChart.setStartAngle(180);
+            pieChart.setLabelLineLength(20);
+            pieChart.setTitle(entitiesString.substring(0, 1).toUpperCase() + entitiesString.substring(1) + " in " + year);
         }
     }
 }

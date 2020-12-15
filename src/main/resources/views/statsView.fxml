@@ -4,15 +4,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="519.0" prefWidth="895.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
+<AnchorPane prefHeight="468.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.StatsController">
    <children>
-      <Button fx:id="buttonGeneratePDFReport" layoutX="441.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="64.0" prefWidth="145.0" text="Generate PDF Report" />
+      <Button fx:id="buttonGeneratePDFReport" layoutX="994.0" layoutY="18.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="64.0" prefWidth="145.0" text="Generate PDF Report" />
       <DatePicker fx:id="datePickerStartDate" layoutX="87.0" layoutY="15.0" prefHeight="18.0" prefWidth="206.0" promptText="Start Date" />
       <DatePicker fx:id="datePickerEndDate" layoutX="87.0" layoutY="50.0" prefHeight="26.0" prefWidth="206.0" promptText="End Date" />
-      <PieChart fx:id="pieChartMessages" layoutX="149.0" layoutY="164.0" prefHeight="300.0" prefWidth="633.0" />
+      <PieChart fx:id="pieChartMessages" layoutX="22.0" layoutY="149.0" prefHeight="300.0" prefWidth="549.0" />
       <Label layoutX="22.0" layoutY="18.0" text="Start Date" />
       <Label layoutX="22.0" layoutY="54.0" text="End Date" />
       <Label layoutX="22.0" layoutY="94.0" text="Year " />
-      <TextField fx:id="textFieldYear" layoutX="87.0" layoutY="90.0" onKeyTyped="#eventShowPieChart" prefHeight="26.0" prefWidth="206.0" promptText="Year Pie Chart" />
+      <TextField fx:id="textFieldYear" layoutX="87.0" layoutY="90.0" onKeyTyped="#eventShowGraphs" prefHeight="26.0" prefWidth="206.0" promptText="Year Pie Chart" />
+      <PieChart fx:id="pieChartFriendships" layoutX="572.0" layoutY="149.0" prefHeight="300.0" prefWidth="549.0" />
    </children>
 </AnchorPane>

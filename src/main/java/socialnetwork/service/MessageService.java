@@ -7,10 +7,14 @@ import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.MessagesDBRepository;
 import socialnetwork.service.validators.ValidatorMessageService;
 import socialnetwork.service.validators.ValidatorService;
+import socialnetwork.utils.Constants;
+import socialnetwork.utils.DateConverter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MessageService {
@@ -50,7 +54,7 @@ public class MessageService {
     }
 
     /**
-     * Method that gets the list of all Messages that are sent to a User
+     * Method that gets the list Messages sent to a User
      * @param idUser Long, representing the ID of the User
      * @return List<Message>, representing the list of messages
      */
@@ -61,7 +65,7 @@ public class MessageService {
     }
 
     /**
-     * Method that gets the list of all the messages sent to a specific User, during in an interval of time
+     * Method that gets the list of messages sent to a specific User, in an interval of time
      * @param idUser Long, representing the ID of the User
      * @param startDate LocalDate, representing the start date of the interval
      * @param endDate LocalDate, representing the end date of the interval
@@ -74,5 +78,24 @@ public class MessageService {
                 .filter(message -> (startDate.compareTo(message.getDate().toLocalDate()) <= 0) &&
                         (message.getDate().toLocalDate().compareTo(endDate) <= 0))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Method that gets the number of messages sent to a User for each month in a specific Year
+     * @param idUser Long, representing the ID of the User
+     * @param year Integer, representing the year to determine the number of messages for
+     * @return Map<String, Integer>, representing the Map containing pairs of (Month, # messages in that month)
+     */
+    public Map<String, Integer> getMessagesToUserYear(Long idUser, Integer year) {
+        List<Message> messageList = getListAllMessagesToUser(idUser);
+        Map<String, Integer> mapMessages = new HashMap<>();
+        Constants.months.forEach(month -> {
+            long numberMessages = messageList.stream()
+                    .filter(message -> message.getDate().getYear() == year &&
+                            message.getDate().getMonthValue() == DateConverter.convertMonthStringToInteger(month))
+                    .count();
+            mapMessages.put(month, (int) numberMessages);
+        });
+        return mapMessages;
     }
 }

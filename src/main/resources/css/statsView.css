@@ -1,0 +1,57 @@
+#labelIntroduceYear {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a56e2;
+}
+
+#labelIntroduceTimeInterval {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a56e2;
+}
+
+#labelYear {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelStartDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelEndDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+.button {
+    -fx-text-fill: #dae2f8;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #4a56e2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: #1b2498;
+}
+
+#textFieldYear:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}
+
+#datePickerStartDate:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}
+
+#datePickerEndDate:focused {
+    -fx-background-color: #dae2f8;
+    -fx-text-fill: #4a56e2;
+}

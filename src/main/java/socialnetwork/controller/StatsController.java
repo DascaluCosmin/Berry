@@ -23,6 +23,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+enum TypeReport {
+    PDF, HTML
+}
+
 public class StatsController {
     private UserDTO selectedUserDTO;
     private MessageService messageService;
@@ -51,7 +55,7 @@ public class StatsController {
         this.friendshipService = friendshipService;
     }
 
-    public void generatePDFReport() {
+    private void generateReport(TypeReport typeReport) {
         LocalDate dateStart = datePickerStartDate.getValue();
         LocalDate dateEnd = datePickerEndDate.getValue();
         if (!validateDates(dateStart, dateEnd)) {
@@ -64,7 +68,6 @@ public class StatsController {
         if (messageList.size() == 0) { // No messages in that Date Period
             messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
         }
-        String pathToGenerateTo = "C:\\Users\\dasco\\" + selectedUserDTO.getFullName().replace(' ', '_') + "Report.pdf";
         try {
             File file = ResourceUtils.getFile("classpath:report.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
@@ -75,10 +78,23 @@ public class StatsController {
                     " people and received " + messageList.size() + " messages");
             parameters.put("DatePeriodReport", "Date Period: " + dateStart + " - " + dateEnd);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
-            JasperExportManager.exportReportToPdfFile(jasperPrint, pathToGenerateTo);
+            String pathToGenerateTo = "C:\\Users\\dasco\\" + selectedUserDTO.getFullName().replace(' ', '_');
+            if (typeReport == TypeReport.PDF) {
+                JasperExportManager.exportReportToPdfFile(jasperPrint, pathToGenerateTo + "Report.pdf");
+            } else if (typeReport == TypeReport.HTML) {
+                JasperExportManager.exportReportToHtmlFile(jasperPrint, pathToGenerateTo + "Report.html");
+            }
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }
+    }
+
+    public void generatePDFReport() {
+        generateReport(TypeReport.PDF);
+    }
+
+    public void generateHTMLReport() {
+        generateReport(TypeReport.HTML);
     }
 
     private boolean validateDates(LocalDate dateStart, LocalDate dateEnd) {

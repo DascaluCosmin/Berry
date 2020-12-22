@@ -11,14 +11,30 @@
          <graphic>
             <ImageView fitHeight="529.0" fitWidth="881.0" pickOnBounds="true" preserveRatio="true">
              <image>
-                 <Image url="@../images/Group 16.png" />
+                 <Image url="@../images/Group 20.png" />
              </image>
             </ImageView>
          </graphic></Label>
-      <Pane fx:id="loggedInUserPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0">
+      <Pane fx:id="loggedInUserPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0" visible="false">
          <children>
-            <TextField fx:id="textFieldSearch" layoutX="72.0" layoutY="11.0" prefHeight="25.0" prefWidth="107.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelSearch" layoutX="24.0" layoutY="7.0" prefHeight="49.0" prefWidth="139.0">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/SearchTextField.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
             <Label fx:id="labelExitApplication" layoutX="642.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="32.0" />
+            <Label fx:id="labelNotification" layoutX="617.0" layoutY="11.0" prefHeight="20.0" prefWidth="19.0">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/NotificationLogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
+            <TextField fx:id="textFieldSearch" layoutX="54.0" layoutY="19.0" prefHeight="25.0" prefWidth="158.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
          </children>
       </Pane>
       <Pane fx:id="sliderPane" layoutX="64.0" layoutY="51.0" prefHeight="446.0" prefWidth="188.0">
@@ -34,6 +50,21 @@
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
+            <Label fx:id="labelStatistics" layoutX="15.0" layoutY="331.0" onMouseClicked="#eventShowStatistics" prefHeight="27.0" prefWidth="84.0" />
          </children></Pane>
+      <Pane fx:id="statisticsPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0">
+         <children>
+            <Label fx:id="labelExitApplication1" layoutX="642.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="32.0" />
+            <Label fx:id="labelGeneratePDFReport" alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="396.0" prefHeight="36.0" prefWidth="131.0" text="Generate PDF Report" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Button.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

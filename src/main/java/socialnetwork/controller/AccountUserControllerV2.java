@@ -2,6 +2,7 @@ package socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import socialnetwork.domain.Page;
 
@@ -14,6 +15,10 @@ public class AccountUserControllerV2 {
     Label labelRealName;
     @FXML
     Label labelUsername;
+    @FXML
+    Pane statisticsPane;
+    @FXML
+    Pane loggedInUserPane;
 
     /**
      * @param userPage Page, representing the Page of the logged in User.
@@ -47,11 +52,20 @@ public class AccountUserControllerV2 {
     }
 
     /**
-     * Method to the labelLogout's onMouseClicked event
+     * Method linked to the labelLogout's onMouseClicked event
      * It log outs the user
      */
     public void eventLogout() {
         accountUserStage.close();
         loginStage.show();
+    }
+
+    /**
+     * Method linked to the labelStatistics onMouseClicked event
+     * It shows the Statistics Panel
+     */
+    public void eventShowStatistics() {
+        statisticsPane.setVisible(true);
+        loggedInUserPane.setVisible(false);
     }
 }

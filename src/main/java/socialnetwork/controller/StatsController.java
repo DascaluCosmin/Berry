@@ -84,6 +84,8 @@ public class StatsController {
             } else if (typeReport == TypeReport.HTML) {
                 JasperExportManager.exportReportToHtmlFile(jasperPrint, pathToGenerateTo + "Report.html");
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The report has been generated successfully!");
+            alert.show();
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.ChatViewController;
 import socialnetwork.domain.Friendship;
@@ -29,20 +31,13 @@ public class MainFXTest extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/views/chatView.fxml"));
+        loader.setLocation(getClass().getResource("/views/accountUserV2.fxml"));
 
         AnchorPane root = loader.load();
-        primaryStage.setScene(new Scene(root));
-        ChatViewController chatViewController = loader.getController();
-        UserDTO loggedInUserDTO = new UserDTO("Sergiu", "Breaban");
-        loggedInUserDTO.setId(1L);
-        chatViewController.setLoggedInUser(loggedInUserDTO);
-
-        UserDTO selectedUserForConversationDTO = new UserDTO("Cosmin", "Dascalu");
-        selectedUserForConversationDTO.setId(3L);
-        chatViewController.setSelectedUserForConversation(selectedUserForConversationDTO);
-        chatViewController.setUserService(userService);
-        chatViewController.setReplyMessageService(replyMessageService);
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.setScene(scene);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
     }
 

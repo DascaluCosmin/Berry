@@ -10,11 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import socialnetwork.domain.ProfilePhotoUser;
-import socialnetwork.domain.User;
-import socialnetwork.domain.UserCredentials;
-import socialnetwork.domain.UserDTO;
+import socialnetwork.domain.*;
 import socialnetwork.service.*;
+import socialnetwork.utils.ViewClass;
 
 import java.io.IOException;
 
@@ -120,20 +118,20 @@ public class LoginController {
     private void initializeAccountUserView(UserDTO loggedInUser) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/views/accountUser.fxml"));
-            AnchorPane root = loader.load();
-
+            loader.setLocation(getClass().getResource("/views/accountUserV2.fxml"));
             Stage accountUserStage = new Stage();
-            accountUserStage.setOnCloseRequest(event -> {
-                loginStage.show();
-            });
-            accountUserStage.setScene(new Scene(root));
+            ViewClass viewClass = new ViewClass();
+            viewClass.initView(accountUserStage, loader);
             accountUserStage.setTitle(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "'s account");
-            accountUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
-            accountUserStage.setResizable(false);
-            AccountUserController accountUserController = loader.getController();
-            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-                    loggedInUser, accountUserStage, messageService, replyMessageService);
+            AccountUserControllerV2 accountUserControllerV2 = loader.getController();
+            Page loggedInUserPage = new Page(loggedInUser, userService, friendshipService, friendshipRequestService,
+                    profilePhotoUserService, userCredentialsService, replyMessageService, messageService);
+            accountUserControllerV2.setUserPage(loggedInUserPage);
+            accountUserControllerV2.setAccountUserStage(accountUserStage);
+            accountUserControllerV2.setLoginStage(loginStage);
+//            AccountUserController accountUserController = loader.getController();
+//            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
+//                    loggedInUser, accountUserStage, messageService, replyMessageService);
             loginStage.hide();
             accountUserStage.show();
             textFieldUsername.clear();

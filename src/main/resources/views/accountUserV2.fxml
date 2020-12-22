@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="549.0" prefWidth="973.0" style="-fx-background-color: transparent" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="34.0" prefHeight="479.0" prefWidth="809.0">
+         <graphic>
+            <ImageView fitHeight="529.0" fitWidth="881.0" pickOnBounds="true" preserveRatio="true">
+             <image>
+                 <Image url="@../images/Group 16.png" />
+             </image>
+            </ImageView>
+         </graphic></Label>
+      <Pane fx:id="loggedInUserPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0">
+         <children>
+            <TextField fx:id="textFieldSearch" layoutX="72.0" layoutY="11.0" prefHeight="25.0" prefWidth="107.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelExitApplication" layoutX="642.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="32.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="sliderPane" layoutX="64.0" layoutY="51.0" prefHeight="446.0" prefWidth="188.0">
+         <children>
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="17.0" layoutY="413.0" onMouseClicked="#eventLogout" prefHeight="27.0" prefWidth="78.0" />
+            <Label fx:id="labelRealName" alignment="CENTER" layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="149.0" text="Dascalu Cosmin" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUsername" alignment="CENTER" layoutX="20.0" layoutY="171.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+         </children></Pane>
+   </children>
+</AnchorPane>

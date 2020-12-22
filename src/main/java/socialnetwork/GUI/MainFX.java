@@ -30,6 +30,7 @@ import socialnetwork.repository.database.*;
 import socialnetwork.repository.file.*;
 import socialnetwork.service.*;
 import socialnetwork.utils.Constants;
+import socialnetwork.utils.ViewClass;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,9 +41,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class MainFX extends Application {
-    private double xOffset = 0;
-    private double yOffset = 0;
-
     private static UserService userService;
     private static FriendshipService friendshipService;
     private static MessageService messageService;
@@ -55,7 +53,9 @@ public class MainFX extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/views/login.fxml"));
-        initView(primaryStage, loader);
+
+        ViewClass viewClass = new ViewClass();
+        viewClass.initView(primaryStage, loader);
 
         LoginController loginController = loader.getController();
         loginController.setFriendshipRequestService(friendshipRequestService);
@@ -94,29 +94,5 @@ public class MainFX extends Application {
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserRepository);
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
         launch(args);
-    }
-
-    private void initView(Stage primaryStage, FXMLLoader loader) throws IOException {
-        Parent root = loader.load();
-        root.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            }
-        });
-        root.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                primaryStage.setX(event.getScreenX() - xOffset);
-                primaryStage.setY(event.getScreenY() - yOffset);
-            }
-        });
-
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
-        primaryStage.setScene(scene);
     }
 }

@@ -1,3 +1,7 @@
 #textFieldSearch {
     -fx-background-color: #40457B;
 }
+
+#textFieldSearch:focused {
+    -fx-text-fill: white;
+}

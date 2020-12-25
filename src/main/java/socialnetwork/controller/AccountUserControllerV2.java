@@ -10,6 +10,7 @@ public class AccountUserControllerV2 {
     private Page userPage;
     private Stage accountUserStage;
     private Stage loginStage;
+    private Pane currentPane;
 
     @FXML
     Label labelRealName;
@@ -18,7 +19,12 @@ public class AccountUserControllerV2 {
     @FXML
     Pane statisticsPane;
     @FXML
-    Pane loggedInUserPane;
+    Pane feedPane;
+
+    @FXML
+    public void initialize() {
+        currentPane = feedPane;
+    }
 
     /**
      * @param userPage Page, representing the Page of the logged in User.
@@ -61,11 +67,22 @@ public class AccountUserControllerV2 {
     }
 
     /**
-     * Method linked to the labelStatistics onMouseClicked event
+     * Method linked to the labelShowStatistics onMouseClicked event
      * It shows the Statistics Panel
      */
     public void eventShowStatistics() {
-        statisticsPane.setVisible(true);
-        loggedInUserPane.setVisible(false);
+        currentPane.setVisible(false);
+        currentPane = statisticsPane;
+        currentPane.setVisible(true);
+    }
+
+    /**
+     * Method linked to the labelShowFeed onMouseClicked event
+     * It shows the Feed Panel
+     */
+    public void eventShowFeed() {
+        currentPane.setVisible(false);
+        currentPane = feedPane;
+        currentPane.setVisible(true);
     }
 }

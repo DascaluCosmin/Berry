@@ -5,57 +5,35 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="549.0" prefWidth="973.0" style="-fx-background-color: transparent" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
+<AnchorPane prefHeight="679.0" prefWidth="1100.0" style="-fx-background-color: transparent" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="34.0" prefHeight="479.0" prefWidth="809.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1118.0">
          <graphic>
-            <ImageView fitHeight="529.0" fitWidth="881.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="590.0" fitWidth="843.0" pickOnBounds="true" preserveRatio="true">
              <image>
-                 <Image url="@../images/Group 20.png" />
+                 <Image url="@../images/UserAccount.png" />
              </image>
             </ImageView>
          </graphic></Label>
-      <Pane fx:id="loggedInUserPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0" visible="false">
+      <Pane fx:id="sliderPane" layoutX="161.0" layoutY="51.0" prefHeight="588.0" prefWidth="226.0">
          <children>
-            <Label fx:id="labelSearch" layoutX="24.0" layoutY="7.0" prefHeight="49.0" prefWidth="139.0">
-               <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/SearchTextField.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Label>
-            <Label fx:id="labelExitApplication" layoutX="642.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="32.0" />
-            <Label fx:id="labelNotification" layoutX="617.0" layoutY="11.0" prefHeight="20.0" prefWidth="19.0">
-               <graphic>
-                  <ImageView fitHeight="26.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/NotificationLogo.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Label>
-            <TextField fx:id="textFieldSearch" layoutX="54.0" layoutY="19.0" prefHeight="25.0" prefWidth="158.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
-         </children>
-      </Pane>
-      <Pane fx:id="sliderPane" layoutX="64.0" layoutY="51.0" prefHeight="446.0" prefWidth="188.0">
-         <children>
-            <Label fx:id="labelLogout" alignment="CENTER" layoutX="17.0" layoutY="413.0" onMouseClicked="#eventLogout" prefHeight="27.0" prefWidth="78.0" />
-            <Label fx:id="labelRealName" alignment="CENTER" layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="149.0" text="Dascalu Cosmin" textFill="WHITE">
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="21.0" layoutY="543.0" onMouseClicked="#eventLogout" prefHeight="27.0" prefWidth="90.0" />
+            <Label fx:id="labelRealName" alignment="CENTER" layoutX="34.0" layoutY="186.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="labelUsername" alignment="CENTER" layoutX="20.0" layoutY="171.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
+            <Label fx:id="labelUsername" alignment="CENTER" layoutX="39.0" layoutY="206.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
-            <Label fx:id="labelStatistics" layoutX="15.0" layoutY="331.0" onMouseClicked="#eventShowStatistics" prefHeight="27.0" prefWidth="84.0" />
+            <Label fx:id="labelStatistics" layoutX="14.0" layoutY="443.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="104.0" />
          </children></Pane>
-      <Pane fx:id="statisticsPane" layoutX="252.0" layoutY="51.0" prefHeight="446.0" prefWidth="685.0">
+      <Pane fx:id="statisticsPane" layoutX="386.0" layoutY="49.0" prefHeight="588.0" prefWidth="590.0" visible="false">
          <children>
-            <Label fx:id="labelExitApplication1" layoutX="642.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="32.0" />
-            <Label fx:id="labelGeneratePDFReport" alignment="CENTER" contentDisplay="CENTER" layoutX="543.0" layoutY="396.0" prefHeight="36.0" prefWidth="131.0" text="Generate PDF Report" textFill="WHITE">
+            <Label fx:id="labelExitApplication1" layoutX="539.0" layoutY="6.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="42.0"/>
+            <Label fx:id="labelGeneratePDFReport" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="538.0" prefHeight="36.0" prefWidth="131.0" text="Generate PDF Report" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="36.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -66,5 +44,9 @@
             </Label>
          </children>
       </Pane>
+      <Pane fx:id="loggedInUserPane" layoutX="384.0" layoutY="51.0" prefHeight="588.0" prefWidth="590.0" visible="false">
+         <children>
+            <Label fx:id="labelExitApplication" layoutX="540.0" layoutY="5.0" prefHeight="27.0" prefWidth="42.0" text="Label" onMouseClicked="#eventExitApplication"/>
+         </children></Pane>
    </children>
 </AnchorPane>

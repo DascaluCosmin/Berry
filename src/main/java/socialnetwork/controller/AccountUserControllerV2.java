@@ -1,10 +1,19 @@
 package socialnetwork.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import socialnetwork.domain.Page;
+import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class AccountUserControllerV2 {
     private Page userPage;
@@ -20,10 +29,29 @@ public class AccountUserControllerV2 {
     Pane statisticsPane;
     @FXML
     Pane feedPane;
+    @FXML
+    ImageView stImageView;
+    @FXML
+    ImageView ndImageView;
+    @FXML
+    ImageView rdImageView;
+    @FXML
+    ImageView fourthImageView;
+    @FXML
+    ImageView fifthImageView;
+    @FXML
+    ImageView sixthImageView;
 
     @FXML
     public void initialize() {
         currentPane = feedPane;
+//        setImageView(stImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\larisuuuca.png");
+        setImageView(stImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\tiberiu.png");
+        setImageView(ndImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\mariabun.jpg");
+        setImageView(rdImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\carina.png");
+        setImageView(fourthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\patricea.png");
+        setImageView(fifthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\sergiu1.png");
+        setImageView(sixthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\elenabunbun.png");
     }
 
     /**
@@ -84,5 +112,36 @@ public class AccountUserControllerV2 {
         currentPane.setVisible(false);
         currentPane = feedPane;
         currentPane.setVisible(true);
+    }
+
+    /**
+     * Method that sets an ImageView, making the Photo corresponding to the path round bordered
+     * @param imageView Imageview, representing the ImageView to be set
+     * @param pathToPhoto String, representing the path to the photo
+     */
+    private void setImageView(ImageView imageView, String pathToPhoto) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(pathToPhoto);
+            Image image = new Image(fileInputStream, imageView.getFitWidth(), imageView.getFitHeight(), false, true);
+            imageView.setImage(image);
+
+            Rectangle clip = new Rectangle();
+            clip.setWidth(imageView.getFitWidth());
+            clip.setHeight(imageView.getFitHeight());
+
+            clip.setArcHeight(45);
+            clip.setArcWidth(45);
+            clip.setStroke(Color.BLACK);
+            imageView.setClip(clip);
+
+            SnapshotParameters parameters = new SnapshotParameters();
+            parameters.setFill(Color.TRANSPARENT);
+            WritableImage writableImage = imageView.snapshot(parameters, null);
+
+            imageView.setClip(null);
+            imageView.setImage(writableImage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

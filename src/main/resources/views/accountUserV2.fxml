@@ -9,32 +9,32 @@
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1118.0">
          <graphic>
-            <ImageView fitHeight="590.0" fitWidth="843.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="679.0" fitWidth="970.0" pickOnBounds="true" preserveRatio="true">
              <image>
-                 <Image url="@../images/Group 27.png" />
+                 <Image url="@../images/Group 33.png" />
              </image>
             </ImageView>
          </graphic></Label>
-      <Pane fx:id="sliderPane" layoutX="161.0" layoutY="51.0" prefHeight="588.0" prefWidth="226.0">
+      <Pane fx:id="sliderPane" layoutX="101.0" layoutY="4.0" prefHeight="679.0" prefWidth="260.0">
          <children>
-            <Label fx:id="labelLogout" alignment="CENTER" layoutX="21.0" layoutY="543.0" onMouseClicked="#eventLogout" prefHeight="27.0" prefWidth="90.0" />
-            <Label fx:id="labelRealName" alignment="CENTER" layoutX="34.0" layoutY="186.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="26.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="97.0" />
+            <Label fx:id="labelRealName" alignment="CENTER" layoutX="44.0" layoutY="210.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="labelUsername" alignment="CENTER" layoutX="39.0" layoutY="206.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
+            <Label fx:id="labelUsername" alignment="CENTER" layoutX="49.0" layoutY="230.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
-            <Label fx:id="labelShowStatistics" layoutX="14.0" layoutY="443.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="104.0" />
-            <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="20.0" layoutY="267.0" onMouseClicked="#eventShowFeed" prefHeight="25.0" prefWidth="71.0" />
+            <Label fx:id="labelShowStatistics" layoutX="23.0" layoutY="514.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="110.0" />
+            <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="21.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="84.0" />
          </children></Pane>
-      <Pane fx:id="statisticsPane" layoutX="384.0" layoutY="51.0" prefHeight="588.0" prefWidth="590.0" visible="false">
+      <Pane fx:id="statisticsPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
-            <Label fx:id="labelExitApplication1" layoutX="539.0" layoutY="6.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="42.0" />
-            <Label fx:id="labelGeneratePDFReport" alignment="CENTER" contentDisplay="CENTER" layoutX="445.0" layoutY="538.0" prefHeight="36.0" prefWidth="131.0" text="Generate PDF Report" textFill="WHITE">
+            <Label fx:id="labelExitApplication1" layoutX="647.0" layoutY="7.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="23.0" />
+            <Label fx:id="labelGeneratePDFReport" alignment="CENTER" contentDisplay="CENTER" layoutX="539.0" layoutY="629.0" prefHeight="36.0" prefWidth="131.0" text="Generate PDF Report" textFill="WHITE">
                <graphic>
                   <ImageView fitHeight="36.0" fitWidth="212.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,10 +45,10 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="feedPane" layoutX="384.0" layoutY="51.0" prefHeight="588.0" prefWidth="590.0">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
-            <Label fx:id="labelExitApplication" layoutX="558.0" layoutY="7.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
-            <Label fx:id="labelNotifications" alignment="CENTER" layoutX="528.0" layoutY="7.0" prefHeight="20.0" prefWidth="13.0">
+            <Label fx:id="labelExitApplication" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
+            <Label fx:id="labelNotifications" alignment="CENTER" layoutX="620.0" layoutY="13.0" prefHeight="20.0" prefWidth="13.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,16 +57,52 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelSearch" contentDisplay="CENTER" layoutX="39.0" layoutY="17.0" prefHeight="36.0" prefWidth="202.0">
+            <Label fx:id="labelSearch" contentDisplay="CENTER" layoutX="39.0" layoutY="17.0" prefHeight="36.0" prefWidth="178.0">
                <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="34.0" fitWidth="194.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/SearchTextField.png" />
+                        <Image url="@../images/SearchTextField2.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Label>
-            <TextField fx:id="textFieldSearch" layoutX="72.0" layoutY="23.0" prefHeight="25.0" prefWidth="158.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
+            <TextField fx:id="textFieldSearch" layoutX="81.0" layoutY="23.0" prefHeight="25.0" prefWidth="131.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
+            <ImageView fx:id="stImageView" fitHeight="250.0" fitWidth="200.0" layoutX="27.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ndImageView" fitHeight="266.0" fitWidth="200.0" layoutX="27.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelUsernlabelUserNameNdPhoto" layoutX="112.0" layoutY="625.0" prefHeight="17.0" prefWidth="59.0" text="\@mariafl">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUsernlabelUserNameStPhoto" layoutX="112.0" layoutY="320.0" prefHeight="17.0" prefWidth="59.0" text="\@maxisa">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="rdImageView" fitHeight="321.0" fitWidth="200.0" layoutX="243.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelUsernlabelUserNameRdPhoto" layoutX="324.0" layoutY="625.0" prefHeight="17.0" prefWidth="59.0" text="\@carinac">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="fourthImageView" fitHeight="198.0" fitWidth="200.0" layoutX="243.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelUsernlabelUserName4thPhoto" layoutX="324.0" layoutY="269.0" prefHeight="17.0" prefWidth="59.0" text="\@patriburtic">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="fifthImageView" fitHeight="185.0" fitWidth="200.0" layoutX="459.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelUsernlabelUserName5thPhoto" layoutX="544.0" layoutY="625.0" prefHeight="17.0" prefWidth="59.0" text="\@serju">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUsernlabelUserName6thPhoto" layoutX="544.0" layoutY="404.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="sixthImageView" fitHeight="333.0" fitWidth="200.0" layoutX="459.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
    </children>

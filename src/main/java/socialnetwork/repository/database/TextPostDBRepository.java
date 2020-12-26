@@ -29,7 +29,8 @@ public class TextPostDBRepository implements Repository<Long, TextPost> {
     /**
      * Overridden method that gets one specific Text Post
      * @param aLong Long, representing the ID of the Text Post
-     * @return TextPost, representing the selected Text Post
+     * @return null, if the Test Post doesn't exist
+     *      non-null Test Post, otherwise
      */
     @Override
     public TextPost findOne(Long aLong) {

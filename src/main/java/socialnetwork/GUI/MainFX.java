@@ -24,6 +24,7 @@ import socialnetwork.domain.*;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
+import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
@@ -86,6 +87,7 @@ public class MainFX extends Application {
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
         TextPostDBRepository textPostDBRepository = new TextPostDBRepository(url, username, password);
+        PhotoPostDBRepository photoPostDBRepository = new PhotoPostDBRepository(url, username, password);
 
         // Services
         userService = new UserService(userRepository, friendshipRepository);
@@ -98,10 +100,6 @@ public class MainFX extends Application {
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
 
         // Test Area
-        TextPost textPost = new TextPost(5L, LocalDate.now(), "TestUpdate");
-        textPost.setId(2L);
-        System.out.println(textPostDBRepository.update(textPost));
-        textPostDBRepository.findAll().forEach(System.out::println);
 
         //launch(args);
     }

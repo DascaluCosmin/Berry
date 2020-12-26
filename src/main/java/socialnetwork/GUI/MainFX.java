@@ -24,6 +24,7 @@ import socialnetwork.domain.*;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.messages.ReplyMessage;
+import socialnetwork.domain.posts.TextPost;
 import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.*;
@@ -35,6 +36,7 @@ import socialnetwork.utils.ViewClass;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -83,6 +85,7 @@ public class MainFX extends Application {
                 password, userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
+        TextPostDBRepository textPostDBRepository = new TextPostDBRepository(url, username, password);
 
         // Services
         userService = new UserService(userRepository, friendshipRepository);
@@ -93,6 +96,13 @@ public class MainFX extends Application {
                 friendshipRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserRepository);
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
-        launch(args);
+
+        // Test Area
+        TextPost textPost = new TextPost(5L, LocalDate.now(), "TestUpdate");
+        textPost.setId(2L);
+        System.out.println(textPostDBRepository.update(textPost));
+        textPostDBRepository.findAll().forEach(System.out::println);
+
+        //launch(args);
     }
 }

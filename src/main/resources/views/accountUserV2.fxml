@@ -11,13 +11,13 @@
          <graphic>
             <ImageView fitHeight="679.0" fitWidth="970.0" pickOnBounds="true" preserveRatio="true">
              <image>
-                 <Image url="@../images/Group 33.png" />
+                 <Image url="@../images/UserAccount.png" />
              </image>
             </ImageView>
          </graphic></Label>
       <Pane fx:id="sliderPane" layoutX="101.0" layoutY="4.0" prefHeight="679.0" prefWidth="260.0">
          <children>
-            <Label fx:id="labelLogout" alignment="CENTER" layoutX="26.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="97.0" />
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="26.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="102.0" />
             <Label fx:id="labelRealName" alignment="CENTER" layoutX="44.0" layoutY="210.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="14.0" />
@@ -28,7 +28,7 @@
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
-            <Label fx:id="labelShowStatistics" layoutX="23.0" layoutY="514.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="110.0" />
+            <Label fx:id="labelShowStatistics" layoutX="22.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="115.0" />
             <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="21.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="84.0" />
          </children></Pane>
       <Pane fx:id="statisticsPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
@@ -69,12 +69,12 @@
             <TextField fx:id="textFieldSearch" layoutX="81.0" layoutY="23.0" prefHeight="25.0" prefWidth="131.0" promptText="Search" stylesheets="@../css/accountUserV2.css" />
             <ImageView fx:id="stImageView" fitHeight="250.0" fitWidth="200.0" layoutX="27.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fx:id="ndImageView" fitHeight="266.0" fitWidth="200.0" layoutX="27.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="labelUsernlabelUserNameNdPhoto" layoutX="112.0" layoutY="625.0" prefHeight="17.0" prefWidth="59.0" text="\@mariafl">
+            <Label fx:id="labelUsernlabelUserNameNdPhoto" layoutX="107.0" layoutY="625.0" prefHeight="17.0" prefWidth="59.0" text="\@mariafl">
                <font>
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
-            <Label fx:id="labelUsernlabelUserNameStPhoto" layoutX="112.0" layoutY="320.0" prefHeight="17.0" prefWidth="59.0" text="\@maxisa">
+            <Label fx:id="labelUsernlabelUserNameStPhoto" layoutX="107.0" layoutY="320.0" prefHeight="17.0" prefWidth="59.0" text="\@larisuuuca">
                <font>
                   <Font name="Ebrima" size="9.0" />
                </font>
@@ -103,6 +103,24 @@
                </font>
             </Label>
             <ImageView fx:id="sixthImageView" fitHeight="333.0" fitWidth="200.0" layoutX="459.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelGoBack" alignment="CENTER" layoutX="17.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoBack1" alignment="CENTER" layoutX="649.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
          </children>
       </Pane>
    </children>

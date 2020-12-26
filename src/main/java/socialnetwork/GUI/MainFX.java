@@ -18,6 +18,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
 import socialnetwork.config.ApplicationContext;
+import socialnetwork.config.Config;
 import socialnetwork.controller.IntroductionController;
 import socialnetwork.controller.LoginController;
 import socialnetwork.domain.*;
@@ -51,6 +52,8 @@ public class MainFX extends Application {
     private static FriendshipRequestService friendshipRequestService;
     private static ProfilePhotoUserService profilePhotoUserService;
     private static UserCredentialsService userCredentialsService;
+    private static TextPostService textPostService;
+    private static PhotoPostService photoPostService;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -69,6 +72,8 @@ public class MainFX extends Application {
         loginController.setLoginStage(primaryStage);
         loginController.setUserCredentialsService(userCredentialsService);
         loginController.setReplyMessageService(replyMessageService);
+        loginController.setTextPostService(textPostService);
+        loginController.setPhotoPostService(photoPostService);
         primaryStage.show();
     }
 
@@ -98,9 +103,8 @@ public class MainFX extends Application {
                 friendshipRepository);
         profilePhotoUserService = new ProfilePhotoUserService(profilePhotoUserRepository);
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
-
-        // Test Area
-
-        //launch(args);
+        textPostService = new TextPostService(textPostDBRepository);
+        photoPostService = new PhotoPostService(photoPostDBRepository);
+        launch(args);
     }
 }

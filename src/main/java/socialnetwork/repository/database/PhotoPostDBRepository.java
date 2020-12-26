@@ -67,6 +67,26 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
     }
 
     /**
+     * Method that gets the list of all Photo Posts of a User
+     * @param idUser Long, representing the ID of the User
+     * @return Iterable<PhotoPost>, representing the list of all Photo Posts
+     */
+    public Iterable<PhotoPost> findAll(Long idUser) {
+        List<PhotoPost> photoPostList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM \"photoPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                photoPostList.add(getPhotoPost(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return photoPostList;
+    }
+
+    /**
      * Method that adds a new Photo Post to the Data Base
      * @param entity PhotoPost, representing the entity to be added
      *         entity must be not null

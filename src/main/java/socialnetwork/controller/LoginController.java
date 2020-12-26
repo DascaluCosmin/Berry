@@ -2,11 +2,9 @@ package socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -41,6 +39,8 @@ public class LoginController {
     private MessageService messageService;
     private UserCredentialsService userCredentialsService;
     private ReplyMessageService replyMessageService;
+    private TextPostService textPostService;
+    private PhotoPostService photoPostService;
     private Stage loginStage;
 
     @FXML
@@ -86,6 +86,14 @@ public class LoginController {
         this.replyMessageService = replyMessageService;
     }
 
+    public void setTextPostService(TextPostService textPostService) {
+        this.textPostService = textPostService;
+    }
+
+    public void setPhotoPostService(PhotoPostService photoPostService) {
+        this.photoPostService = photoPostService;
+    }
+
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
@@ -125,7 +133,8 @@ public class LoginController {
             accountUserStage.setTitle(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "'s account");
             AccountUserControllerV2 accountUserControllerV2 = loader.getController();
             Page loggedInUserPage = new Page(loggedInUser, userService, friendshipService, friendshipRequestService,
-                    profilePhotoUserService, userCredentialsService, replyMessageService, messageService);
+                    profilePhotoUserService, userCredentialsService, replyMessageService, messageService, textPostService,
+                    photoPostService);
             accountUserControllerV2.setUserPage(loggedInUserPage);
             accountUserControllerV2.setAccountUserStage(accountUserStage);
             accountUserControllerV2.setLoginStage(loginStage);

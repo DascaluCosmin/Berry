@@ -2,18 +2,25 @@ package socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import socialnetwork.config.Config;
 import socialnetwork.domain.Page;
 import javafx.scene.image.ImageView;
+import socialnetwork.domain.ProfilePhotoUser;
+import socialnetwork.domain.posts.PhotoPost;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 
 public class AccountUserControllerV2 {
     private Page userPage;
@@ -28,6 +35,8 @@ public class AccountUserControllerV2 {
     @FXML
     Pane statisticsPane;
     @FXML
+    Pane profilePane;
+    @FXML
     Pane feedPane;
     @FXML
     ImageView stImageView;
@@ -41,6 +50,8 @@ public class AccountUserControllerV2 {
     ImageView fifthImageView;
     @FXML
     ImageView sixthImageView;
+    @FXML
+    ImageView imageViewChangeProfilePhoto;
 
     @FXML
     public void initialize() {
@@ -114,6 +125,16 @@ public class AccountUserControllerV2 {
     }
 
     /**
+     * Method linked to the labelShowProfile onMouseClicked event
+     * It shows the Profile Panel
+     */
+    public void eventShowProfile() {
+        currentPane.setVisible(false);
+        currentPane = profilePane;
+        currentPane.setVisible(true);
+    }
+
+    /**
      * Method that sets an ImageView, making the Photo corresponding to the path round bordered
      * @param imageView Imageview, representing the ImageView to be set
      * @param pathToPhoto String, representing the path to the photo
@@ -142,5 +163,60 @@ public class AccountUserControllerV2 {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Method linked to the buttonChangeProfilePhoto's onMouseClicked event
+     * It allows to the user to change the current Profile Photo
+     */
+    public void eventChangeProfilePhoto() {
+        String selectedPhotoURL = getPhotoURL();
+        if (selectedPhotoURL == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No profile photo was selected!");
+            alert.show();
+        } else {
+            ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(selectedPhotoURL);
+            newProfilePhotoUser.setId(userPage.getUser().getId());
+            userPage.getProfilePhotoUserService().updateProfilePhotoUser(newProfilePhotoUser);
+        }
+    }
+
+    /**
+     * Method linked to the buttonAddPhoto's onMouseClicked event
+     * It allows the user to add a new photo
+     */
+    public void eventAddPhoto() {
+        String selectedPhotoURL = getPhotoURL();
+        if (selectedPhotoURL == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No photo was selected!");
+            alert.show();
+        } else {
+            PhotoPost photoPost = new PhotoPost(userPage.getUser().getId(), LocalDate.now(), selectedPhotoURL);
+            if (userPage.getPhotoPostService().addPhotoPost(photoPost) == null) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The photo was added successfully!");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "There was an error adding your photo. Please try again!");
+                alert.show();
+            }
+        }
+    }
+
+    /**
+     * Method that opens up a FileChooser Dialog in order to select a photo (.png, .jpg extensions)
+     * @return null, if no photo is chosen
+     *      non-null String, representing the URL of the selected photo
+     */
+    private String getPhotoURL() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG Files", "*.png"),
+                new FileChooser.ExtensionFilter("JPG Files", "*.jpg"));
+        fileChooser.setTitle("Choose Photo");
+        File file = fileChooser.showOpenDialog(accountUserStage);
+        if (file != null) {
+            return file.toString();
+        }
+        return null;
     }
 }

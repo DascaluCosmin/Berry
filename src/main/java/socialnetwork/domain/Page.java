@@ -11,6 +11,8 @@ public class Page {
     private UserCredentialsService userCredentialsService;
     private ReplyMessageService replyMessageService;
     private MessageService messageService;
+    private TextPostService textPostService;
+    private PhotoPostService photoPostService;
 
     /**
      * Constructor that creates a new Page
@@ -18,16 +20,18 @@ public class Page {
      * @param userService UserService, representing the Service concerned with the Users data
      * @param friendshipService FriendshipService, representing the Service concerned with the Friendships data
      * @param friendshipRequestService FriendshipRequestService, representing the Service
-     *                                 concerned with the Friendship Requests data
+*                                 concerned with the Friendship Requests data
      * @param profilePhotoUserService ProfilePhotoUserService, representing the Service concerned with the Profile Photos data
      * @param userCredentialsService UserCredentialsService, representing the Service concerned with the User Credentials data
      * @param replyMessageService ReplyMessageService, representing the Service concerned with the Reply Messages data
      * @param messageService MessageService, representing the Service concerned with the Messages data
+     * @param textPostService TextPostService, representing the Service concerned with the Text Posts data
+     * @param photoPostService PhotoPostService, representing the Service concerned with the Photo Posts data
      */
     public Page(UserDTO user, UserService userService, FriendshipService friendshipService,
                 FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
-                UserCredentialsService userCredentialsService,
-                ReplyMessageService replyMessageService, MessageService messageService) {
+                UserCredentialsService userCredentialsService, ReplyMessageService replyMessageService,
+                MessageService messageService, TextPostService textPostService, PhotoPostService photoPostService) {
         this.user = user;
         this.userService = userService;
         this.friendshipService = friendshipService;
@@ -36,6 +40,8 @@ public class Page {
         this.userCredentialsService = userCredentialsService;
         this.replyMessageService = replyMessageService;
         this.messageService = messageService;
+        this.textPostService = textPostService;
+        this.photoPostService = photoPostService;
     }
 
     /**
@@ -99,5 +105,19 @@ public class Page {
      */
     public MessageService getMessageService() {
         return messageService;
+    }
+
+    /**
+     * @return TextPostService, representing the Service concerned with the Test Posts data
+     */
+    public TextPostService getTextPostService() {
+        return textPostService;
+    }
+
+    /**
+     * @return PhotoPostService, representing the Service concerned with the Photo Posts data
+     */
+    public PhotoPostService getPhotoPostService() {
+        return photoPostService;
     }
 }

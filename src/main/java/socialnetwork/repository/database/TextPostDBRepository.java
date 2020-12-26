@@ -1,7 +1,6 @@
 package socialnetwork.repository.database;
 
 import org.postgresql.util.PSQLException;
-import socialnetwork.domain.posts.Post;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.repository.Repository;
 
@@ -65,6 +64,27 @@ public class TextPostDBRepository implements Repository<Long, TextPost> {
             throwables.printStackTrace();
         }
         return textPostsList;
+    }
+
+    /**
+     * Method that gets the list of all Text Posts of a User
+     * @param idUser Long, representing the ID of the User
+     * @return Iterable<TextPost>, representing the list of all Text Posts in descending order by Date
+     */
+    public Iterable<TextPost> findAll(Long idUser) {
+        List<TextPost> textPostsLists = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM \"textPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC";
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                textPostsLists.add(getTextPost(resultSet));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return textPostsLists;
     }
 
     /**

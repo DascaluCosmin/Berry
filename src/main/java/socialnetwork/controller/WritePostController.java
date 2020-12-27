@@ -6,6 +6,8 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import socialnetwork.domain.Page;
 import socialnetwork.domain.posts.TextPost;
+import socialnetwork.utils.events.TextPostEvent;
+import socialnetwork.utils.observer.Observer;
 
 import java.time.LocalDate;
 

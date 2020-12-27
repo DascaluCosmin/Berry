@@ -33,6 +33,24 @@
     -fx-background-color: #333A83;
 }
 
+#buttonGeneratePDFReport {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonGeneratePDFReport:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonGenerateHTMLReport {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonGenerateHTMLReport:hover {
+    -fx-background-color: #333A83;
+}
+
 #buttonStPostProfile {
     -fx-background-color: white;
     -fx-background-radius: 15px;
@@ -42,3 +60,52 @@
     -fx-background-color: white;
     -fx-background-radius: 15px;
 }
+
+/* STATISTICS START */
+
+#labelIntroduceYear {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#labelIntroduceTimeInterval {
+    -fx-font-size: 19.5px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#labelStartDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelEndDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelYear {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#datePickerStartDate:focused {
+    -fx-background-color: #DAE2F8;
+    -fx-text-fill: #40457B;
+}
+
+#datePickerEndDate:focused {
+    -fx-background-color: #DAE2F8;
+    -fx-text-fill: #40457B;
+}
+
+#textFieldYear:focused {
+    -fx-background-color: #40457B;
+    -fx-text-fill: #DAE2F8;
+}
+
+/* STATISTICS END */

@@ -1,14 +1,20 @@
 package socialnetwork.service;
 
+import javafx.collections.ObservableList;
 import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.repository.database.TextPostDBRepository;
+import socialnetwork.utils.events.ChangeEventType;
+import socialnetwork.utils.events.TextPostEvent;
+import socialnetwork.utils.observer.Observable;
+import socialnetwork.utils.observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextPostService {
+public class TextPostService implements Observable<TextPostEvent> {
     private final TextPostDBRepository textPostDBRepository;
+    private List<Observer<TextPostEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new TextPostService
@@ -25,7 +31,11 @@ public class TextPostService {
      *      non-null TextPost, otherwise
      */
     public TextPost addTextPost(TextPost textPostToBeAdded) {
-        return textPostDBRepository.save(textPostToBeAdded);
+        TextPost textPost = textPostDBRepository.save(textPostToBeAdded);
+        if (textPost == null) {
+            notifyAll(new TextPostEvent(ChangeEventType.ADD));
+        }
+        return textPost;
     }
 
     /**
@@ -78,5 +88,32 @@ public class TextPostService {
      */
     public TextPost getTextPost(Long idTextPost) {
         return textPostDBRepository.findOne(idTextPost);
+    }
+
+    /**
+     * Overridden method that adds a new Observer to the list of Observers
+     * @param observer Observer<TextPostEvent>, representing the Observer to be added
+     */
+    @Override
+    public void addObserver(Observer<TextPostEvent> observer) {
+        observers.add(observer);
+    }
+
+    /**
+     * Overridden method that deletes an Observer from the list of Observers
+     * @param observer Observer<TextPostEvent>, representing the Observer to be removed
+     */
+    @Override
+    public void removeObserver(Observer<TextPostEvent> observer) {
+        observers.remove(observer);
+    }
+
+    /**
+     * Method that notifies all of the Observer that an event has occurred
+     * @param textPostEvent TextPostEvent, representing the event that has occurred
+     */
+    @Override
+    public void notifyAll(TextPostEvent textPostEvent) {
+        observers.forEach(observer -> observer.update(textPostEvent));
     }
 }

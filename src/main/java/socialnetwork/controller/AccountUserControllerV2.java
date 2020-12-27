@@ -1,11 +1,12 @@
 package socialnetwork.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
@@ -14,25 +15,29 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import socialnetwork.domain.ContentPage;
-import socialnetwork.domain.Page;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.util.ResourceUtils;
+import socialnetwork.domain.*;
 import javafx.scene.image.ImageView;
-import socialnetwork.domain.ProfilePhotoUser;
+import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.utils.ChangeProfilePhotoRound;
+import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
+import socialnetwork.utils.events.TextPostEvent;
+import socialnetwork.utils.observer.Observer;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
-public class AccountUserControllerV2 {
+public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private List<ImageView> listImageViewProfile;
     private List<Button> listButtonProfile;
     private Page userPage;
@@ -42,16 +47,6 @@ public class AccountUserControllerV2 {
     private ContentPage pagePhotoPostProfile = new ContentPage(4, 1);
     private ContentPage pageTextPostProfile = new ContentPage(2, 1);
 
-    @FXML
-    Label labelRealName;
-    @FXML
-    Label labelUsername;
-    @FXML
-    Pane statisticsPane;
-    @FXML
-    Pane profilePane;
-    @FXML
-    Pane feedPane;
     @FXML
     ImageView stImageView;
     @FXML
@@ -64,21 +59,9 @@ public class AccountUserControllerV2 {
     ImageView fifthImageView;
     @FXML
     ImageView sixthImageView;
-    @FXML
-    ImageView imageViewProfilePhoto;
-    @FXML
-    ImageView stImageViewProfile;
-    @FXML
-    ImageView ndImageViewProfile;
-    @FXML
-    ImageView rdImageViewProfile;
-    @FXML
-    ImageView fourthImageViewProfile;
-    @FXML
-    Button buttonStPostProfile;
-    @FXML
-    Button buttonNdPostProfile;
 
+
+    // INITIALIZE
     @FXML
     public void initialize() {
         currentPane = feedPane;
@@ -98,6 +81,7 @@ public class AccountUserControllerV2 {
      */
     public void setUserPage(Page userPage) {
         this.userPage = userPage;
+        userPage.getTextPostService().addObserver(this);
         initializeSliderPane();
     }
 
@@ -113,6 +97,29 @@ public class AccountUserControllerV2 {
      */
     public void setLoginStage(Stage loginStage) {
         this.loginStage = loginStage;
+    }
+
+    // SLIDER PANE
+    @FXML
+    Label labelRealName;
+    @FXML
+    Label labelUsername;
+    @FXML
+    Pane statisticsPane;
+    @FXML
+    Pane profilePane;
+    @FXML
+    Pane feedPane;
+
+    /**
+     * Method that initializes the Slider Pane.
+     * It sets the labelRealName, labelUserName and imageViewProfilePhoto
+     */
+    private void initializeSliderPane() {
+        labelRealName.setText(userPage.getUserDTO().getFullName());
+        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
+        ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
+        changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
     }
 
     /**
@@ -140,6 +147,8 @@ public class AccountUserControllerV2 {
         currentPane.setVisible(false);
         currentPane = statisticsPane;
         currentPane.setVisible(true);
+        setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), 2020), 2020, "messages");
+        setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), 2020), 2020, "friendships");
     }
 
     /**
@@ -164,6 +173,22 @@ public class AccountUserControllerV2 {
         setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
         setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
+
+    // PROFILE PANE
+    @FXML
+    ImageView imageViewProfilePhoto;
+    @FXML
+    ImageView stImageViewProfile;
+    @FXML
+    ImageView ndImageViewProfile;
+    @FXML
+    ImageView rdImageViewProfile;
+    @FXML
+    ImageView fourthImageViewProfile;
+    @FXML
+    Button buttonStPostProfile;
+    @FXML
+    Button buttonNdPostProfile;
 
     /**
      * Method that sets an ImageView, making the Photo corresponding to the path round bordered
@@ -209,6 +234,8 @@ public class AccountUserControllerV2 {
             ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(selectedPhotoURL);
             newProfilePhotoUser.setId(userPage.getUser().getId());
             userPage.getProfilePhotoUserService().updateProfilePhotoUser(newProfilePhotoUser);
+            ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
+            changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
         }
     }
 
@@ -226,6 +253,7 @@ public class AccountUserControllerV2 {
             if (userPage.getPhotoPostService().addPhotoPost(photoPost) == null) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The photo was added successfully!");
                 alert.show();
+                setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "There was an error adding your photo. Please try again!");
                 alert.show();
@@ -323,13 +351,130 @@ public class AccountUserControllerV2 {
     }
 
     /**
-     * Method that initializes the Slider Pane.
-     * It sets the labelRealName, labelUserName and imageViewProfilePhoto
+     * Overridden method that updates the Text Posts on the current Page
+     * @param textPostEvent TextPostEvent, representing the Event corresponding to the changes in Text Post Data
      */
-    private void initializeSliderPane() {
-        labelRealName.setText(userPage.getUserDTO().getFullName());
-        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
-        ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
-        changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
+    @Override
+    public void update(TextPostEvent textPostEvent) {
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
+
+    // STATISTICS PANE
+    @FXML
+    DatePicker datePickerStartDate;
+    @FXML
+    DatePicker datePickerEndDate;
+    @FXML
+    TextField textFieldYear;
+    @FXML
+    PieChart pieChartMessages;
+    @FXML
+    PieChart pieChartFriendships;
+
+    /**
+     * Method that generates a Report about the User activity in a Date Period
+     * @param typeReport TypeReport, representing the Type of the Report - PDF or HTML
+     */
+    private void generateReport(TypeReport typeReport) {
+        LocalDate dateStart = datePickerStartDate.getValue();
+        LocalDate dateEnd = datePickerEndDate.getValue();
+        if (!ValidatorDates.validateDates(dateStart, dateEnd)) {
+            return;
+        }
+        List<Message> messageList = userPage.getMessageService().getListAllMessagesToUserTimeInterval(
+                userPage.getUserDTO().getId(), dateStart, dateEnd
+        );
+        List<Friendship> friendshipList = userPage.getFriendshipService().getListAllFriendshipsUserTimeInterval(
+                userPage.getUserDTO().getId(), dateStart, dateEnd
+        );
+        if (messageList.size() == 0) { // No messages in that Date Period
+            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
+        }
+        try {
+            File file = ResourceUtils.getFile("classpath:report.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(messageList);
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("UserReport", userPage.getUserDTO().getFullName() + "'s Report");
+            parameters.put("StatisticsFriendsMessages", "You befriended " + friendshipList.size() +
+                    " people and received " + messageList.size() + " messages");
+            parameters.put("DatePeriodReport", "Date Period: " + dateStart + " - " + dateEnd);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            String pathToGenerateTo = "C:\\Users\\dasco\\" + userPage.getUserDTO().getFullName().replace(' ', '_');
+            if (typeReport == TypeReport.PDF) {
+                JasperExportManager.exportReportToPdfFile(jasperPrint, pathToGenerateTo + "Report.pdf");
+            } else if (typeReport == TypeReport.HTML) {
+                JasperExportManager.exportReportToHtmlFile(jasperPrint, pathToGenerateTo + "Report.html");
+            }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The report has been generated successfully!");
+            alert.show();
+        } catch (FileNotFoundException | JRException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method linked to the buttonGeneratePDFReport's onMouseClicked event
+     * It generates a new PDF Report about the User's activity
+     */
+    public void generatePDFReport() {
+        generateReport(TypeReport.PDF);
+    }
+
+    /**
+     * Method linked to the buttonGenerateHTMLReport's onMouseClicked event
+     * It generates a new HTML Report about the User's activity
+     */
+    public void generateHTMLReport() {
+        generateReport(TypeReport.HTML);
+    }
+
+    /**
+     * Method linked to the textFieldYear's onKeyTyped event
+     * It displays the two Pie Charts - received Messages and new Friendships for a typed Year
+     */
+    public void eventShowGraphs() {
+        if (textFieldYear.getText().length() >= 4) {
+            try {
+                Integer year = Integer.parseInt(textFieldYear.getText());
+                setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), year), year, "messages");
+                setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), year), year, "friendships");
+            } catch (NumberFormatException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Introduce a valid year!");
+                alert.show();
+            }
+        } else {
+            pieChartMessages.setTitle("");
+            pieChartMessages.setData(FXCollections.emptyObservableList());
+            pieChartFriendships.setTitle("");
+            pieChartFriendships.setData(FXCollections.emptyObservableList());
+        }
+    }
+
+    /**
+     * @param pieChart PieChart, representing the Pie Chart to be set
+     * @param mapData Map<String, Integer>, representing a Map mapping a String (Month in String Format) to a Quantity
+     * @param year Integer, representing the Year the observations were made
+     * @param entitiesString String, representing the type of entities observed
+     */
+    private void setPieChart(PieChart pieChart, Map<String, Integer> mapData, Integer year, String entitiesString) {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        mapData.entrySet().removeIf(entry -> entry.getValue() == 0); // Remove the months with 0 entities
+        mapData.keySet().forEach(key -> {
+            int number = mapData.get(key);
+            String text = key + ": " + number + " " + entitiesString;
+            pieChartData.add(new PieChart.Data(text, number));
+        });
+        if (mapData.keySet().size() == 0) { // Don't show the pie chart if there is no data for that year
+            pieChart.setTitle("");
+            pieChart.setData(FXCollections.emptyObservableList());
+        } else {
+            pieChart.setData(pieChartData);
+            pieChart.setClockwise(true);
+            pieChart.setStartAngle(180);
+            pieChart.setLabelLineLength(15);
+            pieChart.setTitle(entitiesString.substring(0, 1).toUpperCase() + entitiesString.substring(1) + " in " + year);
+        }
+    }
+
 }

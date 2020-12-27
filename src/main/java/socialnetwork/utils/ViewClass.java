@@ -16,6 +16,13 @@ public class ViewClass {
     private double xOffset = 0;
     private double yOffset = 0;
 
+    /**
+     * Method that initializes a View.
+     * It makes the Stage movable and transparent
+     * @param primaryStage Stage, representing the Stage to be initialized
+     * @param loader FXMLLoader, representing the Loader of the View
+     * @throws IOException
+     */
     public void initView(Stage primaryStage, FXMLLoader loader) throws IOException {
         Parent root = loader.load();
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -36,7 +43,7 @@ public class ViewClass {
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo2.png")));
         primaryStage.setScene(scene);
     }
 }

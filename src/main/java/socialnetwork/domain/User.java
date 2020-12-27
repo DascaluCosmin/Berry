@@ -73,11 +73,8 @@ public class User extends Entity<Long>{
             }
             contor.getAndIncrement();
         });
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", friends='" + friendsString + '\'' +
-                '}';
+        return "User: ID = " + getId() + " " + ", First Name = " + getFirstName() + ", Last Name = " + getLastName() +
+                ", List Friends = " + friendsString;
     }
 
     /**

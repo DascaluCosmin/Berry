@@ -46,7 +46,7 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Label fx:id="labelNotifications" alignment="CENTER" layoutX="620.0" layoutY="13.0" prefHeight="20.0" prefWidth="13.0">
@@ -124,16 +124,16 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+      <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
             <Label fx:id="labelExitApplicationProfile" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <ImageView fx:id="stImageViewProfile" fitHeight="250.0" fitWidth="200.0" layoutX="27.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="ndImageViewProfile" fitHeight="266.0" fitWidth="200.0" layoutX="27.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="rdImageViewProfile" fitHeight="321.0" fitWidth="200.0" layoutX="243.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="fourthImageViewProfile" fitHeight="198.0" fitWidth="200.0" layoutX="243.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="fifthImageViewProfile" fitHeight="185.0" fitWidth="200.0" layoutX="459.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView fx:id="sixthImageViewProfile" fitHeight="333.0" fitWidth="200.0" layoutX="459.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="labelGoBackProfile" alignment="CENTER" layoutX="17.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0">
+            <ImageView fx:id="rdImageViewProfile" fitHeight="266.0" fitWidth="200.0" layoutX="27.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="fourthImageViewProfile" fitHeight="321.0" fitWidth="200.0" layoutX="243.0" layoutY="301.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="198.0" fitWidth="200.0" layoutX="243.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="185.0" fitWidth="200.0" layoutX="459.0" layoutY="437.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="ndImageViewProfile" fitHeight="333.0" fitWidth="200.0" layoutX="459.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="labelGoBackProfile" alignment="CENTER" layoutX="17.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0" onMouseClicked="#eventGoBackProfile">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -142,7 +142,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelGoNextProfile" alignment="CENTER" layoutX="649.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0">
+            <Label fx:id="labelGoNextProfile" alignment="CENTER" layoutX="649.0" layoutY="655.0" prefHeight="21.0" prefWidth="20.0" onMouseClicked="#eventGoNextProfile">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>

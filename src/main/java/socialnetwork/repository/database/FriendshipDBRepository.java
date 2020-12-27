@@ -2,6 +2,7 @@ package socialnetwork.repository.database;
 
 import jdk.vm.ci.meta.Local;
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.Tuple;
 import socialnetwork.repository.Repository;
@@ -55,6 +56,28 @@ public class FriendshipDBRepository implements Repository<Tuple<Long, Long>, Fri
         List<Friendship> listFriendships = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)){
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM friendships");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                listFriendships.add(getFriendship(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listFriendships;
+    }
+
+    /**
+     * Method that gets the list of all Friendships of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param currentPage ContentPage, representing the Page containing the Friendships
+     * @return Iterable<Friendship>, representing the Friendships of the User on that Page
+     */
+    public Iterable<Friendship> findAll(Long idUser, ContentPage currentPage) {
+        List<Friendship> listFriendships = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM friendships WHERE \"idLeft\" = " + idUser + " LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 listFriendships.add(getFriendship(resultSet));

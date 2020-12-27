@@ -1,6 +1,7 @@
 package socialnetwork.repository.database;
 
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.User;
 import socialnetwork.domain.validators.Validator;
 import socialnetwork.repository.Repository;
@@ -30,12 +31,7 @@ public class UserDBRepository implements Repository<Long, User> {
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                Long idUser = resultSet.getLong("id");
-                String firstName = resultSet.getString("firstName");
-                String lastName = resultSet.getString("lastName");
-                User user = new User(firstName, lastName);
-                user.setId(idUser);
-                return user;
+               return getUser(resultSet);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -50,14 +46,31 @@ public class UserDBRepository implements Repository<Long, User> {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long idUser = resultSet.getLong("id");
-                String firstNameUser = resultSet.getString("firstName");
-                String lastNameUser = resultSet.getString("lastName");
-                User user = new User(firstNameUser, lastNameUser);
-                user.setId(idUser);
-                userList.add(user);
+                userList.add(getUser(resultSet));
             }
             return userList;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return userList;
+    }
+
+    /**
+     * Method that gets the list of all Users on a specific Page
+     * @param currentPage ContentPage, representing the Page containing the Users
+     * @return Iterable<User>, representing the list of Users on that Page
+     */
+    public Iterable<User> findAll(ContentPage currentPage) {
+        List<User> userList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM users LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                userList.add(getUser(resultSet));
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -76,18 +89,12 @@ public class UserDBRepository implements Repository<Long, User> {
                 command = "INSERT INTO users (id, \"firstName\", \"lastName\") VALUES " +
                           "(" + entity.getId() + ", '" + entity.getFirstName() + "', '" + entity.getLastName() + "') " +
                           "RETURNING *";
-
             }
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             try {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    Long idUser = resultSet.getLong("id");
-                    String firstName = resultSet.getString("firstName");
-                    String lastName = resultSet.getString("lastName");
-                    User addedUser = new User(firstName, lastName);
-                    addedUser.setId(idUser);
-                    return addedUser;
+                   return getUser(resultSet);
                 }
             } catch (PSQLException e) {
                 return entity;
@@ -105,11 +112,7 @@ public class UserDBRepository implements Repository<Long, User> {
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                String firstName = resultSet.getString("firstName");
-                String lastName = resultSet.getString("lastName");
-                User user = new User(firstName, lastName);
-                user.setId(aLong);
-                return user;
+                return getUser(resultSet);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -133,5 +136,20 @@ public class UserDBRepository implements Repository<Long, User> {
             throwables.printStackTrace();
         }
         return entity;
+    }
+
+    /**
+     * Method that gets an User from the current position of the Result Set
+     * @param resultSet ResultSet, representing the Result Set
+     * @return User, representing the User built from the current position of the Result Set
+     * @throws SQLException
+     */
+    private User getUser(ResultSet resultSet) throws SQLException {
+        Long userID = resultSet.getLong("id");
+        String firstName = resultSet.getString("firstName");
+        String lastName = resultSet.getString("lastName");
+        User user = new User(firstName, lastName);
+        user.setId(userID);
+        return user;
     }
 }

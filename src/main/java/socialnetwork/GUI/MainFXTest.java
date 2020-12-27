@@ -42,16 +42,16 @@ public class MainFXTest extends Application {
     }
 
     public static void main(String[] args) {
-        String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
-        String username = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.username");
-        String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
-        String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
-        Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
-        Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
-                new FriendshipValidator(userRepository), userRepository);
-        userService = new UserService(userRepository, friendshipFileRepository);
-        ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
-        replyMessageService = new ReplyMessageService(replyMessageRepository);
+//        String fileNameFriendships = ApplicationContext.getPROPERTIES().getProperty("data.socialnetwork.friendships");
+//        String username = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.username");
+//        String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
+//        String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
+//        Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
+//        Repository<Tuple<Long, Long>, Friendship> friendshipFileRepository = new FriendshipFileRepository(fileNameFriendships,
+//                new FriendshipValidator(userRepository), userRepository);
+//        userService = new UserService(userRepository, friendshipFileRepository);
+//        ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
+//        replyMessageService = new ReplyMessageService(replyMessageRepository);
         launch(args);
     }
 }

@@ -1,6 +1,7 @@
 package socialnetwork.repository.database;
 
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.repository.Repository;
 
@@ -74,7 +75,7 @@ public class TextPostDBRepository implements Repository<Long, TextPost> {
     public Iterable<TextPost> findAll(Long idUser) {
         List<TextPost> textPostsLists = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String command = "SELECT * FROM \"textPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC";
+            String command = "SELECT * FROM \"textPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC ";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
@@ -85,6 +86,30 @@ public class TextPostDBRepository implements Repository<Long, TextPost> {
             throwables.printStackTrace();
         }
         return textPostsLists;
+    }
+
+    /**
+     * Method that gets the list of all Text Posts of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param currentPage ContentPage, representing the Page containing the Text Posts
+     * @return Iterable<TextPost>, representing the list of Text Posts of the User on that Page
+     *      in descending order by Date
+     */
+    public Iterable<TextPost> findAll(Long idUser, ContentPage currentPage) {
+        List<TextPost> textPostList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM \"textPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC" +
+                    " LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                textPostList.add(getTextPost(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return textPostList;
     }
 
     /**

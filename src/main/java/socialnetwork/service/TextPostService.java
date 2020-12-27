@@ -1,5 +1,6 @@
 package socialnetwork.service;
 
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.repository.database.TextPostDBRepository;
 
@@ -38,8 +39,8 @@ public class TextPostService {
     }
 
     /**
-     * Method that gets the list of text posts
-     * @return List<TextPost>, representing the list of text posts
+     * Method that gets the list of Text Posts
+     * @return List<TextPost>, representing the list of Text Posts
      */
     public List<TextPost> getListTextPosts() {
         List<TextPost> listTextPosts = new ArrayList<>();
@@ -48,13 +49,25 @@ public class TextPostService {
     }
 
     /**
-     * Method that gets the list of text posts of a User
-     * @param idUser List<TextPost>, representing the list of text posts in descending order by Date
-     * @return
+     * Method that gets the list of Text Posts of a User
+     * @param idUser List<TextPost>, representing the list of Text Posts in descending order by Date
+     * @return List<TextPost>, representing the list of Text Posts
      */
     public List<TextPost> getListTextPosts(Long idUser) {
         List<TextPost> listTextPosts = new ArrayList<>();
         textPostDBRepository.findAll(idUser).forEach(listTextPosts::add);
+        return listTextPosts;
+    }
+
+    /**
+     * Method that gets the list of Text Posts of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Text Posts
+     * @return List<TextPost>, representing the list of Text Posts on that Page
+     */
+    public List<TextPost> getListTextPosts(Long idUser, ContentPage page) {
+        List<TextPost> listTextPosts = new ArrayList<>();
+        textPostDBRepository.findAll(idUser, page).forEach(listTextPosts::add);
         return listTextPosts;
     }
 

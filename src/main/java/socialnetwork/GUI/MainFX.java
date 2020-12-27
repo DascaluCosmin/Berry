@@ -83,8 +83,8 @@ public class MainFX extends Application {
         String password = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.password");
         String url = ApplicationContext.getPROPERTIES().getProperty("database.socialnetwork.url");
         // Repositories
-        Repository<Long, User> userRepository = new UserDBRepository(url, username, password);
-        Repository<Tuple<Long, Long>, Friendship> friendshipRepository = new FriendshipDBRepository(url, username, password);
+        UserDBRepository userRepository = new UserDBRepository(url, username, password);
+        FriendshipDBRepository friendshipRepository = new FriendshipDBRepository(url, username, password);
         MessagesDBRepository messageRepository = new MessagesDBRepository(url, username, password, userRepository);
         ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
         Repository<Long, FriendshipRequest> friendshipRequestDBRepository = new FriendshipRequestsDBRepository(url, username,

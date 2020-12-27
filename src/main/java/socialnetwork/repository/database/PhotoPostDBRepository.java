@@ -1,6 +1,7 @@
 package socialnetwork.repository.database;
 
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.repository.Repository;
 
@@ -78,6 +79,30 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
+                photoPostList.add(getPhotoPost(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return photoPostList;
+    }
+
+    /**
+     * Method that gets the list of all Photo Posts of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param currentPage ContentPage, representing the Page containing the Photo Posts
+     * @return Iterable<PhotoPost>, representing the list of Photo Posts of the User on that Page
+     *      in descending order by Date
+     */
+    public Iterable<PhotoPost> findAll(Long idUser, ContentPage currentPage) {
+        List<PhotoPost> photoPostList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * FROM \"photoPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC" +
+                    " LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 photoPostList.add(getPhotoPost(resultSet));
             }
         } catch (SQLException throwables) {

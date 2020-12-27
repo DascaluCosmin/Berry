@@ -1,0 +1,18 @@
+#buttonPost {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonPost:hover {
+    -fx-background-color: #333A83;
+}
+
+#textAreaPost {
+    text-area-background: #40457B;
+    -fx-text-fill: white;
+    -fx-background-color: white;
+}
+
+.text-area .content {
+    -fx-background-color: text-area-background;
+}

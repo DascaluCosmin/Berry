@@ -1,8 +1,10 @@
 package socialnetwork.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -10,17 +12,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import socialnetwork.config.Config;
 import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.Page;
 import javafx.scene.image.ImageView;
 import socialnetwork.domain.ProfilePhotoUser;
 import socialnetwork.domain.posts.PhotoPost;
+import socialnetwork.domain.posts.TextPost;
+import socialnetwork.utils.ChangeProfilePhotoRound;
+import socialnetwork.utils.ViewClass;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,11 +34,13 @@ import java.util.List;
 
 public class AccountUserControllerV2 {
     private List<ImageView> listImageViewProfile;
+    private List<Button> listButtonProfile;
     private Page userPage;
     private Stage accountUserStage;
     private Stage loginStage;
     private Pane currentPane;
-    private ContentPage pagePhotoProfile = new ContentPage(4, 1);
+    private ContentPage pagePhotoPostProfile = new ContentPage(4, 1);
+    private ContentPage pageTextPostProfile = new ContentPage(2, 1);
 
     @FXML
     Label labelRealName;
@@ -57,7 +65,7 @@ public class AccountUserControllerV2 {
     @FXML
     ImageView sixthImageView;
     @FXML
-    ImageView imageViewChangeProfilePhoto;
+    ImageView imageViewProfilePhoto;
     @FXML
     ImageView stImageViewProfile;
     @FXML
@@ -66,12 +74,17 @@ public class AccountUserControllerV2 {
     ImageView rdImageViewProfile;
     @FXML
     ImageView fourthImageViewProfile;
+    @FXML
+    Button buttonStPostProfile;
+    @FXML
+    Button buttonNdPostProfile;
 
     @FXML
     public void initialize() {
         currentPane = feedPane;
         listImageViewProfile = new ArrayList<>(Arrays.asList(stImageViewProfile, ndImageViewProfile,
                 rdImageViewProfile, fourthImageViewProfile));
+        listButtonProfile = new ArrayList<>(Arrays.asList(buttonStPostProfile, buttonNdPostProfile));
         setImageView(stImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\larisuuuca.png");
         setImageView(ndImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\mariabun.jpg");
         setImageView(rdImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\carina.png");
@@ -85,8 +98,7 @@ public class AccountUserControllerV2 {
      */
     public void setUserPage(Page userPage) {
         this.userPage = userPage;
-        labelRealName.setText(userPage.getUser().getFullName());
-        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
+        initializeSliderPane();
     }
 
     /**
@@ -148,8 +160,9 @@ public class AccountUserControllerV2 {
         currentPane.setVisible(false);
         currentPane = profilePane;
         currentPane.setVisible(true);
-        pagePhotoProfile.setNumberPage(1); // Resets the Posts of the User to the first Page
-        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoProfile));
+        pagePhotoPostProfile.setNumberPage(1); // Resets the Posts of the User to the first Page
+        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
 
     /**
@@ -221,12 +234,31 @@ public class AccountUserControllerV2 {
     }
 
     /**
+     * Method linked to the buttonWritePost's onMouseClicked event
+     * It opens up a new Stage where the User can Write a Post
+     */
+    public void eventWritePost() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/views/writePostView.fxml"));
+        Stage writePostStage = new Stage();
+        ViewClass viewClass = new ViewClass();
+        viewClass.initView(writePostStage, loader);
+        WritePostController writePostController = loader.getController();
+        writePostController.setUserPage(userPage);
+        writePostController.setWritePostStage(writePostStage);
+        writePostStage.initModality(Modality.APPLICATION_MODAL);
+        writePostStage.show();
+    }
+
+    /**
      * Method linked to the labelGoNextProfile's onMouseClicked event
      * It shows the Posts of the User on the next Page
      */
     public void eventGoNextProfile() {
-        pagePhotoProfile.nextPage();
-        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoProfile));
+        pagePhotoPostProfile.nextPage();
+        pageTextPostProfile.nextPage();
+        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
 
     /**
@@ -234,9 +266,15 @@ public class AccountUserControllerV2 {
      * It shows the Posts of the User on the previous Page
      */
     public void eventGoBackProfile() {
-        pagePhotoProfile.previousPage();
-        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoProfile));
-        // TODO: ALERT GO BACK PAGE ALREADY 1
+        if (pagePhotoPostProfile.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pagePhotoPostProfile.previousPage();
+            pageTextPostProfile.previousPage();
+            setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+            setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
+        }
     }
 
     /**
@@ -268,5 +306,30 @@ public class AccountUserControllerV2 {
         for (int i = 0; i < listPhotoPosts.size(); i++) {
             setImageView(listImageViewProfile.get(i), listPhotoPosts.get(i).getPhotoURL());
         }
+    }
+
+    /**
+     * Method that sets the Buttons used for Text Posts on the Profile Pane with some Text
+     * @param listTextPosts List<TextPosts>, representing the Text Posts whose Texts are to be set to the Buttons
+     *    its size can't be greater than 2 since a Page contains 2 Text Posts
+     */
+    private void setButtonProfile(List<TextPost> listTextPosts) {
+        // First, reset the Buttons
+        listButtonProfile.forEach(button -> button.setVisible(false));
+        for (int i = 0; i < listTextPosts.size(); i++) {
+            listButtonProfile.get(i).setVisible(true);
+            listButtonProfile.get(i).setText(listTextPosts.get(i).getText());
+        }
+    }
+
+    /**
+     * Method that initializes the Slider Pane.
+     * It sets the labelRealName, labelUserName and imageViewProfilePhoto
+     */
+    private void initializeSliderPane() {
+        labelRealName.setText(userPage.getUserDTO().getFullName());
+        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
+        ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
+        changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
     }
 }

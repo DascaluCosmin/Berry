@@ -3,7 +3,7 @@ package socialnetwork.domain;
 import socialnetwork.service.*;
 
 public class Page {
-    private UserDTO user;
+    private UserDTO userDTO;
     private UserService userService;
     private FriendshipService friendshipService;
     private FriendshipRequestService friendshipRequestService;
@@ -16,7 +16,7 @@ public class Page {
 
     /**
      * Constructor that creates a new Page
-     * @param user UserDTO, representing the User linked to the Page
+     * @param userDTO UserDTO, representing the User linked to the Page
      * @param userService UserService, representing the Service concerned with the Users data
      * @param friendshipService FriendshipService, representing the Service concerned with the Friendships data
      * @param friendshipRequestService FriendshipRequestService, representing the Service
@@ -28,11 +28,11 @@ public class Page {
      * @param textPostService TextPostService, representing the Service concerned with the Text Posts data
      * @param photoPostService PhotoPostService, representing the Service concerned with the Photo Posts data
      */
-    public Page(UserDTO user, UserService userService, FriendshipService friendshipService,
+    public Page(UserDTO userDTO, UserService userService, FriendshipService friendshipService,
                 FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
                 UserCredentialsService userCredentialsService, ReplyMessageService replyMessageService,
                 MessageService messageService, TextPostService textPostService, PhotoPostService photoPostService) {
-        this.user = user;
+        this.userDTO = userDTO;
         this.userService = userService;
         this.friendshipService = friendshipService;
         this.friendshipRequestService = friendshipRequestService;
@@ -48,14 +48,21 @@ public class Page {
      * @param user UserDTO, representing the new User linked to the Page
      */
     public void setUser(UserDTO user) {
-        this.user = user;
+        this.userDTO = user;
     }
 
     /**
-     * @return UserDTO, representing the User linked to the Page
+     * @return UserDTO, representing the UserDTO linked to the Page
      */
-    public UserDTO getUser() {
-        return user;
+    public UserDTO getUserDTO() {
+        return userDTO;
+    }
+
+    /**
+     * @return User, representing the User linked to the Page
+     */
+    public User getUser() {
+        return userService.getUser(userDTO.getId());
     }
 
     /**

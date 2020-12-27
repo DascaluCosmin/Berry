@@ -32,3 +32,13 @@
 #buttonWritePost:hover {
     -fx-background-color: #333A83;
 }
+
+#buttonStPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}

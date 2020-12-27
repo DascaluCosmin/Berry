@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: transparent" stylesheets="/css/writePostView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.WritePostController">
+   <children>
+      <Label alignment="CENTER" prefHeight="415.0" prefWidth="630.0">
+         <graphic>
+            <ImageView fitHeight="230.0" fitWidth="418.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/WritePostBackground.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <TextArea fx:id="textAreaPost" layoutX="127.0" layoutY="123.0" prefHeight="150.0" prefWidth="355.0" stylesheets="@../css/writePostView.css" />
+      <Button fx:id="buttonPost" layoutX="391.0" layoutY="283.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="92.0" stylesheets="@../css/writePostView.css" text="Post" textFill="WHITE" onMouseClicked="#eventPost"/>
+      <Label fx:id="labelExit" layoutX="489.0" layoutY="97.0" onMouseClicked="#eventExitView" prefHeight="18.0" prefWidth="26.0">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ExitSign.png" />
+               </image></ImageView>
+         </graphic>
+      </Label>
+      <Label contentDisplay="CENTER" layoutX="126.0" layoutY="98.0" prefHeight="26.0" prefWidth="92.0" text="Write Post">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

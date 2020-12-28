@@ -186,6 +186,12 @@ public class LoginController {
         } else if (password.contains(" ")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "The password can't contain blank spaces!");
             alert.show();
+        } else if (username.length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The username has to be at least 4 characters long!");
+            alert.show();
+        } else if (password.length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The password has to be at least 4 characters long!");
+            alert.show();
         } else {
             User userToBeAdded = userService.addUser(new User(firstName, lastName));
             Long idUser = userToBeAdded.getId();

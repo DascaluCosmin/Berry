@@ -91,6 +91,15 @@ public class TextPostService implements Observable<TextPostEvent> {
     }
 
     /**
+     * Method that gets the number of Text Posts an User has
+     * @param idUser Long, representing the ID of the User
+     * @return Integer, representing the number of Text Posts the User has
+     */
+    public Integer getNumberTextPosts(Long idUser) {
+        return getListTextPosts(idUser).size();
+    }
+
+    /**
      * Overridden method that adds a new Observer to the list of Observers
      * @param observer Observer<TextPostEvent>, representing the Observer to be added
      */

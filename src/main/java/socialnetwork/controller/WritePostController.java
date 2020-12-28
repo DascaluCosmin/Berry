@@ -2,6 +2,7 @@ package socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import socialnetwork.domain.Page;
@@ -12,10 +13,27 @@ import socialnetwork.utils.observer.Observer;
 import java.time.LocalDate;
 
 public class WritePostController {
+    private Integer numberPosts;
+
     @FXML
     TextArea textAreaPost;
+    Label labelNumberPosts;
     Stage writePostStage;
     Page userPage;
+
+    /**
+     * @param labelNumberPosts Label, representing the label containing the number of Text Pots the User has
+     */
+    public void setLabelNumberPosts(Label labelNumberPosts) {
+        this.labelNumberPosts = labelNumberPosts;
+    }
+
+    /**
+     * @param numberPosts Integer, representing the number of Text Posts the User has
+     */
+    public void setNumberPosts(Integer numberPosts) {
+        this.numberPosts = numberPosts;
+    }
 
     /**
      * @param userPage Page, representing the Page of the logged in User.
@@ -54,6 +72,8 @@ public class WritePostController {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The post was made successfully!");
             alert.show();
             textAreaPost.clear();
+            numberPosts++;
+            labelNumberPosts.setText(numberPosts + " Posts");
         }
     }
 }

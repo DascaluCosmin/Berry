@@ -55,4 +55,11 @@ public class ContentPage {
     public void previousPage() {
         numberPage--;
     }
+
+    /**
+     * Method that sets the current Page to the first Page
+     */
+    public void setToFirstPage() {
+        numberPage = 1;
+    }
 }

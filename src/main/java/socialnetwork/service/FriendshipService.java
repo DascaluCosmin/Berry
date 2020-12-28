@@ -77,6 +77,15 @@ public class FriendshipService implements Observable<FriendshipChangeEvent> {
     }
 
     /**
+     * Method that gets the number of Friends an User has
+     * @param idUser Long, representing the ID of the User
+     * @return Integer, representing the number of Friends the User has
+     */
+    public Integer getNumberFriends(Long idUser) {
+        return getListAllFriendshipsUser(idUser).size();
+    }
+
+    /**
      * Method that gets all the existing Friendships
      * @return Iterable<Friendship>, representing all the existing Friendships
      */

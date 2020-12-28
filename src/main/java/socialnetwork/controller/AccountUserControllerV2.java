@@ -4,14 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,7 +23,6 @@ import javafx.scene.image.ImageView;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
-import socialnetwork.utils.ChangeProfilePhotoRound;
 import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
 import socialnetwork.utils.events.TextPostEvent;
@@ -38,42 +37,37 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class AccountUserControllerV2  implements Observer<TextPostEvent> {
-    private List<ImageView> listImageViewProfile;
+    private Integer numberFriends;
+    private Integer numberPosts;
+    private Integer numberPhotos;
+    private List<Rectangle> listRectanglesProfile;
+    private List<Rectangle> listRectanglesProfileFriend;
     private List<Button> listButtonProfile;
     private Page userPage;
     private Stage accountUserStage;
     private Stage loginStage;
     private Pane currentPane;
-    private ContentPage pagePhotoPostProfile = new ContentPage(4, 1);
-    private ContentPage pageTextPostProfile = new ContentPage(2, 1);
-
-    @FXML
-    ImageView stImageView;
-    @FXML
-    ImageView ndImageView;
-    @FXML
-    ImageView rdImageView;
-    @FXML
-    ImageView fourthImageView;
-    @FXML
-    ImageView fifthImageView;
-    @FXML
-    ImageView sixthImageView;
-
+    private ContentPage pagePhotoPostProfile = new ContentPage(6, 1);
+    private ContentPage pagePhotoPostProfileFriend = new ContentPage(6, 1);
+    private ContentPage pageTextPostProfile = new ContentPage(6, 1);
 
     // INITIALIZE
     @FXML
     public void initialize() {
+        buttonRemoveFriend.setVisible(false); // TODO: at production, set visibility to false in Scene Builder
+        labelFriendRealName.setVisible(false);
         currentPane = feedPane;
-        listImageViewProfile = new ArrayList<>(Arrays.asList(stImageViewProfile, ndImageViewProfile,
-                rdImageViewProfile, fourthImageViewProfile));
-        listButtonProfile = new ArrayList<>(Arrays.asList(buttonStPostProfile, buttonNdPostProfile));
-        setImageView(stImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\larisuuuca.png");
-        setImageView(ndImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\mariabun.jpg");
-        setImageView(rdImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\carina.png");
-        setImageView(fourthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\patricea.png");
-        setImageView(fifthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\sergiu1.png");
-        setImageView(sixthImageView, "C:\\Users\\dasco\\OneDrive\\Pictures\\ProfilePhotos\\elenabunbun.png");
+        listButtonProfile = new ArrayList<>(Arrays.asList(
+                buttonStPostProfile, buttonNdPostProfile, buttonRdPostProfile,
+                button4thPostProfile, button5thPostProfile, button6thPostProfile));
+        listRectanglesProfile = new ArrayList<>(Arrays.asList(
+                rectangleStPhoto, rectangleNdPhoto, rectangleRdPhoto,
+                rectangle4thPhoto, rectangle5thPhoto, rectangle6thPhoto)
+        );
+        listRectanglesProfileFriend = new ArrayList<>(Arrays.asList(
+                rectangleStPhotoFriendsFeed, rectangleNdPhotoFriendsFeed, rectangleRdPhotoFriendsFeed,
+                rectangle4thPhotoFriendsFeed, rectangle5thPhotoFriendsFeed, rectangle6thPhotoFriendsFeed
+        ));
     }
 
     /**
@@ -99,27 +93,93 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         this.loginStage = loginStage;
     }
 
+    // FEED PANE
+    @FXML
+    TextField textFieldSearchFriend;
+    @FXML
+    Label labelFriendRealName;
+    @FXML
+    Button buttonRemoveFriend;
+    @FXML
+    Pane paneFriendsProfile;
+    @FXML
+    Pane paneFriendsFeed;
+    @FXML
+    Rectangle rectangleStPhotoFriendsFeed;
+    @FXML
+    Rectangle rectangleNdPhotoFriendsFeed;
+    @FXML
+    Rectangle rectangleRdPhotoFriendsFeed;
+    @FXML
+    Rectangle rectangle4thPhotoFriendsFeed;
+    @FXML
+    Rectangle rectangle5thPhotoFriendsFeed;
+    @FXML
+    Rectangle rectangle6thPhotoFriendsFeed;
+
+    /**
+     * Method linked to the textFieldSearchFriend's onKeyTyped event
+     * It allows the User to search a Friend's Profile
+     */
+    public void eventSearchFriend() {
+        String usernameUser = textFieldSearchFriend.getText();
+        if (usernameUser.length() >= 4) {
+            UserCredentials userCredentials = userPage.getUserCredentialsService().findOne(usernameUser);
+            if (userCredentials != null) { // The User exists
+                User searchedUser = userPage.getUserService().getUser(userCredentials.getId());
+                if (userPage.getFriendshipService().findOne(userPage.getUser().getId(), searchedUser.getId()) != null) {
+                    // The two Users are friends
+                    paneFriendsProfile.setVisible(true);
+                    paneFriendsFeed.setVisible(false);
+                    buttonRemoveFriend.setVisible(true);
+                    labelFriendRealName.setVisible(true);
+                    labelFriendRealName.setText(searchedUser.getFullName());
+                    setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(searchedUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
+                }
+            }
+        } else if (usernameUser.length() == 0) {
+            buttonRemoveFriend.setVisible(false);
+            labelFriendRealName.setVisible(false);
+            paneFriendsProfile.setVisible(false);
+            paneFriendsFeed.setVisible(true);
+        }
+    }
+
     // SLIDER PANE
     @FXML
     Label labelRealName;
     @FXML
     Label labelUsername;
     @FXML
+    Label labelNumberFriends;
+    @FXML
+    Label labelNumberPosts;
+    @FXML
+    Label labelNumberPhotos;
+    @FXML
     Pane statisticsPane;
     @FXML
     Pane profilePane;
     @FXML
     Pane feedPane;
+    @FXML
+    Circle circleProfilePhoto;
 
     /**
      * Method that initializes the Slider Pane.
      * It sets the labelRealName, labelUserName and imageViewProfilePhoto
      */
     private void initializeSliderPane() {
+        numberFriends = userPage.getFriendshipService().getNumberFriends(userPage.getUser().getId());
+        numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
+        numberPhotos = userPage.getPhotoPostService().getNumberPhotoPosts(userPage.getUser().getId());
+
         labelRealName.setText(userPage.getUserDTO().getFullName());
         labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
-        ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
-        changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
+        labelNumberFriends.setText(numberFriends + " Friends");
+        labelNumberPosts.setText(numberPosts + " Posts");
+        labelNumberPhotos.setText(numberPhotos + " Photos");
+        setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
     }
 
     /**
@@ -169,53 +229,56 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = profilePane;
         currentPane.setVisible(true);
-        pagePhotoPostProfile.setNumberPage(1); // Resets the Posts of the User to the first Page
-        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+        pageTextPostProfile.setToFirstPage();
+        pagePhotoPostProfile.setToFirstPage();
+        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
         setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
 
     // PROFILE PANE
     @FXML
-    ImageView imageViewProfilePhoto;
-    @FXML
-    ImageView stImageViewProfile;
-    @FXML
-    ImageView ndImageViewProfile;
-    @FXML
-    ImageView rdImageViewProfile;
-    @FXML
-    ImageView fourthImageViewProfile;
-    @FXML
     Button buttonStPostProfile;
     @FXML
     Button buttonNdPostProfile;
+    @FXML
+    Button buttonRdPostProfile;
+    @FXML
+    Button button4thPostProfile;
+    @FXML
+    Button button5thPostProfile;
+    @FXML
+    Button button6thPostProfile;
+    @FXML
+    Rectangle rectangleStPhoto;
+    @FXML
+    Rectangle rectangleNdPhoto;
+    @FXML
+    Rectangle rectangleRdPhoto;
+    @FXML
+    Rectangle rectangle4thPhoto;
+    @FXML
+    Rectangle rectangle5thPhoto;
+    @FXML
+    Rectangle rectangle6thPhoto;
+    @FXML
+    Pane panePhotoPostsProfile;
+    @FXML
+    Pane paneTextPostsProfile;
 
     /**
-     * Method that sets an ImageView, making the Photo corresponding to the path round bordered
-     * @param imageView Imageview, representing the ImageView to be set
-     * @param pathToPhoto String, representing the path to the photo
+     * Method that sets a Shape, filling it with an Image
+     * @param shape Shape, representing the Shape to be set
+     * @param pathToPhoto String, representing the path to the Image
      */
-    private void setImageView(ImageView imageView, String pathToPhoto) {
+    private void setImage(Shape shape, String pathToPhoto) {
         try {
             FileInputStream fileInputStream = new FileInputStream(pathToPhoto);
-            Image image = new Image(fileInputStream, imageView.getFitWidth(), imageView.getFitHeight(), false, true);
-            imageView.setImage(image);
-
-            Rectangle clip = new Rectangle();
-            clip.setWidth(imageView.getFitWidth());
-            clip.setHeight(imageView.getFitHeight());
-
-            clip.setArcHeight(45);
-            clip.setArcWidth(45);
-            clip.setStroke(Color.BLACK);
-            imageView.setClip(clip);
-
-            SnapshotParameters parameters = new SnapshotParameters();
-            parameters.setFill(Color.TRANSPARENT);
-            WritableImage writableImage = imageView.snapshot(parameters, null);
-
-            imageView.setClip(null);
-            imageView.setImage(writableImage);
+            Image image = new Image(fileInputStream, 1000, 1000, false, true);
+            shape.setFill(new ImagePattern(image));
+            if (shape instanceof Rectangle) {
+                ((Rectangle) shape).setArcHeight(45);
+                ((Rectangle) shape).setArcWidth(45);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -234,8 +297,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             ProfilePhotoUser newProfilePhotoUser = new ProfilePhotoUser(selectedPhotoURL);
             newProfilePhotoUser.setId(userPage.getUser().getId());
             userPage.getProfilePhotoUserService().updateProfilePhotoUser(newProfilePhotoUser);
-            ChangeProfilePhotoRound changeProfilePhotoRound = new ChangeProfilePhotoRound();
-            changeProfilePhotoRound.changeProfilePhoto(userPage.getProfilePhotoUserService(), imageViewProfilePhoto, userPage.getUser());
+            setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
         }
     }
 
@@ -253,7 +315,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (userPage.getPhotoPostService().addPhotoPost(photoPost) == null) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The photo was added successfully!");
                 alert.show();
-                setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+                setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
+                numberPhotos++;
+                labelNumberPhotos.setText(numberPhotos + " Photos");
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "There was an error adding your photo. Please try again!");
                 alert.show();
@@ -274,7 +338,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         WritePostController writePostController = loader.getController();
         writePostController.setUserPage(userPage);
         writePostController.setWritePostStage(writePostStage);
+        writePostController.setNumberPosts(numberPosts);
+        writePostController.setLabelNumberPosts(labelNumberPosts);
         writePostStage.initModality(Modality.APPLICATION_MODAL);
+        writePostStage.setOnHiding(event -> {
+            // When closing (hiding) the Write Post Stage, we want the number of Posts to be updated
+            numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
+        });
         writePostStage.show();
     }
 
@@ -285,7 +355,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     public void eventGoNextProfile() {
         pagePhotoPostProfile.nextPage();
         pageTextPostProfile.nextPage();
-        setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
         setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
     }
 
@@ -294,15 +364,37 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Posts of the User on the previous Page
      */
     public void eventGoBackProfile() {
-        if (pagePhotoPostProfile.getNumberPage() == 1) {
+        if (pagePhotoPostProfile.getNumberPage() == 1 || pageTextPostProfile.getNumberPage() == 1) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
             alert.show();
         } else {
             pagePhotoPostProfile.previousPage();
             pageTextPostProfile.previousPage();
-            setImageViewProfile(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile));
+            setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
             setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
         }
+    }
+
+    /**
+     * Method linked to the buttonsShowProfilePhoto's onMouseClicked event
+     * It shows the Photo Posts of the User
+     */
+    public void eventShowPhotoPaneProfile() {
+        pagePhotoPostProfile.setToFirstPage();
+        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
+        panePhotoPostsProfile.setVisible(true);
+        paneTextPostsProfile.setVisible(false);
+    }
+
+    /**
+     * Method linked to the buttonsShowTextPhoto's onMouseClicked event
+     * It shows the Text Posts of the User
+     */
+    public void eventShowTextPaneProfile() {
+        pageTextPostProfile.setToFirstPage();
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile));
+        paneTextPostsProfile.setVisible(true);
+        panePhotoPostsProfile.setVisible(false);
     }
 
     /**
@@ -324,22 +416,22 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
-     * Method that sets the Image Views on the Profile Pane with some Photo Posts
-     * @param listPhotoPosts List<PhotoPost>, representing the Photo Posts to be set to the Image Views
-     *    its size can't be greater than 4 since a Page contains 4 Image Views
+     * Method that sets some Rectangles corresponding to the Photo Posts, filling them with the Photo Posts
+     * @param listPhotoPosts List<PhotoPost>, representing the Photo Posts to be filled to the Rectangles
+     *    its size can't be greater than 6 since a Page contains only 6 Photos
+     * @param listRectangles List<Rectangles>, representing the Rectangles to be filled
      */
-    private void setImageViewProfile(List<PhotoPost> listPhotoPosts) {
-        // First, reset the Image Views from the list
-        listImageViewProfile.forEach(imageView -> imageView.setImage(null));
+    private void setRectanglesPhoto(List<PhotoPost> listPhotoPosts, List<Rectangle> listRectangles) {
+        listRectangles.forEach(shape -> shape.setFill(null));
         for (int i = 0; i < listPhotoPosts.size(); i++) {
-            setImageView(listImageViewProfile.get(i), listPhotoPosts.get(i).getPhotoURL());
+            setImage(listRectangles.get(i), listPhotoPosts.get(i).getPhotoURL());
         }
     }
 
     /**
      * Method that sets the Buttons used for Text Posts on the Profile Pane with some Text
      * @param listTextPosts List<TextPosts>, representing the Text Posts whose Texts are to be set to the Buttons
-     *    its size can't be greater than 2 since a Page contains 2 Text Posts
+     *    its size can't be greater than 6 since a Page contains only 6 Text Posts
      */
     private void setButtonProfile(List<TextPost> listTextPosts) {
         // First, reset the Buttons
@@ -476,5 +568,4 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             pieChart.setTitle(entitiesString.substring(0, 1).toUpperCase() + entitiesString.substring(1) + " in " + year);
         }
     }
-
 }

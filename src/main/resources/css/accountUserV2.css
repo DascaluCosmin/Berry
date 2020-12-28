@@ -1,9 +1,72 @@
-#textFieldSearch {
+/* SLIDER PANE */
+#labelShowStatistics:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelLogout:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowProfile:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowFeed:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowEvents:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowDirect:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowExplore:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+/* SLIDER PANE */
+
+
+/* FEED START*/
+
+#textFieldSearchFriend {
     -fx-background-color: #40457B;
 }
 
-#textFieldSearch:focused {
+#buttonRemoveFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonRemoveFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#textFieldSearchFriend:focused {
     -fx-text-fill: white;
+}
+
+/* FEED END */
+
+/* PROFILE START */
+
+#buttonShowPhotosProfile {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotosProfile:hover {
+    -fx-background-color: #333A83;
 }
 
 #buttonChangeProfilePhoto {
@@ -12,6 +75,15 @@
 }
 
 #buttonChangeProfilePhoto:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowProfileText {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowProfileText:hover {
     -fx-background-color: #333A83;
 }
 
@@ -33,6 +105,40 @@
     -fx-background-color: #333A83;
 }
 
+#buttonStPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button4thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button5thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button6thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+/* PROFILE END */
+
+/* STATISTICS START */
+
 #buttonGeneratePDFReport {
     -fx-background-color: #40457B;
     -fx-background-radius: 6px;
@@ -50,18 +156,6 @@
 #buttonGenerateHTMLReport:hover {
     -fx-background-color: #333A83;
 }
-
-#buttonStPostProfile {
-    -fx-background-color: white;
-    -fx-background-radius: 15px;
-}
-
-#buttonNdPostProfile {
-    -fx-background-color: white;
-    -fx-background-radius: 15px;
-}
-
-/* STATISTICS START */
 
 #labelIntroduceYear {
     -fx-font-size: 19.5px;

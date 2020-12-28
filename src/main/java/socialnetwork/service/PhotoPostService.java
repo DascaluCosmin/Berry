@@ -79,4 +79,13 @@ public class PhotoPostService {
     public PhotoPost getPhotoPost(Long idPhotoPost) {
         return photoPostDBRepository.findOne(idPhotoPost);
     }
+
+    /**
+     * Method that gets the number of Photo Posts an User has
+     * @param idUser Long, representing the ID of the User
+     * @return Integer, representing the number of Photo Posts the User has
+     */
+    public Integer getNumberPhotoPosts(Long idUser) {
+        return getListPhotoPosts(idUser).size();
+    }
 }

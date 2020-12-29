@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -52,8 +53,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private ContentPage pagePhotoPostProfileFriend = new ContentPage(3, 1);
     private ContentPage pageTextPostProfile = new ContentPage(6, 1);
     private ContentPage pageTextPostProfileFriend = new ContentPage(3, 1);
+    private ContentPage pageExploreUsers = new ContentPage(5, 1);
+    private ContentPage pageFriendRequests = new ContentPage(5, 1);
 
     // INITIALIZE
+    /**
+     * Method that initializes the View
+     */
     @FXML
     public void initialize() {
         buttonRemoveFriend.setVisible(false); // TODO: at production, set visibility to false in Scene Builder
@@ -192,7 +198,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowPhotoPaneProfileFriend() {
         pagePhotoPostProfileFriend.setToFirstPage();
-        pageTextPostProfileFriend.setToFirstPage();
+        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
         paneFriendsProfilePhotos.setVisible(true);
         paneFriendsProfilePosts.setVisible(false);
     }
@@ -202,10 +208,29 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Text Posts of the Friend User
      */
     public void eventShowTextPaneProfileFriend() {
-        pagePhotoPostProfileFriend.setToFirstPage();
         pageTextPostProfileFriend.setToFirstPage();
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
         paneFriendsProfilePosts.setVisible(true);
         paneFriendsProfilePhotos.setVisible(false);
+    }
+
+    /**
+     * Method linked to the buttonRemoveFriend's onMouseClicked event
+     * It asks the User whether to to remove the Friend or not
+     */
+    public void eventButtonRemoveFriend() {
+        Alert alertAskConfirmationRemoval = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure?", ButtonType.YES, ButtonType.NO);
+        alertAskConfirmationRemoval.showAndWait();
+        if (alertAskConfirmationRemoval.getResult() == ButtonType.YES) {
+            userPage.getFriendshipService().deleteFriendship(new Tuple(userPage.getUser().getId(), friendUser.getId()));
+            userPage.getFriendshipService().deleteFriendship(new Tuple(friendUser.getId(), userPage.getUser().getId()));
+            initializeFeedPane(); // Removing the Friend means you can't access his/her profile from Feed
+            numberFriends--;
+            labelNumberFriends.setText(numberFriends + " Friends");
+            Alert alertConfirmationRemoval = new Alert(Alert.AlertType.CONFIRMATION, "You're no longer friends!");
+            alertConfirmationRemoval.show();
+        }
     }
 
     // SLIDER PANE
@@ -226,6 +251,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Pane feedPane;
     @FXML
+    Pane explorePane;
+    @FXML
     Circle circleProfilePhoto;
 
     /**
@@ -243,6 +270,16 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelNumberPosts.setText(numberPosts + " Posts");
         labelNumberPhotos.setText(numberPhotos + " Photos");
         setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
+    }
+
+    /**
+     * Method that initializes the Feed Pane.
+     * It clear the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
+     */
+    private void initializeFeedPane() {
+        textFieldSearchFriend.clear();
+        paneFriendsFeed.setVisible(true);
+        paneFriendsProfile.setVisible(false);
     }
 
     /**
@@ -282,6 +319,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = feedPane;
         currentPane.setVisible(true);
+        initializeFeedPane();
     }
 
     /**
@@ -297,6 +335,19 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
         setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
     }
+
+    /**
+     * Method linked to the labelShowExplore onMouseClicked event
+     * It shows the Explore Panel
+     */
+    public void eventShowExplore() {
+        currentPane.setVisible(false);
+        currentPane = explorePane;
+        currentPane.setVisible(true);
+        pageExploreUsers.setToFirstPage();
+        pageFriendRequests.setToFirstPage();
+    }
+
 
     // PROFILE PANE
     @FXML
@@ -514,6 +565,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     public void update(TextPostEvent textPostEvent) {
         setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
     }
+
+    // EXPLORE PANE
+
 
     // STATISTICS PANE
     @FXML

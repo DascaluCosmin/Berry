@@ -1,48 +1,19 @@
 package socialnetwork.GUI;
 
-import com.sun.org.apache.bcel.internal.generic.FMUL;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import jdk.internal.loader.Loader;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import org.springframework.util.ResourceUtils;
 import socialnetwork.config.ApplicationContext;
-import socialnetwork.config.Config;
-import socialnetwork.controller.IntroductionController;
 import socialnetwork.controller.LoginController;
 import socialnetwork.domain.*;
-import socialnetwork.domain.messages.FriendshipRequest;
-import socialnetwork.domain.messages.Message;
-import socialnetwork.domain.messages.ReplyMessage;
-import socialnetwork.domain.posts.PhotoPost;
-import socialnetwork.domain.posts.TextPost;
-import socialnetwork.domain.validators.*;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.*;
-import socialnetwork.repository.file.*;
+import socialnetwork.repository.database.friendshipRequests.FriendshipRequestsDBRepository;
+import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.service.*;
-import socialnetwork.utils.Constants;
 import socialnetwork.utils.ViewClass;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
 
 public class MainFX extends Application {
     private static UserService userService;
@@ -87,7 +58,7 @@ public class MainFX extends Application {
         FriendshipDBRepository friendshipRepository = new FriendshipDBRepository(url, username, password);
         MessagesDBRepository messageRepository = new MessagesDBRepository(url, username, password, userRepository);
         ReplyMessageDBRepository replyMessageRepository = new ReplyMessageDBRepository(url, username, password, userRepository);
-        Repository<Long, FriendshipRequest> friendshipRequestDBRepository = new FriendshipRequestsDBRepository(url, username,
+        FriendshipRequestsDBRepository friendshipRequestDBRepository = new FriendshipRequestsDBRepository(url, username,
                 password, userRepository);
         Repository<Long, ProfilePhotoUser> profilePhotoUserRepository = new ProfilePhotoUserDBRepository(url, username, password);
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);

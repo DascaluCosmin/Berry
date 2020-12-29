@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,13 +17,16 @@ import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
 import socialnetwork.domain.*;
+import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
+import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
 import socialnetwork.utils.events.TextPostEvent;
@@ -31,7 +36,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -54,16 +58,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private ContentPage pageTextPostProfile = new ContentPage(6, 1);
     private ContentPage pageTextPostProfileFriend = new ContentPage(3, 1);
     private ContentPage pageExploreUsers = new ContentPage(5, 1);
-    private ContentPage pageFriendRequests = new ContentPage(5, 1);
 
     // INITIALIZE
     /**
-     * Method that initializes the View
+     * Method that initializes some of the components of the View
      */
     @FXML
     public void initialize() {
-        buttonRemoveFriend.setVisible(false); // TODO: at production, set visibility to false in Scene Builder
-        labelFriendRealName.setVisible(false);
         currentPane = feedPane;
         listButtonsProfile = new ArrayList<>(Arrays.asList(
                 buttonStPostProfile, buttonNdPostProfile, buttonRdPostProfile,
@@ -77,6 +78,14 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         );
         listRectanglesProfileFriend = new ArrayList<>(Arrays.asList(
                 rectangleStPhotoFriendFeed, rectangleNdPhotoFriendFeed, rectangleRdPhotoFriendFeed
+        ));
+        listGroupRequestsReceived = new ArrayList<>(Arrays.asList(
+                groupRequestReceivedSt, groupRequestReceivedNd, groupRequestReceivedRd,
+                groupRequestReceived4th, groupRequestReceived5th
+        ));
+        listGroupRequestsSent = new ArrayList<>(Arrays.asList(
+                groupRequestSentSt, groupRequestSentNd, groupRequestSentRd,
+                groupRequestSent4th, groupRequestSent5th
         ));
     }
 
@@ -101,6 +110,126 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void setLoginStage(Stage loginStage) {
         this.loginStage = loginStage;
+    }
+
+    // SLIDER PANE
+    @FXML
+    Label labelRealName;
+    @FXML
+    Label labelUsername;
+    @FXML
+    Label labelNumberFriends;
+    @FXML
+    Label labelNumberPosts;
+    @FXML
+    Label labelNumberPhotos;
+    @FXML
+    Pane statisticsPane;
+    @FXML
+    Pane profilePane;
+    @FXML
+    Pane feedPane;
+    @FXML
+    Pane explorePane;
+    @FXML
+    Circle circleProfilePhoto;
+
+    /**
+     * Method that initializes the Slider Pane.
+     * It sets the labelRealName, labelUserName and imageViewProfilePhoto
+     */
+    private void initializeSliderPane() {
+        numberFriends = userPage.getFriendshipService().getNumberFriends(userPage.getUser().getId());
+        numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
+        numberPhotos = userPage.getPhotoPostService().getNumberPhotoPosts(userPage.getUser().getId());
+
+        labelRealName.setText(userPage.getUserDTO().getFullName());
+        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
+        labelNumberFriends.setText(numberFriends + " Friends");
+        labelNumberPosts.setText(numberPosts + " Posts");
+        labelNumberPhotos.setText(numberPhotos + " Photos");
+        setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
+    }
+
+    /**
+     * Method that initializes the Feed Pane.
+     * It clear the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
+     */
+    private void initializeFeedPane() {
+        textFieldSearchFriend.clear();
+        paneFriendsFeed.setVisible(true);
+        paneFriendsProfile.setVisible(false);
+    }
+
+    /**
+     * Method linked to the labelExitApplication's onMouseClicked event.
+     * It closes the Application with a 0 status code.
+     */
+    public void eventExitApplication() {
+        System.exit(0);
+    }
+
+    /**
+     * Method linked to the labelLogout's onMouseClicked event
+     * It log outs the user
+     */
+    public void eventLogout() {
+        accountUserStage.close();
+        loginStage.show();
+    }
+
+    /**
+     * Method linked to the labelShowStatistics onMouseClicked event
+     * It shows the Statistics Panel
+     */
+    public void eventShowStatistics() {
+        currentPane.setVisible(false);
+        currentPane = statisticsPane;
+        currentPane.setVisible(true);
+        setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), 2020), 2020, "messages");
+        setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), 2020), 2020, "friendships");
+    }
+
+    /**
+     * Method linked to the labelShowFeed onMouseClicked event
+     * It shows the Feed Panel
+     */
+    public void eventShowFeed() {
+        currentPane.setVisible(false);
+        currentPane = feedPane;
+        currentPane.setVisible(true);
+        initializeFeedPane();
+    }
+
+    /**
+     * Method linked to the labelShowProfile onMouseClicked event
+     * It shows the Profile Panel
+     */
+    public void eventShowProfile() {
+        currentPane.setVisible(false);
+        currentPane = profilePane;
+        currentPane.setVisible(true);
+        pageTextPostProfile.setToFirstPage();
+        pagePhotoPostProfile.setToFirstPage();
+        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
+        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+    }
+
+    /**
+     * Method linked to the labelShowExplore onMouseClicked event
+     * It shows the Explore Panel
+     */
+    public void eventShowExplore() {
+        currentPane.setVisible(false);
+        currentPane = explorePane;
+        currentPane.setVisible(true);
+        pageExploreUsers.setToFirstPage();
+        pageFriendRequestsReceived.setToFirstPage();
+        pageFriendRequestsSent.setToFirstPage();
+        initializeGrouping(
+                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
+                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
+        );
     }
 
     // FEED PANE
@@ -232,122 +361,6 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             alertConfirmationRemoval.show();
         }
     }
-
-    // SLIDER PANE
-    @FXML
-    Label labelRealName;
-    @FXML
-    Label labelUsername;
-    @FXML
-    Label labelNumberFriends;
-    @FXML
-    Label labelNumberPosts;
-    @FXML
-    Label labelNumberPhotos;
-    @FXML
-    Pane statisticsPane;
-    @FXML
-    Pane profilePane;
-    @FXML
-    Pane feedPane;
-    @FXML
-    Pane explorePane;
-    @FXML
-    Circle circleProfilePhoto;
-
-    /**
-     * Method that initializes the Slider Pane.
-     * It sets the labelRealName, labelUserName and imageViewProfilePhoto
-     */
-    private void initializeSliderPane() {
-        numberFriends = userPage.getFriendshipService().getNumberFriends(userPage.getUser().getId());
-        numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
-        numberPhotos = userPage.getPhotoPostService().getNumberPhotoPosts(userPage.getUser().getId());
-
-        labelRealName.setText(userPage.getUserDTO().getFullName());
-        labelUsername.setText("@" + userPage.getUserCredentialsService().findOne(userPage.getUser().getId()).getUsername());
-        labelNumberFriends.setText(numberFriends + " Friends");
-        labelNumberPosts.setText(numberPosts + " Posts");
-        labelNumberPhotos.setText(numberPhotos + " Photos");
-        setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
-    }
-
-    /**
-     * Method that initializes the Feed Pane.
-     * It clear the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
-     */
-    private void initializeFeedPane() {
-        textFieldSearchFriend.clear();
-        paneFriendsFeed.setVisible(true);
-        paneFriendsProfile.setVisible(false);
-    }
-
-    /**
-     * Method linked to the labelExitApplication's onMouseClicked event.
-     * It closes the Application with a 0 status code.
-     */
-    public void eventExitApplication() {
-        System.exit(0);
-    }
-
-    /**
-     * Method linked to the labelLogout's onMouseClicked event
-     * It log outs the user
-     */
-    public void eventLogout() {
-        accountUserStage.close();
-        loginStage.show();
-    }
-
-    /**
-     * Method linked to the labelShowStatistics onMouseClicked event
-     * It shows the Statistics Panel
-     */
-    public void eventShowStatistics() {
-        currentPane.setVisible(false);
-        currentPane = statisticsPane;
-        currentPane.setVisible(true);
-        setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), 2020), 2020, "messages");
-        setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), 2020), 2020, "friendships");
-    }
-
-    /**
-     * Method linked to the labelShowFeed onMouseClicked event
-     * It shows the Feed Panel
-     */
-    public void eventShowFeed() {
-        currentPane.setVisible(false);
-        currentPane = feedPane;
-        currentPane.setVisible(true);
-        initializeFeedPane();
-    }
-
-    /**
-     * Method linked to the labelShowProfile onMouseClicked event
-     * It shows the Profile Panel
-     */
-    public void eventShowProfile() {
-        currentPane.setVisible(false);
-        currentPane = profilePane;
-        currentPane.setVisible(true);
-        pageTextPostProfile.setToFirstPage();
-        pagePhotoPostProfile.setToFirstPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
-        setButtonProfile(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
-    }
-
-    /**
-     * Method linked to the labelShowExplore onMouseClicked event
-     * It shows the Explore Panel
-     */
-    public void eventShowExplore() {
-        currentPane.setVisible(false);
-        currentPane = explorePane;
-        currentPane.setVisible(true);
-        pageExploreUsers.setToFirstPage();
-        pageFriendRequests.setToFirstPage();
-    }
-
 
     // PROFILE PANE
     @FXML
@@ -567,7 +580,111 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // EXPLORE PANE
+    private List<Group> listGroupRequestsReceived;
+    private List<Pair<FriendshipRequest, Group>> listRequestsReceivedGroup; // TODO: NEEDS LOOKUP
+    private List<Group> listGroupRequestsSent;
+    private List<Pair<FriendshipRequest, Group>> listRequestsSentGroup;
+    private ContentPage pageFriendRequestsReceived = new ContentPage(5, 1);
+    private ContentPage pageFriendRequestsSent = new ContentPage(5, 1);
 
+    @FXML
+    Group groupRequestReceivedSt;
+    @FXML
+    Group groupRequestReceivedNd;
+    @FXML
+    Group groupRequestReceivedRd;
+    @FXML
+    Group groupRequestReceived4th;
+    @FXML
+    Group groupRequestReceived5th;
+    @FXML
+    Group groupRequestSentSt;
+    @FXML
+    Group groupRequestSentNd;
+    @FXML
+    Group groupRequestSentRd;
+    @FXML
+    Group groupRequestSent4th;
+    @FXML
+    Group groupRequestSent5th;
+    @FXML
+    Pane paneExploreReceivedRequests;
+    @FXML
+    Pane paneExploreSentRequests;
+
+    /**
+     * Method that initializes the components of some Groups with the content of some Friendship Requests
+     * It sets the Circle of each Group with an Image and the Label of each Group with a String
+     * @param listFriendshipRequests List<FriendshipRequest>, representing the list of Friendship Requests
+     * @param listGroups List<Group>, representing the list of Groups
+     * @param typeFriendshipRequest TypeFriendshipRequest, representing the Type of the Friendship Request - RECEIVED or SENT
+     */
+    private void initializeGrouping(List<FriendshipRequest> listFriendshipRequests, List<Group> listGroups, TypeFriendshipRequest typeFriendshipRequest) {
+        listGroups.forEach(group -> group.setVisible(false)); // Reset the groups
+        for (int i = 0; i < listFriendshipRequests.size(); i++) {
+            initializeGroup(listFriendshipRequests.get(i), listGroups.get(i), typeFriendshipRequest);
+        }
+    }
+
+    /**
+     * Method that initializes the components of a Group with the content of a Friendship Requests
+     * It sets the Circle of the Group with an Image and the Label of the Group with a String
+     * @param friendshipRequest FriendshipRequest, representing Friendship Request to initialize with
+     * @param group Group, representing the Group to be initialized
+     *     The group has at least 3 children
+     *     The second child of the Group has to be a Shape
+     *     The third child of the Group has to be Label
+     * @param typeFriendshipRequest TypeFriendshipRequest, representing the Type of the Friendship Request - RECEIVED or SENT
+     */
+    private void initializeGroup(FriendshipRequest friendshipRequest, Group group, TypeFriendshipRequest typeFriendshipRequest) {
+        group.setVisible(true);
+        Node secondChild = group.getChildren().get(1);
+        Node thirdChild = group.getChildren().get(2);
+        if (typeFriendshipRequest == TypeFriendshipRequest.RECEIVED) {
+            if (secondChild instanceof Shape) {
+                setImage((Shape) secondChild, userPage.getProfilePhotoUserService().findOne(friendshipRequest.getFrom().getId()).getPathProfilePhoto());
+            }
+            if (thirdChild instanceof Label) {
+                ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getFrom().getId()).getFullName());
+             }
+        } else { // TypeFriendshipRequest.SENT
+            if (secondChild instanceof Shape) {
+                setImage((Shape) secondChild, userPage.getProfilePhotoUserService().findOne(friendshipRequest.getTo().get(0).getId()).getPathProfilePhoto());
+            }
+            if (thirdChild instanceof Label) {
+                ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getTo().get(0).getId()).getFullName());
+            }
+        }
+
+    }
+
+    /**
+     * Method linked to the buttonShowReceivedRequests onMouseClicked
+     * It shows the Received Friendship Requests by the User
+     */
+    public void eventShowReceivedRequests() {
+        pageFriendRequestsReceived.setToFirstPage();
+        paneExploreReceivedRequests.setVisible(true);
+        paneExploreSentRequests.setVisible(false);
+        initializeGrouping(
+                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
+                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
+        );
+    }
+
+    /**
+     * Method linked to the buttonShowSentRequests onMouseClicked
+     * It shows the Sent Friendship Requests by the User
+     */
+    public void eventShowSentRequests() {
+        pageFriendRequestsSent.setToFirstPage();
+        paneExploreSentRequests.setVisible(true);
+        paneExploreReceivedRequests.setVisible(false);
+        initializeGrouping(
+                userPage.getFriendshipRequestService().getListSentPendingRequests(userPage.getUser().getId(), pageFriendRequestsSent),
+                listGroupRequestsSent, TypeFriendshipRequest.SENT
+        );
+    }
 
     // STATISTICS PANE
     @FXML

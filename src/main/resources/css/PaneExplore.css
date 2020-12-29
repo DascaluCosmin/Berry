@@ -119,3 +119,64 @@
     -fx-background-color: #A3B2DA;
 }
 
+#buttonShowReceivedRequests {
+    -fx-background-color: #40457B;
+}
+
+#buttonShowReceivedRequests:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowSentRequests {
+    -fx-background-color: #40457B;
+}
+
+#buttonShowSentRequests:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentSt {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentSt:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentNd {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentNd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentRd {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentRd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSent4th {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSent4th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSent5th {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSent5th:hover {
+    -fx-background-color: #333A83;
+}
+

@@ -1,11 +1,13 @@
 package socialnetwork.service;
 
-import javafx.collections.ObservableList;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.Friendship;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.friendshipRequests.FriendshipRequestsDBRepository;
+import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.service.validators.ValidatorFriendshipRequest;
 import socialnetwork.utils.events.ChangeEventType;
 import socialnetwork.utils.events.FriendshipRequestChangeEvent;
@@ -17,19 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FriendshipRequestService implements Observable<FriendshipRequestChangeEvent> {
-    private Repository<Long, FriendshipRequest> friendshipRequestRepository;
+    private FriendshipRequestsDBRepository friendshipRequestRepository;
     private Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
     private ValidatorFriendshipRequest validatorFriendshipRequestService = new ValidatorFriendshipRequest();
     private List<Observer<FriendshipRequestChangeEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new FriendshipRequestService
-     * @param friendshipRequestRepository Repository<Long, FriendshipRequest>, representing the Repository
+     * @param friendshipRequestRepository FriendshipRequestsDBRepository, representing the Repository
      *                                    that handles the FriendshipRequest data
      * @param friendshipRepository Repository<Tuple<Long, Long>, Friendship>, representing the Repository
      *                             that handles the Friendship data
      */
-    public FriendshipRequestService(Repository<Long, FriendshipRequest> friendshipRequestRepository,
+    public FriendshipRequestService(FriendshipRequestsDBRepository friendshipRequestRepository,
                                     Repository<Tuple<Long, Long>, Friendship> friendshipRepository) {
         this.friendshipRequestRepository = friendshipRequestRepository;
         this.friendshipRepository = friendshipRepository;
@@ -88,6 +90,30 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
             }
         });
         return listPendingRequestsUser;
+    }
+
+    /**
+     * Method that gets the list of pending Friendship Requests received by an User on a specific Page
+     * @param idUser Long, representing the ID of the User receiving the Friendship Requests
+     * @param page ContentPage, representing the Page containing the Friendship Requests
+     * @return List<FriendshipRequest>, representing the list of pending Friendship Requests received by the User, on that Page
+     */
+    public List<FriendshipRequest> getListReceivedPendingRequests(Long idUser, ContentPage page) {
+        List<FriendshipRequest> friendshipRequestList = new ArrayList<>();
+        friendshipRequestRepository.findAll(idUser, page, TypeFriendshipRequest.RECEIVED).forEach(friendshipRequestList::add);
+        return friendshipRequestList;
+    }
+
+    /**
+     * Method that gets the list of pending Friendship Requests sent by an User on a specific Page
+     * @param idUser Long, representing the ID of the User sending the Friendship Requests
+     * @param page ContentPage, representing the Page containing the Friendship Requests
+     * @return List<FriendshipRequest>, representing the list of pending Friendship Requests sent by the User, on that Page
+     */
+    public List<FriendshipRequest> getListSentPendingRequests(Long idUser, ContentPage page) {
+        List<FriendshipRequest> friendshipRequestList = new ArrayList<>();
+        friendshipRequestRepository.findAll(idUser, page, TypeFriendshipRequest.SENT).forEach(friendshipRequestList::add);
+        return friendshipRequestList;
     }
 
     /**

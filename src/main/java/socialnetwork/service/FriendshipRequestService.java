@@ -76,6 +76,37 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
     }
 
     /**
+     * Method that accepts a Friendship Requests
+     * It changes its status from Pending to Accepted
+     * @param friendshipRequestParam FriendshipRequest, the FriendshipRequest to be accepted
+     * @return null, if the FriendshipRequest was accepted successfully
+     *      non-null FriendshipRequest, otherwise
+     */
+    public FriendshipRequest acceptFriendshipRequest(FriendshipRequest friendshipRequestParam) {
+        friendshipRequestParam.setDate(LocalDateTime.now());
+        friendshipRequestParam.setStatusRequest("accepted");
+        FriendshipRequest friendshipRequest = friendshipRequestRepository.update(friendshipRequestParam);
+        if (friendshipRequest == null) {
+            friendshipRepository.save(new Friendship(new Tuple<>(friendshipRequestParam.getTo().get(0).getId(), friendshipRequestParam.getFrom().getId())));
+            friendshipRepository.save(new Friendship(new Tuple<>(friendshipRequestParam.getFrom().getId(), friendshipRequestParam.getTo().get(0).getId())));
+        }
+        return friendshipRequest;
+    }
+
+    /**
+     * Method that declines a Friendship Requests
+     * It changes its status from Pending to Declined
+     * @param friendshipRequestParam FriendshipRequest, the FriendshipRequest to be declined
+     * @return null, if the FriendshipRequest was declined successfully
+     *      non-null FriendshipRequest, otherwise
+     */
+    public FriendshipRequest declineFriendshipRequest(FriendshipRequest friendshipRequestParam) {
+        friendshipRequestParam.setDate(LocalDateTime.now());
+        friendshipRequestParam.setStatusRequest("declined");
+        return friendshipRequestRepository.update(friendshipRequestParam);
+    }
+
+    /**
      * Method that gets the pending Friendship Requests of some User
      * @param idUser Long, representing the ID of the User
      * @return Iterable<FriendshipRequest>, representing the pending Friendship Requests

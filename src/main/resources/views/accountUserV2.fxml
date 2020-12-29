@@ -193,7 +193,7 @@
       <Pane fx:id="explorePane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationExplore" layoutX="647.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="23.0" />
-            <Rectangle fill="#40457b" height="680.0" layoutX="340.0" stroke="BLACK" strokeType="INSIDE" width="4.0" />
+            <Rectangle fill="#40457b" height="680.0" layoutX="340.0" stroke="#40457b" strokeType="INSIDE" width="4.0" />
             <Button fx:id="buttonShowReceivedRequests" layoutX="366.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowReceivedRequests" prefHeight="25.0" prefWidth="101.0" stylesheets="@../css/PaneExplore.css" text="Received Requests" textFill="WHITE">
                <font>
                   <Font size="10.0" />
@@ -323,12 +323,12 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonConfirmFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                        <Button fx:id="buttonConfirmFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDeclineFriendSt" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                        <Button fx:id="buttonDeclineFriendSt" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -344,12 +344,12 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonConfirmFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                        <Button fx:id="buttonConfirmFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDeclineFriendNd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                        <Button fx:id="buttonDeclineFriendNd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -365,12 +365,12 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonConfirmFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                        <Button fx:id="buttonConfirmFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDeclineFriendRd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                        <Button fx:id="buttonDeclineFriendRd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -386,12 +386,12 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonConfirmFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                        <Button fx:id="buttonConfirmFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirm4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDeclineFriend4th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                        <Button fx:id="buttonDeclineFriend4th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDecline4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -407,19 +407,19 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonConfirmFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                        <Button fx:id="buttonConfirmFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirm5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
-                        <Button fx:id="buttonDeclineFriend5th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                        <Button fx:id="buttonDeclineFriend5th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDecline5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Button>
                      </children>
                   </Group>
-                  <Label fx:id="labelGoBackExploreRequestsReceived" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackProfile" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoBackExploreRequestsReceived" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackReceivedRequests" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -428,7 +428,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoNextExploreRequestsReceived" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoNextExploreRequestsReceived" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextReceivedRequests" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -520,7 +520,7 @@
                         </Button>
                      </children>
                   </Group>
-                  <Label fx:id="labelGoBackExploreRequestsSent" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackProfile" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoBackExploreRequestsSent" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackSentRequests" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -529,7 +529,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoNextExploreRequestsSent" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoNextExploreRequestsSent" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextSentRequests" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>

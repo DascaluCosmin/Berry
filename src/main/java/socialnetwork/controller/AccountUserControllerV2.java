@@ -2,6 +2,9 @@ package socialnetwork.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -226,10 +229,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageExploreUsers.setToFirstPage();
         pageFriendRequestsReceived.setToFirstPage();
         pageFriendRequestsSent.setToFirstPage();
-        initializeGrouping(
-                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
-                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
-        );
+        initializeReceivedRequests();
     }
 
     // FEED PANE
@@ -580,10 +580,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // EXPLORE PANE
+    private List<FriendshipRequest> listCurrentRequestsReceived = new ArrayList<>();
+    private List<FriendshipRequest> listCurrentRequestsSent = new ArrayList<>();
     private List<Group> listGroupRequestsReceived;
-    private List<Pair<FriendshipRequest, Group>> listRequestsReceivedGroup; // TODO: NEEDS LOOKUP
     private List<Group> listGroupRequestsSent;
-    private List<Pair<FriendshipRequest, Group>> listRequestsSentGroup;
     private ContentPage pageFriendRequestsReceived = new ContentPage(5, 1);
     private ContentPage pageFriendRequestsSent = new ContentPage(5, 1);
 
@@ -620,6 +620,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * @param typeFriendshipRequest TypeFriendshipRequest, representing the Type of the Friendship Request - RECEIVED or SENT
      */
     private void initializeGrouping(List<FriendshipRequest> listFriendshipRequests, List<Group> listGroups, TypeFriendshipRequest typeFriendshipRequest) {
+        listCurrentRequestsReceived.clear();
+        listCurrentRequestsSent.clear();
         listGroups.forEach(group -> group.setVisible(false)); // Reset the groups
         for (int i = 0; i < listFriendshipRequests.size(); i++) {
             initializeGroup(listFriendshipRequests.get(i), listGroups.get(i), typeFriendshipRequest);
@@ -647,6 +649,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (thirdChild instanceof Label) {
                 ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getFrom().getId()).getFullName());
              }
+            listCurrentRequestsReceived.add(friendshipRequest);
         } else { // TypeFriendshipRequest.SENT
             if (secondChild instanceof Shape) {
                 setImage((Shape) secondChild, userPage.getProfilePhotoUserService().findOne(friendshipRequest.getTo().get(0).getId()).getPathProfilePhoto());
@@ -654,8 +657,29 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (thirdChild instanceof Label) {
                 ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getTo().get(0).getId()).getFullName());
             }
+            listCurrentRequestsSent.add(friendshipRequest);
         }
 
+    }
+
+    /**
+     * Method that initializes the Received Friendship Requests
+     */
+    private void initializeReceivedRequests() {
+        initializeGrouping(
+                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
+                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
+        );
+    }
+
+    /**
+     * Method that initializes the Sent Friendship Requests
+     */
+    private void initializeSentRequests() {
+        initializeGrouping(
+                userPage.getFriendshipRequestService().getListSentPendingRequests(userPage.getUser().getId(), pageFriendRequestsSent),
+                listGroupRequestsSent, TypeFriendshipRequest.SENT
+        );
     }
 
     /**
@@ -666,10 +690,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsReceived.setToFirstPage();
         paneExploreReceivedRequests.setVisible(true);
         paneExploreSentRequests.setVisible(false);
-        initializeGrouping(
-                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
-                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
-        );
+        initializeReceivedRequests();
     }
 
     /**
@@ -680,10 +701,170 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsSent.setToFirstPage();
         paneExploreSentRequests.setVisible(true);
         paneExploreReceivedRequests.setVisible(false);
-        initializeGrouping(
-                userPage.getFriendshipRequestService().getListSentPendingRequests(userPage.getUser().getId(), pageFriendRequestsSent),
-                listGroupRequestsSent, TypeFriendshipRequest.SENT
-        );
+        initializeSentRequests();
+    }
+
+    /**
+     * Method linked to the labelGoNextExploreRequestsReceived onMouseClicked
+     * It shows the Friendship Requests received by the User on the next Page
+     */
+    public void eventGoNextReceivedRequests() {
+        pageFriendRequestsReceived.nextPage();
+        initializeReceivedRequests();
+    }
+
+    /**
+     * Method linked to the labelGoNextExploreRequestsReceived onMouseClicked
+     * It shows the Friendship Requests received by the User on the previous Page
+     */
+    public void eventGoBackReceivedRequests() {
+        if (pageFriendRequestsReceived.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageFriendRequestsReceived.previousPage();
+            initializeReceivedRequests();
+        }
+    }
+
+    /**
+     * Method linked to the labelGoNextExploreRequestsSent onMouseClicked
+     * It shows the Friendship Requests sent by the User on the next Page
+     */
+    public void eventGoNextSentRequests() {
+        pageFriendRequestsSent.nextPage();
+        initializeSentRequests();
+    }
+
+    /**
+     * Method linked to the labelGoBackExploreRequestsSent onMouseClicked
+     * It shows the Friendship Requests sent by the User on the previous Page
+     */
+    public void eventGoBackSentRequests() {
+        if (pageFriendRequestsSent.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageFriendRequestsSent.previousPage();
+            initializeSentRequests();
+        }
+    }
+
+    // EXPLORE EVENTS BUTTONS
+
+    /**
+     * Method linked to the buttonConfirmFriendSt's onMouseClicked
+     * It accepts the first Received Friendship Request
+     */
+    public void eventButtonConfirmSt() {
+        eventAcceptFriendshipRequest(userPage.getFriendshipRequestService().acceptFriendshipRequest(listCurrentRequestsReceived.get(0)));
+    }
+
+    /**
+     * Method linked to the buttonConfirmFriendSt's onMouseClicked
+     * It accepts the second Received Friendship Request
+     */
+    public void eventButtonConfirmNd() {
+        eventAcceptFriendshipRequest(userPage.getFriendshipRequestService().acceptFriendshipRequest(listCurrentRequestsReceived.get(1)));
+    }
+
+    /**
+     * Method linked to the buttonConfirmFriendRd's onMouseClicked
+     * It accepts the third Received Friendship Request
+     */
+    public void eventButtonConfirmRd() {
+        eventAcceptFriendshipRequest(userPage.getFriendshipRequestService().acceptFriendshipRequest(listCurrentRequestsReceived.get(2)));
+    }
+
+    /**
+     * Method linked to the buttonConfirmFriend4th's onMouseClicked
+     * It accepts the 4th Received Friendship Request
+     */
+    public void eventButtonConfirm4th() {
+        eventAcceptFriendshipRequest(userPage.getFriendshipRequestService().acceptFriendshipRequest(listCurrentRequestsReceived.get(3)));
+    }
+
+    /**
+     * Method linked to the buttonConfirmFriend5th's onMouseClicked
+     * It accepts the 5th Received Friendship Request
+     */
+    public void eventButtonConfirm5th() {
+        eventAcceptFriendshipRequest(userPage.getFriendshipRequestService().acceptFriendshipRequest(listCurrentRequestsReceived.get(4)));
+    }
+
+    /**
+     * Method linked to the buttonConfirmFriend's onMouseClicked
+     * It accepts a Friendship Request, resetting the current Received Requests and updating the labelNumberFriends
+     * @param friendshipRequest null, if the Friendship Request was accepted successfully
+     *           non-null FriendshipRequest, otherwise
+     */
+    private void eventAcceptFriendshipRequest(FriendshipRequest friendshipRequest) {
+        if (friendshipRequest == null) {
+            initializeReceivedRequests();
+            numberFriends++;
+            labelNumberFriends.setText(numberFriends + " Friends");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has benn accepted!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at accepting the Friendship Request");
+            alert.show();;
+        }
+    }
+
+    /**
+     Method linked to the buttonDeclineFriendSt's onMouseClicked
+     * It decline the first Received Friendship Request
+     */
+    public void eventButtonDeclineSt() {
+        eventDeclineFriendshipRequest(listCurrentRequestsReceived.get(0));
+    }
+
+    /**
+     Method linked to the buttonDeclineFriendNd's onMouseClicked
+     * It decline the second Received Friendship Request
+     */
+    public void eventButtonDeclineNd() {
+        eventDeclineFriendshipRequest(listCurrentRequestsReceived.get(1));
+    }
+
+    /**
+     Method linked to the buttonDeclineFriendRd's onMouseClicked
+     * It decline the third Received Friendship Request
+     */
+    public void eventButtonDeclineRd() {
+        eventDeclineFriendshipRequest(listCurrentRequestsReceived.get(2));
+    }
+
+    /**
+     Method linked to the buttonDeclineFriend4th's onMouseClicked
+     * It decline the 4th Received Friendship Request
+     */
+    public void eventButtonDecline4th() {
+        eventDeclineFriendshipRequest(listCurrentRequestsReceived.get(3));
+    }
+
+    /**
+     Method linked to the buttonDeclineFriend5th's onMouseClicked
+     * It decline the 5th Received Friendship Request
+     */
+    public void eventButtonDecline5th() {
+        eventDeclineFriendshipRequest(listCurrentRequestsReceived.get(4));
+    }
+
+    /**
+     * Method linked to the buttonDeclineFriend's onMouseClicked
+     * It declines a Friendship Request
+     * @param friendshipRequest FriendshipRequest, representing the Friendship Request to be declined
+     */
+    private void eventDeclineFriendshipRequest(FriendshipRequest friendshipRequest) {
+        if (userPage.getFriendshipRequestService().declineFriendshipRequest(friendshipRequest) == null) {
+            initializeReceivedRequests();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has benn declined!");
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at declining the Friendship Request");
+            alert.show();
+        }
     }
 
     // STATISTICS PANE

@@ -56,6 +56,39 @@
     -fx-text-fill: white;
 }
 
+#buttonShowPhotosProfileFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotosProfileFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowProfileTextFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowProfileTextFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonStPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
 /* FEED END */
 
 /* PROFILE START */

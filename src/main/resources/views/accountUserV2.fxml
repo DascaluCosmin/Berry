@@ -80,12 +80,21 @@
                </graphic>
             </Label>
             <TextField fx:id="textFieldSearchFriend" layoutX="63.0" layoutY="16.0" onKeyTyped="#eventSearchFriend" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
-            <Pane fx:id="paneFriendsProfile" layoutX="17.0" layoutY="63.0" prefHeight="613.0" prefWidth="650.0" visible="false">
+            <Pane fx:id="paneFriendsProfile" layoutX="17.0" layoutY="63.0" prefHeight="613.0" prefWidth="650.0">
                <children>
-                  <Rectangle fx:id="rectangleNdPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleStPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle4thPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Label fx:id="labelGoNextFeed" alignment="CENTER" layoutX="630.0" layoutY="586.0" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelFriendRealName" alignment="CENTER" layoutX="250.0" layoutY="239.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Circle fx:id="circleProfilePhotoFriend" fill="WHITE" layoutX="325.0" layoutY="121.0" radius="119.0" stroke="#dae2f8" strokeType="INSIDE" />
+                  <Pane fx:id="paneFriendsProfilePhotos" layoutX="22.0" layoutY="276.0" prefHeight="325.0" prefWidth="611.0">
+                     <children>
+                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="-15.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="204.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="421.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
+                     </children></Pane>
+                  <Label fx:id="labelGoNextFriendProfile" alignment="CENTER" layoutX="630.0" layoutY="586.0" onMouseClicked="#eventGoNextFriend" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -94,19 +103,24 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoBackFeed" alignment="CENTER" layoutX="3.0" layoutY="586.0" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoBackProfileFriend" alignment="CENTER" layoutX="3.0" layoutY="586.0" onMouseClicked="#eventGoBackFriend" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/ButtonGoBack.png" />
                            </image>
                         </ImageView>
-                     </graphic>
-                  </Label>
-                  <Rectangle fx:id="rectangle5thPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle6thPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleRdPhotoFriendsFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-               </children></Pane>
+                     </graphic></Label>
+                  <Button fx:id="buttonShowPhotosProfileFriend" layoutX="249.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+                  <Button fx:id="buttonShowProfileTextFriend" layoutX="349.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+                  <Pane fx:id="paneFriendsProfilePosts" layoutX="22.0" layoutY="276.0" prefHeight="325.0" prefWidth="611.0" visible="false">
+                     <children>
+                        <Button fx:id="buttonStPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="-15.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonNdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="204.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonRdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="421.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                     </children></Pane>
+               </children>
+            </Pane>
             <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="622.0" prefWidth="670.0">
                <children>
                   <Label fx:id="labelUserNameNdPhoto" prefHeight="17.0" prefWidth="59.0" text="\@mariafl">
@@ -142,11 +156,6 @@
                </children>
             </Pane>
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" />
-            <Label fx:id="labelFriendRealName" alignment="CENTER" layoutX="284.0" layoutY="12.0" text="Sergiu Breaban" textFill="#40457b">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
-            </Label>
          </children>
       </Pane>
       <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">

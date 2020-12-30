@@ -5,13 +5,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -52,6 +58,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private Stage accountUserStage;
     private Stage loginStage;
     private Pane currentPane;
+    private Label currentSliderLabel;
     private User friendUser;
     private final ContentPage pagePhotoPostProfile = new ContentPage(6, 1);
     private final ContentPage pagePhotoPostProfileFriend = new ContentPage(3, 1);
@@ -66,6 +73,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     public void initialize() {
         currentPane = feedPane;
+        currentSliderLabel = labelShowFeedDummy;
+        currentSliderLabel.setVisible(true);
         listButtonsProfile = new ArrayList<>(Arrays.asList(
                 buttonStPostProfile, buttonNdPostProfile, buttonRdPostProfile,
                 button4thPostProfile, button5thPostProfile, button6thPostProfile));
@@ -127,6 +136,16 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelNumberPosts;
     @FXML
     Label labelNumberPhotos;
+    @FXML
+    Label labelLogout;
+    @FXML
+    Label labelShowProfileDummy;
+    @FXML
+    Label labelShowFeedDummy;
+    @FXML
+    Label labelShowExploreDummy;
+    @FXML
+    Label labelShowStatisticsDummy;
     @FXML
     Pane statisticsPane;
     @FXML
@@ -190,6 +209,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = statisticsPane;
         currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowStatisticsDummy;
+        currentSliderLabel.setVisible(true);
         setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), 2020), 2020, "messages");
         setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), 2020), 2020, "friendships");
     }
@@ -202,6 +224,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = feedPane;
         currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowFeedDummy;
+        currentSliderLabel.setVisible(true);
         initializeFeedPane();
     }
 
@@ -213,6 +238,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = profilePane;
         currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowProfileDummy;
+        currentSliderLabel.setVisible(true);
         pageTextPostProfile.setToFirstPage();
         pagePhotoPostProfile.setToFirstPage();
         setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
@@ -227,6 +255,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = explorePane;
         currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowExploreDummy;
+        currentSliderLabel.setVisible(true);
         pageExploreUsers.setToFirstPage();
         pageFriendRequestsReceived.setToFirstPage();
         pageFriendRequestsSent.setToFirstPage();
@@ -626,6 +657,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Pane paneExploreSentRequests;
     @FXML
+    Label labelFriendshipRequests;
+    @FXML
     Label labelNoNewUsers;
     @FXML
     Label labelNoNewRequests;
@@ -722,6 +755,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsReceived.setToFirstPage();
         paneExploreReceivedRequests.setVisible(true);
         paneExploreSentRequests.setVisible(false);
+        labelFriendshipRequests.setText("Received Requests");
         initializeReceivedRequests();
     }
 
@@ -733,6 +767,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsSent.setToFirstPage();
         paneExploreSentRequests.setVisible(true);
         paneExploreReceivedRequests.setVisible(false);
+        labelFriendshipRequests.setText("Sent Requests");
         initializeSentRequests();
     }
 

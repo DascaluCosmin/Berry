@@ -4,6 +4,37 @@
     -fx-opacity: 0.5;
 }
 
+#labelShowFeedDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowProfileDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowExploreDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowStatisticsDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowDirectDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowEventsDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+
 #labelLogout:hover {
     -fx-background-color: #333A83;
     -fx-opacity: 0.5;

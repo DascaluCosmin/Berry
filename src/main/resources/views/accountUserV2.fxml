@@ -20,7 +20,7 @@
          </graphic></Label>
       <Pane fx:id="sliderPane" layoutX="101.0" layoutY="4.0" prefHeight="679.0" prefWidth="260.0">
          <children>
-            <Label fx:id="labelLogout" alignment="CENTER" layoutX="1.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="1.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
             <Label fx:id="labelRealName" alignment="CENTER" layoutX="44.0" layoutY="212.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
                <font>
                   <Font name="Ebrima" size="14.0" />
@@ -31,9 +31,9 @@
                   <Font name="Ebrima" size="9.0" />
                </font>
             </Label>
-            <Label fx:id="labelShowStatistics" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowProfile" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowStatistics" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowProfile" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
             <Circle fx:id="circleProfilePhoto" fill="WHITE" layoutX="125.0" layoutY="143.0" onMouseClicked="#eventChangeProfilePhoto" radius="69.0" stroke="WHITE" strokeType="INSIDE" />
             <Label fx:id="labelNumberFriends" layoutX="29.0" layoutY="254.0" text="# Friends" textFill="WHITE" />
             <Label fx:id="labelNumberPosts" layoutX="108.0" layoutY="254.0" text="# Posts" textFill="WHITE" />
@@ -47,9 +47,15 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelShowEvents" layoutX="2.0" layoutY="415.0" prefHeight="23.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowDirect" layoutX="2.0" layoutY="466.0" prefHeight="25.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowExplore" layoutX="2.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowExplore" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
          </children></Pane>
       <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
@@ -289,7 +295,7 @@
                   </Button>
                </children>
             </Group>
-            <Label layoutX="442.0" layoutY="66.0" text="Friend Requests" textFill="#40457b">
+            <Label fx:id="labelFriendshipRequests" layoutX="442.0" layoutY="66.0" text="Received Requests" textFill="#40457b">
                <font>
                   <Font size="19.0" />
                </font>

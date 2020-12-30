@@ -34,7 +34,7 @@
             <Label fx:id="labelShowStatistics" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
             <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
             <Label fx:id="labelShowProfile" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="257.0" stylesheets="@../css/accountUserV2.css" />
-            <Circle fx:id="circleProfilePhoto" fill="WHITE" layoutX="125.0" layoutY="143.0" onMouseClicked="#eventChangeProfilePhoto" radius="69.0" stroke="#40457b" strokeType="INSIDE" />
+            <Circle fx:id="circleProfilePhoto" fill="WHITE" layoutX="125.0" layoutY="143.0" onMouseClicked="#eventChangeProfilePhoto" radius="69.0" stroke="WHITE" strokeType="INSIDE" />
             <Label fx:id="labelNumberFriends" layoutX="29.0" layoutY="254.0" text="# Friends" textFill="WHITE" />
             <Label fx:id="labelNumberPosts" layoutX="108.0" layoutY="254.0" text="# Posts" textFill="WHITE" />
             <Label fx:id="labelNumberPhotos" layoutX="177.0" layoutY="254.0" text="# Photos" textFill="WHITE" />
@@ -71,12 +71,12 @@
                         <Font name="System Bold" size="21.0" />
                      </font>
                   </Label>
-                  <Circle fx:id="circleProfilePhotoFriend" fill="WHITE" layoutX="325.0" layoutY="121.0" radius="119.0" stroke="#dae2f8" strokeType="INSIDE" />
+                  <Circle fx:id="circleProfilePhotoFriend" fill="WHITE" layoutX="325.0" layoutY="121.0" radius="119.0" stroke="#40457B" strokeType="INSIDE" />
                   <Pane fx:id="paneFriendsProfilePhotos" layoutX="22.0" layoutY="276.0" prefHeight="301.0" prefWidth="619.0">
                      <children>
-                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="-15.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="204.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="421.0" layoutY="14.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="-15.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="204.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="421.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
                      </children></Pane>
                   <Label fx:id="labelGoNextFriendProfile" alignment="CENTER" layoutX="630.0" layoutY="586.0" onMouseClicked="#eventGoNextFriend" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
@@ -146,12 +146,12 @@
          <children>
             <Pane fx:id="panePhotoPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0">
                <children>
-                  <Rectangle fx:id="rectangleStPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle4thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle5thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleRdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleNdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle6thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#dae2f8" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleStPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle4thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle5thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleRdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleNdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle6thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
                </children>
             </Pane>
             <Label fx:id="labelExitApplicationProfile" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
@@ -209,7 +209,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Group fx:id="group1" layoutX="37.0" layoutY="110.0">
+            <Group fx:id="groupNonFriendSt" layoutX="37.0" layoutY="110.0">
                <children>
                   <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
                   <Circle fx:id="circlePhotoStUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
@@ -218,14 +218,14 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="buttonAddFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                  <Button fx:id="buttonAddFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
                </children>
             </Group>
-            <Group layoutX="37.0" layoutY="220.0">
+            <Group fx:id="groupNonFriendNd" layoutX="37.0" layoutY="220.0">
                <children>
                   <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
                   <Circle fx:id="circlePhotoNdUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
@@ -234,14 +234,14 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="buttonAddFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                  <Button fx:id="buttonAddFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
                </children>
             </Group>
-            <Group layoutX="37.0" layoutY="330.0">
+            <Group fx:id="groupNonFriendRd" layoutX="37.0" layoutY="330.0">
                <children>
                   <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
                   <Circle fx:id="circlePhotoRdUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
@@ -250,14 +250,14 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="buttonAddFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                  <Button fx:id="buttonAddFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
                </children>
             </Group>
-            <Group layoutX="31.0" layoutY="440.0">
+            <Group fx:id="groupNonFriend4th" layoutX="31.0" layoutY="440.0">
                <children>
                   <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
                   <Circle fx:id="circlePhoto4thUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
@@ -266,14 +266,14 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="buttonAddFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                  <Button fx:id="buttonAddFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequest4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Button>
                </children>
             </Group>
-            <Group layoutX="35.0" layoutY="550.0">
+            <Group fx:id="groupNonFriend5th" layoutX="35.0" layoutY="550.0">
                <children>
                   <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
                   <Circle fx:id="circlePhoto5thUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
@@ -282,7 +282,7 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="buttonAddFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                  <Button fx:id="buttonAddFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequest5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -294,7 +294,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label fx:id="labelGoBackExploreUsers" alignment="CENTER" layoutX="39.0" layoutY="649.0" onMouseClicked="#eventGoBackProfile" prefHeight="21.0" prefWidth="20.0">
+            <Label fx:id="labelGoBackExploreUsers" alignment="CENTER" layoutX="39.0" layoutY="649.0" onMouseClicked="#eventGoBackExploreUsers" prefHeight="21.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -303,7 +303,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelGoNextExploreUsers" alignment="CENTER" layoutX="292.0" layoutY="649.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
+            <Label fx:id="labelGoNextExploreUsers" alignment="CENTER" layoutX="292.0" layoutY="649.0" onMouseClicked="#eventGoNextExploreUsers" prefHeight="21.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -449,7 +449,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonCancelSentSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                        <Button fx:id="buttonCancelSentSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -465,7 +465,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonCancelSentNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                        <Button fx:id="buttonCancelSentNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -481,7 +481,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonCancelSentRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                        <Button fx:id="buttonCancelSentRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -497,7 +497,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonCancelSent4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                        <Button fx:id="buttonCancelSent4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequest4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -513,7 +513,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Button fx:id="buttonCancelSent5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                        <Button fx:id="buttonCancelSent5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequest5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -540,6 +540,16 @@
                   </Label>
                </children>
             </Pane>
+            <Label fx:id="labelNoNewRequests" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="105.0" prefHeight="17.0" prefWidth="131.0" text="No new requests" textFill="#40457b">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNoNewUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="105.0" prefHeight="19.0" prefWidth="149.0" text="No new users to explore" textFill="#40457b">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="statisticsPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">

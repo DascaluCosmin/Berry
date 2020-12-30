@@ -1,10 +1,8 @@
 package socialnetwork.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -20,7 +18,6 @@ import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
@@ -56,11 +53,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private Stage loginStage;
     private Pane currentPane;
     private User friendUser;
-    private ContentPage pagePhotoPostProfile = new ContentPage(6, 1);
-    private ContentPage pagePhotoPostProfileFriend = new ContentPage(3, 1);
-    private ContentPage pageTextPostProfile = new ContentPage(6, 1);
-    private ContentPage pageTextPostProfileFriend = new ContentPage(3, 1);
-    private ContentPage pageExploreUsers = new ContentPage(5, 1);
+    private final ContentPage pagePhotoPostProfile = new ContentPage(6, 1);
+    private final ContentPage pagePhotoPostProfileFriend = new ContentPage(3, 1);
+    private final ContentPage pageTextPostProfile = new ContentPage(6, 1);
+    private final ContentPage pageTextPostProfileFriend = new ContentPage(3, 1);
+    private final ContentPage pageExploreUsers = new ContentPage(5, 1);
 
     // INITIALIZE
     /**
@@ -89,6 +86,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         listGroupRequestsSent = new ArrayList<>(Arrays.asList(
                 groupRequestSentSt, groupRequestSentNd, groupRequestSentRd,
                 groupRequestSent4th, groupRequestSent5th
+        ));
+        listGroupsNonFriends = new ArrayList<>(Arrays.asList(
+                groupNonFriendSt, groupNonFriendNd, groupNonFriendRd,
+                groupNonFriend4th, groupNonFriend5th
         ));
     }
 
@@ -230,6 +231,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsReceived.setToFirstPage();
         pageFriendRequestsSent.setToFirstPage();
         initializeReceivedRequests();
+        initializeNonFriends();
     }
 
     // FEED PANE
@@ -315,7 +317,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             alert.show();
         } else {
             pagePhotoPostProfileFriend.previousPage();
-            pageTextPostProfileFriend.previousPage();;
+            pageTextPostProfileFriend.previousPage();
             setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
             setButtonProfile(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
         }
@@ -352,8 +354,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 "Are you sure?", ButtonType.YES, ButtonType.NO);
         alertAskConfirmationRemoval.showAndWait();
         if (alertAskConfirmationRemoval.getResult() == ButtonType.YES) {
-            userPage.getFriendshipService().deleteFriendship(new Tuple(userPage.getUser().getId(), friendUser.getId()));
-            userPage.getFriendshipService().deleteFriendship(new Tuple(friendUser.getId(), userPage.getUser().getId()));
+            userPage.getFriendshipService().deleteFriendship(new Tuple<>(userPage.getUser().getId(), friendUser.getId()));
+            userPage.getFriendshipService().deleteFriendship(new Tuple<>(friendUser.getId(), userPage.getUser().getId()));
             initializeFeedPane(); // Removing the Friend means you can't access his/her profile from Feed
             numberFriends--;
             labelNumberFriends.setText(numberFriends + " Friends");
@@ -582,11 +584,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     // EXPLORE PANE
     private List<FriendshipRequest> listCurrentRequestsReceived = new ArrayList<>();
     private List<FriendshipRequest> listCurrentRequestsSent = new ArrayList<>();
+    private List<User> listCurrentNonFriends = new ArrayList<>();
     private List<Group> listGroupRequestsReceived;
     private List<Group> listGroupRequestsSent;
-    private ContentPage pageFriendRequestsReceived = new ContentPage(5, 1);
-    private ContentPage pageFriendRequestsSent = new ContentPage(5, 1);
-
+    private List<Group> listGroupsNonFriends;
+    private final ContentPage pageFriendRequestsReceived = new ContentPage(5, 1);
+    private final ContentPage pageFriendRequestsSent = new ContentPage(5, 1);
+    private final ContentPage pageNonFriends = new ContentPage(5, 1);
     @FXML
     Group groupRequestReceivedSt;
     @FXML
@@ -608,9 +612,23 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Group groupRequestSent5th;
     @FXML
+    Group groupNonFriendSt;
+    @FXML
+    Group groupNonFriendNd;
+    @FXML
+    Group groupNonFriendRd;
+    @FXML
+    Group groupNonFriend4th;
+    @FXML
+    Group groupNonFriend5th;
+    @FXML
     Pane paneExploreReceivedRequests;
     @FXML
     Pane paneExploreSentRequests;
+    @FXML
+    Label labelNoNewUsers;
+    @FXML
+    Label labelNoNewRequests;
 
     /**
      * Method that initializes the components of some Groups with the content of some Friendship Requests
@@ -623,43 +641,49 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         listCurrentRequestsReceived.clear();
         listCurrentRequestsSent.clear();
         listGroups.forEach(group -> group.setVisible(false)); // Reset the groups
+        labelNoNewRequests.setVisible(listFriendshipRequests.size() == 0);
         for (int i = 0; i < listFriendshipRequests.size(); i++) {
-            initializeGroup(listFriendshipRequests.get(i), listGroups.get(i), typeFriendshipRequest);
+            FriendshipRequest currentFriendshipRequest = listFriendshipRequests.get(i);
+            Group currentGroup = listGroups.get(i);
+            if (typeFriendshipRequest == TypeFriendshipRequest.RECEIVED) {
+                listCurrentRequestsReceived.add(currentFriendshipRequest);
+                initializeGroup(userPage.getUserService().getUser(currentFriendshipRequest.getFrom().getId()), currentGroup);
+            } else if (typeFriendshipRequest == TypeFriendshipRequest.SENT) {
+                listCurrentRequestsSent.add(currentFriendshipRequest);
+                initializeGroup(userPage.getUserService().getUser(currentFriendshipRequest.getTo().get(0).getId()), currentGroup);
+            }
         }
     }
 
     /**
-     * Method that initializes the components of a Group with the content of a Friendship Requests
-     * It sets the Circle of the Group with an Image and the Label of the Group with a String
-     * @param friendshipRequest FriendshipRequest, representing Friendship Request to initialize with
-     * @param group Group, representing the Group to be initialized
-     *     The group has at least 3 children
-     *     The second child of the Group has to be a Shape
-     *     The third child of the Group has to be Label
-     * @param typeFriendshipRequest TypeFriendshipRequest, representing the Type of the Friendship Request - RECEIVED or SENT
+     * Method that initializes the components of some Groups with the content of some Users
+     * It sets the Circle of each Group with an Image and the Label of each Group with a String
+     * @param listUsers List<User>, representing the list of Users
+     * @param listGroups List<Group>, representing the list of Groups
      */
-    private void initializeGroup(FriendshipRequest friendshipRequest, Group group, TypeFriendshipRequest typeFriendshipRequest) {
-        group.setVisible(true);
-        Node secondChild = group.getChildren().get(1);
-        Node thirdChild = group.getChildren().get(2);
-        if (typeFriendshipRequest == TypeFriendshipRequest.RECEIVED) {
-            if (secondChild instanceof Shape) {
-                setImage((Shape) secondChild, userPage.getProfilePhotoUserService().findOne(friendshipRequest.getFrom().getId()).getPathProfilePhoto());
-            }
-            if (thirdChild instanceof Label) {
-                ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getFrom().getId()).getFullName());
-             }
-            listCurrentRequestsReceived.add(friendshipRequest);
-        } else { // TypeFriendshipRequest.SENT
-            if (secondChild instanceof Shape) {
-                setImage((Shape) secondChild, userPage.getProfilePhotoUserService().findOne(friendshipRequest.getTo().get(0).getId()).getPathProfilePhoto());
-            }
-            if (thirdChild instanceof Label) {
-                ((Label) thirdChild).setText(userPage.getUserService().getUser(friendshipRequest.getTo().get(0).getId()).getFullName());
-            }
-            listCurrentRequestsSent.add(friendshipRequest);
+    private void initializeGrouping(List<User> listUsers, List<Group> listGroups) {
+        listCurrentNonFriends.clear();
+        listGroups.forEach(group -> group.setVisible(false));
+        labelNoNewUsers.setVisible(listUsers.size() == 0);
+        for (int i = 0; i < listUsers.size(); i++) {
+            listCurrentNonFriends.add(listUsers.get(i));
+            initializeGroup(listUsers.get(i), listGroups.get(i));
         }
+    }
 
+    /**
+     * Method that initializes the components of a Group with the content of a User
+     * It sets the Circle of the Group with an Profile Photo of the User and
+     * the Label of the Group with the Full Name of the User
+     * @param user User, representing the User whose data is used
+     * @param group Group, representing the Group to be set
+     */
+    private void initializeGroup(User user, Group group) {
+        group.setVisible(true);
+        Node ndChild = group.getChildren().get(1);
+        Node rdChild = group.getChildren().get(2);
+        setImage((Shape) ndChild, userPage.getProfilePhotoUserService().findOne(user.getId()).getPathProfilePhoto());
+        ((Label)rdChild).setText(user.getFullName());
     }
 
     /**
@@ -680,6 +704,14 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 userPage.getFriendshipRequestService().getListSentPendingRequests(userPage.getUser().getId(), pageFriendRequestsSent),
                 listGroupRequestsSent, TypeFriendshipRequest.SENT
         );
+    }
+
+    /**
+     * Method that initializes the Non Friend Users
+     */
+    private void initializeNonFriends(){
+        initializeGrouping(userPage.getUserService().getListAllNonFriends(userPage.getUser().getId(), pageNonFriends),
+                listGroupsNonFriends);
     }
 
     /**
@@ -750,6 +782,29 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         }
     }
 
+    /**
+     * Method linked to the labelGoNextExploreUsers onMouseClicked
+     * It shows the Users that are not friends with the Logged In User on the next Page
+     */
+    public void eventGoNextExploreUsers() {
+        pageNonFriends.nextPage();
+        initializeNonFriends();
+    }
+
+    /**
+     * Method linked to the labelGoBackExploreUsers onMouseClicked
+     * It shows the Users that are not friends with the Logged In User on the previous Page
+     */
+    public void eventGoBackExploreUsers() {
+        if (pageNonFriends.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageNonFriends.previousPage();
+            initializeNonFriends();
+        }
+    }
+
     // EXPLORE EVENTS BUTTONS
 
     /**
@@ -807,7 +862,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error at accepting the Friendship Request");
-            alert.show();;
+            alert.show();
         }
     }
 
@@ -859,13 +914,137 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private void eventDeclineFriendshipRequest(FriendshipRequest friendshipRequest) {
         if (userPage.getFriendshipRequestService().declineFriendshipRequest(friendshipRequest) == null) {
             initializeReceivedRequests();
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has benn declined!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has been declined!");
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error at declining the Friendship Request");
             alert.show();
         }
     }
+
+    /**
+     Method linked to the buttonAddFriendSt's onMouseClicked
+     * It sends a Friendship Request so the second User
+     */
+    public void eventButtonSendRequestNd() {
+        eventSendFriendshipRequest(
+                new FriendshipRequest(userPage.getUser(), Collections.singletonList(listCurrentNonFriends.get(1)), "Friendship Request", LocalDateTime.now(), "pending")
+        );
+    }
+
+    /**
+     Method linked to the buttonAddFriendSt's onMouseClicked
+     * It sends a Friendship Request so the third User
+     */
+    public void eventButtonSendRequestRd() {
+        eventSendFriendshipRequest(
+                new FriendshipRequest(userPage.getUser(), Collections.singletonList(listCurrentNonFriends.get(2)), "Friendship Request", LocalDateTime.now(), "pending")
+        );
+    }
+
+    /**
+     Method linked to the buttonAddFriendSt's onMouseClicked
+     * It sends a Friendship Request so the 4th User
+     */
+    public void eventButtonSendRequest4th() {
+        eventSendFriendshipRequest(
+                new FriendshipRequest(userPage.getUser(), Collections.singletonList(listCurrentNonFriends.get(3)), "Friendship Request", LocalDateTime.now(), "pending")
+        );
+    }
+
+    /**
+     Method linked to the buttonAddFriendSt's onMouseClicked
+     * It sends a Friendship Request so the 5th User
+     */
+    public void eventButtonSendRequest5th() {
+        eventSendFriendshipRequest(
+                new FriendshipRequest(userPage.getUser(), Collections.singletonList(listCurrentNonFriends.get(4)), "Friendship Request", LocalDateTime.now(), "pending")
+        );
+    }
+
+    /**
+     Method linked to the buttonAddFriendSt's onMouseClicked
+     * It sends a Friendship Request so the first User
+     */
+    public void eventButtonSendRequestSt() {
+        eventSendFriendshipRequest(
+                new FriendshipRequest(userPage.getUser(), Collections.singletonList(listCurrentNonFriends.get(0)), "Friendship Request", LocalDateTime.now(), "pending")
+        );
+    }
+
+    /**
+     * Method linked to the buttonAddFriend's onMouseClicked
+     * It sends a Friendship Request to an User
+     * @param friendshipRequest FriendshipRequest, representing the Friendship Request to be sent
+     */
+    private void eventSendFriendshipRequest(FriendshipRequest friendshipRequest) {
+        if (userPage.getFriendshipRequestService().addFriendshipRequest(friendshipRequest) == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has been sent!");
+            alert.show();
+            initializeNonFriends();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at sending the Friendship Request");
+            alert.show();
+        }
+    }
+
+    /**
+     * Method linked to the buttonCancelSentSt's onMouseClicked
+     * It cancels the first sent Friendship Request by the User
+     */
+    public void eventButtonCancelRequestSt() {
+        eventCancelFriendshipRequest(listCurrentRequestsSent.get(0));
+    }
+
+    /**
+     * Method linked to the buttonCancelSentSt's onMouseClicked
+     * It cancels the second sent Friendship Request by the User
+     */
+    public void eventButtonCancelRequestNd() {
+        eventCancelFriendshipRequest(listCurrentRequestsSent.get(1));
+    }
+
+    /**
+     * Method linked to the buttonCancelSentSt's onMouseClicked
+     * It cancels the third sent Friendship Request by the User
+     */
+    public void eventButtonCancelRequestRd() {
+        eventCancelFriendshipRequest(listCurrentRequestsSent.get(2));
+    }
+
+    /**
+     * Method linked to the buttonCancelSentSt's onMouseClicked
+     * It cancels the 4th sent Friendship Request by the User
+     */
+    public void eventButtonCancelRequest4th() {
+        eventCancelFriendshipRequest(listCurrentRequestsSent.get(3));
+    }
+
+    /**
+     * Method linked to the buttonCancelSentSt's onMouseClicked
+     * It cancels the 5th sent Friendship Request by the User
+     */
+    public void eventButtonCancelRequest5th() {
+        eventCancelFriendshipRequest(listCurrentRequestsSent.get(4));
+    }
+
+    /**
+     * Method linked to the buttonCancelSent onMouseClicked
+     * It retrieves (deletes) a sent Friendship Request by the User
+     * @param friendshipRequest FriendshipRequest, representing the Friendship Request sent by the User,
+     *                to be canceled (retrieved)
+     */
+    private void eventCancelFriendshipRequest(FriendshipRequest friendshipRequest) {
+        if (userPage.getFriendshipRequestService().deleteFriendshipRequest(friendshipRequest.getId()) != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The sent Friendship Request has been canceled!");
+            alert.show();
+            initializeSentRequests();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Error at canceling the sent Friendship Request");
+            alert.show();
+        }
+    }
+
 
     // STATISTICS PANE
     @FXML

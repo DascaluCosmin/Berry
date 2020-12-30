@@ -136,6 +136,17 @@ public class UserService implements Observable<UserChangeEvent> {
         return friendsUser;
     }
 
+    /**
+     * Method that gets the list of non-friends of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return List<User>, representing the non-friends of the User on that Page
+     */
+    public List<User> getListAllNonFriends(Long idUser, ContentPage page) {
+        List<User> listNonFriendUsers = new ArrayList<>();
+        repositoryUser.findAll(idUser, page).forEach(listNonFriendUsers::add);
+        return listNonFriendUsers;
+    }
 
     /**
      * Method that gets one specific User

@@ -17,7 +17,8 @@ public class ValidatorFriendshipRequest implements ValidatorService<FriendshipRe
     private void validateFriendshipRequestAlreadyExists(FriendshipRequest friendshipRequestToBeChecked,
                                                        Iterable<FriendshipRequest> friendshipRequestList) throws ValidationException{
         friendshipRequestList.forEach(friendshipRequest -> {
-            if (friendshipRequest.getFrom().getId().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
+            if (friendshipRequest.getStatusRequest().equals("pending") &&
+                    friendshipRequest.getFrom().getId().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
                     friendshipRequest.getTo().get(0).getId().equals(friendshipRequestToBeChecked.getTo().get(0).getId())) {
                 throw new ValidationException("The friendship request already exists!");
             }

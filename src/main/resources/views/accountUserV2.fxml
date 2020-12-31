@@ -47,15 +47,15 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" onMouseClicked="#eventShowEvents"/>
+            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" onMouseClicked="#eventShowDirect"/>
             <Label fx:id="labelShowExplore" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
-            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
-            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
-            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
-            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
-            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowFeed"/>
+            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowProfile"/>
+            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowDirect"/>
+            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowStatistics"/>
+            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowExplore"/>
+            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowEvents"/>
          </children></Pane>
       <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>

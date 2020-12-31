@@ -176,12 +176,31 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
 
     /**
      * Method that initializes the Feed Pane.
-     * It clear the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
+     * It clears the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
      */
     private void initializeFeedPane() {
         textFieldSearchFriend.clear();
         paneFriendsFeed.setVisible(true);
         paneFriendsProfile.setVisible(false);
+    }
+
+    /**
+     * Method that initializes the Explore Pane.
+     * It shows paneExploreReceivedRequests and hides paneExploreSentRequests
+     */
+    private void initializeExplorePane() {
+        paneExploreReceivedRequests.setVisible(true);
+        paneExploreSentRequests.setVisible(false);
+        labelFriendshipRequests.setText("Received Requests");
+    }
+
+    /**
+     * Method that initializes the Explore Pane.
+     * It shows panePhotoPostsProfile and hides paneTextPostsProfile
+     */
+    private void initializeProfilePane() {
+        panePhotoPostsProfile.setVisible(true);
+        paneTextPostsProfile.setVisible(false);
     }
 
     /**
@@ -235,6 +254,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Profile Panel
      */
     public void eventShowProfile() {
+        initializeProfilePane();
         currentPane.setVisible(false);
         currentPane = profilePane;
         currentPane.setVisible(true);
@@ -252,6 +272,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Explore Panel
      */
     public void eventShowExplore() {
+        initializeExplorePane();
         currentPane.setVisible(false);
         currentPane = explorePane;
         currentPane.setVisible(true);
@@ -263,6 +284,22 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pageFriendRequestsSent.setToFirstPage();
         initializeReceivedRequests();
         initializeNonFriends();
+    }
+
+    /**
+     * Method linked to the labelShowEvents onMouseClicked event
+     * It shows the Events Panel
+     */
+    public void eventShowEvents() {
+
+    }
+
+    /**
+     * Method linked to the labelShowDirect onMouseClicked event
+     * It shows the Direct Panel
+     */
+    public void eventShowDirect() {
+
     }
 
     // FEED PANE
@@ -439,6 +476,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 ((Rectangle) shape).setArcHeight(45);
                 ((Rectangle) shape).setArcWidth(45);
             }
+            shape.setVisible(true);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -582,7 +620,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * @param listRectangles List<Rectangle>, representing the Rectangles to be filled
      */
     private void setRectanglesPhoto(List<PhotoPost> listPhotoPosts, List<Rectangle> listRectangles) {
-        listRectangles.forEach(shape -> shape.setFill(null));
+        listRectangles.forEach(shape -> shape.setVisible(false));
         for (int i = 0; i < listPhotoPosts.size(); i++) {
             setImage(listRectangles.get(i), listPhotoPosts.get(i).getPhotoURL());
         }

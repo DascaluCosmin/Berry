@@ -197,7 +197,7 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
      * Method that gets a Photo Post from the current position of the Result Set
      * @param resultSet ResultSet, representing the Result Set
      * @return PhotoPost, representing the Photo Post built from the current position of the Result Set
-     * @throws SQLException
+     * @throws SQLException, if a field from the Data Base doesn't exist
      */
     private PhotoPost getPhotoPost(ResultSet resultSet) throws SQLException {
         Long postID = resultSet.getLong("ID");

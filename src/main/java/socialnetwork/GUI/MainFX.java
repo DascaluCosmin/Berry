@@ -6,14 +6,20 @@ import javafx.stage.Stage;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.LoginController;
 import socialnetwork.domain.*;
+import socialnetwork.domain.events.Event;
+import socialnetwork.domain.events.Participant;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.*;
+import socialnetwork.repository.database.event.EventDBRepository;
+import socialnetwork.repository.database.event.EventParticipationType;
+import socialnetwork.repository.database.event.ParticipantDBRepository;
 import socialnetwork.repository.database.friendshipRequests.FriendshipRequestsDBRepository;
 import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.service.*;
 import socialnetwork.utils.ViewClass;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class MainFX extends Application {
     private static UserService userService;
@@ -25,6 +31,7 @@ public class MainFX extends Application {
     private static UserCredentialsService userCredentialsService;
     private static TextPostService textPostService;
     private static PhotoPostService photoPostService;
+    private static EventsService eventsService;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
@@ -64,6 +71,8 @@ public class MainFX extends Application {
         UserCredentialsDBRepository userCredentialsRepository = new UserCredentialsDBRepository(url, username, password);
         TextPostDBRepository textPostDBRepository = new TextPostDBRepository(url, username, password);
         PhotoPostDBRepository photoPostDBRepository = new PhotoPostDBRepository(url, username, password);
+        EventDBRepository eventDBRepository = new EventDBRepository(url, username, password, userRepository);
+        ParticipantDBRepository participantDBRepository = new ParticipantDBRepository(url, username, password);
 
         // Services
         userService = new UserService(userRepository, friendshipRepository);
@@ -76,6 +85,7 @@ public class MainFX extends Application {
         userCredentialsService = new UserCredentialsService(userCredentialsRepository);
         textPostService = new TextPostService(textPostDBRepository);
         photoPostService = new PhotoPostService(photoPostDBRepository);
+        eventsService = new EventsService(eventDBRepository, participantDBRepository);
         launch(args);
     }
 }

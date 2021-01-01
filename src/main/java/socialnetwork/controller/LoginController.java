@@ -41,6 +41,7 @@ public class LoginController {
     private ReplyMessageService replyMessageService;
     private TextPostService textPostService;
     private PhotoPostService photoPostService;
+    private EventsService eventsService;
     private Stage loginStage;
 
     @FXML
@@ -94,6 +95,10 @@ public class LoginController {
         this.photoPostService = photoPostService;
     }
 
+    public void setEventsService(EventsService eventsService) {
+        this.eventsService = eventsService;
+    }
+
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
@@ -134,13 +139,10 @@ public class LoginController {
             AccountUserControllerV2 accountUserControllerV2 = loader.getController();
             Page loggedInUserPage = new Page(loggedInUser, userService, friendshipService, friendshipRequestService,
                     profilePhotoUserService, userCredentialsService, replyMessageService, messageService, textPostService,
-                    photoPostService);
+                    photoPostService, eventsService);
             accountUserControllerV2.setUserPage(loggedInUserPage);
             accountUserControllerV2.setAccountUserStage(accountUserStage);
             accountUserControllerV2.setLoginStage(loginStage);
-//            AccountUserController accountUserController = loader.getController();
-//            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-//                    loggedInUser, accountUserStage, messageService, replyMessageService);
             loginStage.hide();
             accountUserStage.show();
             textFieldUsername.clear();

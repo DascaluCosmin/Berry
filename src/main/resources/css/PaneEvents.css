@@ -29,3 +29,19 @@
 #buttonManage:hover {
     -fx-background-color: #333A83;
 }
+
+#buttonParticipate {
+    -fx-background-color: #40457B;
+}
+
+#buttonParticipate:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonSubscribe {
+    -fx-background-color: #40457B;
+}
+
+#buttonSubscribe:hover {
+    -fx-background-color: #333A83;
+}

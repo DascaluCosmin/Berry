@@ -13,6 +13,7 @@ public class Page {
     private MessageService messageService;
     private TextPostService textPostService;
     private PhotoPostService photoPostService;
+    private EventsService eventsService;
 
     /**
      * Constructor that creates a new Page
@@ -27,11 +28,13 @@ public class Page {
      * @param messageService MessageService, representing the Service concerned with the Messages data
      * @param textPostService TextPostService, representing the Service concerned with the Text Posts data
      * @param photoPostService PhotoPostService, representing the Service concerned with the Photo Posts data
+     * @param eventsService EventsService, representing the Service concerned with the Events data
      */
     public Page(UserDTO userDTO, UserService userService, FriendshipService friendshipService,
                 FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
                 UserCredentialsService userCredentialsService, ReplyMessageService replyMessageService,
-                MessageService messageService, TextPostService textPostService, PhotoPostService photoPostService) {
+                MessageService messageService, TextPostService textPostService, PhotoPostService photoPostService,
+                EventsService eventsService) {
         this.userDTO = userDTO;
         this.userService = userService;
         this.friendshipService = friendshipService;
@@ -42,6 +45,7 @@ public class Page {
         this.messageService = messageService;
         this.textPostService = textPostService;
         this.photoPostService = photoPostService;
+        this.eventsService = eventsService;
     }
 
     /**
@@ -126,5 +130,12 @@ public class Page {
      */
     public PhotoPostService getPhotoPostService() {
         return photoPostService;
+    }
+
+    /**
+     * @return EventsService, representing the Service concerned with the Events data
+     */
+    public EventsService getEventsService() {
+        return eventsService;
     }
 }

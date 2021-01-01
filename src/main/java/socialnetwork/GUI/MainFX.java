@@ -52,6 +52,7 @@ public class MainFX extends Application {
         loginController.setReplyMessageService(replyMessageService);
         loginController.setTextPostService(textPostService);
         loginController.setPhotoPostService(photoPostService);
+        loginController.setEventsService(eventsService);
         primaryStage.show();
     }
 

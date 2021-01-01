@@ -136,6 +136,17 @@ public class EventsService {
     }
 
     /**
+     * Method that gets one specific Participant
+     * @param event Event, representing the Event the Participant attends to
+     * @param user User, representing the User being the Participant
+     * @return non-null Participant, if the User participates to the Event
+     *      null, otherwise
+     */
+    public Participant getParticipant(Event event, User user) {
+        return participantDBRepository.findOne(new Tuple<>(event.getId(), user.getId()));
+    }
+
+    /**
      * Method that gets the list of all Events
      * @return List<Event>, representing the list of Events
      */

@@ -28,11 +28,13 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
 import socialnetwork.domain.*;
+import socialnetwork.domain.events.Event;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
+import socialnetwork.utils.DateConverter;
 import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
 import socialnetwork.utils.events.TextPostEvent;
@@ -209,10 +211,16 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
 
     /**
      * Method that initializes the Events Pane
+     * It shows the components corresponding to the Discover Pane, hiding the components corresponding to the Your Events Pane
      */
     private void initializeEventsPane() {
-        // TODO: TO BE DELETED AT PRODUCTION
-        setImage(rectanglePhotoEvent, "C:\\Users\\dasco\\OneDrive\\Pictures\\EventsPhotos\\Untold.png");
+        buttonParticipate.setVisible(true);
+        buttonSubscribe.setVisible(false);
+        labelNoEvents.setVisible(false);
+        labelGoBackEventDiscover.setVisible(true);
+        labelGoNextEventDiscover.setVisible(true);
+        labelGoBackEventParticipate.setVisible(false);
+        labelGoNextEventParticipate.setVisible(false);
     }
 
     /**
@@ -311,6 +319,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentSliderLabel.setVisible(false);
         currentSliderLabel = labelShowEventsDummy;
         currentSliderLabel.setVisible(true);
+        pageEventsDiscover.setToFirstPage();
+        pageEventsParticipate.setToFirstPage();
+        initializeEventToBeDiscovered();
     }
 
     /**
@@ -497,7 +508,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             }
             shape.setVisible(true);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+           shape.setFill(Paint.valueOf("#FFF"));
         }
     }
 
@@ -1138,9 +1149,215 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // EVENTS PANE
+    private final String TEXT_PEOPLE = "People Responded";
+    private final String TEXT_HOSTED_BY = "Hosted By";
+    private final ContentPage pageEventsDiscover = new ContentPage(1, 1);
+    private final ContentPage pageEventsParticipate = new ContentPage(1, 1);
+    private Event currentEvent;
+
     @FXML
     Rectangle rectanglePhotoEvent;
+    @FXML
+    Button buttonParticipate;
+    @FXML
+    Button buttonSubscribe;
+    @FXML
+    Label labelNoEvents;
+    @FXML
+    Label labelEventName;
+    @FXML
+    Label labelEventNbPeople;
+    @FXML
+    Label labelEventDate;
+    @FXML
+    Label labelEventLocation;
+    @FXML
+    Label labelEventHosted;
+    @FXML
+    Label labelEventCategory;
+    @FXML
+    Label labelEventDescription;
+    @FXML
+    Label labelGoBackEventDiscover;
+    @FXML
+    Label labelGoNextEventDiscover;
+    @FXML
+    Label labelGoNextEventParticipate;
+    @FXML
+    Label labelGoBackEventParticipate;
+    @FXML
+    Pane paneEventsParticipate;
+    @FXML
+    Pane paneEventsParticipateDetails;
 
+    /**
+     * Method that initializes an Event
+     * It sets the Image and the Details of the Event
+     * @param event Event, representing the Event to be initialized
+     */
+    private void initializeEvent(Event event) {
+        currentEvent = event;
+        setImage(rectanglePhotoEvent, event.getPhotoURL());
+        labelEventName.setText(event.getName().toUpperCase());
+        labelEventNbPeople.setText(userPage.getEventsService().getNumberParticipants(event) + " " + TEXT_PEOPLE);
+
+        LocalDate startDate = event.getStartDate();
+        LocalDate endDate = event.getEndDate();
+        labelEventDate.setText(
+                startDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(startDate.getMonthValue()) + " " + startDate.getYear() + " - " +
+                endDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(endDate.getMonthValue()) + " " + endDate.getYear()
+        );
+        labelEventLocation.setText(event.getLocation());
+        labelEventHosted.setText(TEXT_HOSTED_BY + " " + event.getOrganization());
+        labelEventCategory.setText(event.getCategory());
+        labelEventDescription.setText(event.getDescription());
+    }
+
+    /**
+     * Method that initializes the Event to be Discovered by the User
+     */
+    private void initializeEventToBeDiscovered() {
+        List<Event> listEventsDiscoverOnPage = userPage.getEventsService().getListEventsDoesntParticipate(userPage.getUser().getId(), pageEventsDiscover);
+        if (!listEventsDiscoverOnPage.isEmpty()) {
+            paneEventsParticipateDetails.setVisible(true);
+            initializeEvent(listEventsDiscoverOnPage.get(0));
+        } else {
+            paneEventsParticipateDetails.setVisible(false);
+            labelNoEvents.setVisible(true);
+            labelNoEvents.setText("There are no new Events");
+        }
+    }
+
+    /**
+     * Method that initializes the Event the User Participates to
+     */
+    private void initializeEventParticipateTo() {
+        List<Event> listEventsParticipateOnPage = userPage.getEventsService().getListEventsParticipate(userPage.getUser().getId(), pageEventsParticipate);
+        if (!listEventsParticipateOnPage.isEmpty()) {
+            Event eventToParticipateTo = listEventsParticipateOnPage.get(0);
+            if (userPage.getEventsService().getParticipant(eventToParticipateTo, userPage.getUser()).getNotified()) {
+                buttonSubscribe.setText("Unsubscribe");
+            } else {
+                buttonSubscribe.setText("Subscribe");
+            }
+            paneEventsParticipateDetails.setVisible(true);
+            initializeEvent(eventToParticipateTo);
+        } else {
+            paneEventsParticipateDetails.setVisible(false);
+            labelNoEvents.setVisible(true);
+            labelNoEvents.setText("No Events to participate to");
+        }
+    }
+
+    /**
+     * Method linked to the buttonDiscover onMouseClicked event
+     * It shows the Events the User doesn't Participate to
+     */
+    public void eventButtonDiscover() {
+        buttonParticipate.setVisible(true);
+        buttonSubscribe.setVisible(false);
+        labelNoEvents.setVisible(false);
+        labelGoBackEventDiscover.setVisible(true);
+        labelGoNextEventDiscover.setVisible(true);
+        labelGoBackEventParticipate.setVisible(false);
+        labelGoNextEventParticipate.setVisible(false);
+        paneEventsParticipate.setVisible(true);
+        pageEventsDiscover.setToFirstPage();
+        initializeEventToBeDiscovered();
+    }
+
+    /**
+     * Method linked to the buttonYourEvents onMouseClicked event
+     * It shows the Events the User Participates to
+     */
+    public void eventButtonYourEvents() {
+        buttonSubscribe.setVisible(true);
+        buttonParticipate.setVisible(false);
+        pageEventsParticipate.setToFirstPage();
+        labelNoEvents.setVisible(false);
+        labelGoBackEventParticipate.setVisible(true);
+        labelGoNextEventParticipate.setVisible(true);
+        labelGoBackEventDiscover.setVisible(false);
+        labelGoNextEventDiscover.setVisible(false);
+        paneEventsParticipate.setVisible(true);
+        initializeEventParticipateTo();
+    }
+
+    /**
+     * Method linked to labelGoNextEventDiscover onMouseClicked event
+     * It shows the next Event to be Discovered by the User
+     */
+    public void eventGoNextEventDiscover() {
+        pageEventsDiscover.nextPage();
+        initializeEventToBeDiscovered();
+    }
+
+    /**
+     * Method linked to the labelGoBackEventDiscover onMouseClicked event
+     * It shows the previous Event to be Discovered by the User
+     */
+    public void eventGoBackEventDiscover() {
+        if (pageEventsDiscover.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageEventsDiscover.previousPage();
+            initializeEventToBeDiscovered();
+        }
+    }
+
+    /**
+     * Method linked to the labelGoNextEventParticipate onMouseClicked event
+     * It shows the next Event the User Participates to
+     */
+    public void eventGoNextEventParticipate() {
+        pageEventsParticipate.nextPage();
+        initializeEventParticipateTo();
+    }
+
+    /**
+     * Method linked to the labelGoBackEventParticipate onMouseClicked event
+     * It shows the previous Event the User Participates to
+     */
+    public void eventGoBackEventParticipate() {
+        if (pageEventsParticipate.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageEventsParticipate.previousPage();
+            initializeEventParticipateTo();
+        }
+    }
+
+    /**
+     * Method linked to the buttonParticipate onMouseClicked event
+     * It makes the User a Participant to the current Event
+     */
+    public void eventButtonParticipate() {
+        if (currentEvent != null) {
+            userPage.getEventsService().addParticipant(currentEvent, userPage.getUser());
+            initializeEventToBeDiscovered();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are now participating to the event!");
+            alert.show();
+        }
+    }
+
+
+    /**
+     * Method linked to the buttonSubscribe onMouseClicked event
+     * It subscribes/unsubscribes the User from getting notifications about an Event
+     */
+    public void eventButtonSubscribe() {
+        if (currentEvent != null) {
+            if (buttonSubscribe.getText().equals("Subscribe")) {
+                userPage.getEventsService().subscribe(currentEvent, userPage.getUser());
+                buttonSubscribe.setText("Unsubscribe");
+            } else if (buttonSubscribe.getText().equals("Unsubscribe")) {
+                userPage.getEventsService().unsubscribe(currentEvent, userPage.getUser());
+                buttonSubscribe.setText("Subscribe");
+            }
+        }
+    }
 
     // STATISTICS PANE
     @FXML

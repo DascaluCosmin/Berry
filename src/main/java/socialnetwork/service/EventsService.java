@@ -5,6 +5,9 @@ import socialnetwork.domain.Tuple;
 import socialnetwork.domain.User;
 import socialnetwork.domain.events.Event;
 import socialnetwork.domain.events.Participant;
+import socialnetwork.domain.validators.ValidationException;
+import socialnetwork.domain.validators.Validator;
+import socialnetwork.domain.validators.ValidatorEvent;
 import socialnetwork.repository.database.event.EventDBRepository;
 import socialnetwork.repository.database.event.EventParticipationType;
 import socialnetwork.repository.database.event.ParticipantDBRepository;
@@ -32,8 +35,11 @@ public class EventsService {
      * @param event Event, representing the Event to be added
      * @return non-null Event, if the Event was added successfully
      *      null, otherwise
+     * @throws ValidationException, if the Event has empty fields
      */
-    public Event addEvent(Event event) {
+    public Event addEvent(Event event) throws ValidationException {
+        Validator<Event> validatorEvent = new ValidatorEvent();
+        validatorEvent.validate(event);
         return eventRepository.save(event);
     }
 

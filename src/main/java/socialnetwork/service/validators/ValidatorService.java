@@ -1,3 +1,4 @@
+
 package socialnetwork.service.validators;
 
 import socialnetwork.domain.validators.ValidationException;

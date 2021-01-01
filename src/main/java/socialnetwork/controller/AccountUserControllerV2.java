@@ -33,6 +33,7 @@ import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.TextPost;
+import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.utils.DateConverter;
 import socialnetwork.utils.ValidatorDates;
@@ -316,6 +317,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = eventsPane;
         currentPane.setVisible(true);
+        if (currentEventPane != null) {
+            currentEventPane.setVisible(false);
+        }
+        currentEventPane = paneEventsParticipate;
+        currentEventPane.setVisible(true);
         currentSliderLabel.setVisible(false);
         currentSliderLabel = labelShowEventsDummy;
         currentSliderLabel.setVisible(true);
@@ -499,6 +505,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void setImage(Shape shape, String pathToPhoto) {
         try {
+            if (pathToPhoto == null) {
+                throw new FileNotFoundException();
+            }
             FileInputStream fileInputStream = new FileInputStream(pathToPhoto);
             Image image = new Image(fileInputStream, 1000, 1000, false, true);
             shape.setFill(new ImagePattern(image));
@@ -1151,16 +1160,40 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     // EVENTS PANE
     private final String TEXT_PEOPLE = "People Responded";
     private final String TEXT_HOSTED_BY = "Hosted By";
+    private String currentNewEventPhotoURL;
     private final ContentPage pageEventsDiscover = new ContentPage(1, 1);
     private final ContentPage pageEventsParticipate = new ContentPage(1, 1);
     private Event currentEvent;
+    private Pane currentEventPane;
 
     @FXML
+    Rectangle rectanglePhotoEventAdd;
+    @FXML
     Rectangle rectanglePhotoEvent;
+    @FXML
+    TextField textFieldEventName;
+    @FXML
+    TextField textFieldEventLocation;
+    @FXML
+    TextField textFieldEventOrganization;
+    @FXML
+    TextField textFieldEventCategory;
+    @FXML
+    TextArea textAreaEventDescription;
+    @FXML
+    DatePicker datePickerEventStartDate;
+    @FXML
+    DatePicker datePickerEventEndDate;
     @FXML
     Button buttonParticipate;
     @FXML
     Button buttonSubscribe;
+    @FXML
+    Button buttonAddEvent;
+    @FXML
+    Button buttonAddNewEvent;
+    @FXML
+    Button buttonDeleteEvent;
     @FXML
     Label labelNoEvents;
     @FXML
@@ -1186,9 +1219,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelGoBackEventParticipate;
     @FXML
+    Group groupPhotoEventAdd;
+    @FXML
     Pane paneEventsParticipate;
     @FXML
     Pane paneEventsParticipateDetails;
+    @FXML
+    Pane paneEventsAddEvent;
 
     /**
      * Method that initializes an Event
@@ -1210,7 +1247,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelEventLocation.setText(event.getLocation());
         labelEventHosted.setText(TEXT_HOSTED_BY + " " + event.getOrganization());
         labelEventCategory.setText(event.getCategory());
-        labelEventDescription.setText(event.getDescription());
+        labelEventDescription.setText(event.getDescription().replace("\n", " "));
     }
 
     /**
@@ -1261,7 +1298,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextEventDiscover.setVisible(true);
         labelGoBackEventParticipate.setVisible(false);
         labelGoNextEventParticipate.setVisible(false);
-        paneEventsParticipate.setVisible(true);
+        currentEventPane.setVisible(false);
+        currentEventPane = paneEventsParticipate;
+        currentEventPane.setVisible(true);
         pageEventsDiscover.setToFirstPage();
         initializeEventToBeDiscovered();
     }
@@ -1279,8 +1318,101 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextEventParticipate.setVisible(true);
         labelGoBackEventDiscover.setVisible(false);
         labelGoNextEventDiscover.setVisible(false);
-        paneEventsParticipate.setVisible(true);
+        currentEventPane.setVisible(false);
+        currentEventPane = paneEventsParticipate;
+        currentEventPane.setVisible(true);
         initializeEventParticipateTo();
+    }
+
+    /**
+     * Method linked to the buttonAddEvent onMouseClicked event
+     * It shows the User the Pane to add a new Event
+     */
+    public void eventButtonAddEvent() {
+        currentEventPane.setVisible(false);
+        currentEventPane = paneEventsAddEvent;
+        currentEventPane.setVisible(true);
+        buttonAddNewEvent.setVisible(true);
+        buttonDeleteEvent.setVisible(false);
+        clearAddEventPane();
+    }
+
+    /**
+     * Method that clears the components of the Add Event Pane
+     */
+    private void clearAddEventPane() {
+        currentNewEventPhotoURL = "";
+        setImage(rectanglePhotoEventAdd, currentNewEventPhotoURL);
+        textFieldEventName.clear();
+        textFieldEventLocation.clear();
+        textFieldEventOrganization.clear();
+        textFieldEventCategory.clear();
+        datePickerEventStartDate.setValue(null);
+        datePickerEventEndDate.setValue(null);
+        textAreaEventDescription.clear();
+        groupPhotoEventAdd.setVisible(true);
+    }
+
+    /**
+     * Method linked to the buttonAddNewEvent onMouseClicked event
+     * It adds a new Event hosted by the User
+     */
+    public void eventButtonAddNewEvent() {
+        String eventName = textFieldEventName.getText();
+        LocalDate eventStartDate = datePickerEventStartDate.getValue();
+        LocalDate eventEndDate = datePickerEventEndDate.getValue();
+        String eventLocation = textFieldEventLocation.getText();
+        String eventOrganization = textFieldEventOrganization.getText();
+        String eventCategory = textFieldEventCategory.getText();
+        String eventDescription = textAreaEventDescription.getText();
+        try {
+            currentEvent = userPage.getEventsService().addEvent(new Event(
+                    eventName, eventStartDate, eventEndDate, eventOrganization, eventDescription, eventLocation,
+                    eventCategory, currentNewEventPhotoURL, userPage.getUser()
+            ));
+            if (currentEvent != null) {
+                buttonDeleteEvent.setVisible(true);
+                buttonAddNewEvent.setVisible(false);
+                userPage.getEventsService().addParticipant(currentEvent, userPage.getUser());
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The event has been added successfully!");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error at adding the event");
+                alert.show();
+            }
+        } catch (ValidationException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Please complete all mandatory fields!");
+            alert.show();
+        }
+    }
+
+    /**
+     * Method linked to the buttonDeleteEvent onMouseClicked event
+     * It allows the User to delete the newly added Event
+     */
+    public void eventButtonDeleteNewEvent() {
+        if (currentEvent != null) {
+            if (userPage.getEventsService().deleteEvent(currentEvent.getId()) != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The event has been deleted successfully!");
+                alert.show();
+                clearAddEventPane();
+                return;
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Error at deleting the event");
+        alert.show();
+    }
+
+    /**
+     * Method linked to the rectanglePhotoEventAdd onMouseClicked event
+     * It allows the User to select an Event Photo
+     */
+    public void eventGetNewEventPhoto() {
+        currentNewEventPhotoURL = getPhotoURL();
+        setImage(rectanglePhotoEventAdd, currentNewEventPhotoURL);
+        if (currentNewEventPhotoURL != null) {
+            groupPhotoEventAdd.setVisible(false);
+        }
     }
 
     /**
@@ -1341,7 +1473,6 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             alert.show();
         }
     }
-
 
     /**
      * Method linked to the buttonSubscribe onMouseClicked event

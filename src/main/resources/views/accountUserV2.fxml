@@ -56,9 +56,16 @@
             <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
             <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
             <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" onMouseClicked="#eventShowEvents" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelNbNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="2.0" prefHeight="15.0" prefWidth="14.0" stylesheets="@../css/accountUserV2.css" text="15" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
+            <TextField fx:id="textFieldTrash" layoutX="299.0" layoutY="16.0" opacity="0.0" />
+            <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Label fx:id="labelSearch" contentDisplay="CENTER" layoutX="27.0" layoutY="12.0" prefHeight="32.0" prefWidth="178.0">
                <graphic>
@@ -145,7 +152,6 @@
                   </Label>
                </children>
             </Pane>
-            <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
          </children>
       </Pane>
       <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
@@ -206,7 +212,7 @@
                </image>
             </ImageView>
             <Button fx:id="buttonYourEvents" layoutX="177.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonYourEvents" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Your Events" textFill="WHITE" />
-            <Button fx:id="buttonAddEvent" layoutX="327.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
+            <Button fx:id="buttonAddEvent" layoutX="327.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonAddEvent" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
             <Button fx:id="buttonManage" layoutX="477.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Manage" textFill="WHITE" />
             <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="184.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -319,6 +325,64 @@
                         </ImageView>
                      </graphic>
                   </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="paneEventsAddEvent" layoutX="17.0" layoutY="70.0" visible="false">
+               <children>
+                  <Rectangle fx:id="rectangleDetailsAddEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutX="77.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+                  <Rectangle fx:id="rectanglePhotoEventAdd" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="178.0" onMouseClicked="#eventGetNewEventPhoto" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventDate.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventLocation.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventHosted.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventCategory.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="178.0" layoutY="272.0" text="Details">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddNewEvent" alignment="CENTER" layoutX="525.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonAddNewEvent" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
+                  <Button fx:id="buttonDeleteEvent" alignment="CENTER" layoutX="525.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeleteNewEvent" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Delete Event" textFill="WHITE" visible="false" />
+                  <Group fx:id="groupPhotoEventAdd" layoutX="286.0" layoutY="101.0">
+                     <children>
+                        <ImageView fitHeight="26.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelAddPhotoEvent.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="31.0" layoutY="5.0" text="Add Event Photo" />
+                     </children>
+                  </Group>
+                  <TextField fx:id="textFieldEventName" layoutX="220.0" layoutY="238.0" prefHeight="25.0" prefWidth="238.0" promptText="Event Name" />
+                  <DatePicker fx:id="datePickerEventStartDate" layoutX="212.0" layoutY="303.0" prefHeight="25.0" prefWidth="101.0" promptText="Start Date" />
+                  <DatePicker fx:id="datePickerEventEndDate" layoutX="336.0" layoutY="303.0" prefHeight="25.0" prefWidth="101.0" promptText="End Date" />
+                  <Label alignment="CENTER" layoutX="318.0" layoutY="308.0" prefHeight="17.0" prefWidth="14.0" text="-" />
+                  <TextField fx:id="textFieldEventLocation" layoutX="212.0" layoutY="343.0" promptText="Location" />
+                  <TextField fx:id="textFieldEventOrganization" layoutX="212.0" layoutY="381.0" promptText="Organization" />
+                  <TextField fx:id="textFieldEventCategory" layoutX="212.0" layoutY="420.0" promptText="Category" />
+                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" />
+                  <Label layoutX="213.0" layoutY="232.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="329.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="337.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="375.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="414.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="171.0" layoutY="451.0" text="*" textFill="#cf1e1e" />
                </children>
             </Pane>
          </children>

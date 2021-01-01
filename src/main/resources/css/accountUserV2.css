@@ -1,4 +1,8 @@
 /* SLIDER PANE */
+#labelNbNotifications {
+    -fx-background-color: red;
+}
+
 #labelShowStatistics:hover {
     -fx-background-color: #333A83;
     -fx-opacity: 0.5;

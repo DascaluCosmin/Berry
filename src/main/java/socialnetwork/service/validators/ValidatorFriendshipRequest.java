@@ -15,10 +15,9 @@ public class ValidatorFriendshipRequest implements ValidatorService<FriendshipRe
      * @throws ValidationException, if the Friendship Request already exists (the sender and the receiver ar the same)
      */
     private void validateFriendshipRequestAlreadyExists(FriendshipRequest friendshipRequestToBeChecked,
-                                                       Iterable<FriendshipRequest> friendshipRequestList) throws ValidationException{
+                                                        Iterable<FriendshipRequest> friendshipRequestList) throws ValidationException{
         friendshipRequestList.forEach(friendshipRequest -> {
-            if (friendshipRequest.getStatusRequest().equals("pending") &&
-                    friendshipRequest.getFrom().getId().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
+            if (friendshipRequest.getFrom().getId().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
                     friendshipRequest.getTo().get(0).getId().equals(friendshipRequestToBeChecked.getTo().get(0).getId())) {
                 throw new ValidationException("The friendship request already exists!");
             }
@@ -32,15 +31,15 @@ public class ValidatorFriendshipRequest implements ValidatorService<FriendshipRe
      * @throws ValidationException, if the Friendship already exists
      */
     private void validateFriendshipAlreadyExists(FriendshipRequest friendshipRequestToBeChecked,
-                                                Iterable<Friendship> friendshipList) throws ValidationException {
+                                                 Iterable<Friendship> friendshipList) throws ValidationException {
         if (friendshipRequestToBeChecked.getStatusRequest().equals("pending")) {
             friendshipList.forEach(friendship -> {
-            if (friendship.getId().getLeft().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
-                friendship.getId().getRight().equals(friendshipRequestToBeChecked.getTo().get(0).getId()))
-                throw new ValidationException("The friendship already exists!");
-            if (friendship.getId().getLeft().equals(friendshipRequestToBeChecked.getTo().get(0).getId()) &&
-                friendship.getId().getRight().equals(friendshipRequestToBeChecked.getFrom().getId()))
-                throw new ValidationException("The friendship already exists!");
+                if (friendship.getId().getLeft().equals(friendshipRequestToBeChecked.getFrom().getId()) &&
+                        friendship.getId().getRight().equals(friendshipRequestToBeChecked.getTo().get(0).getId()))
+                    throw new ValidationException("The friendship already exists!");
+                if (friendship.getId().getLeft().equals(friendshipRequestToBeChecked.getTo().get(0).getId()) &&
+                        friendship.getId().getRight().equals(friendshipRequestToBeChecked.getFrom().getId()))
+                    throw new ValidationException("The friendship already exists!");
             });
         };
     }
@@ -53,7 +52,7 @@ public class ValidatorFriendshipRequest implements ValidatorService<FriendshipRe
      * @throws ValidationException
      */
     public void validateBeforeAdding(FriendshipRequest friendshipRequestToBeChecked,
-            Iterable<FriendshipRequest> friendshipRequestsList, Iterable<Friendship> friendshipsList) throws ValidationException{
+                                     Iterable<FriendshipRequest> friendshipRequestsList, Iterable<Friendship> friendshipsList) throws ValidationException{
         validateFriendshipRequestAlreadyExists(friendshipRequestToBeChecked, friendshipRequestsList);
         validateFriendshipAlreadyExists(friendshipRequestToBeChecked, friendshipsList);
     }

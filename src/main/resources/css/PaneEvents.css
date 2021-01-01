@@ -45,3 +45,19 @@
 #buttonSubscribe:hover {
     -fx-background-color: #333A83;
 }
+
+#buttonAddNewEvent {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddNewEvent:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonDeleteEvent {
+    -fx-background-color: #40457B;
+}
+
+#buttonDeleteEvent:hover {
+    -fx-background-color: #333A83;
+}

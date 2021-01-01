@@ -47,17 +47,17 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" onMouseClicked="#eventShowEvents"/>
-            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" onMouseClicked="#eventShowDirect"/>
+            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" onMouseClicked="#eventShowEvents" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" onMouseClicked="#eventShowDirect" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
             <Label fx:id="labelShowExplore" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
-            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowFeed"/>
-            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowProfile"/>
-            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowDirect"/>
-            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowStatistics"/>
-            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowExplore"/>
-            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" onMouseClicked="#eventShowEvents"/>
+            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" onMouseClicked="#eventShowDirect" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" onMouseClicked="#eventShowEvents" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Label fx:id="labelSearch" contentDisplay="CENTER" layoutX="27.0" layoutY="12.0" prefHeight="32.0" prefWidth="178.0">
@@ -194,6 +194,111 @@
             </Pane>
             <Button fx:id="buttonShowPhotosProfile" layoutX="266.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
             <Button fx:id="buttonShowProfileText" layoutX="366.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="eventsPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+         <children>
+            <Label fx:id="labelExitApplicationEvents" layoutX="646.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="23.0" />
+            <Button fx:id="buttonDiscover" alignment="CENTER" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Discover" textFill="WHITE" />
+            <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="38.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/DiscoverButton.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonYourEvents" layoutX="177.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Your Events" textFill="WHITE" />
+            <Button fx:id="buttonAddEvent" layoutX="327.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
+            <Button fx:id="buttonManage" layoutX="477.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Manage" textFill="WHITE" />
+            <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="184.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ButtonYourEvents.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="337.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ButtonAddEvent.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="488.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ButtonManage.png" />
+               </image>
+            </ImageView>
+            <Rectangle fx:id="rectangleDetailsEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutX="94.0" layoutY="170.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+            <Rectangle fx:id="rectanglePhotoEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="195.0" layoutY="70.0" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+            <Label fx:id="labelGoBackEvent" alignment="CENTER" layoutX="17.0" layoutY="649.0" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoNextEvent" alignment="CENTER" layoutX="649.0" layoutY="649.0" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelEventName" alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="294.0" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="194.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LabelEventNbPeople.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelEventNbPeople" layoutX="235.0" layoutY="362.0" text="44K People Responded" />
+            <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="194.0" layoutY="395.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LabelEventDate.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelEventDate" layoutX="228.0" layoutY="401.0" text="5 August 2021 - 8 August 2021" />
+            <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="193.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LabelEventLocation.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelEventLocation" layoutX="228.0" layoutY="438.0" text="Cluj Arena, Cluj-Napoca">
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="193.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LabelEventHosted.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelEventHosted" layoutX="228.0" layoutY="482.0" text="Hosted By UNTOLD">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="28.0" fitWidth="36.0" layoutX="193.0" layoutY="517.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/LabelEventCategory.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelEventHosted1" layoutX="228.0" layoutY="521.0" text="Music Festival">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="190.0" layoutY="551.0" prefHeight="62.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="193.0" layoutY="327.0" text="Details">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="explorePane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
@@ -575,5 +680,6 @@
             <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
          </children>
       </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

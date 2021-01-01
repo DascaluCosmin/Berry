@@ -143,6 +143,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelShowFeedDummy;
     @FXML
+    Label labelShowEventsDummy;
+    @FXML
     Label labelShowExploreDummy;
     @FXML
     Label labelShowStatisticsDummy;
@@ -155,10 +157,12 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Pane explorePane;
     @FXML
+    Pane eventsPane;
+    @FXML
     Circle circleProfilePhoto;
 
     /**
-     * Method that initializes the Slider Pane.
+     * Method that initializes the Slider Pane
      * It sets the labelRealName, labelUserName and imageViewProfilePhoto
      */
     private void initializeSliderPane() {
@@ -175,7 +179,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
-     * Method that initializes the Feed Pane.
+     * Method that initializes the Feed Pane
      * It clears the textFieldSearchFriend, shows paneFriendsFeed and hides paneFriendsProfile
      */
     private void initializeFeedPane() {
@@ -185,7 +189,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
-     * Method that initializes the Explore Pane.
+     * Method that initializes the Explore Pane
      * It shows paneExploreReceivedRequests and hides paneExploreSentRequests
      */
     private void initializeExplorePane() {
@@ -195,12 +199,20 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
-     * Method that initializes the Explore Pane.
+     * Method that initializes the Explore Pane
      * It shows panePhotoPostsProfile and hides paneTextPostsProfile
      */
     private void initializeProfilePane() {
         panePhotoPostsProfile.setVisible(true);
         paneTextPostsProfile.setVisible(false);
+    }
+
+    /**
+     * Method that initializes the Events Pane
+     */
+    private void initializeEventsPane() {
+        // TODO: TO BE DELETED AT PRODUCTION
+        setImage(rectanglePhotoEvent, "C:\\Users\\dasco\\OneDrive\\Pictures\\EventsPhotos\\Untold.png");
     }
 
     /**
@@ -231,8 +243,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentSliderLabel.setVisible(false);
         currentSliderLabel = labelShowStatisticsDummy;
         currentSliderLabel.setVisible(true);
-        setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), 2020), 2020, "messages");
-        setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), 2020), 2020, "friendships");
+        int CurrentYear = LocalDate.now().getYear();
+        setPieChart(pieChartMessages, userPage.getMessageService().getMessagesToUserYear(userPage.getUserDTO().getId(), CurrentYear), CurrentYear, "messages");
+        setPieChart(pieChartFriendships, userPage.getFriendshipService().getNewFriendsUserYear(userPage.getUserDTO().getId(), CurrentYear), CurrentYear, "friendships");
     }
 
     /**
@@ -291,7 +304,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Events Panel
      */
     public void eventShowEvents() {
-
+        initializeEventsPane();
+        currentPane.setVisible(false);
+        currentPane = eventsPane;
+        currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowEventsDummy;
+        currentSliderLabel.setVisible(true);
     }
 
     /**
@@ -1117,6 +1136,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             alert.show();
         }
     }
+
+    // EVENTS PANE
+    @FXML
+    Rectangle rectanglePhotoEvent;
 
 
     // STATISTICS PANE

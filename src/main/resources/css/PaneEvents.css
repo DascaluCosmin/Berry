@@ -1,0 +1,31 @@
+#buttonDiscover {
+    -fx-background-color: #40457B;
+}
+
+#buttonDiscover:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonYourEvents {
+    -fx-background-color: #40457B;
+}
+
+#buttonYourEvents:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddEvent {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddEvent:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonManage {
+    -fx-background-color: #40457B;
+}
+
+#buttonManage:hover {
+    -fx-background-color: #333A83;
+}

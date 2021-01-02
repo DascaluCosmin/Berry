@@ -62,4 +62,13 @@ public class ContentPage {
     public void setToFirstPage() {
         numberPage = 1;
     }
+
+    /**
+     * @return String, representing the serialization of the Content Page
+     */
+    @Override
+    public String toString() {
+        return "sizePage = " + sizePage + ", " +
+                "numberPage = " + numberPage;
+    }
 }

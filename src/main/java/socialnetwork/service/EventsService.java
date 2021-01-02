@@ -122,6 +122,19 @@ public class EventsService {
     }
 
     /**
+     * Method that gets the number of Events (Notifications) a User participates to, is Notified and
+     * where the Current Date and the Start Date of the Event have a given Day Gap
+     * @param idUser Long, representing the ID of the User that participates to the Events
+     * @param idUser Long, representing the ID of the User that participates to the Events
+     * @return Long, representing the number of Events (Notifications)
+     */
+    public Long getNumberOfNotificationsEvents(Long idUser, Integer dayDifference) {
+        AtomicReference<Long> numberNotifications = new AtomicReference<>(0L);
+        eventRepository.findAll(idUser, null, dayDifference).forEach(event -> numberNotifications.getAndSet(numberNotifications.get() + 1));
+        return numberNotifications.get();
+    }
+
+    /**
      * Method that updates an Event
      * @param event Event, representing the updated Event
      * @return null, if the Event was updated successfully
@@ -172,6 +185,20 @@ public class EventsService {
         List<Event> listHostedEvents = new ArrayList<>();
         eventRepository.findAll(idUser, page, EventParticipationType.HOST).forEach(listHostedEvents::add);
         return listHostedEvents;
+    }
+
+    /**
+     * Method that gets the list of all Events that a User participates to, is Notified and
+     * where the Current Date and the Start Date of the Event have a given Day Gap, on a Specific Page
+     * @param idUser Long, representing the ID of the User that participates to the Events
+     * @param page ContentPage, representing the Page containing the Events
+     * @paramidUser Long, representing the ID of the User that participates to the Events
+     * @return List<Event>, representing the list of Events
+     */
+    public List<Event> getListEventsToNotify(Long idUser, ContentPage page, Integer dayDifference) {
+        List<Event> listEvents = new ArrayList<>();
+        eventRepository.findAll(idUser, page, dayDifference).forEach(listEvents::add);
+        return listEvents;
     }
 
     /**

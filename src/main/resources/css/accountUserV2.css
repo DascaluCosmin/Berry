@@ -71,6 +71,26 @@
 
 /* SLIDER PANE */
 
+/* NOTIFICATIONS START */
+
+#buttonDontParticipateNotifications {
+    -fx-background-color: #40457B;
+}
+
+#buttonDontParticipateNotifications:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonParticipateNotifications {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonParticipateNotifications:hover {
+    -fx-background-color: #333A83;
+}
+
+/* NOTIFICATIONS END*/
 
 /* FEED START*/
 

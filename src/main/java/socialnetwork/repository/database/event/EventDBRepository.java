@@ -105,9 +105,44 @@ public class EventDBRepository implements Repository<Long, Event> {
     public Iterable<Event> findAll(Long idUser, ContentPage currentPage, EventParticipationType eventParticipationType) {
         List<Event> eventList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(participationToCommand(idUser, currentPage, eventParticipationType));
+            String command = participationToCommand(idUser, currentPage, eventParticipationType);
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
+                eventList.add(getEvent(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return eventList;
+    }
+
+    /**
+     * Method that gets the list of all Events that a User participates to and is notified to, on a specific Page,
+     * (if the Page is null, gets all the Events) where the Current Date and the Start Date of the Event have a given Day Gap.
+     * @param idUser Long, representing the ID of the User
+     * @param currentPage ContentPage, representing the Page containing the Events
+     * @param dayDifference Integer, representing the Day Gap between the Current Date and the Start Date of the Event
+     * @return Iterable<Event>, representing the list of Events
+     */
+    public Iterable<Event> findAll(Long idUser, ContentPage currentPage, Integer dayDifference) {
+        List<Event> eventList = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "SELECT * " +
+                    "FROM events e " +
+                    "INNER JOIN " +
+                        "(SELECT \"EventID\" AS EventID FROM participants " +
+                        "WHERE \"UserID\" = " + idUser + " AND \"isNotified\" = '1') " +
+                    "AS r " +
+                    "ON r.EventID = e.id " +
+                    "WHERE e.\"DateStart\" - '" + LocalDate.now() + "' BETWEEN 0 AND " + dayDifference;
+            if (currentPage != null) {
+                command += " LIMIT " + currentPage.getSizePage() +
+                        " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
                 eventList.add(getEvent(resultSet));
             }
         } catch (SQLException throwables) {

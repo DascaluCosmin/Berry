@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
@@ -146,6 +145,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // SLIDER PANE
+    private final Integer DAY_GAP = 250;
+
+    @FXML
+    Label labelNbNotifications;
     @FXML
     Label labelRealName;
     @FXML
@@ -179,6 +182,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Pane eventsPane;
     @FXML
+    Pane notificationsPane;
+    @FXML
     Circle circleProfilePhoto;
 
     /**
@@ -195,6 +200,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelNumberFriends.setText(numberFriends + " Friends");
         labelNumberPosts.setText(numberPosts + " Posts");
         labelNumberPhotos.setText(numberPhotos + " Photos");
+        initializeNumberNotifications();
         setImage(circleProfilePhoto, userPage.getProfilePhotoUserService().findOne(userPage.getUser().getId()).getPathProfilePhoto());
     }
 
@@ -247,6 +253,20 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextEventDiscover.setVisible(true);
         labelGoBackEventParticipate.setVisible(false);
         labelGoNextEventParticipate.setVisible(false);
+    }
+
+    /**
+     * Method that initializes the number of Notifications
+     */
+    private void initializeNumberNotifications() {
+        Long numberOfNotifications = userPage.getEventsService().getNumberOfNotificationsEvents(
+                userPage.getUser().getId(), DAY_GAP);
+        if (numberOfNotifications == 0) {
+            labelNbNotifications.setVisible(false);
+        } else {
+            labelNbNotifications.setVisible(true);
+            labelNbNotifications.setText(numberOfNotifications.toString());
+        }
     }
 
     /**
@@ -363,10 +383,133 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
 
     /**
      * Method linked to the labelShowDirect onMouseClicked event
-     * It shows the Direct Panel
+     * It shows the Direct Pane
      */
     public void eventShowDirect() {
 
+    }
+
+    /**
+     * Method linked to the labelNotifications' onMouseClicked
+     * It shows the Notifications Pane
+     */
+    public void eventShowNotifications() {
+        if (userPage.getEventsService().getNumberOfNotificationsEvents(userPage.getUser().getId(), DAY_GAP) > 0) {
+            currentPane.setVisible(false);
+            currentPane = notificationsPane;
+            currentPane.setVisible(true);
+            currentSliderLabel.setVisible(false);
+            pageEventsNotifications.setToFirstPage();
+            labelHeaderEventNotifications.setText(HEADER_EVENT_NOTIFICATIONS_ST_PART + DAY_GAP + HEADER_EVENT_NOTIFICATIONS_ND_PART);
+            initializeEventNotification();
+        }
+    }
+
+    // NOTIFICATIONS PANE
+    private final ContentPage pageEventsNotifications = new ContentPage(1, 1);
+    private final String HEADER_EVENT_NOTIFICATIONS_ST_PART = "Events taking place in less than ";
+    private final String HEADER_EVENT_NOTIFICATIONS_ND_PART = " Days";
+    @FXML
+    Label labelHeaderEventNotifications;
+    @FXML
+    Label labelNoEventsNotifications;
+    @FXML
+    Label labelGoNextEventNotifications;
+    @FXML
+    Button buttonDontParticipateNotifications;
+    @FXML
+    Button buttonParticipateNotifications;
+    @FXML
+    Group groupEventDetailsNotifications;
+    @FXML
+    Rectangle rectanglePhotoEventNotifications;
+    @FXML
+    Pane paneEventsNotifications;
+
+    /**
+     * Method that initializes the Notification Event
+     */
+    private void initializeEventNotification() {
+        List<Event> listEventsNotificationsOnPage = userPage.getEventsService().getListEventsToNotify(
+                userPage.getUser().getId(), pageEventsNotifications, DAY_GAP
+        );
+        if (!listEventsNotificationsOnPage.isEmpty()) {
+            paneEventsNotifications.setVisible(true);
+            labelGoNextEventNotifications.setVisible(true);
+            labelNoEventsNotifications.setVisible(false);
+            initializeEvent(listEventsNotificationsOnPage.get(0), groupEventDetailsNotifications, rectanglePhotoEventNotifications);
+        } else {
+            labelNoEventsNotifications.setVisible(true);
+            paneEventsNotifications.setVisible(false);
+            labelGoNextEventNotifications.setVisible(false);
+        }
+    }
+
+    /**
+     * Method linked to the labelGoNextEventNotifications' onMouseClicked
+     * It shows the Notification Event on the next Page
+     */
+    public void eventGoNextEventNotifications() {
+        pageEventsNotifications.nextPage();
+        initializeEventNotification();
+    }
+
+    /**
+     * Method linked to the labelGoBackEventNotifications' onMouseClicked
+     * It shows the Notification Event on the previous Page
+     */
+    public void eventGoBackEventNotifications() {
+        if (pageEventsNotifications.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+            alert.show();
+        } else {
+            pageEventsNotifications.previousPage();
+            initializeEventNotification();
+        }
+    }
+
+    /**
+     * Method linked to the buttonDontParticipateNotifications' onMouseClicked
+     * It removes the participation from the Event shown in the Notifications Pane
+     */
+    public void eventDontParticipateEventNotifications() {
+        if (currentEvent != null) {
+            if (userPage.getEventsService().deleteParticipant(currentEvent, userPage.getUser()) != null) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "You participate no longer to the Event!");
+                alert.show();
+                initializeNumberNotifications();
+                buttonParticipateNotifications.setVisible(true);
+                buttonDontParticipateNotifications.setVisible(false);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error at removing the participation from the Event!");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at removing the participation from the Event!");
+            alert.show();
+        }
+    }
+
+    /**
+     * Method linked to the buttonParticipateNotifications' onMouseClicked
+     * It makes the User a Participant to the Event shown in the Notifications Pane
+     */
+    public void eventParticipateEventNotifications() {
+        if (currentEvent != null) {
+            if (userPage.getEventsService().addParticipant(currentEvent, userPage.getUser()) != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Now you are participating to the Event!");
+                alert.show();
+                initializeNumberNotifications();
+                buttonParticipateNotifications.setVisible(false);
+                buttonDontParticipateNotifications.setVisible(true);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Error at adding the participation from the Event!");
+                alert.show();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at adding the participation from the Event!");
+            alert.show();
+        }
     }
 
     // FEED PANE
@@ -657,7 +800,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             initializeFeedPane(); // Removing the Friend means you can't access his/her profile from Feed
             numberFriends--;
             labelNumberFriends.setText(numberFriends + " Friends");
-            Alert alertConfirmationRemoval = new Alert(Alert.AlertType.CONFIRMATION, "You're no longer friends!");
+            Alert alertConfirmationRemoval = new Alert(Alert.AlertType.INFORMATION, "You're no longer friends!");
             alertConfirmationRemoval.show();
         }
     }
@@ -908,6 +1051,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private final ContentPage pageFriendRequestsReceived = new ContentPage(5, 1);
     private final ContentPage pageFriendRequestsSent = new ContentPage(5, 1);
     private final ContentPage pageNonFriends = new ContentPage(5, 1);
+
     @FXML
     Group groupRequestReceivedSt;
     @FXML
@@ -1420,6 +1564,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelEventDescription;
     @FXML
+    Label labelRemoveParticipationEvent;
+    @FXML
     Label labelGoBackEventDiscover;
     @FXML
     Label labelGoNextEventDiscover;
@@ -1429,6 +1575,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelGoBackEventParticipate;
     @FXML
     Group groupPhotoEventAdd;
+    @FXML
+    Group groupEventDetailsParticipate;
     @FXML
     Pane paneEventsParticipate;
     @FXML
@@ -1440,23 +1588,55 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * Method that initializes an Event
      * It sets the Image and the Details of the Event
      * @param event Event, representing the Event to be initialized
+     * @param group Group, representing the Group corresponding to the Event's details
+     * @param rectangle Rectangle, representing the Rectangle corresponding to the Event's Photo
      */
-    private void initializeEvent(Event event) {
+    private void initializeEvent(Event event, Group group, Rectangle rectangle) {
         currentEvent = event;
-        setImage(rectanglePhotoEvent, event.getPhotoURL());
-        labelEventName.setText(event.getName().toUpperCase());
-        labelEventNbPeople.setText(userPage.getEventsService().getNumberParticipants(event) + " " + TEXT_PEOPLE);
+        setImage(rectangle, event.getPhotoURL());
+        initializeGroup(event, group);
+    }
 
-        LocalDate startDate = event.getStartDate();
-        LocalDate endDate = event.getEndDate();
-        labelEventDate.setText(
-                startDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(startDate.getMonthValue()) + " " + startDate.getYear() + " - " +
-                endDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(endDate.getMonthValue()) + " " + endDate.getYear()
-        );
-        labelEventLocation.setText(event.getLocation());
-        labelEventHosted.setText(TEXT_HOSTED_BY + " " + event.getOrganization());
-        labelEventCategory.setText(event.getCategory());
-        labelEventDescription.setText(event.getDescription().replace("\n", " "));
+    /**
+     * Method that initializes the components of a Group with the content of an Event
+     * It sets the labels of the Group with the information about the Event
+     * @param event Event, representing the Event whose data is used
+     * @param group Group, representing the Group to be set
+     */
+    private void initializeGroup(Event event, Group group) {
+        Node stNode = group.getChildren().get(0);
+        Node ndNode = group.getChildren().get(1);
+        Node rdNode = group.getChildren().get(2);
+        Node fourthNode = group.getChildren().get(3);
+        Node fifthNode = group.getChildren().get(4);
+        Node sixthNode = group.getChildren().get(5);
+        Node seventhNode = group.getChildren().get(6);
+        if (stNode instanceof Label) {
+            ((Label) stNode).setText(event.getName().toUpperCase());
+        }
+        if (ndNode instanceof Label) {
+            ((Label) ndNode).setText(userPage.getEventsService().getNumberParticipants(event) + " " + TEXT_PEOPLE);
+        }
+        if (rdNode instanceof Label) {
+            LocalDate startDate = event.getStartDate();
+            LocalDate endDate = event.getEndDate();
+            ((Label) rdNode).setText(
+                    startDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(startDate.getMonthValue()) + " " + startDate.getYear() + " - " +
+                    endDate.getDayOfMonth() + " " + DateConverter.convertMonthIntegerToString(endDate.getMonthValue()) + " " + endDate.getYear()
+            );
+        }
+        if (fourthNode instanceof Label) {
+            ((Label) fourthNode).setText(event.getLocation());
+        }
+        if (fifthNode instanceof Label) {
+            ((Label) fifthNode).setText(TEXT_HOSTED_BY + " " + event.getOrganization());
+        }
+        if (sixthNode instanceof Label) {
+            ((Label) sixthNode).setText(event.getCategory());
+        }
+        if (seventhNode instanceof Label) {
+            ((Label) seventhNode).setText(event.getDescription().replace("\n", " "));
+        }
     }
 
     /**
@@ -1465,11 +1645,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private void initializeEventToBeDiscovered() {
         List<Event> listEventsDiscoverOnPage = userPage.getEventsService().getListEventsDoesntParticipate(userPage.getUser().getId(), pageEventsDiscover);
         if (!listEventsDiscoverOnPage.isEmpty()) {
+            labelGoNextEventDiscover.setVisible(true);
             paneEventsParticipateDetails.setVisible(true);
-            initializeEvent(listEventsDiscoverOnPage.get(0));
+            initializeEvent(listEventsDiscoverOnPage.get(0), groupEventDetailsParticipate, rectanglePhotoEvent);
         } else {
-            paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setVisible(true);
+            labelGoNextEventDiscover.setVisible(false);
+            paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setText("There are no new Events");
         }
     }
@@ -1486,11 +1668,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             } else {
                 buttonSubscribe.setText("Subscribe");
             }
+            labelGoNextEventParticipate.setVisible(true);
             paneEventsParticipateDetails.setVisible(true);
-            initializeEvent(eventToParticipateTo);
+            initializeEvent(eventToParticipateTo, groupEventDetailsParticipate, rectanglePhotoEvent);
         } else {
-            paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setVisible(true);
+            labelGoNextEventParticipate.setVisible(false);
+            paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setText("No Events to participate to");
         }
     }
@@ -1500,13 +1684,14 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Events the User doesn't Participate to
      */
     public void eventButtonDiscover() {
+        labelGoBackEventDiscover.setVisible(true);
+        labelGoNextEventDiscover.setVisible(true);
         buttonParticipate.setVisible(true);
         buttonSubscribe.setVisible(false);
         labelNoEvents.setVisible(false);
-        labelGoBackEventDiscover.setVisible(true);
-        labelGoNextEventDiscover.setVisible(true);
         labelGoBackEventParticipate.setVisible(false);
         labelGoNextEventParticipate.setVisible(false);
+        labelRemoveParticipationEvent.setVisible(false);
         currentEventPane.setVisible(false);
         currentEventPane = paneEventsParticipate;
         currentEventPane.setVisible(true);
@@ -1519,12 +1704,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Events the User Participates to
      */
     public void eventButtonYourEvents() {
+        labelGoBackEventParticipate.setVisible(true);
+        labelGoNextEventParticipate.setVisible(true);
+        labelRemoveParticipationEvent.setVisible(true);
         buttonSubscribe.setVisible(true);
         buttonParticipate.setVisible(false);
         pageEventsParticipate.setToFirstPage();
         labelNoEvents.setVisible(false);
-        labelGoBackEventParticipate.setVisible(true);
-        labelGoNextEventParticipate.setVisible(true);
         labelGoBackEventDiscover.setVisible(false);
         labelGoNextEventDiscover.setVisible(false);
         currentEventPane.setVisible(false);
@@ -1585,6 +1771,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 userPage.getEventsService().addParticipant(currentEvent, userPage.getUser());
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The event has been added successfully!");
                 alert.show();
+                initializeNumberNotifications();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "Error at adding the event");
                 alert.show();
@@ -1604,6 +1791,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (userPage.getEventsService().deleteEvent(currentEvent.getId()) != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The event has been deleted successfully!");
                 alert.show();
+                initializeNumberNotifications();
                 clearAddEventPane();
                 return;
             }
@@ -1621,6 +1809,28 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         setImage(rectanglePhotoEventAdd, currentNewEventPhotoURL);
         if (currentNewEventPhotoURL != null) {
             groupPhotoEventAdd.setVisible(false);
+        }
+    }
+
+    /**
+     * Method linked to the labelRemoveParticipationEvent's onMouseClicked event
+     * It allows the User to Remove Participation from the current Event
+     */
+    public void eventRemoveParticipationEvent() {
+        if (currentEvent != null) {
+            Alert alertAskConfirmationRemoval = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure?", ButtonType.YES, ButtonType.NO);
+            alertAskConfirmationRemoval.showAndWait();
+            if (alertAskConfirmationRemoval.getResult() == ButtonType.YES) {
+                if (userPage.getEventsService().deleteParticipant(currentEvent, userPage.getUser()) != null) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "You participate no longer to the Event!");
+                    alert.show();
+                    initializeNumberNotifications();
+                    initializeEventParticipateTo();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Error at removing participation from the Event!");
+                    alert.show();
+                }
+            }
         }
     }
 
@@ -1679,6 +1889,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             userPage.getEventsService().addParticipant(currentEvent, userPage.getUser());
             initializeEventToBeDiscovered();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "You are now participating to the event!");
+            initializeNumberNotifications();
             alert.show();
         }
     }
@@ -1692,10 +1903,12 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (buttonSubscribe.getText().equals("Subscribe")) {
                 userPage.getEventsService().subscribe(currentEvent, userPage.getUser());
                 buttonSubscribe.setText("Unsubscribe");
+                initializeNumberNotifications();
             } else if (buttonSubscribe.getText().equals("Unsubscribe")) {
                 userPage.getEventsService().unsubscribe(currentEvent, userPage.getUser());
                 buttonSubscribe.setText("Subscribe");
             }
+            initializeNumberNotifications();
         }
     }
 

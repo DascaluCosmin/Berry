@@ -18,6 +18,94 @@
              </image>
             </ImageView>
          </graphic></Label>
+      <Pane fx:id="notificationsPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Label fx:id="labelGoNextEventNotifications" alignment="CENTER" layoutX="649.0" layoutY="649.0" onMouseClicked="#eventGoNextEventNotifications" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoBackEventNotifications" alignment="CENTER" layoutX="17.0" layoutY="649.0" onMouseClicked="#eventGoBackEventNotifications" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Pane fx:id="paneEventsNotifications" layoutX="94.0" layoutY="70.0">
+               <children>
+                  <Rectangle fx:id="rectangleDetailsEventNotifications" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+                  <Rectangle fx:id="rectanglePhotoEventNotifications" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="101.0" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+                  <Group fx:id="groupEventDetailsNotifications" layoutX="101.0" layoutY="233.0">
+                     <children>
+                        <Label fx:id="labelEventNameNotifications" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelEventNbPeopleNotifications" layoutX="34.0" layoutY="74.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="44 People Responded" />
+                        <Label fx:id="labelEventDateNotifications" layoutX="34.0" layoutY="111.0" text="5 August 2021 - 8 August 2021" />
+                        <Label fx:id="labelEventLocationNotifications" layoutX="34.0" layoutY="150.0" text="Cluj Arena, Cluj-Napoca" />
+                        <Label fx:id="labelEventHostedNotifications" layoutX="34.0" layoutY="189.0" text="Hosted By UNTOLD" />
+                        <Label fx:id="labelEventCategoryNotifications" layoutX="34.0" layoutY="229.0" text="Music Festival" />
+                        <Label fx:id="labelEventDescriptionNotifications" alignment="TOP_LEFT" layoutY="259.0" prefHeight="52.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventNbPeople.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventDate.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventLocation.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventHosted.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventCategory.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="101.0" layoutY="272.0" text="Details">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonDontParticipateNotifications" alignment="CENTER" layoutX="448.0" layoutY="529.0" mnemonicParsing="false" onMouseClicked="#eventDontParticipateEventNotifications" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Don't Participate" textFill="WHITE">
+                     <font>
+                        <Font size="9.0" />
+                     </font></Button>
+                  <Button fx:id="buttonParticipateNotifications" alignment="CENTER" layoutX="448.0" layoutY="529.0" mnemonicParsing="false" onMouseClicked="#eventParticipateEventNotifications" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Participate" textFill="WHITE" visible="false" />
+               </children>
+            </Pane>
+            <Label fx:id="labelNoEventsNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="340.0" prefHeight="34.0" prefWidth="619.0" text="There are no Events to be shown" textFill="#40457b" visible="false">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" layoutX="148.0" layoutY="18.0" text="Events taking place in less than 3 Days" textFill="#40457b">
+               <font>
+                  <Font size="23.0" />
+               </font></Label>
+            <Label fx:id="labelExitApplicationNotifications" layoutX="647.0" layoutY="6.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="23.0" />
+         </children>
+      </Pane>
       <Pane fx:id="sliderPane" layoutX="101.0" layoutY="4.0" prefHeight="679.0" prefWidth="260.0">
          <children>
             <Label fx:id="labelLogout" alignment="CENTER" layoutX="1.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
@@ -38,7 +126,7 @@
             <Label fx:id="labelNumberFriends" layoutX="29.0" layoutY="254.0" text="# Friends" textFill="WHITE" />
             <Label fx:id="labelNumberPosts" layoutX="108.0" layoutY="254.0" text="# Posts" textFill="WHITE" />
             <Label fx:id="labelNumberPhotos" layoutX="177.0" layoutY="254.0" text="# Photos" textFill="WHITE" />
-            <Label fx:id="labelNotifications" alignment="CENTER" layoutX="220.0" layoutY="11.0" prefHeight="20.0" prefWidth="13.0">
+            <Label fx:id="labelNotifications" alignment="CENTER" layoutX="220.0" layoutY="11.0" onMouseClicked="#eventShowNotifications" prefHeight="20.0" prefWidth="13.0">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -298,42 +386,46 @@
                      <children>
                         <Rectangle fx:id="rectangleDetailsEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
                         <Rectangle fx:id="rectanglePhotoEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="101.0" stroke="#40457b" strokeType="INSIDE" width="324.0" />
-                        <Label fx:id="labelEventName" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="233.0" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
-                           <font>
-                              <Font size="23.0" />
-                           </font>
-                        </Label>
+                        <Group fx:id="groupEventDetailsParticipate" layoutX="101.0" layoutY="233.0">
+                           <children>
+                              <Label fx:id="labelEventName" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelEventNbPeople" layoutX="34.0" layoutY="74.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="44 People Responded" />
+                              <Label fx:id="labelEventDate" layoutX="34.0" layoutY="111.0" text="5 August 2021 - 8 August 2021" />
+                              <Label fx:id="labelEventLocation" layoutX="34.0" layoutY="150.0" text="Cluj Arena, Cluj-Napoca" />
+                              <Label fx:id="labelEventHosted" layoutX="34.0" layoutY="189.0" text="Hosted By UNTOLD" />
+                              <Label fx:id="labelEventCategory" layoutX="34.0" layoutY="229.0" text="Music Festival" />
+                              <Label fx:id="labelEventDescription" alignment="TOP_LEFT" layoutY="259.0" prefHeight="52.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
                         <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/LabelEventNbPeople.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelEventNbPeople" layoutX="135.0" layoutY="307.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="44 People Responded" />
                         <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/LabelEventDate.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelEventDate" layoutX="135.0" layoutY="344.0" text="5 August 2021 - 8 August 2021" />
                         <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/LabelEventLocation.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelEventLocation" layoutX="135.0" layoutY="383.0" text="Cluj Arena, Cluj-Napoca" />
                         <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/LabelEventHosted.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelEventHosted" layoutX="135.0" layoutY="422.0" text="Hosted By UNTOLD" />
                         <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/LabelEventCategory.png" />
                            </image>
                         </ImageView>
-                        <Label fx:id="labelEventCategory" layoutX="135.0" layoutY="462.0" text="Music Festival" />
-                        <Label fx:id="labelEventDescription" alignment="TOP_LEFT" layoutX="101.0" layoutY="492.0" prefHeight="52.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true" />
                         <Label layoutX="101.0" layoutY="272.0" text="Details">
                            <font>
                               <Font size="17.0" />
@@ -341,6 +433,15 @@
                         </Label>
                         <Button fx:id="buttonParticipate" alignment="CENTER" layoutX="448.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonParticipate" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Participate" textFill="WHITE" />
                         <Button fx:id="buttonSubscribe" alignment="CENTER" layoutX="448.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonSubscribe" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Subscribe" textFill="WHITE" visible="false" />
+                        <Label fx:id="labelRemoveParticipationEvent" layoutX="471.0" layoutY="114.0" onMouseClicked="#eventRemoveParticipationEvent" visible="false">
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/ExitSign.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
                      </children>
                   </Pane>
                   <Label fx:id="labelGoBackEventDiscover" alignment="CENTER" layoutY="579.0" onMouseClicked="#eventGoBackEventDiscover" prefHeight="21.0" prefWidth="20.0">
@@ -361,7 +462,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoBackEventParticipate" alignment="CENTER" layoutY="579.0" onMouseClicked="#eventGoBackEventParticipate" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoBackEventParticipate" alignment="CENTER" layoutY="579.0" onMouseClicked="#eventGoBackEventParticipate" prefHeight="21.0" prefWidth="20.0" visible="false">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -370,7 +471,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoNextEventParticipate" alignment="CENTER" layoutX="632.0" layoutY="579.0" onMouseClicked="#eventGoNextEventParticipate" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoNextEventParticipate" alignment="CENTER" layoutX="632.0" layoutY="579.0" onMouseClicked="#eventGoNextEventParticipate" prefHeight="21.0" prefWidth="20.0" visible="false">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>

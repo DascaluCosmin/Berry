@@ -2,7 +2,8 @@ package socialnetwork.service;
 
 import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.PhotoPost;
-import socialnetwork.repository.database.PhotoPostDBRepository;
+import socialnetwork.repository.database.userPosts.PhotoPostDBRepository;
+import socialnetwork.repository.database.userPosts.PostUserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +68,20 @@ public class PhotoPostService {
      */
     public List<PhotoPost> getListPhotoPosts(Long idUser, ContentPage page) {
         List<PhotoPost> photoPostList = new ArrayList<>();
-        photoPostDBRepository.findAll(idUser, page).forEach(photoPostList::add);
+        photoPostDBRepository.findAll(idUser, page, PostUserType.USER).forEach(photoPostList::add);
         return photoPostList;
+    }
+
+    /**
+     * Method that gets the list of Photo Posts of a User's friends, on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Photo Posts
+     * @return List<PhotoPost>, representing the list of Photo Posts of the User's friends, on that Page
+     */
+    public List<PhotoPost> getListPhotoPostsFriends(Long idUser, ContentPage page) {
+        List<PhotoPost> photoPostListFriends = new ArrayList<>();
+        photoPostDBRepository.findAll(idUser, page, PostUserType.FRIEND).forEach(photoPostListFriends::add);
+        return photoPostListFriends;
     }
 
     /**

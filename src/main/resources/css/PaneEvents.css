@@ -1,5 +1,6 @@
 #buttonDiscover {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonDiscover:hover {
@@ -8,6 +9,7 @@
 
 #buttonYourEvents {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonYourEvents:hover {
@@ -16,22 +18,16 @@
 
 #buttonAddEvent {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonAddEvent:hover {
     -fx-background-color: #333A83;
 }
 
-#buttonManage {
-    -fx-background-color: #40457B;
-}
-
-#buttonManage:hover {
-    -fx-background-color: #333A83;
-}
-
 #buttonParticipate {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonParticipate:hover {
@@ -40,6 +36,7 @@
 
 #buttonSubscribe {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonSubscribe:hover {
@@ -48,6 +45,7 @@
 
 #buttonAddNewEvent {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonAddNewEvent:hover {
@@ -56,6 +54,7 @@
 
 #buttonDeleteEvent {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonDeleteEvent:hover {

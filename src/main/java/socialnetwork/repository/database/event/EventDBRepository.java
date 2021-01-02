@@ -238,10 +238,10 @@ public class EventDBRepository implements Repository<Long, Event> {
      * @param currentPage ContentPage, representing the Page containing the Events
      * @param eventParticipationType eventParticipationType EventParticipationType, representing the type of Participation to the Event
      *                   the User has - HOST, PARTICIPATE or NO_PARTICIPATE
-     * @return
+     * @return String, representing the SQL Command to be run
      */
     private String participationToCommand(Long idUser, ContentPage currentPage, EventParticipationType eventParticipationType) {
-        String subQuery =  "( SELECT \"EventID\" FROM participants WHERE \"UserID\" = " + idUser + ")";
+        String subQuery =  "(SELECT \"EventID\" FROM participants WHERE \"UserID\" = " + idUser + ")";
         if (eventParticipationType == EventParticipationType.HOST) {
             return "SELECT * FROM events WHERE \"OrganizerID\" = " + idUser +
                     " LIMIT " + currentPage.getSizePage() + " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();

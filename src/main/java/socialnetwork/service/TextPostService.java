@@ -1,9 +1,9 @@
 package socialnetwork.service;
 
-import javafx.collections.ObservableList;
 import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.posts.TextPost;
-import socialnetwork.repository.database.TextPostDBRepository;
+import socialnetwork.repository.database.userPosts.PostUserType;
+import socialnetwork.repository.database.userPosts.TextPostDBRepository;
 import socialnetwork.utils.events.ChangeEventType;
 import socialnetwork.utils.events.TextPostEvent;
 import socialnetwork.utils.observer.Observable;
@@ -77,7 +77,19 @@ public class TextPostService implements Observable<TextPostEvent> {
      */
     public List<TextPost> getListTextPosts(Long idUser, ContentPage page) {
         List<TextPost> listTextPosts = new ArrayList<>();
-        textPostDBRepository.findAll(idUser, page).forEach(listTextPosts::add);
+        textPostDBRepository.findAll(idUser, page, PostUserType.USER).forEach(listTextPosts::add);
+        return listTextPosts;
+    }
+
+    /**
+     * Method that gets the list of Text Posts of a User's friends, on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Text Posts
+     * @return List<TextPost>, representing the list of Text Posts of the User's friends, on that Page
+     */
+    public List<TextPost> getListTextPostsFriends(Long idUser, ContentPage page) {
+        List<TextPost> listTextPosts = new ArrayList<>();
+        textPostDBRepository.findAll(idUser, page, PostUserType.FRIEND).forEach(listTextPosts::add);
         return listTextPosts;
     }
 

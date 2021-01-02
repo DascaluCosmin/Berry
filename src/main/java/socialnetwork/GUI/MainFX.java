@@ -6,20 +6,17 @@ import javafx.stage.Stage;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.LoginController;
 import socialnetwork.domain.*;
-import socialnetwork.domain.events.Event;
-import socialnetwork.domain.events.Participant;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.*;
 import socialnetwork.repository.database.event.EventDBRepository;
-import socialnetwork.repository.database.event.EventParticipationType;
 import socialnetwork.repository.database.event.ParticipantDBRepository;
 import socialnetwork.repository.database.friendshipRequests.FriendshipRequestsDBRepository;
-import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
+import socialnetwork.repository.database.userPosts.PhotoPostDBRepository;
+import socialnetwork.repository.database.userPosts.TextPostDBRepository;
 import socialnetwork.service.*;
 import socialnetwork.utils.ViewClass;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class MainFX extends Application {
     private static UserService userService;

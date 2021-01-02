@@ -121,6 +121,55 @@
     -fx-background-radius: 15px;
 }
 
+#buttonShowTextPostsFriends {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowTextPostsFriends:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowPhotoPostsFriends {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotoPostsFriends:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonStTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button4thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button5thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button6thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+
 /* FEED END */
 
 /* PROFILE START */

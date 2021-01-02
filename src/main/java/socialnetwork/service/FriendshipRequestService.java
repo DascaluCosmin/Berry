@@ -45,8 +45,8 @@ public class FriendshipRequestService implements Observable<FriendshipRequestCha
      * @throws ValidationException if the FriendshipRequest already exists
      */
     public FriendshipRequest addFriendshipRequest(FriendshipRequest friendshipRequestParam) throws ValidationException {
-        validatorFriendshipRequestService.validateBeforeAdding(friendshipRequestParam,
-                getAll(), friendshipRepository.findAll());
+//        validatorFriendshipRequestService.validateBeforeAdding(friendshipRequestParam,
+//                getAll(), friendshipRepository.findAll());
         return friendshipRequestRepository.save(friendshipRequestParam);
     }
 

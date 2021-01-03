@@ -150,7 +150,7 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
@@ -310,8 +310,8 @@
          <children>
             <Label fx:id="labelExitApplicationProfile" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonChangeProfilePhoto" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Change Profile Photo" textFill="WHITE" />
-            <Button fx:id="buttonAddPhoto" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Add Photo" textFill="WHITE" />
             <Button fx:id="buttonWritePost" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Write Post" textFill="WHITE" />
+            <Button fx:id="buttonAddPhoto" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Add Photo" textFill="WHITE" />
             <Pane fx:id="panePhotoPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0">
                <children>
                   <Rectangle fx:id="rectangleStPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
@@ -540,6 +540,45 @@
                   <Label layoutX="171.0" layoutY="451.0" text="*" textFill="#cf1e1e" />
                </children>
             </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0">
+         <children>
+            <Button fx:id="buttonComposeMessage" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Compose" textFill="WHITE" />
+            <Button fx:id="buttonInbox" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Inbox" textFill="WHITE" />
+            <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
+            <Label fx:id="labelExitApplicationDirect" layoutX="645.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="24.0" />
+            <Pane fx:id="paneChat" layoutX="123.0" layoutY="109.0" prefHeight="462.0" prefWidth="438.0" stylesheets="@../css/PaneDirect.css">
+               <children>
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="440.0" layoutX="9.0" layoutY="11.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+                  <Rectangle arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                  <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Label layoutX="90.0" layoutY="28.0" text="Sergiu Breaban" textFill="WHITE">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Pane layoutX="584.0" layoutY="78.0" prefHeight="527.0" prefWidth="73.0">
+               <children>
+                  <Circle fx:id="circleStPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="73.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image></ImageView>
+                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="20.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+                  <Circle fx:id="circleNdPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="127.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circleRdPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="181.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle4thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="235.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle5thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="289.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle6thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="343.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle7thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="397.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle8thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="451.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+               </children></Pane>
          </children>
       </Pane>
       <Pane fx:id="explorePane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
@@ -921,6 +960,5 @@
             <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
          </children>
       </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

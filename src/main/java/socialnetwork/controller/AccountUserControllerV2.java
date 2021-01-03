@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -101,6 +102,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         listRectanglesFeedFriends = new ArrayList<>(Arrays.asList(
                 rectangleStPhotoPostFriends, rectangleNdPhotoPostFriends, rectangleRdPhotoPostFriends,
                 rectangle4thPhotoPostFriends, rectangle5thPhotoPostFriends, rectangle6thPhotoPostFriends
+        ));
+        listCirclesPhotoFriends = new ArrayList<>(Arrays.asList(
+                circleStPhotoFriendDirect, circleNdPhotoFriendDirect, circleRdPhotoFriendDirect,
+                circle4thPhotoFriendDirect, circle5thPhotoFriendDirect, circle6thPhotoFriendDirect,
+                circle7thPhotoFriendDirect, circle8thPhotoFriendDirect
         ));
         listGroupRequestsReceived = new ArrayList<>(Arrays.asList(
                 groupRequestReceivedSt, groupRequestReceivedNd, groupRequestReceivedRd,
@@ -386,7 +392,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Direct Pane
      */
     public void eventShowDirect() {
-
+        currentPane.setVisible(false);
+        currentPane = directPane;
+        currentPane.setVisible(true);
+        setCirclesPhoto(userPage.getUserService().getListAllFriends(userPage.getUser().getId(), pageFriendsDirect), listCirclesPhotoFriends);
     }
 
     /**
@@ -1039,6 +1048,45 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @Override
     public void update(TextPostEvent textPostEvent) {
         setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+    }
+
+    // DIRECT PANE
+    private List<Circle> listCirclesPhotoFriends;
+    private final ContentPage pageFriendsDirect = new ContentPage(8, 1);
+
+    @FXML
+    Circle circleStPhotoFriendDirect;
+    @FXML
+    Circle circleNdPhotoFriendDirect;
+    @FXML
+    Circle circleRdPhotoFriendDirect;
+    @FXML
+    Circle circle4thPhotoFriendDirect;
+    @FXML
+    Circle circle5thPhotoFriendDirect;
+    @FXML
+    Circle circle6thPhotoFriendDirect;
+    @FXML
+    Circle circle7thPhotoFriendDirect;
+    @FXML
+    Circle circle8thPhotoFriendDirect;
+    @FXML
+    Pane directPane;
+
+
+    /**
+     * Method that sets some Circles with the User's Friends' Profile Photos
+     * @param listFriendsUser List<User>, representing the User's Friends
+     * @param listCircles List<Circle>, representing the Circles to be set
+     */
+    private void setCirclesPhoto(List<User> listFriendsUser, List<Circle> listCircles) {
+        // First, reset the Circles
+        listCircles.forEach(circle -> circle.setFill(Paint.valueOf("#40457B")));
+        for (int i = 0; i < listFriendsUser.size(); i++) {
+            User currentUser = listFriendsUser.get(i);
+            setImage(listCircles.get(i),
+                    userPage.getProfilePhotoUserService().findOne(currentUser.getId()).getPathProfilePhoto());
+        }
     }
 
     // EXPLORE PANE

@@ -1,0 +1,27 @@
+#buttonComposeMessage {
+    -fx-background-color: #40457B;
+}
+
+#buttonComposeMessage:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonInbox {
+     -fx-background-color: #40457B;
+ }
+
+#buttonInbox:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonChat {
+    -fx-background-color: #40457B;
+}
+
+#buttonChat:hover {
+    -fx-background-color: #333A83;
+}
+
+#paneChat {
+    -fx-background-color: white;
+}

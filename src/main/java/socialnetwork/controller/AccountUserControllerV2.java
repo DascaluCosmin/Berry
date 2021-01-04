@@ -2,6 +2,7 @@ package socialnetwork.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
@@ -30,11 +32,13 @@ import socialnetwork.domain.*;
 import socialnetwork.domain.events.Event;
 import socialnetwork.domain.messages.FriendshipRequest;
 import socialnetwork.domain.messages.Message;
+import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.posts.PhotoPost;
 import socialnetwork.domain.posts.Post;
 import socialnetwork.domain.posts.TextPost;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
+import socialnetwork.repository.database.messages.SenderType;
 import socialnetwork.utils.DateConverter;
 import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
@@ -65,6 +69,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private Stage accountUserStage;
     private Stage loginStage;
     private Pane currentPane;
+    private Pane currentDirectPane;
     private Label currentSliderLabel;
     private User friendUser;
     private final ContentPage pagePhotoPostProfile = new ContentPage(6, 1);
@@ -104,9 +109,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 rectangle4thPhotoPostFriends, rectangle5thPhotoPostFriends, rectangle6thPhotoPostFriends
         ));
         listCirclesPhotoFriends = new ArrayList<>(Arrays.asList(
-                circleStPhotoFriendDirect, circleNdPhotoFriendDirect, circleRdPhotoFriendDirect,
-                circle4thPhotoFriendDirect, circle5thPhotoFriendDirect, circle6thPhotoFriendDirect,
-                circle7thPhotoFriendDirect, circle8thPhotoFriendDirect
+                circleStPhotoFriendChat, circleNdPhotoFriendChat, circleRdPhotoFriendChat,
+                circle4thPhotoFriendChat, circle5thPhotoFriendChat, circle6thPhotoFriendChat,
+                circle7thPhotoFriendChat, circle8thPhotoFriendChat
         ));
         listGroupRequestsReceived = new ArrayList<>(Arrays.asList(
                 groupRequestReceivedSt, groupRequestReceivedNd, groupRequestReceivedRd,
@@ -124,6 +129,44 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 groupNonFriendSt, groupNonFriendNd, groupNonFriendRd,
                 groupNonFriend4th, groupNonFriend5th
         ));
+        listGroupMessagesUser = new ArrayList<>(Arrays.asList(
+                groupStMessageUser, groupNdMessageUser, groupRdMessageUser,
+                group4thMessageUser, group5thMessageUser, group6thMessageUser,
+                groupHiddenMessageUser
+        ));
+        listGroupMessagesFriend = new ArrayList<>(Arrays.asList(
+                groupStMessageFriend, groupNdMessageFriend, groupRdMessageFriend,
+                group4thMessageFriend, group5thMessageFriend, group6thMessageFriend,
+                groupHiddenMessageFriend
+        ));
+        initializeEventHandlers();
+    }
+
+    /**
+     * Method that initializes some of the Event Handlers - for textFieldChat onKeyTyped & paneChat onScrollEvent
+     */
+    private void initializeEventHandlers() {
+        textFieldChat.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (textFieldChat.getText().length() > MAX_CHARACTERS_MESSAGE) {
+                    textFieldChat.setText(textFieldChat.getText(0, MAX_CHARACTERS_MESSAGE));
+                    textFieldChat.positionCaret(MAX_CHARACTERS_MESSAGE);
+                }
+            }
+        });
+        paneChat.setOnScroll((ScrollEvent e) -> {
+            if (e.getDeltaY() < 0) {
+                if (pageFriendConversation.getNumberPage() > 1) {
+                    pageFriendConversation.previousPage();
+                    initializeConversation();
+                }
+            } else {
+                pageFriendConversation.nextPage();
+                initializeConversation();
+            }
+        });
+
     }
 
     /**
@@ -395,7 +438,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = directPane;
         currentPane.setVisible(true);
-        setCirclesPhoto(userPage.getUserService().getListAllFriends(userPage.getUser().getId(), pageFriendsDirect), listCirclesPhotoFriends);
+        initializePaneChat();
     }
 
     /**
@@ -1051,28 +1094,74 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // DIRECT PANE
+    private int MAX_CHARACTERS_MESSAGE = 26;
+    private int WIDTH_START_GROUP = 40;
+    private int LAYOUT_X_START_GROUP = 160;
+    private float SCALE_LABEL_MESSAGE = 6f;
+    private User currentFriendChat; // The current User the Logged In User chats with
     private List<Circle> listCirclesPhotoFriends;
-    private final ContentPage pageFriendsDirect = new ContentPage(8, 1);
+    private List<Group> listGroupMessagesUser;
+    private List<Group> listGroupMessagesFriend;
+    private List<User> listCurrentFriendsChat = new ArrayList<>();
+    private final ContentPage pageFriendConversation = new ContentPage(7, 1);
+    private final ContentPage pageFriendChat = new ContentPage(8, 1);
 
     @FXML
-    Circle circleStPhotoFriendDirect;
+    Label labelNameFriendChat;
     @FXML
-    Circle circleNdPhotoFriendDirect;
+    Circle circlePhotoFriendChat;
     @FXML
-    Circle circleRdPhotoFriendDirect;
+    Circle circleStPhotoFriendChat;
     @FXML
-    Circle circle4thPhotoFriendDirect;
+    Circle circleNdPhotoFriendChat;
     @FXML
-    Circle circle5thPhotoFriendDirect;
+    Circle circleRdPhotoFriendChat;
     @FXML
-    Circle circle6thPhotoFriendDirect;
+    Circle circle4thPhotoFriendChat;
     @FXML
-    Circle circle7thPhotoFriendDirect;
+    Circle circle5thPhotoFriendChat;
     @FXML
-    Circle circle8thPhotoFriendDirect;
+    Circle circle6thPhotoFriendChat;
+    @FXML
+    Circle circle7thPhotoFriendChat;
+    @FXML
+    Circle circle8thPhotoFriendChat;
+    @FXML
+    TextField textFieldChat;
+    @FXML
+    Group groupStMessageUser;
+    @FXML
+    Group groupNdMessageUser;
+    @FXML
+    Group groupRdMessageUser;
+    @FXML
+    Group group4thMessageUser;
+    @FXML
+    Group group5thMessageUser;
+    @FXML
+    Group group6thMessageUser;
+    @FXML
+    Group groupHiddenMessageUser;
+    @FXML
+    Group groupStMessageFriend;
+    @FXML
+    Group groupNdMessageFriend;
+    @FXML
+    Group groupRdMessageFriend;
+    @FXML
+    Group group4thMessageFriend;
+    @FXML
+    Group group5thMessageFriend;
+    @FXML
+    Group group6thMessageFriend;
+    @FXML
+    Group groupHiddenMessageFriend;
     @FXML
     Pane directPane;
-
+    @FXML
+    Pane panePhotoChatFriends;
+    @FXML
+    Pane paneChat;
 
     /**
      * Method that sets some Circles with the User's Friends' Profile Photos
@@ -1088,6 +1177,182 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                     userPage.getProfilePhotoUserService().findOne(currentUser.getId()).getPathProfilePhoto());
         }
     }
+
+    /**
+     * Method that initializes the components of a Group with the content of a Message
+     * It sets the label of the Group (Message Text) with the information of the Message - its text
+     * @param message Message, representing the Messages whose data is used
+     * @param group Group, representign the Group to be set
+     * @param senderType SenderType, representing the Type of the Sender - USER or FRIEND
+     */
+    private void initializeGroup(Message message, Group group, SenderType senderType) {
+        Node stNode = group.getChildren().get(0);
+        Node ndNode = group.getChildren().get(1);
+        if (stNode instanceof Rectangle && ndNode instanceof Label) {
+            Rectangle rectangle = (Rectangle) stNode;
+            Label label = (Label) ndNode;
+            int lengthMessage = message.getMessage().length();
+            if (lengthMessage > MAX_CHARACTERS_MESSAGE) { // If the message has more characters, the text will Wrap
+                lengthMessage = MAX_CHARACTERS_MESSAGE;
+            }
+            label.setText(message.getMessage());
+            rectangle.setWidth(WIDTH_START_GROUP + (lengthMessage - 1) * SCALE_LABEL_MESSAGE);
+            if (senderType == SenderType.USER) { // For the User's Messages, have to adjust the LayoutX as well
+                rectangle.setLayoutX(LAYOUT_X_START_GROUP - (lengthMessage - 1)* SCALE_LABEL_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Method that initializes the Conversation between the User and the Friend
+     */
+    private void initializeConversation() {
+        if (currentFriendChat == null) {
+            return;
+        }
+        List<ReplyMessage> conversation = userPage.getReplyMessageService().getListConversationOnPage(
+                userPage.getUser().getId(), currentFriendChat.getId(), pageFriendConversation
+        );
+        listGroupMessagesUser.forEach(group -> group.setVisible(false));
+        listGroupMessagesFriend.forEach(group -> group.setVisible(false));
+        for (int i = 0; i < conversation.size(); i++) {
+            ReplyMessage currentMessage = conversation.get(i);
+            Group currentGroup = null;
+            if (currentMessage.getFrom().getId().equals(userPage.getUser().getId())) {
+                currentGroup = listGroupMessagesUser.get(i);
+                currentGroup.setVisible(true);
+                initializeGroup(currentMessage, currentGroup, SenderType.USER);
+            } else { // The Friend sent the Message
+                currentGroup = listGroupMessagesFriend.get(i);
+                currentGroup.setVisible(true);
+                initializeGroup(currentMessage, currentGroup, SenderType.FRIEND);
+            }
+        }
+    }
+
+    // DIRECT BUTTONS EVENTS
+
+    /**
+     * Method linked to the buttonChat's onMouseClicked
+     * It shows the Chat Pane
+     */
+    public void eventShowChat() {
+        initializePaneChat();
+    }
+
+    /**
+     * Method that initializes the Chat Pane
+     */
+    private void initializePaneChat() {
+        if (currentDirectPane != null) {
+            currentDirectPane.setVisible(false);
+        }
+        currentDirectPane = paneChat;
+        currentDirectPane.setVisible(true);
+        panePhotoChatFriends.setVisible(true);
+        listCurrentFriendsChat.clear();
+        listCurrentFriendsChat.addAll(userPage.getUserService().getListAllFriends(userPage.getUser().getId(), pageFriendChat));
+        setCirclesPhoto(listCurrentFriendsChat, listCirclesPhotoFriends);
+    }
+
+    /**
+     * Method that initializes the Friend the User chats with
+     * It sets the Chat Pane - the Friend's Profile Photo and Name and the first messages between the two Users and then
+     * It shows the Chat Pane
+     * @param friendToChatWith User, representing the Friend the User chats with
+     */
+    private void initializeFriendChat(User friendToChatWith) {
+        textFieldChat.setDisable(false);
+        textFieldChat.clear();
+        setImage(circlePhotoFriendChat,
+                userPage.getProfilePhotoUserService().findOne(friendToChatWith.getId()).getPathProfilePhoto()
+        );
+        labelNameFriendChat.setText(friendToChatWith.getFullName());
+        currentFriendChat = friendToChatWith;
+        pageFriendConversation.setToFirstPage();
+        initializeConversation();
+    }
+
+    /**
+     * Method connected to the circleStPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chatStFriendEvent() {
+        if (listCurrentFriendsChat.size() > 0) {
+            initializeFriendChat(listCurrentFriendsChat.get(0));
+        }
+    }
+
+    /**
+     * Method connected to the circleNdPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chatNdFriendEvent() {
+        if (listCurrentFriendsChat.size() > 1) {
+            initializeFriendChat(listCurrentFriendsChat.get(1));
+        }
+    }
+
+    /**
+     * Method connected to the circleRdPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chatRdFriendEvent() {
+        if (listCurrentFriendsChat.size() > 2) {
+            initializeFriendChat(listCurrentFriendsChat.get(2));
+        }
+    }
+
+    /**
+     * Method connected to the circle4thPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chat4thFriendEvent() {
+        if (listCurrentFriendsChat.size() > 3) {
+            initializeFriendChat(listCurrentFriendsChat.get(3));
+        }
+    }
+
+    /**
+     * Method connected to the circle5thPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chat5thFriendEvent() {
+        if (listCurrentFriendsChat.size() > 4) {
+            initializeFriendChat(listCurrentFriendsChat.get(4));
+        }
+    }
+
+    /**
+     * Method connected to the circle6thPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chat6thFriendEvent() {
+        if (listCurrentFriendsChat.size() > 5) {
+            initializeFriendChat(listCurrentFriendsChat.get(5));
+        }
+    }
+
+    /**
+     * Method connected to the circle7thPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chat7thFriendEvent() {
+        if (listCurrentFriendsChat.size() > 6) {
+            initializeFriendChat(listCurrentFriendsChat.get(6));
+        }
+    }
+
+    /**
+     * Method connected to the circle8thPhotoFriendChat's onMouseClicked
+     * It shows the Chat between the Friend and the User
+     */
+    public void chat8thFriendEvent() {
+        if (listCurrentFriendsChat.size() > 7) {
+            initializeFriendChat(listCurrentFriendsChat.get(7));
+        }
+    }
+
 
     // EXPLORE PANE
     private List<FriendshipRequest> listCurrentRequestsReceived = new ArrayList<>();

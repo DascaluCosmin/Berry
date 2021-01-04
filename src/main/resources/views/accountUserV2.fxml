@@ -150,7 +150,7 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
@@ -542,42 +542,141 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Button fx:id="buttonComposeMessage" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Compose" textFill="WHITE" />
             <Button fx:id="buttonInbox" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Inbox" textFill="WHITE" />
-            <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
+            <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowChat" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
             <Label fx:id="labelExitApplicationDirect" layoutX="645.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="24.0" />
-            <Pane fx:id="paneChat" layoutX="123.0" layoutY="109.0" prefHeight="462.0" prefWidth="438.0" stylesheets="@../css/PaneDirect.css">
+            <Pane fx:id="paneChat" layoutX="123.0" layoutY="109.0" prefHeight="462.0" prefWidth="438.0">
                <children>
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="440.0" layoutX="9.0" layoutY="11.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
-                  <Rectangle arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                  <Group fx:id="groupHiddenMessageUser" layoutX="213.0" layoutY="46.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat1311111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="34.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="168.0" textFill="#40457b" visible="false" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupHiddenMessageFriend" layoutX="35.0" layoutY="46.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat131111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="34.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label prefHeight="34.0" prefWidth="168.0" textFill="#40457b" visible="false" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
                   <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label layoutX="90.0" layoutY="28.0" text="Sergiu Breaban" textFill="WHITE">
+                  <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Choose a Friend to Chat with" textFill="WHITE">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Label>
+                  <Rectangle fx:id="rectangleWriteMessageChat" arcHeight="30.0" arcWidth="30.0" fill="#8b8d9f" height="43.0" layoutX="24.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                  <Group fx:id="groupStMessageUser" layoutX="213.0" layoutY="347.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat1" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupNdMessageUser" layoutX="213.0" layoutY="298.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat14" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRdMessageUser" layoutX="213.0" layoutY="245.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat12" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group4thMessageUser" layoutX="213.0" layoutY="192.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat13" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group5thMessageUser" layoutX="213.0" layoutY="140.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat16" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group6thMessageUser" layoutX="213.0" layoutY="91.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat15" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupStMessageFriend" layoutX="35.0" layoutY="347.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupNdMessageFriend" layoutX="35.0" layoutY="298.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat11" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRdMessageFriend" layoutX="35.0" layoutY="245.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat112" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group4thMessageFriend" layoutX="35.0" layoutY="192.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat114" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group5thMessageFriend" layoutX="35.0" layoutY="140.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat113" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group6thMessageFriend" layoutX="35.0" layoutY="91.0" visible="false">
+                     <children>
+                        <Rectangle fx:id="rectangleWriteMessageChat115" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                        <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <TextField fx:id="textFieldChat" disable="true" layoutX="35.0" layoutY="403.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="368.0" promptText="Aa" stylesheets="@../css/PaneDirect.css">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
                </children></Pane>
-            <Pane layoutX="584.0" layoutY="78.0" prefHeight="527.0" prefWidth="73.0">
+            <Pane fx:id="panePhotoChatFriends" layoutX="584.0" layoutY="78.0" prefHeight="527.0" prefWidth="73.0">
                <children>
-                  <Circle fx:id="circleStPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="73.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                     <image>
-                        <Image url="@../images/ButtonGoBack.png" />
-                     </image></ImageView>
-                  <ImageView fitHeight="31.0" fitWidth="36.0" layoutX="20.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
-                     <image>
-                        <Image url="@../images/ButtonGoNext.png" />
-                     </image>
-                  </ImageView>
-                  <Circle fx:id="circleNdPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="127.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circleRdPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="181.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circle4thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="235.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circle5thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="289.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circle6thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="343.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circle7thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="397.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Circle fx:id="circle8thPhotoFriendDirect" fill="WHITE" layoutX="37.0" layoutY="451.0" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label alignment="CENTER" layoutX="21.0" layoutY="11.0" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                     <graphic>
+                        <ImageView fx:id="labelGoBackFriendChat" fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Circle fx:id="circleStPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="73.0" onMouseClicked="#chatStFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circleNdPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="127.0" onMouseClicked="#chatNdFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circleRdPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="181.0" onMouseClicked="#chatRdFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle4thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="235.0" onMouseClicked="#chat4thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle5thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="289.0" onMouseClicked="#chat5thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle6thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="343.0" onMouseClicked="#chat6thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle7thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="397.0" onMouseClicked="#chat7thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Circle fx:id="circle8thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="451.0" onMouseClicked="#chat8thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelGoNextFriendChat" alignment="CENTER" layoutX="21.0" layoutY="481.0" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
                </children></Pane>
          </children>
       </Pane>

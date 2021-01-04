@@ -1,9 +1,9 @@
 package socialnetwork.service;
 
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.domain.validators.ValidationException;
-import socialnetwork.repository.Repository;
-import socialnetwork.repository.database.ReplyMessageDBRepository;
+import socialnetwork.repository.database.messages.ReplyMessageDBRepository;
 import socialnetwork.service.validators.ValidatorReplyMessageService;
 import socialnetwork.service.validators.ValidatorService;
 
@@ -54,6 +54,20 @@ public class ReplyMessageService {
      * @return Iterable<ReplyMessage>, representing the list containing the Reply Messages between the two users
      */
     public Iterable<ReplyMessage> getConversation(Long idLeftUser, Long idRightUser) {
-        return replyMessageRepository.findAll(idLeftUser, idRightUser);
+        return replyMessageRepository.findAll(idLeftUser, idRightUser, null, false);
+    }
+
+    /**
+     * Method that gets the conversion between two Users on a specific Page
+     * @param idLeftUser Long, representing the ID of the User that initiated the conversion
+     * @param idRightUser Long, representing the ID of the User that received the first message
+     * @param page ContentPage, representing the Page containing the Conversation
+     * @return List<ReplyMessage>, representing the list containing the Reply Messages between the two users,
+     *                             ordered by the most recent
+     */
+    public List<ReplyMessage> getListConversationOnPage(Long idLeftUser, Long idRightUser, ContentPage page) {
+        List<ReplyMessage> conversation = new ArrayList<>();
+        replyMessageRepository.findAll(idLeftUser, idRightUser, page, true).forEach(conversation::add);
+        return conversation;
     }
 }

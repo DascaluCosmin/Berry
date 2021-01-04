@@ -11,6 +11,7 @@ import socialnetwork.repository.database.*;
 import socialnetwork.repository.database.event.EventDBRepository;
 import socialnetwork.repository.database.event.ParticipantDBRepository;
 import socialnetwork.repository.database.friendshipRequests.FriendshipRequestsDBRepository;
+import socialnetwork.repository.database.messages.ReplyMessageDBRepository;
 import socialnetwork.repository.database.userPosts.PhotoPostDBRepository;
 import socialnetwork.repository.database.userPosts.TextPostDBRepository;
 import socialnetwork.service.*;

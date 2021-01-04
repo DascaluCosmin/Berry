@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -63,7 +64,10 @@
       </AnchorPane>
       <AnchorPane fx:id="anchorPaneLogin" layoutX="295.0" layoutY="71.0" prefHeight="275.0" prefWidth="367.0">
          <children>
-            <TextField opacity="0.0" />
+            <TextField opacity="0.0">
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor></TextField>
             <TextField fx:id="textFieldUsername" layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="Username">
                <font>
                   <Font size="14.0" />

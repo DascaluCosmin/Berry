@@ -2,7 +2,6 @@ package socialnetwork.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -15,7 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
@@ -26,6 +24,7 @@ import javafx.scene.shape.Shape;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
@@ -40,6 +39,7 @@ import socialnetwork.domain.posts.TextPost;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.database.friendshipRequests.TypeFriendshipRequest;
 import socialnetwork.repository.database.messages.SenderType;
+import socialnetwork.utils.Constants;
 import socialnetwork.utils.DateConverter;
 import socialnetwork.utils.ValidatorDates;
 import socialnetwork.utils.ViewClass;
@@ -140,6 +140,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 group4thMessageFriend, group5thMessageFriend, group6thMessageFriend,
                 groupHiddenMessageFriend
         ));
+        listGroupMessagesInbox = new ArrayList<>(Arrays.asList(
+                groupStMessageInbox, groupNdMessageInbox, groupRdMessageInbox, group4thMessageInbox,
+                group5thMessageInbox, group6thMessageInbox, group7thMessageInbox, group8thMessageInbox,
+                group9thMessageInbox, group10thMessageInbox, group11thMessageInbox
+        ));
         initializeEventHandlers();
     }
 
@@ -147,29 +152,23 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * Method that initializes some of the Event Handlers - for textFieldChat onKeyTyped & paneChat onScrollEvent
      */
     private void initializeEventHandlers() {
-        textFieldChat.setOnKeyTyped(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (textFieldChat.getText().length() > MAX_CHARACTERS_MESSAGE * 2) {
-                    textFieldChat.setText(textFieldChat.getText(0, MAX_CHARACTERS_MESSAGE * 2));
-                    textFieldChat.positionCaret(MAX_CHARACTERS_MESSAGE * 2);
-                }
+        textFieldChat.setOnKeyTyped(event -> {
+            if (textFieldChat.getText().length() > MAX_CHARACTERS_MESSAGE * 2) {
+                textFieldChat.setText(textFieldChat.getText(0, MAX_CHARACTERS_MESSAGE * 2));
+                textFieldChat.positionCaret(MAX_CHARACTERS_MESSAGE * 2);
             }
         });
-        textFieldChat.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.ENTER) {
-                    String textMessage = textFieldChat.getText();
-                    if (!textMessage.matches("[ ]*")) {
-                        ReplyMessage chatMessage = new ReplyMessage(
-                                userPage.getUser(), Collections.singletonList(currentFriendChat),
-                                textFieldChat.getText().trim(), LocalDateTime.now(), null);
-                        userPage.getReplyMessageService().addMessage(chatMessage);
-                        pageFriendConversation.setToFirstPage();
-                        initializeConversation();
-                        textFieldChat.clear();
-                    }
+        textFieldChat.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String textMessage = textFieldChat.getText();
+                if (!textMessage.matches("[ ]*")) {
+                    ReplyMessage chatMessage = new ReplyMessage(
+                            userPage.getUser(), Collections.singletonList(currentFriendChat),
+                            textFieldChat.getText().trim(), LocalDateTime.now(), null);
+                    userPage.getReplyMessageService().addMessage(chatMessage);
+                    pageFriendConversation.setToFirstPage();
+                    initializeConversation();
+                    textFieldChat.clear();
                 }
             }
         });
@@ -385,6 +384,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextPhotoPostsFriends.setVisible(true);
         labelGoBackTextPostsFriends.setVisible(false);
         labelGoNextTextPostsFriends.setVisible(false);
+        buttonRemoveFriend.setVisible(false);
         pagePhotoPostsFeedFriends.setToFirstPage();
         pageTextPostsFeedFriends.setToFirstPage();
         initializeFeedPane();
@@ -679,6 +679,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void initializePhotoPostsFriends() {
         List<PhotoPost> listPhotoPostsFriends = userPage.getPhotoPostService().getListPhotoPostsFriends(userPage.getUser().getId(), pagePhotoPostsFeedFriends);
+        labelGoBackPhotoPostsFriends.setVisible(pagePhotoPostsFeedFriends.getNumberPage() > 1);
+        labelGoNextPhotoPostsFriends.setVisible(pagePhotoPostsFeedFriends.getSizePage() == listPhotoPostsFriends.size());
         setRectanglesPhoto(listPhotoPostsFriends, listRectanglesFeedFriends);
         setLabelsUserNames(listPhotoPostsFriends, listLabelsFeedFriends);
     }
@@ -689,6 +691,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void initializeTextPostsFriends() {
         List<TextPost> listTextPostsFriends = userPage.getTextPostService().getListTextPostsFriends(userPage.getUser().getId(), pageTextPostsFeedFriends);
+        labelGoBackTextPostsFriends.setVisible(pageTextPostsFeedFriends.getNumberPage() > 1);
+        labelGoNextTextPostsFriends.setVisible(pageTextPostsFeedFriends.getSizePage() == listTextPostsFriends.size());
         setButtonsTextPosts(listTextPostsFriends, listButtonsFeedFriends);
         setLabelsUserNames(listTextPostsFriends, listLabelsFeedFriends);
     }
@@ -814,13 +818,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowPhotoPostsFriends() {
         pagePhotoPostsFeedFriends.setToFirstPage();
-        initializePhotoPostsFriends();
         panePhotoPostsFriends.setVisible(true);
         paneTextPostsFriends.setVisible(false);
-        labelGoBackPhotoPostsFriends.setVisible(true);
-        labelGoNextPhotoPostsFriends.setVisible(true);
         labelGoBackTextPostsFriends.setVisible(false);
         labelGoNextTextPostsFriends.setVisible(false);
+        initializePhotoPostsFriends();
     }
 
     /**
@@ -829,13 +831,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowTextPostsFriends() {
         pageTextPostsFeedFriends.setToFirstPage();
-        initializeTextPostsFriends();
         paneTextPostsFriends.setVisible(true);
         panePhotoPostsFriends.setVisible(false);
-        labelGoBackTextPostsFriends.setVisible(true);
-        labelGoNextTextPostsFriends.setVisible(true);
         labelGoBackPhotoPostsFriends.setVisible(false);
         labelGoNextPhotoPostsFriends.setVisible(false);
+        initializeTextPostsFriends();
     }
 
     /**
@@ -1072,7 +1072,14 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private void setRectanglesPhoto(List<PhotoPost> listPhotoPosts, List<Rectangle> listRectangles) {
         listRectangles.forEach(shape -> shape.setVisible(false));
         for (int i = 0; i < listPhotoPosts.size(); i++) {
-            setImage(listRectangles.get(i), listPhotoPosts.get(i).getPhotoURL());
+            PhotoPost currentPhotoPost = listPhotoPosts.get(i);
+            Rectangle currentRectangle = listRectangles.get(i);
+            setImage(currentRectangle, currentPhotoPost.getPhotoURL());
+            Tooltip tooltip = new Tooltip("Posted on " +
+                    currentPhotoPost.getPostDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME)
+            );
+            tooltip.setShowDelay(Duration.seconds(2));
+            Tooltip.install(currentRectangle, tooltip);
         }
     }
 
@@ -1086,8 +1093,15 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         // First, reset the Buttons
         listButtons.forEach(button -> button.setVisible(false));
         for (int i = 0; i < listTextPosts.size(); i++) {
-            listButtons.get(i).setVisible(true);
-            listButtons.get(i).setText(listTextPosts.get(i).getText());
+            TextPost currentTextPost = listTextPosts.get(i);
+            Button currentButton = listButtons.get(i);
+            currentButton.setVisible(true);
+            currentButton.setText(currentTextPost.getText());
+            Tooltip tooltip = new Tooltip("Posted on " +
+                    currentTextPost.getPostDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME)
+            );
+            tooltip.setShowDelay(Duration.seconds(2));
+            Tooltip.install(currentButton, tooltip);
         }
     }
 
@@ -1124,9 +1138,12 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private List<Circle> listCirclesPhotoFriends;
     private List<Group> listGroupMessagesUser;
     private List<Group> listGroupMessagesFriend;
+    private List<Group> listGroupMessagesInbox;
     private List<User> listCurrentFriendsChat = new ArrayList<>();
+    private List<Message> listCurrentMessagesInbox = new ArrayList<>();
     private final ContentPage pageFriendConversation = new ContentPage(7, 1);
     private final ContentPage pagePossibleFriendChat = new ContentPage(8, 1);
+    private final ContentPage pageMessagesInbox = new ContentPage(11, 1);
 
     @FXML
     Label labelNameFriendChat;
@@ -1134,6 +1151,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelGoBackFriendChat;
     @FXML
     Label labelGoNextFriendChat;
+    @FXML
+    Label labelGoBackInbox;
+    @FXML
+    Label labelGoNextInbox;
     @FXML
     Circle circlePhotoFriendChat;
     @FXML
@@ -1183,11 +1204,37 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Group groupHiddenMessageFriend;
     @FXML
+    Group groupStMessageInbox;
+    @FXML
+    Group groupNdMessageInbox;
+    @FXML
+    Group groupRdMessageInbox;
+    @FXML
+    Group group4thMessageInbox;
+    @FXML
+    Group group5thMessageInbox;
+    @FXML
+    Group group6thMessageInbox;
+    @FXML
+    Group group7thMessageInbox;
+    @FXML
+    Group group8thMessageInbox;
+    @FXML
+    Group group9thMessageInbox;
+    @FXML
+    Group group10thMessageInbox;
+    @FXML
+    Group group11thMessageInbox;
+    @FXML
     Pane directPane;
+    @FXML
+    Pane paneChatWrapper;
     @FXML
     Pane panePhotoChatFriends;
     @FXML
     Pane paneChat;
+    @FXML
+    Pane paneInbox;
 
     /**
      * Method that sets some Circles with the User's Friends' Profile Photos
@@ -1201,17 +1248,19 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             User currentUser = listFriendsUser.get(i);
             setImage(listCircles.get(i),
                     userPage.getProfilePhotoUserService().findOne(currentUser.getId()).getPathProfilePhoto());
+            Tooltip tooltip = new Tooltip(currentUser.getFullName());
+            Tooltip.install(listCircles.get(i), tooltip);
         }
     }
 
     /**
      * Method that initializes the components of a Group with the content of a Message
      * It sets the label of the Group (Message Text) with the information of the Message - its text
-     * @param message Message, representing the Messages whose data is used
-     * @param group Group, representign the Group to be set
+     * @param message ReplyMessage, representing the Messages whose data is used
+     * @param group Group, representing the Group to be set
      * @param senderType SenderType, representing the Type of the Sender - USER or FRIEND
      */
-    private void initializeGroup(Message message, Group group, SenderType senderType) {
+    private void initializeGroup(ReplyMessage message, Group group, SenderType senderType) {
         Node stNode = group.getChildren().get(0);
         Node ndNode = group.getChildren().get(1);
         if (stNode instanceof Rectangle && ndNode instanceof Label) {
@@ -1226,6 +1275,23 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (senderType == SenderType.USER) { // For the User's Messages, have to adjust the LayoutX as well
                 rectangle.setLayoutX(LAYOUT_X_START_GROUP - (lengthMessage - 1)* SCALE_LABEL_MESSAGE);
             }
+        }
+    }
+
+    /**
+     * Method that initializes the components of a Group with the content of a Message
+     * It sets the labels of the Group - User's Name, Text Message & Date, with the information of the Message
+     * @param message Message, representing the Messages whose data is used
+     * @param group Group, representing the Group to be set
+     */
+    private void initializeGroup(Message message, Group group) {
+        Node stNode = group.getChildren().get(1);
+        Node ndNode = group.getChildren().get(2);
+        Node rdNode = group.getChildren().get(3);
+        if (stNode instanceof Label && ndNode instanceof Label && rdNode instanceof Label) {
+            ((Label) stNode).setText(message.getFrom().getFullName());
+            ((Label) ndNode).setText(message.getMessage());
+            ((Label) rdNode).setText(message.getDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME));
         }
     }
 
@@ -1256,6 +1322,22 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         }
     }
 
+    /**
+     * Method that initializes the Messages in the User's Inbox
+     */
+    private void initializeMessagesInbox() {
+        listGroupMessagesInbox.forEach(group -> group.setVisible(false));
+        List<Message> inbox = userPage.getMessageService().getListAllMessagesToUser(userPage.getUser().getId(), pageMessagesInbox);
+        listCurrentMessagesInbox.clear();
+        listCurrentMessagesInbox.addAll(inbox);
+        labelGoBackInbox.setVisible(pageMessagesInbox.getNumberPage() > 1);
+        labelGoNextInbox.setVisible(pageMessagesInbox.getSizePage() == inbox.size());
+        for (int i = 0; i < inbox.size(); i++) {
+            listGroupMessagesInbox.get(i).setVisible(true);
+            initializeGroup(inbox.get(i), listGroupMessagesInbox.get(i));
+        }
+    }
+
     // DIRECT BUTTONS EVENTS
 
     /**
@@ -1267,6 +1349,18 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
+     * Method linked to the buttonInbox's onMouseClicked
+     * It shows the Inbox Pane
+     */
+    public void eventShowInbox() {
+        pageMessagesInbox.setToFirstPage();
+        currentDirectPane.setVisible(false);
+        currentDirectPane = paneInbox;
+        currentDirectPane.setVisible(true);
+        initializeMessagesInbox();
+    }
+
+    /**
      * Method that initializes the Chat Pane
      */
     private void initializePaneChat() {
@@ -1274,11 +1368,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         if (currentDirectPane != null) {
             currentDirectPane.setVisible(false);
         }
-        currentDirectPane = paneChat;
+        currentDirectPane = paneChatWrapper;
         currentDirectPane.setVisible(true);
-        panePhotoChatFriends.setVisible(true);
-        labelGoNextFriendChat.setFocusTraversable(true);
-        labelGoBackFriendChat.setVisible(false);
         initializeCurrentFriendsChat();
     }
 
@@ -1289,12 +1380,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         listCirclesPhotoFriends.forEach(circle -> circle.setVisible(false));
         listCurrentFriendsChat.clear();
         listCurrentFriendsChat.addAll(userPage.getUserService().getListAllConsecutiveFriends(userPage.getUser().getId(), pagePossibleFriendChat));
+        labelGoBackFriendChat.setVisible(pagePossibleFriendChat.getNumberPage() > 1);
+        labelGoNextFriendChat.setVisible(pagePossibleFriendChat.getSizePage() == listCurrentFriendsChat.size());
         setCirclesPhoto(listCurrentFriendsChat, listCirclesPhotoFriends);
-        if (listCurrentFriendsChat.size() < pagePossibleFriendChat.getSizePage()) {
-            labelGoNextFriendChat.setVisible(false);
-        } else {
-            labelGoNextFriendChat.setVisible(true);
-        }
     }
 
     /**
@@ -1417,6 +1505,29 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         pagePossibleFriendChat.nextPage();
         labelGoBackFriendChat.setVisible(true);
         initializeCurrentFriendsChat();
+    }
+
+    /**
+     * Method linked to the labelGoBackInbox's onMouseClicked
+     * It shows the Inbox of the User on the previous page
+     */
+    public void eventGoBackInbox() {
+        if (pageMessagesInbox.getNumberPage() == 1) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first page!");
+            alert.show();
+        } else {
+            pageMessagesInbox.previousPage();
+            initializeMessagesInbox();
+        }
+    }
+
+    /**
+     * Method linked to the labelGoNextInbox's onMouseClicked
+     * It shows the Inbox of the User on the next page
+     */
+    public void eventGoNextInbox() {
+        pageMessagesInbox.nextPage();
+        initializeMessagesInbox();
     }
 
     // EXPLORE PANE

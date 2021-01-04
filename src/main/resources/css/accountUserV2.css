@@ -3,6 +3,10 @@
     -fx-background-color: red;
 }
 
+#labelNbNotifications:hover {
+    -fx-background-color: #d61c1c;
+}
+
 #labelShowStatistics:hover {
     -fx-background-color: #333A83;
     -fx-opacity: 0.5;
@@ -292,15 +296,26 @@
 }
 
 #labelIntroduceYear {
-    -fx-font-size: 19.5px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #40457B;
 }
 
 #labelIntroduceTimeInterval {
-    -fx-font-size: 19.5px;
+    -fx-font-size: 15px;
     -fx-font-weight: bold;
     -fx-text-fill: #40457B;
+}
+
+#labelSearchFriend {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#textFieldSearchFriendStatistics {
+    -fx-text-fill: white;
+    -fx-background-color: #40457B;
 }
 
 #labelStartDate {

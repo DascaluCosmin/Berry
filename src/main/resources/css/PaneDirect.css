@@ -1,5 +1,6 @@
 #buttonComposeMessage {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonComposeMessage:hover {
@@ -8,7 +9,8 @@
 
 #buttonInbox {
      -fx-background-color: #40457B;
- }
+    -fx-background-radius: 6px;
+}
 
 #buttonInbox:hover {
     -fx-background-color: #333A83;
@@ -16,6 +18,7 @@
 
 #buttonChat {
     -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
 }
 
 #buttonChat:hover {

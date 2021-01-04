@@ -551,7 +551,7 @@
             <Pane fx:id="paneChat" layoutX="123.0" layoutY="109.0" prefHeight="462.0" prefWidth="438.0">
                <children>
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="440.0" layoutX="9.0" layoutY="11.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
-                  <Group fx:id="groupHiddenMessageUser" layoutX="213.0" layoutY="46.0" visible="false">
+                  <Group fx:id="groupHiddenMessageUser" layoutX="202.0" layoutY="46.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat1311111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="34.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
                         <Label alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="168.0" textFill="#40457b" visible="false" wrapText="true" />
@@ -564,47 +564,47 @@
                      </children>
                   </Group>
                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
-                  <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" />
                   <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Choose a Friend to Chat with" textFill="WHITE">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Label>
                   <Rectangle fx:id="rectangleWriteMessageChat" arcHeight="30.0" arcWidth="30.0" fill="#8b8d9f" height="43.0" layoutX="24.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
-                  <Group fx:id="groupStMessageUser" layoutX="213.0" layoutY="347.0" visible="false">
+                  <Group fx:id="groupStMessageUser" layoutX="202.0" layoutY="347.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat1" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <Group fx:id="groupNdMessageUser" layoutX="213.0" layoutY="298.0" visible="false">
+                  <Group fx:id="groupNdMessageUser" layoutX="202.0" layoutY="298.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat14" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <Group fx:id="groupRdMessageUser" layoutX="213.0" layoutY="245.0" visible="false">
+                  <Group fx:id="groupRdMessageUser" layoutX="202.0" layoutY="245.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat12" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <Group fx:id="group4thMessageUser" layoutX="213.0" layoutY="192.0" visible="false">
+                  <Group fx:id="group4thMessageUser" layoutX="202.0" layoutY="192.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat13" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <Group fx:id="group5thMessageUser" layoutX="213.0" layoutY="140.0" visible="false">
+                  <Group fx:id="group5thMessageUser" layoutX="202.0" layoutY="140.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat16" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <Group fx:id="group6thMessageUser" layoutX="213.0" layoutY="91.0" visible="false">
+                  <Group fx:id="group6thMessageUser" layoutX="202.0" layoutY="91.0" visible="false">
                      <children>
                         <Rectangle fx:id="rectangleWriteMessageChat15" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                        <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
                   <Group fx:id="groupStMessageFriend" layoutX="35.0" layoutY="347.0" visible="false">
@@ -643,17 +643,17 @@
                         <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
                      </children>
                   </Group>
-                  <TextField fx:id="textFieldChat" disable="true" layoutX="35.0" layoutY="403.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" prefWidth="368.0" promptText="Aa" stylesheets="@../css/PaneDirect.css">
+                  <TextField fx:id="textFieldChat" disable="true" layoutX="28.0" layoutY="405.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="34.0" prefWidth="380.0" promptText="Aa" stylesheets="@../css/PaneDirect.css">
                      <font>
-                        <Font size="24.0" />
+                        <Font size="13.0" />
                      </font>
                   </TextField>
                </children></Pane>
             <Pane fx:id="panePhotoChatFriends" layoutX="584.0" layoutY="78.0" prefHeight="527.0" prefWidth="73.0">
                <children>
-                  <Label alignment="CENTER" layoutX="21.0" layoutY="11.0" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                  <Label fx:id="labelGoBackFriendChat" alignment="CENTER" layoutX="21.0" layoutY="11.0" onMouseClicked="#eventGoBackFriendChat" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
                      <graphic>
-                        <ImageView fx:id="labelGoBackFriendChat" fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/ButtonGoBack.png" />
                            </image>
@@ -668,9 +668,9 @@
                   <Circle fx:id="circle6thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="343.0" onMouseClicked="#chat6thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
                   <Circle fx:id="circle7thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="397.0" onMouseClicked="#chat7thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
                   <Circle fx:id="circle8thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="451.0" onMouseClicked="#chat8thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
-                  <Label fx:id="labelGoNextFriendChat" alignment="CENTER" layoutX="21.0" layoutY="481.0" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                  <Label fx:id="labelGoNextFriendChat" alignment="CENTER" layoutX="21.0" layoutY="481.0" onMouseClicked="#eventGoNextFriendChat" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
                      <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="31.0" fitWidth="36.0" onMouseClicked="#eventGoNextFriendChat" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../images/ButtonGoNext.png" />
                            </image>
@@ -1045,18 +1045,29 @@
       <Pane fx:id="statisticsPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationStatistics" layoutX="647.0" layoutY="7.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="23.0" />
-            <Button fx:id="buttonGeneratePDFReport" layoutX="517.0" layoutY="56.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="32.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate PDF Report" textFill="WHITE" />
-            <Button fx:id="buttonGenerateHTMLReport" layoutX="517.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="32.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate HTML Report" textFill="WHITE" />
-            <DatePicker fx:id="datePickerStartDate" layoutX="97.0" layoutY="56.0" prefHeight="32.0" prefWidth="174.0" promptText="Start Date" />
-            <DatePicker fx:id="datePickerEndDate" layoutX="97.0" layoutY="100.0" prefHeight="32.0" prefWidth="174.0" promptText="End Date" />
-            <Label fx:id="labelIntroduceTimeInterval" layoutX="21.0" layoutY="8.0" prefHeight="28.0" prefWidth="485.0" stylesheets="@../css/accountUserV2.css" text="Introduce a time interval to generate activity report" />
-            <Label fx:id="labelStartDate" layoutX="21.0" layoutY="61.0" stylesheets="@../css/accountUserV2.css" text="Start Date" />
-            <Label fx:id="labelEndDate" layoutX="21.0" layoutY="107.0" stylesheets="@../css/accountUserV2.css" text="End Date" />
-            <Label fx:id="labelIntroduceYear" layoutX="21.0" layoutY="223.0" prefHeight="28.0" prefWidth="485.0" stylesheets="@../css/accountUserV2.css" text="Introduce a year to get stats about that specific year" />
-            <Label fx:id="labelYear" layoutX="21.0" layoutY="279.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
-            <TextField fx:id="textFieldYear" layoutX="97.0" layoutY="277.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
+            <Label fx:id="labelSearchStatistics" contentDisplay="CENTER" layoutX="22.0" layoutY="40.0" prefHeight="32.0" prefWidth="178.0">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/SearchTextField2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <TextField fx:id="textFieldSearchFriendStatistics" layoutX="57.0" layoutY="44.0" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
+            <Button fx:id="buttonGeneratePDFReport" layoutX="521.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate PDF Report" textFill="WHITE" />
+            <Button fx:id="buttonGenerateHTMLReport" layoutX="521.0" layoutY="184.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate HTML Report" textFill="WHITE" />
+            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce a time interval to generate activity report" />
+            <DatePicker fx:id="datePickerStartDate" layoutX="98.0" layoutY="137.0" prefHeight="32.0" prefWidth="174.0" promptText="Start Date" />
+            <DatePicker fx:id="datePickerEndDate" layoutX="98.0" layoutY="184.0" prefHeight="32.0" prefWidth="174.0" promptText="End Date" />
+            <Label fx:id="labelStartDate" layoutX="22.0" layoutY="142.0" stylesheets="@../css/accountUserV2.css" text="Start Date" />
+            <Label fx:id="labelEndDate" layoutX="22.0" layoutY="189.0" stylesheets="@../css/accountUserV2.css" text="End Date" />
+            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get stats about that specific year" />
+            <Label fx:id="labelYear" layoutX="22.0" layoutY="281.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
+            <TextField fx:id="textFieldYear" layoutX="98.0" layoutY="279.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
             <PieChart fx:id="pieChartMessages" layoutX="14.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
             <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
+            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a Friend to generate Transcripts" />
          </children>
       </Pane>
    </children>

@@ -1,3 +1,8 @@
+/**
+ * !!! DEPRECATED !!!
+ * THE APPLICATION IS NO LONGER A CONSOLE APPLICATION, BUT RATHER A GUI APPLICATION
+ */
+
 package socialnetwork.ui;
 
 import socialnetwork.community.Communities;

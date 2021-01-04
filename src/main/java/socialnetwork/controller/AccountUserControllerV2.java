@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
@@ -149,9 +150,26 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         textFieldChat.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                if (textFieldChat.getText().length() > MAX_CHARACTERS_MESSAGE) {
-                    textFieldChat.setText(textFieldChat.getText(0, MAX_CHARACTERS_MESSAGE));
-                    textFieldChat.positionCaret(MAX_CHARACTERS_MESSAGE);
+                if (textFieldChat.getText().length() > MAX_CHARACTERS_MESSAGE * 2) {
+                    textFieldChat.setText(textFieldChat.getText(0, MAX_CHARACTERS_MESSAGE * 2));
+                    textFieldChat.positionCaret(MAX_CHARACTERS_MESSAGE * 2);
+                }
+            }
+        });
+        textFieldChat.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER) {
+                    String textMessage = textFieldChat.getText();
+                    if (!textMessage.matches("[ ]*")) {
+                        ReplyMessage chatMessage = new ReplyMessage(
+                                userPage.getUser(), Collections.singletonList(currentFriendChat),
+                                textFieldChat.getText().trim(), LocalDateTime.now(), null);
+                        userPage.getReplyMessageService().addMessage(chatMessage);
+                        pageFriendConversation.setToFirstPage();
+                        initializeConversation();
+                        textFieldChat.clear();
+                    }
                 }
             }
         });
@@ -166,7 +184,6 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 initializeConversation();
             }
         });
-
     }
 
     /**
@@ -218,6 +235,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelShowEventsDummy;
     @FXML
     Label labelShowExploreDummy;
+    @FXML
+    Label labelShowDirectDummy;
     @FXML
     Label labelShowStatisticsDummy;
     @FXML
@@ -438,6 +457,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentPane.setVisible(false);
         currentPane = directPane;
         currentPane.setVisible(true);
+        currentSliderLabel.setVisible(false);
+        currentSliderLabel = labelShowDirectDummy;
+        currentSliderLabel.setVisible(true);
         initializePaneChat();
     }
 
@@ -1097,17 +1119,21 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private int MAX_CHARACTERS_MESSAGE = 26;
     private int WIDTH_START_GROUP = 40;
     private int LAYOUT_X_START_GROUP = 160;
-    private float SCALE_LABEL_MESSAGE = 6f;
+    private float SCALE_LABEL_MESSAGE = 5.7f;
     private User currentFriendChat; // The current User the Logged In User chats with
     private List<Circle> listCirclesPhotoFriends;
     private List<Group> listGroupMessagesUser;
     private List<Group> listGroupMessagesFriend;
     private List<User> listCurrentFriendsChat = new ArrayList<>();
     private final ContentPage pageFriendConversation = new ContentPage(7, 1);
-    private final ContentPage pageFriendChat = new ContentPage(8, 1);
+    private final ContentPage pagePossibleFriendChat = new ContentPage(8, 1);
 
     @FXML
     Label labelNameFriendChat;
+    @FXML
+    Label labelGoBackFriendChat;
+    @FXML
+    Label labelGoNextFriendChat;
     @FXML
     Circle circlePhotoFriendChat;
     @FXML
@@ -1244,15 +1270,31 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * Method that initializes the Chat Pane
      */
     private void initializePaneChat() {
+        pagePossibleFriendChat.setToFirstPage();
         if (currentDirectPane != null) {
             currentDirectPane.setVisible(false);
         }
         currentDirectPane = paneChat;
         currentDirectPane.setVisible(true);
         panePhotoChatFriends.setVisible(true);
+        labelGoNextFriendChat.setFocusTraversable(true);
+        labelGoBackFriendChat.setVisible(false);
+        initializeCurrentFriendsChat();
+    }
+
+    /**
+     * Method that initializes the current Friends the User might chat with
+     */
+    private void initializeCurrentFriendsChat() {
+        listCirclesPhotoFriends.forEach(circle -> circle.setVisible(false));
         listCurrentFriendsChat.clear();
-        listCurrentFriendsChat.addAll(userPage.getUserService().getListAllFriends(userPage.getUser().getId(), pageFriendChat));
+        listCurrentFriendsChat.addAll(userPage.getUserService().getListAllConsecutiveFriends(userPage.getUser().getId(), pagePossibleFriendChat));
         setCirclesPhoto(listCurrentFriendsChat, listCirclesPhotoFriends);
+        if (listCurrentFriendsChat.size() < pagePossibleFriendChat.getSizePage()) {
+            labelGoNextFriendChat.setVisible(false);
+        } else {
+            labelGoNextFriendChat.setVisible(true);
+        }
     }
 
     /**
@@ -1353,6 +1395,29 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         }
     }
 
+    /**
+     * Method linked to the labelGoBackFriendChat's onMouseClicked
+     * It shows the previous Friend the User might chat with
+     */
+    public void eventGoBackFriendChat() {
+        pagePossibleFriendChat.previousPage();
+        if (pagePossibleFriendChat.getNumberPage() == 1) {
+            labelGoBackFriendChat.setVisible(false);
+        } else {
+            labelGoBackFriendChat.setVisible(true);
+        }
+        initializeCurrentFriendsChat();
+    }
+
+    /**
+     * Method linked to the labelGoNextFriendChat's onMouseClicked
+     * It shows the next Friend the User might chat with
+     */
+    public void eventGoNextFriendChat() {
+        pagePossibleFriendChat.nextPage();
+        labelGoBackFriendChat.setVisible(true);
+        initializeCurrentFriendsChat();
+    }
 
     // EXPLORE PANE
     private List<FriendshipRequest> listCurrentRequestsReceived = new ArrayList<>();
@@ -2233,6 +2298,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     TextField textFieldYear;
     @FXML
+    TextField textFieldSearchFriendStatistics;
+    @FXML
     PieChart pieChartMessages;
     @FXML
     PieChart pieChartFriendships;
@@ -2247,9 +2314,28 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         if (!ValidatorDates.validateDates(dateStart, dateEnd)) {
             return;
         }
-        List<Message> messageList = userPage.getMessageService().getListAllMessagesToUserTimeInterval(
-                userPage.getUserDTO().getId(), dateStart, dateEnd
-        );
+        String searchedFriendUsername = textFieldSearchFriendStatistics.getText();
+        UserCredentials searchedFriendCredentials = userPage.getUserCredentialsService().findOne(searchedFriendUsername);
+        User searchedFriend = null;
+        if (searchedFriendCredentials != null) {
+            searchedFriend = userPage.getUserService().getUser(searchedFriendCredentials.getId());
+        }
+        List<Message> messageList = new ArrayList<>();
+        if (searchedFriend != null) {
+            messageList.addAll(userPage.getMessageService().getListAllMessagesToUserTimeInterval(
+                    userPage.getUserDTO().getId(), searchedFriend.getId(), dateStart, dateEnd
+            ));
+        } else if (searchedFriendUsername.matches("[ ]*")) {
+            messageList.addAll(userPage.getMessageService().getListAllMessagesToUserTimeInterval(
+                    userPage.getUserDTO().getId(), dateStart, dateEnd
+            ));
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The searched Friend doesn't exist!");
+            alert.show();
+            textFieldSearchFriendStatistics.clear();
+            return;
+        }
+
         List<Friendship> friendshipList = userPage.getFriendshipService().getListAllFriendshipsUserTimeInterval(
                 userPage.getUserDTO().getId(), dateStart, dateEnd
         );
@@ -2257,7 +2343,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
         }
         try {
-            File file = ResourceUtils.getFile("classpath:report.jrxml");
+            File file = ResourceUtils.getFile("classpath:report2.jrxml");
             JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(messageList);
             Map<String, Object> parameters = new HashMap<>();
@@ -2265,6 +2351,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             parameters.put("StatisticsFriendsMessages", "You befriended " + friendshipList.size() +
                     " people and received " + messageList.size() + " messages");
             parameters.put("DatePeriodReport", "Date Period: " + dateStart + " - " + dateEnd);
+            if (searchedFriend != null) {
+                parameters.put("TranscriptFriendName", "Transcript: " + searchedFriend.getFullName());
+            } else {
+                parameters.put("TranscriptFriendName", "Transcript: all Friends");
+            }
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             String pathToGenerateTo = "C:\\Users\\dasco\\" + userPage.getUserDTO().getFullName().replace(' ', '_');
             if (typeReport == TypeReport.PDF) {
@@ -2274,6 +2365,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The report has been generated successfully!");
             alert.show();
+            textFieldSearchFriendStatistics.clear();
+
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }

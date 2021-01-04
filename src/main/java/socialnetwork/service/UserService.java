@@ -130,21 +130,35 @@ public class UserService implements Observable<UserChangeEvent> {
      */
     public Iterable<User> getAllFriends(Long idUser, ContentPage page) {
         List<User> friendsUser = new ArrayList<>();
-        friendshipRepository.findAll(idUser, page).forEach(ids -> {
+        friendshipRepository.findAll(idUser, page, true).forEach(ids -> {
             friendsUser.add(getUser(ids.getId().getRight()));
         });
         return friendsUser;
     }
 
     /**
-     * Method that gets the list of friends of a User on a specific Page
+     * Method that gets the list of friends of a User on a specific Page (leaps)
      * @param idUser Long, representing the ID of the User
      * @param page ContentPage, representing the Page containing the Users
      * @return List<User>, representing the list of friends of the User on that Page
      */
     public List<User> getListAllFriends(Long idUser, ContentPage page) {
         List<User> friendsUserList = new ArrayList<>();
-        friendshipRepository.findAll(idUser, page).forEach(ids -> {
+        friendshipRepository.findAll(idUser, page, true).forEach(ids -> {
+            friendsUserList.add(getUser(ids.getId().getRight()));
+        });
+        return friendsUserList;
+    }
+
+    /**
+     * Method that gets the list of friends of a User on a specific Page (doesn't leap)
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return List<User>, representing the list of friends of the User on that Page
+     */
+    public List<User> getListAllConsecutiveFriends(Long idUser, ContentPage page) {
+        List<User> friendsUserList = new ArrayList<>();
+        friendshipRepository.findAll(idUser, page, false).forEach(ids -> {
             friendsUserList.add(getUser(ids.getId().getRight()));
         });
         return friendsUserList;

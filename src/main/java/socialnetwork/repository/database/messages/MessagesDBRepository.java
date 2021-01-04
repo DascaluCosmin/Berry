@@ -1,6 +1,7 @@
-package socialnetwork.repository.database;
+package socialnetwork.repository.database.messages;
 
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.User;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.repository.Repository;
@@ -9,6 +10,7 @@ import socialnetwork.utils.Constants;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,6 +20,12 @@ public class MessagesDBRepository implements Repository<Long, Message> {
     private String password;
     private Repository<Long, User> userRepository;
 
+    /**
+     * Constructor that creates a new MessagesDBRepository
+     * @param url String, representing the URL of the Data Base
+     * @param username String, representing the Username of the user connecting to the DB
+     * @param password Password, representing the Password of the user connecting to the DB
+     */
     public MessagesDBRepository(String url, String username, String password, Repository<Long, User> userRepository) {
         this.url = url;
         this.username = username;
@@ -25,6 +33,12 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Method that gets one specific Message
+     * @param aLong, representing the ID of the Message
+     * @return null, if the Message doesn't exist
+     *      non-null Message, otherwise
+     */
     @Override
     public Message findOne(Long aLong) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -46,17 +60,66 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         return null;
     }
 
-    public Iterable<Message> findAll(Long idUserTo) {
-        return findAllMessages(idUserTo);
-    }
-
+    /**
+     * Method that gets the list of all Messages
+     * @return Iterable<Message>, representing the list of Messages
+     */
     @Override
     public Iterable<Message> findAll() {
         return findAllMessages(null);
     }
 
     /**
-     * Method that gets the list of messages of a specific User
+     * Method that gets the list of Messages of a specific User
+     * @param idUserTo Long, representing the ID of the User (null to get all the messages)
+     * @return Iterable<Message>, representing the list of messages
+     */
+    public Iterable<Message> findAll(Long idUserTo) {
+        return findAllMessages(idUserTo);
+    }
+
+    /**
+     * Method that gets the list of all Messages sent to a User, on a specific Page
+     * @param page ContentPage, representing the page containing the Messages
+     * @return Iterable<Message>, representing the list of all Message sent to the User, on that Page,
+     *      ordered descending by Date
+     */
+    public Iterable<Message> findAll(Long idUser, ContentPage page) {
+        List<Message> listMessages = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            /**
+             *  Assume the Messages are never deleted and the id of the Message is AUTO INCREMENT
+             *  Thus, ordering by id is equivalent to ordering by date, but faster, since date is a varchar
+             */
+            String command = "SELECT * FROM messages WHERE id IN " +
+                    "(" +
+                    "SELECT \"idMessage\" " +
+                    "FROM \"messages_To\" " +
+                    "WHERE \"idUserTo\" = " + idUser +
+                    ")" +
+            " ORDER BY id DESC " + " LIMIT " + page.getSizePage() +
+                    " OFFSET " + (page.getNumberPage() - 1) * page.getSizePage();
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Long idMessage = resultSet.getLong("id");
+                Long idUserFrom = resultSet.getLong("idUserFrom");
+                String textMessage = resultSet.getString("message");
+                LocalDateTime date = LocalDateTime.parse(resultSet.getString("date"), Constants.DATE_TIME_FORMATTER);
+                User userFrom = userRepository.findOne(idUserFrom);
+                User userTo = userRepository.findOne(idUser);
+                Message message = new Message(userFrom, Collections.singletonList(userTo), textMessage, date);
+                message.setId(idMessage);
+                listMessages.add(message);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listMessages;
+    }
+
+    /**
+     * Method that gets the list of Messages sent to a specific User
      * @param idUserTo Long, representing the ID of the User (null to get all the messages)
      * @return Iterable<Message>, representing the list of messages
      */
@@ -78,6 +141,13 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         return new ArrayList<>();
     }
 
+    /**
+     * Method that adds a new Message to the Data Base
+     * @param entity Message, representing the entity to be added
+     *         entity must be not null
+     * @return null, if the Message was added successfully
+     *      non-null Message, otherwise
+     */
     @Override
     public Message save(Message entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -120,6 +190,12 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         return entity;
     }
 
+    /**
+     * Method that deletes a Message from the Data Base
+     * @param aLong Long, representing the ID of the Message to be deleted
+     * @return null, if the Message doesn't exist
+     *      non-null Message, if the ReplyMessage was deleted successfully
+     */
     @Override
     public Message delete(Long aLong) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -136,6 +212,13 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         return null;
     }
 
+    /**
+     * Method that updates a Message in the Data Base
+     * @param entity Message, representing the new Message
+     *          entity must not be null
+     * @return null, if the Message was updated successfully
+     *      non-null Message, otherwise
+     */
     @Override
     public Message update(Message entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {

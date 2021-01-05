@@ -609,6 +609,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelGoNextTextPostsFriends;
     @FXML
+    Label labelGoBackProfileFriend;
+    @FXML
+    Label labelGoNextProfileFriend;
+    @FXML
     Label labelUserNameStPost;
     @FXML
     Label labelUserNameNdPost;
@@ -710,7 +714,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 if (userPage.getFriendshipService().findOne(userPage.getUser().getId(), searchedUser.getId()) != null) {
                     // The two Users are friends
                     friendUser = searchedUser;
+                    pagePhotoPostProfileFriend.setToFirstPage();
+                    pageTextPostProfileFriend.setToFirstPage();
                     paneFriendsProfile.setVisible(true);
+                    paneFriendsProfilePhotos.setVisible(true);
+                    paneFriendsProfilePosts.setVisible(false);
                     paneFriendsFeed.setVisible(false);
                     buttonRemoveFriend.setVisible(true);
                     labelFriendRealName.setVisible(true);
@@ -722,8 +730,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                     labelNumberPhotosFriend.setText(userPage.getPhotoPostService().getNumberPhotoPosts(friendUser.getId()) + " Photos");
                     labelNumberPostsFriend.setText(userPage.getTextPostService().getNumberTextPosts(friendUser.getId()) + " Posts");
                     setImage(circleProfilePhotoFriend, userPage.getProfilePhotoUserService().findOne(friendUser.getId()).getPathProfilePhoto());
-                    setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
-                    setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
+                    List<PhotoPost> listPhotoPostsFriend = userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend);
+                    labelGoBackProfileFriend.setVisible(pagePhotoPostProfileFriend.getNumberPage() > 1);
+                    labelGoNextProfileFriend.setVisible(pagePhotoPostProfileFriend.getSizePage() == listPhotoPostsFriend.size());
+                    setRectanglesPhoto(listPhotoPostsFriend, listRectanglesProfileFriend);
                 }
             }
         } else if (usernameUser.length() == 0) {
@@ -746,8 +756,17 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     public void eventGoNextFriend() {
         pagePhotoPostProfileFriend.nextPage();
         pageTextPostProfileFriend.nextPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
-        setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
+        List<PhotoPost> listPhotoPostsFriend = userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend);
+        List<TextPost> listTextPostsFriends = userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend);
+        if (paneFriendsProfilePhotos.isVisible()) {
+            labelGoBackProfileFriend.setVisible(pagePhotoPostProfileFriend.getNumberPage() > 1);
+            labelGoNextProfileFriend.setVisible(pagePhotoPostProfileFriend.getSizePage() == listPhotoPostsFriend.size());
+            setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
+        } else if (paneFriendsProfilePosts.isVisible()){
+            labelGoBackProfileFriend.setVisible(pageTextPostProfileFriend.getNumberPage() > 1);
+            labelGoNextProfileFriend.setVisible(pageTextPostProfileFriend.getSizePage() == listTextPostsFriends.size());
+            setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
+        }
     }
 
     /**
@@ -761,8 +780,17 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         } else {
             pagePhotoPostProfileFriend.previousPage();
             pageTextPostProfileFriend.previousPage();
-            setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
-            setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
+            List<PhotoPost> listPhotoPostsFriend = userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend);
+            List<TextPost> listTextPostsFriends = userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend);
+            if (paneFriendsProfilePhotos.isVisible()) {
+                labelGoBackProfileFriend.setVisible(pagePhotoPostProfileFriend.getNumberPage() > 1);
+                labelGoNextProfileFriend.setVisible(pagePhotoPostProfileFriend.getSizePage() == listPhotoPostsFriend.size());
+                setRectanglesPhoto(listPhotoPostsFriend, listRectanglesProfileFriend);
+            } else if (paneFriendsProfilePosts.isVisible()) {
+                labelGoBackProfileFriend.setVisible(pageTextPostProfileFriend.getNumberPage() > 1);
+                labelGoNextProfileFriend.setVisible(pageTextPostProfileFriend.getSizePage() == listTextPostsFriends.size());
+                setButtonsTextPosts(listTextPostsFriends, listButtonsProfileFriend);
+            }
         }
     }
 
@@ -844,7 +872,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowPhotoPaneProfileFriend() {
         pagePhotoPostProfileFriend.setToFirstPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend), listRectanglesProfileFriend);
+        List<PhotoPost> listPhotoPostsFriend = userPage.getPhotoPostService().getListPhotoPosts(friendUser.getId(), pagePhotoPostProfileFriend);
+        labelGoBackProfileFriend.setVisible(pagePhotoPostProfileFriend.getNumberPage() > 1);
+        labelGoNextProfileFriend.setVisible(pagePhotoPostProfileFriend.getSizePage() == listPhotoPostsFriend.size());
+        setRectanglesPhoto(listPhotoPostsFriend, listRectanglesProfileFriend);
         paneFriendsProfilePhotos.setVisible(true);
         paneFriendsProfilePosts.setVisible(false);
     }
@@ -855,7 +886,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowTextPaneProfileFriend() {
         pageTextPostProfileFriend.setToFirstPage();
-        setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend), listButtonsProfileFriend);
+        List<TextPost> listTextPostsFriends = userPage.getTextPostService().getListTextPosts(friendUser.getId(), pageTextPostProfileFriend);
+        labelGoBackProfileFriend.setVisible(pageTextPostProfileFriend.getNumberPage() > 1);
+        labelGoNextProfileFriend.setVisible(pageTextPostProfileFriend.getSizePage() == listTextPostsFriends.size());
+        setButtonsTextPosts(listTextPostsFriends, listButtonsProfileFriend);
         paneFriendsProfilePosts.setVisible(true);
         paneFriendsProfilePhotos.setVisible(false);
     }
@@ -1581,6 +1615,18 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelNoNewUsers;
     @FXML
     Label labelNoNewRequests;
+    @FXML
+    Label labelGoBackExploreUsers;
+    @FXML
+    Label labelGoNextExploreUsers;
+    @FXML
+    Label labelGoBackExploreRequestsReceived;
+    @FXML
+    Label labelGoNextExploreRequestsReceived;
+    @FXML
+    Label labelGoBackExploreRequestsSent;
+    @FXML
+    Label labelGoNextExploreRequestsSent;
 
     /**
      * Method that initializes the components of some Groups with the content of some Friendship Requests
@@ -1642,28 +1688,36 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * Method that initializes the Received Friendship Requests
      */
     private void initializeReceivedRequests() {
-        initializeGrouping(
-                userPage.getFriendshipRequestService().getListReceivedPendingRequests(userPage.getUser().getId(), pageFriendRequestsReceived),
-                listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED
+        List<FriendshipRequest> listReceivedRequests = userPage.getFriendshipRequestService().getListReceivedPendingRequests(
+                userPage.getUser().getId(), pageFriendRequestsReceived
         );
+        labelGoBackExploreRequestsReceived.setVisible(pageFriendRequestsReceived.getNumberPage() > 1);
+        labelGoNextExploreRequestsReceived.setVisible(pageFriendRequestsReceived.getSizePage() == listReceivedRequests.size());
+        initializeGrouping(listReceivedRequests, listGroupRequestsReceived, TypeFriendshipRequest.RECEIVED);
     }
 
     /**
      * Method that initializes the Sent Friendship Requests
      */
     private void initializeSentRequests() {
-        initializeGrouping(
-                userPage.getFriendshipRequestService().getListSentPendingRequests(userPage.getUser().getId(), pageFriendRequestsSent),
-                listGroupRequestsSent, TypeFriendshipRequest.SENT
+        List<FriendshipRequest> listSentRequests = userPage.getFriendshipRequestService().getListSentPendingRequests(
+                userPage.getUser().getId(), pageFriendRequestsSent
         );
+        labelGoBackExploreRequestsSent.setVisible(pageFriendRequestsSent.getNumberPage() > 1);
+        labelGoNextExploreRequestsSent.setVisible(pageFriendRequestsSent.getSizePage() == listSentRequests.size());
+        initializeGrouping(listSentRequests, listGroupRequestsSent, TypeFriendshipRequest.SENT);
     }
 
     /**
      * Method that initializes the Non Friend Users
      */
     private void initializeNonFriends(){
-        initializeGrouping(userPage.getUserService().getListAllNonFriends(userPage.getUser().getId(), pageNonFriends),
-                listGroupsNonFriends);
+        List<User> listNonFriends = userPage.getUserService().getListAllNonFriends(
+                userPage.getUser().getId(), pageNonFriends
+        );
+        labelGoBackExploreUsers.setVisible(pageNonFriends.getNumberPage() > 1);
+        labelGoNextExploreUsers.setVisible(pageNonFriends.getSizePage() == listNonFriends.size());
+        initializeGrouping(listNonFriends, listGroupsNonFriends);
     }
 
     /**
@@ -1936,6 +1990,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The Friendship Request has been sent!");
             alert.show();
             initializeNonFriends();
+            if (paneExploreSentRequests.isVisible()) {
+                initializeSentRequests();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Error at sending the Friendship Request");
             alert.show();

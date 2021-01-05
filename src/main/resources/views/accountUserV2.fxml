@@ -150,7 +150,7 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
@@ -542,13 +542,13 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0">
          <children>
             <Button fx:id="buttonComposeMessage" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Compose" textFill="WHITE" />
             <Button fx:id="buttonInbox" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowInbox" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Inbox" textFill="WHITE" />
             <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowChat" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
             <Label fx:id="labelExitApplicationDirect" layoutX="645.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="24.0" />
-            <Pane fx:id="paneChatWrapper" layoutX="123.0" layoutY="78.0">
+            <Pane fx:id="paneChatWrapper" layoutX="123.0" layoutY="78.0" visible="false">
                <children>
                   <Pane fx:id="paneChat" layoutY="31.0" prefHeight="462.0" prefWidth="438.0">
                      <children>
@@ -684,7 +684,7 @@
                   </Pane>
                </children>
             </Pane>
-            <Pane fx:id="paneInbox" layoutX="14.0" layoutY="51.0" prefHeight="623.0" prefWidth="662.0" visible="false">
+            <Pane fx:id="paneInbox" layoutX="14.0" layoutY="51.0" prefHeight="623.0" prefWidth="662.0">
                <children>
                   <Label fx:id="labelGoBackInbox" alignment="CENTER" layoutX="3.0" layoutY="599.0" onMouseClicked="#eventGoBackInbox" prefHeight="21.0" prefWidth="20.0">
                      <graphic>

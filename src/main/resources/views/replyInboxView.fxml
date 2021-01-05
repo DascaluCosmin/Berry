@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="505.0" style="-fx-background-color: transparent" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.ReplyInboxController">
+   <children>
+      <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#40457b" height="491.0" layoutX="15.0" layoutY="14.0" stroke="#40457b" strokeType="INSIDE" visible="false" width="476.0" />
+      <Rectangle arcHeight="34.0" arcWidth="34.0" fill="WHITE" height="456.0" layoutX="31.0" layoutY="29.0" stroke="WHITE" strokeType="INSIDE" width="443.0" />
+      <Circle fx:id="circleProfilePhotoSender" fill="#40457b" layoutX="91.0" layoutY="85.0" radius="39.0" stroke="#40457b" strokeType="INSIDE" />
+      <Label fx:id="labelNameSender" layoutX="138.0" layoutY="43.0" prefHeight="42.0" prefWidth="237.0" text="Sergiu Breaban" textFill="#40457b">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelDate" layoutX="138.0" layoutY="81.0" prefHeight="18.0" prefWidth="77.0" text="5 Jan 2021" textFill="#40457b" />
+      <Label fx:id="labelMessageText" alignment="TOP_LEFT" layoutX="52.0" layoutY="136.0" prefHeight="144.0" prefWidth="402.0" text="La multi ani! Iti doresc un an in care toate lucrurile pe care ti le propui sa se indeplineasca, draga coleg! Rememorand zilele de liceu, imi e dor, tare dor! Manuela, profesoara de matematica, a ramas in inima mea, un adevarat icon!" textFill="#40457b" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <Button fx:id="buttonSendReplyInbox" layoutX="375.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#eventSendReplyMessage" prefHeight="27.0" prefWidth="78.0" stylesheets="@../css/PaneInbox.css" text="Send Reply" textFill="WHITE" />
+      <TextArea fx:id="textAreaMessage" layoutX="52.0" layoutY="292.0" prefHeight="136.0" prefWidth="402.0" promptText="Aa" stylesheets="@../css/PaneInbox.css" wrapText="true" />
+      <ImageView fx:id="labelCloseReceivedMessage" fitHeight="27.0" fitWidth="28.0" layoutX="427.0" layoutY="43.0" onMouseClicked="#eventCloseInbox" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/ExitSign.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

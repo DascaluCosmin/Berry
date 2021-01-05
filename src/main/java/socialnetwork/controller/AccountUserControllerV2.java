@@ -183,10 +183,15 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 initializeConversation();
             }
         });
+        for(int i = 0; i < listGroupMessagesInbox.size(); i++) {
+            Group currentGroup = listGroupMessagesInbox.get(i);
+            int finalI = i;
+            currentGroup.setOnMouseClicked(event -> eventInboxMessageClickedOn(listCurrentMessagesInbox.get(finalI)));
+        }
     }
 
     /**
-     * @param userPage Page, representing the Page of the logged in User.
+     * @param userPage Page, representing the Page of the logged in User
      */
     public void setUserPage(Page userPage) {
         this.userPage = userPage;
@@ -1562,6 +1567,23 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     public void eventGoNextInbox() {
         pageMessagesInbox.nextPage();
         initializeMessagesInbox();
+    }
+
+    private void eventInboxMessageClickedOn(Message message) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/views/replyInboxView.fxml"));
+        Stage replyInboxStage = new Stage();
+        replyInboxStage.initModality(Modality.APPLICATION_MODAL);
+        ViewClass viewClassInitializer = new ViewClass();
+        try {
+            viewClassInitializer.initView(replyInboxStage, loader);
+        } catch (IOException ignored) {
+        }
+        ReplyInboxController replyInboxController = loader.getController();
+        replyInboxController.setUserPage(userPage);
+        replyInboxController.setReceivedMessage(message);
+        replyInboxController.setReplyInboxStage(replyInboxStage);
+        replyInboxStage.show();
     }
 
     // EXPLORE PANE

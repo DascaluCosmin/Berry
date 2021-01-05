@@ -1,0 +1,13 @@
+#buttonSendReplyInbox {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonSendReplyInbox:hover {
+    -fx-background-color: #333A83;
+}
+
+.text-area {
+    -fx-focus-color: #40457B ;
+    -fx-faint-focus-color: #40457B ;
+}

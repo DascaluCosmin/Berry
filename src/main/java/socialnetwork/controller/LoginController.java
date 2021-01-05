@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import socialnetwork.domain.*;
 import socialnetwork.service.*;
 import socialnetwork.utils.ViewClass;
+import socialnetwork.utils.passwordEncryption.PasswordCrypt;
 
 import java.io.IOException;
 
@@ -109,7 +110,7 @@ public class LoginController {
         }
         UserCredentials userCredentials = userCredentialsService.findOne(username);
         if (userCredentials != null) {
-            if (userCredentials.getPassword().equals(password)) {
+            if (PasswordCrypt.checkPassword(password, userCredentials.getPassword())) {
                 UserDTO loggedInUser = userService.getUserDTO(userCredentials.getId());
                 initializeAccountUserView(loggedInUser);
             } else {
@@ -197,7 +198,9 @@ public class LoginController {
         } else {
             User userToBeAdded = userService.addUser(new User(firstName, lastName));
             Long idUser = userToBeAdded.getId();
-            UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);
+            UserCredentials userCredentialsToBeAdded = new UserCredentials(
+                    username, PasswordCrypt.encryptPassword(password)
+            );
             userCredentialsToBeAdded.setId(idUser);
             if (userCredentialsService.addUserCredentials(userCredentialsToBeAdded) != null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "The username is already taken! Please choose another one!");

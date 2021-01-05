@@ -17,6 +17,8 @@ import socialnetwork.repository.database.userPosts.PhotoPostDBRepository;
 import socialnetwork.repository.database.userPosts.TextPostDBRepository;
 import socialnetwork.service.*;
 import socialnetwork.utils.ViewClass;
+import socialnetwork.utils.passwordEncryption.BCrypt;
+import socialnetwork.utils.passwordEncryption.PasswordCrypt;
 
 import java.io.IOException;
 

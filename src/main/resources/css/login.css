@@ -1,19 +1,24 @@
 #textFieldUsernameSignup:focused {
     -fx-background-color: #dae2f8;
-    -fx-text-fill: #4a56e2;
+    -fx-text-fill: #40457B;
 }
 
 #textFieldLastname:focused {
     -fx-background-color: #dae2f8;
-    -fx-text-fill: #4a56e2;
+    -fx-text-fill: #40457B;
 }
 
 #textFieldFirstname:focused {
     -fx-background-color: #dae2f8;
-    -fx-text-fill: #4a56e2;
+    -fx-text-fill: #40457B;
 }
 
 #textFieldUsername:focused {
     -fx-background-color: #dae2f8;
-    -fx-text-fill: #4a56e2;
+    -fx-text-fill: #40457B;
+}
+
+.text-field {
+    -fx-focus-color: -fx-control-inner-background ;
+    -fx-faint-focus-color: -fx-control-inner-background ;
 }

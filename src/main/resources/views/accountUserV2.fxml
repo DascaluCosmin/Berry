@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="679.0" prefWidth="1100.0" style="-fx-background-color: transparent" stylesheets="/css/accountUserV2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="687.0" prefWidth="1118.0" stylesheets="@../css/PaneExplore.css">
+         <graphic>
+            <ImageView fitHeight="679.0" fitWidth="970.0" pickOnBounds="true" preserveRatio="true">
+             <image>
+                 <Image url="@../images/UserAccountBackground.png" />
+             </image>
+            </ImageView>
+         </graphic></Label>
+      <Pane fx:id="notificationsPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Label fx:id="labelGoNextEventNotifications" alignment="CENTER" layoutX="649.0" layoutY="649.0" onMouseClicked="#eventGoNextEventNotifications" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoBackEventNotifications" alignment="CENTER" layoutX="17.0" layoutY="649.0" onMouseClicked="#eventGoBackEventNotifications" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Pane fx:id="paneEventsNotifications" layoutX="94.0" layoutY="70.0">
+               <children>
+                  <Rectangle fx:id="rectangleDetailsEventNotifications" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+                  <Rectangle fx:id="rectanglePhotoEventNotifications" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="101.0" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+                  <Group fx:id="groupEventDetailsNotifications" layoutX="101.0" layoutY="233.0">
+                     <children>
+                        <Label fx:id="labelEventNameNotifications" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelEventNbPeopleNotifications" layoutX="34.0" layoutY="74.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="44 People Responded" />
+                        <Label fx:id="labelEventDateNotifications" layoutX="34.0" layoutY="111.0" text="5 August 2021 - 8 August 2021" />
+                        <Label fx:id="labelEventLocationNotifications" layoutX="34.0" layoutY="150.0" text="Cluj Arena, Cluj-Napoca" />
+                        <Label fx:id="labelEventHostedNotifications" layoutX="34.0" layoutY="189.0" text="Hosted By UNTOLD" />
+                        <Label fx:id="labelEventCategoryNotifications" layoutX="34.0" layoutY="229.0" text="Music Festival" />
+                        <Label fx:id="labelEventDescriptionNotifications" alignment="TOP_LEFT" layoutY="259.0" prefHeight="52.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true" />
+                     </children>
+                  </Group>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventNbPeople.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventDate.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventLocation.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventHosted.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventCategory.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="101.0" layoutY="272.0" text="Details">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonDontParticipateNotifications" alignment="CENTER" layoutX="448.0" layoutY="529.0" mnemonicParsing="false" onMouseClicked="#eventDontParticipateEventNotifications" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Don't Participate" textFill="WHITE">
+                     <font>
+                        <Font size="9.0" />
+                     </font></Button>
+                  <Button fx:id="buttonParticipateNotifications" alignment="CENTER" layoutX="448.0" layoutY="529.0" mnemonicParsing="false" onMouseClicked="#eventParticipateEventNotifications" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Participate" textFill="WHITE" visible="false" />
+               </children>
+            </Pane>
+            <Label fx:id="labelNoEventsNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="340.0" prefHeight="34.0" prefWidth="619.0" text="There are no Events to be shown" textFill="#40457b" visible="false">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" layoutX="148.0" layoutY="18.0" text="Events taking place in less than 3 Days" textFill="#40457b">
+               <font>
+                  <Font size="23.0" />
+               </font></Label>
+            <Label fx:id="labelExitApplicationNotifications" layoutX="647.0" layoutY="6.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="23.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="sliderPane" layoutX="101.0" layoutY="4.0" prefHeight="679.0" prefWidth="260.0">
+         <children>
+            <Label fx:id="labelLogout" alignment="CENTER" layoutX="1.0" layoutY="628.0" onMouseClicked="#eventLogout" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelRealName" alignment="CENTER" layoutX="44.0" layoutY="212.0" prefHeight="20.0" prefWidth="158.0" text="Dascalu Cosmin" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUsername" alignment="CENTER" layoutX="49.0" layoutY="227.0" prefHeight="17.0" prefWidth="149.0" text="\@cosmindas" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="9.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelShowStatistics" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowFeed" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowProfile" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Circle fx:id="circleProfilePhoto" fill="WHITE" layoutX="125.0" layoutY="143.0" onMouseClicked="#eventChangeProfilePhoto" radius="69.0" stroke="WHITE" strokeType="INSIDE" />
+            <Label fx:id="labelNumberFriends" layoutX="29.0" layoutY="254.0" text="# Friends" textFill="WHITE" />
+            <Label fx:id="labelNumberPosts" layoutX="108.0" layoutY="254.0" text="# Posts" textFill="WHITE" />
+            <Label fx:id="labelNumberPhotos" layoutX="177.0" layoutY="254.0" text="# Photos" textFill="WHITE" />
+            <Label fx:id="labelNotifications" alignment="CENTER" layoutX="220.0" layoutY="11.0" onMouseClicked="#eventShowNotifications" prefHeight="20.0" prefWidth="13.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/NotificationBell.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelShowEvents" layoutX="1.0" layoutY="415.0" onMouseClicked="#eventShowEvents" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowDirect" layoutX="1.0" layoutY="466.0" onMouseClicked="#eventShowDirect" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowExplore" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" />
+            <Label fx:id="labelShowFeedDummy" alignment="CENTER" layoutX="1.0" layoutY="308.0" onMouseClicked="#eventShowFeed" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowProfileDummy" layoutX="1.0" layoutY="358.0" onMouseClicked="#eventShowProfile" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowDirectDummy" layoutX="1.0" layoutY="466.0" onMouseClicked="#eventShowDirect" prefHeight="25.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowStatisticsDummy" layoutX="1.0" layoutY="566.0" onMouseClicked="#eventShowStatistics" prefHeight="29.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowExploreDummy" layoutX="1.0" layoutY="513.0" onMouseClicked="#eventShowExplore" prefHeight="32.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelShowEventsDummy" layoutX="1.0" layoutY="415.0" onMouseClicked="#eventShowEvents" prefHeight="23.0" prefWidth="256.0" stylesheets="@../css/accountUserV2.css" visible="false" />
+            <Label fx:id="labelNbNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="2.0" prefHeight="15.0" prefWidth="14.0" stylesheets="@../css/accountUserV2.css" text="15" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+         </children></Pane>
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
+         <children>
+            <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
+            <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
+            <TextField fx:id="textFieldTrash" layoutX="299.0" layoutY="16.0" opacity="0.0">
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor></TextField>
+            <Label fx:id="labelSearch" contentDisplay="CENTER" layoutX="27.0" layoutY="12.0" prefHeight="32.0" prefWidth="178.0">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/SearchTextField2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <TextField fx:id="textFieldSearchFriend" layoutX="63.0" layoutY="16.0" onKeyTyped="#eventSearchFriend" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
+            <Pane fx:id="paneFriendsProfile" layoutX="17.0" layoutY="63.0" prefHeight="613.0" prefWidth="650.0" visible="false">
+               <children>
+                  <Label fx:id="labelNumberFriendsFriend" layoutX="221.0" layoutY="250.0" text="# Friends" textFill="#40457b" />
+                  <Label fx:id="labelNumberPhotosFriend" contentDisplay="CENTER" layoutX="369.0" layoutY="250.0" text="# Photos" textFill="#40457b" />
+                  <Label fx:id="labelNumberPostsFriend" alignment="CENTER" layoutX="300.0" layoutY="250.0" text="# Posts" textFill="#40457b" />
+                  <Label fx:id="labelFriendRealName" alignment="CENTER" layoutX="249.0" layoutY="217.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font name="System Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <Circle fx:id="circleProfilePhotoFriend" fill="WHITE" layoutX="325.0" layoutY="99.0" radius="119.0" stroke="#40457B" strokeType="INSIDE" />
+                  <Pane fx:id="paneFriendsProfilePhotos" layoutX="22.0" layoutY="276.0" prefHeight="301.0" prefWidth="619.0">
+                     <children>
+                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="-15.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="204.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="421.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                     </children></Pane>
+                  <Pane fx:id="paneFriendsProfilePosts" layoutX="22.0" layoutY="276.0" prefHeight="301.0" prefWidth="611.0" visible="false">
+                     <children>
+                        <Button fx:id="buttonStPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="-15.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonNdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="204.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonRdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="421.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                     </children></Pane>
+                  <Label fx:id="labelGoNextProfileFriend" alignment="CENTER" layoutX="630.0" layoutY="586.0" onMouseClicked="#eventGoNextFriend" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoBackProfileFriend" alignment="CENTER" layoutX="3.0" layoutY="586.0" onMouseClicked="#eventGoBackFriend" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+                  <Button fx:id="buttonShowPhotosProfileFriend" layoutX="249.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+                  <Button fx:id="buttonShowProfileTextFriend" layoutX="349.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0">
+               <children>
+                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserNameNdPost" layoutX="227.0" layoutY="227.0" prefHeight="17.0" prefWidth="59.0" text="\@larisuuuca" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserNameRdPost" layoutX="442.0" layoutY="347.0" prefHeight="17.0" prefWidth="59.0" text="\@carinac" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserName5thPost" alignment="CENTER_RIGHT" layoutX="368.0" layoutY="239.0" prefHeight="17.0" prefWidth="59.0" text="\@serju" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserName6thPost" alignment="CENTER_RIGHT" layoutX="583.0" layoutY="355.0" prefHeight="17.0" prefWidth="59.0" text="\@mariafl" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="271.0" prefHeight="17.0" prefWidth="59.0" text="\@patriburtic" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima Bold" size="9.0" />
+                     </font>
+                  </Label>
+                  <Pane fx:id="panePhotoPostsFriends" layoutX="2.0" prefHeight="570.0" prefWidth="650.0">
+                     <children>
+                        <Rectangle fx:id="rectangleStPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle4thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle5thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle6thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneTextPostsFriends" prefHeight="570.0" prefWidth="650.0" visible="false">
+                     <children>
+                        <Button fx:id="buttonStTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" mnemonicParsing="false" prefHeight="256.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="button6thTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="372.0" mnemonicParsing="false" prefHeight="198.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="button4thTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="289.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonNdTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" mnemonicParsing="false" prefHeight="228.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="button5thTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="256.0" mnemonicParsing="false" prefHeight="314.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonRdTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="1.0" mnemonicParsing="false" prefHeight="346.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                     </children>
+                  </Pane>
+                  <Button fx:id="buttonShowPhotoPostsFriends" layoutX="253.0" layoutY="578.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+                  <Button fx:id="buttonShowTextPostsFriends" layoutX="353.0" layoutY="578.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+                  <Label fx:id="labelGoBackPhotoPostsFriends" alignment="CENTER" layoutX="4.0" layoutY="587.0" onMouseClicked="#eventGoBackPhotoPostsFriends" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoBackTextPostsFriends" alignment="CENTER" layoutX="4.0" layoutY="587.0" onMouseClicked="#eventGoBackTextPostsFriends" prefHeight="21.0" prefWidth="20.0" visible="false">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextPhotoPostsFriends" alignment="CENTER" layoutX="636.0" layoutY="587.0" onMouseClicked="#eventGoNextPhotoPostsFriends" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextTextPostsFriends" alignment="CENTER" layoutX="636.0" layoutY="587.0" onMouseClicked="#eventGoNextTextPostsFriends" prefHeight="21.0" prefWidth="20.0" visible="false">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Label fx:id="labelExitApplicationProfile" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
+            <Button fx:id="buttonChangeProfilePhoto" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Change Profile Photo" textFill="WHITE" />
+            <Button fx:id="buttonWritePost" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Write Post" textFill="WHITE" />
+            <Button fx:id="buttonAddPhoto" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Add Photo" textFill="WHITE" />
+            <Pane fx:id="panePhotoPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0">
+               <children>
+                  <Rectangle fx:id="rectangleStPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle4thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle5thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleRdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleNdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle6thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneTextPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0" visible="false">
+               <children>
+                  <Button fx:id="buttonStPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" mnemonicParsing="false" prefHeight="256.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button6thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="372.0" mnemonicParsing="false" prefHeight="198.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button4thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="289.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="buttonNdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" mnemonicParsing="false" prefHeight="228.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button5thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="256.0" mnemonicParsing="false" prefHeight="314.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="buttonRdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="1.0" mnemonicParsing="false" prefHeight="346.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </Pane>
+            <Button fx:id="buttonShowPhotosProfile" layoutX="266.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+            <Button fx:id="buttonShowProfileText" layoutX="366.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+            <Label fx:id="labelGoNextProfile" alignment="CENTER" layoutX="649.0" layoutY="649.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoBackProfile" alignment="CENTER" layoutX="17.0" layoutY="649.0" onMouseClicked="#eventGoBackProfile" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="eventsPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Label fx:id="labelExitApplicationEvents" layoutX="646.0" layoutY="8.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="23.0" />
+            <Button fx:id="buttonDiscover" alignment="CENTER" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonDiscover" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Discover" textFill="WHITE" />
+            <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="375.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/DiscoverButton.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonYourEvents" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonYourEvents" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Your Events" textFill="WHITE" />
+            <Button fx:id="buttonAddEvent" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonAddEvent" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
+            <ImageView fitHeight="29.0" fitWidth="23.0" layoutX="510.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ButtonYourEvents.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="37.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ButtonAddEvent.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="labelNoEvents" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="340.0" prefHeight="34.0" prefWidth="619.0" text="There are no new Events" textFill="#40457b" visible="false">
+               <font>
+                  <Font size="23.0" />
+               </font>
+            </Label>
+            <Pane fx:id="paneEventsParticipate" layoutX="17.0" layoutY="70.0">
+               <children>
+                  <Pane fx:id="paneEventsParticipateDetails" layoutX="77.0">
+                     <children>
+                        <Rectangle fx:id="rectangleDetailsEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+                        <Rectangle fx:id="rectanglePhotoEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="101.0" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+                        <Group fx:id="groupEventDetailsParticipate" layoutX="101.0" layoutY="233.0">
+                           <children>
+                              <Label fx:id="labelEventName" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="324.0" text="UNTOLD FESTIVAL 2021" textFill="#40457b">
+                                 <font>
+                                    <Font size="23.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="labelEventNbPeople" layoutX="34.0" layoutY="74.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="44 People Responded" />
+                              <Label fx:id="labelEventDate" layoutX="34.0" layoutY="111.0" text="5 August 2021 - 8 August 2021" />
+                              <Label fx:id="labelEventLocation" layoutX="34.0" layoutY="150.0" text="Cluj Arena, Cluj-Napoca" />
+                              <Label fx:id="labelEventHosted" layoutX="34.0" layoutY="189.0" text="Hosted By UNTOLD" />
+                              <Label fx:id="labelEventCategory" layoutX="34.0" layoutY="229.0" text="Music Festival" />
+                              <Label fx:id="labelEventDescription" alignment="TOP_LEFT" layoutY="259.0" prefHeight="52.0" prefWidth="334.0" text="Together we will write a new chapter of the UNTOLD story! See you on the 5th of August 2021 #UNTOLDmagic" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="302.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelEventNbPeople.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="341.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelEventDate.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="380.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelEventLocation.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelEventHosted.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="101.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelEventCategory.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="101.0" layoutY="272.0" text="Details">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonParticipate" alignment="CENTER" layoutX="448.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonParticipate" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Participate" textFill="WHITE" />
+                        <Button fx:id="buttonSubscribe" alignment="CENTER" layoutX="448.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonSubscribe" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Subscribe" textFill="WHITE" visible="false" />
+                        <Label fx:id="labelRemoveParticipationEvent" layoutX="471.0" layoutY="114.0" onMouseClicked="#eventRemoveParticipationEvent" visible="false">
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/ExitSign.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Label fx:id="labelGoBackEventDiscover" alignment="CENTER" layoutY="579.0" onMouseClicked="#eventGoBackEventDiscover" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextEventDiscover" alignment="CENTER" layoutX="632.0" layoutY="579.0" onMouseClicked="#eventGoNextEventDiscover" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoBackEventParticipate" alignment="CENTER" layoutY="579.0" onMouseClicked="#eventGoBackEventParticipate" prefHeight="21.0" prefWidth="20.0" visible="false">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextEventParticipate" alignment="CENTER" layoutX="632.0" layoutY="579.0" onMouseClicked="#eventGoNextEventParticipate" prefHeight="21.0" prefWidth="20.0" visible="false">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="paneEventsAddEvent" layoutX="17.0" layoutY="70.0" visible="false">
+               <children>
+                  <Rectangle fx:id="rectangleDetailsAddEvent" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="450.0" layoutX="77.0" layoutY="100.0" stroke="#40457b" strokeType="INSIDE" width="507.0" />
+                  <Rectangle fx:id="rectanglePhotoEventAdd" arcHeight="30.0" arcWidth="30.0" fill="WHITE" height="228.0" layoutX="178.0" onMouseClicked="#eventGetNewEventPhoto" stroke="#40457b" strokeType="INSIDE" width="324.0" />
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventDate.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="343.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventLocation.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventHosted.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="178.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/LabelEventCategory.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="178.0" layoutY="272.0" text="Details">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddNewEvent" alignment="CENTER" layoutX="525.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonAddNewEvent" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Add Event" textFill="WHITE" />
+                  <Button fx:id="buttonDeleteEvent" alignment="CENTER" layoutX="525.0" layoutY="528.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeleteNewEvent" prefHeight="32.0" prefWidth="86.0" stylesheets="@../css/PaneEvents.css" text="Delete Event" textFill="WHITE" visible="false" />
+                  <Group fx:id="groupPhotoEventAdd" layoutX="286.0" layoutY="101.0">
+                     <children>
+                        <ImageView fitHeight="26.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/LabelAddPhotoEvent.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="31.0" layoutY="5.0" text="Add Event Photo" />
+                     </children>
+                  </Group>
+                  <TextField fx:id="textFieldEventName" layoutX="220.0" layoutY="238.0" prefHeight="25.0" prefWidth="238.0" promptText="Event Name" />
+                  <DatePicker fx:id="datePickerEventStartDate" layoutX="212.0" layoutY="303.0" prefHeight="25.0" prefWidth="101.0" promptText="Start Date" />
+                  <DatePicker fx:id="datePickerEventEndDate" layoutX="336.0" layoutY="303.0" prefHeight="25.0" prefWidth="101.0" promptText="End Date" />
+                  <Label alignment="CENTER" layoutX="318.0" layoutY="308.0" prefHeight="17.0" prefWidth="14.0" text="-" />
+                  <TextField fx:id="textFieldEventLocation" layoutX="212.0" layoutY="343.0" promptText="Location" />
+                  <TextField fx:id="textFieldEventOrganization" layoutX="212.0" layoutY="381.0" promptText="Organization" />
+                  <TextField fx:id="textFieldEventCategory" layoutX="212.0" layoutY="420.0" promptText="Category" />
+                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" />
+                  <Label layoutX="213.0" layoutY="232.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="329.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="337.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="375.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="205.0" layoutY="414.0" text="*" textFill="#cf1e1e" />
+                  <Label layoutX="171.0" layoutY="451.0" text="*" textFill="#cf1e1e" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Button fx:id="buttonComposeMessage" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowCompose" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Compose" textFill="WHITE" />
+            <Button fx:id="buttonInbox" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowInbox" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Inbox" textFill="WHITE" />
+            <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowChat" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
+            <Label fx:id="labelExitApplicationDirect" layoutX="645.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="24.0" />
+            <Pane fx:id="paneChatWrapper" layoutX="123.0" layoutY="78.0">
+               <children>
+                  <Pane fx:id="paneChat" layoutY="31.0" prefHeight="462.0" prefWidth="438.0">
+                     <children>
+                        <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="440.0" layoutX="9.0" layoutY="11.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+                        <Group fx:id="groupHiddenMessageUser" layoutX="202.0" layoutY="46.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat1311111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="34.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="168.0" textFill="#40457b" visible="false" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupHiddenMessageFriend" layoutX="35.0" layoutY="46.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat131111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="34.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label prefHeight="34.0" prefWidth="168.0" textFill="#40457b" visible="false" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                        <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" />
+                        <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Choose a Friend to Chat with" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Rectangle fx:id="rectangleWriteMessageChat" arcHeight="30.0" arcWidth="30.0" fill="#eeeff2" height="43.0" layoutX="24.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                        <Group fx:id="groupStMessageUser" layoutX="202.0" layoutY="347.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat1" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupNdMessageUser" layoutX="202.0" layoutY="298.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat14" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupRdMessageUser" layoutX="202.0" layoutY="245.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat12" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group4thMessageUser" layoutX="202.0" layoutY="192.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat13" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group5thMessageUser" layoutX="202.0" layoutY="140.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat16" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group6thMessageUser" layoutX="202.0" layoutY="91.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat15" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label alignment="CENTER_RIGHT" layoutX="21.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="01234567123aaaaaaaaaaaaaaa" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupStMessageFriend" layoutX="35.0" layoutY="347.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat111" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupNdMessageFriend" layoutX="35.0" layoutY="298.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat11" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="groupRdMessageFriend" layoutX="35.0" layoutY="245.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat112" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group4thMessageFriend" layoutX="35.0" layoutY="192.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat114" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group5thMessageFriend" layoutX="35.0" layoutY="140.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat113" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <Group fx:id="group6thMessageFriend" layoutX="35.0" layoutY="91.0" visible="false">
+                           <children>
+                              <Rectangle fx:id="rectangleWriteMessageChat115" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+                              <Label layoutX="15.0" layoutY="5.0" prefHeight="34.0" prefWidth="168.0" text="0" textFill="#40457b" wrapText="true" />
+                           </children>
+                        </Group>
+                        <TextField fx:id="textFieldChat" disable="true" layoutX="28.0" layoutY="405.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="34.0" prefWidth="380.0" promptText="Aa" stylesheets="@../css/PaneDirect.css">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="panePhotoChatFriends" layoutX="461.0" prefHeight="527.0" prefWidth="73.0">
+                     <children>
+                        <Label fx:id="labelGoBackFriendChat" alignment="CENTER" layoutX="21.0" layoutY="11.0" onMouseClicked="#eventGoBackFriendChat" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                           <graphic>
+                              <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/ButtonGoBack.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                        <Circle fx:id="circleStPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="73.0" onMouseClicked="#chatStFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circleNdPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="127.0" onMouseClicked="#chatNdFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circleRdPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="181.0" onMouseClicked="#chatRdFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circle4thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="235.0" onMouseClicked="#chat4thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circle5thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="289.0" onMouseClicked="#chat5thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circle6thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="343.0" onMouseClicked="#chat6thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circle7thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="397.0" onMouseClicked="#chat7thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Circle fx:id="circle8thPhotoFriendChat" fill="WHITE" layoutX="37.0" layoutY="451.0" onMouseClicked="#chat8thFriendEvent" radius="26.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelGoNextFriendChat" alignment="CENTER" layoutX="21.0" layoutY="481.0" onMouseClicked="#eventGoNextFriendChat" prefHeight="26.0" prefWidth="28.0" rotate="90.0">
+                           <graphic>
+                              <ImageView fitHeight="31.0" fitWidth="36.0" onMouseClicked="#eventGoNextFriendChat" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/ButtonGoNext.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane fx:id="paneInbox" layoutX="14.0" layoutY="51.0" prefHeight="623.0" prefWidth="662.0" visible="false">
+               <children>
+                  <Label fx:id="labelGoBackInbox" alignment="CENTER" layoutX="3.0" layoutY="599.0" onMouseClicked="#eventGoBackInbox" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextInbox" alignment="CENTER" layoutX="635.0" layoutY="599.0" onMouseClicked="#eventGoNextInbox" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Group fx:id="groupStMessageInbox" layoutX="46.0" layoutY="31.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupNdMessageInbox" layoutX="46.0" layoutY="81.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRdMessageInbox" layoutX="46.0" layoutY="131.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group4thMessageInbox" layoutX="46.0" layoutY="181.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group5thMessageInbox" layoutX="46.0" layoutY="231.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group6thMessageInbox" layoutX="46.0" layoutY="281.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group7thMessageInbox" layoutX="46.0" layoutY="331.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group8thMessageInbox" layoutX="46.0" layoutY="381.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group9thMessageInbox" layoutX="46.0" layoutY="431.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group10thMessageInbox" layoutX="46.0" layoutY="481.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+                  <Group fx:id="group11thMessageInbox" layoutX="46.0" layoutY="531.0">
+                     <children>
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#eeeff2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
+                        <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
+                        <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
+                     </children>
+                  </Group>
+               </children>
+            </Pane>
+            <Pane fx:id="paneCompose" layoutX="123.0" layoutY="78.0" prefHeight="527.0" prefWidth="534.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="440.0" layoutX="9.0" layoutY="42.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
+                  <TextArea fx:id="textAreaCompose" layoutX="28.0" layoutY="155.0" prefHeight="268.0" prefWidth="380.0" stylesheets="@../css/PaneDirect.css" wrapText="true" />
+                  <Button fx:id="buttonSendCompose" layoutX="330.0" layoutY="438.0" mnemonicParsing="false" onMouseClicked="#sendMessageCompose" prefHeight="27.0" prefWidth="78.0" stylesheets="@../css/PaneDirect.css" text="Send" textFill="WHITE" />
+                  <TextField fx:id="textFieldToCompose" layoutX="28.0" layoutY="83.0" prefHeight="25.0" prefWidth="380.0" promptText="To" stylesheets="@../css/PaneDirect.css" />
+                  <TextField fx:id="textFieldSubjectCompose" layoutX="29.0" layoutY="119.0" prefHeight="25.0" prefWidth="380.0" promptText="Subject" stylesheets="@../css/PaneDirect.css" />
+                  <Label layoutX="30.0" layoutY="49.0" prefHeight="28.0" prefWidth="158.0" text="New Message">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Pane fx:id="explorePane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <Label fx:id="labelExitApplicationExplore" layoutX="647.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="25.0" prefWidth="23.0" />
+            <Rectangle fill="#40457b" height="680.0" layoutX="340.0" stroke="#40457b" strokeType="INSIDE" width="4.0" />
+            <Button fx:id="buttonShowReceivedRequests" layoutX="366.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowReceivedRequests" prefHeight="25.0" prefWidth="101.0" stylesheets="@../css/PaneExplore.css" text="Received Requests" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonShowSentRequests" layoutX="474.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowSentRequests" prefHeight="25.0" prefWidth="101.0" stylesheets="@../css/PaneExplore.css" text="Sent Requests" textFill="WHITE">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+            <Label fx:id="label222" layoutX="77.0" layoutY="66.0" text="People you may know" textFill="#40457b">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Group fx:id="groupNonFriendSt" layoutX="37.0" layoutY="110.0">
+               <children>
+                  <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                  <Circle fx:id="circlePhotoStUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelNameStUserExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Group fx:id="groupNonFriendNd" layoutX="37.0" layoutY="220.0">
+               <children>
+                  <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                  <Circle fx:id="circlePhotoNdUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelNameNdUserExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Group fx:id="groupNonFriendRd" layoutX="37.0" layoutY="330.0">
+               <children>
+                  <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                  <Circle fx:id="circlePhotoRdUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelNameRdUserExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequestRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Group fx:id="groupNonFriend4th" layoutX="31.0" layoutY="440.0">
+               <children>
+                  <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                  <Circle fx:id="circlePhoto4thUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelName4thUserExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequest4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Group fx:id="groupNonFriend5th" layoutX="35.0" layoutY="550.0">
+               <children>
+                  <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                  <Circle fx:id="circlePhoto5thUserExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                  <Label fx:id="labelName5thUserExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="buttonAddFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonSendRequest5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Add Friend" textFill="WHITE">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Group>
+            <Label fx:id="labelFriendshipRequests" layoutX="442.0" layoutY="66.0" text="Received Requests" textFill="#40457b">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelGoBackExploreUsers" alignment="CENTER" layoutX="39.0" layoutY="649.0" onMouseClicked="#eventGoBackExploreUsers" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Label fx:id="labelGoNextExploreUsers" alignment="CENTER" layoutX="292.0" layoutY="649.0" onMouseClicked="#eventGoNextExploreUsers" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Pane fx:id="paneExploreReceivedRequests" layoutX="359.0" layoutY="94.0" prefHeight="583.0" prefWidth="300.0">
+               <children>
+                  <Group fx:id="groupRequestReceivedSt" layoutX="12.0" layoutY="15.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoStFriendExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameStFriendExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonConfirmFriendSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDeclineFriendSt" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestReceivedNd" layoutX="12.0" layoutY="125.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoNdFriendExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameNdFriendExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonConfirmFriendNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDeclineFriendNd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestReceivedRd" layoutX="12.0" layoutY="235.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoRdFriendExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameRdFriendExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonConfirmFriendRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirmRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDeclineFriendRd" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDeclineRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestReceived4th" layoutX="12.0" layoutY="345.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhoto4thFriendExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelName4thFriendExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonConfirmFriend4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirm4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDeclineFriend4th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDecline4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestReceived5th" layoutX="12.0" layoutY="455.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhoto5thFriendExplore" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelName5thFriendExplore" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonConfirmFriend5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonConfirm5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Confirm" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="buttonDeclineFriend5th" layoutX="185.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonDecline5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Decline">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelGoBackExploreRequestsReceived" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackReceivedRequests" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextExploreRequestsReceived" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextReceivedRequests" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Label>
+               </children>
+            </Pane>
+            <Pane fx:id="paneExploreSentRequests" layoutX="359.0" layoutY="94.0" prefHeight="583.0" prefWidth="300.0" visible="false">
+               <children>
+                  <Group fx:id="groupRequestSentSt" layoutX="12.0" layoutY="15.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoStSent" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameStSent" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonCancelSentSt" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestSt" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestSentNd" layoutX="12.0" layoutY="125.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoNdSent" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameNdSent" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonCancelSentNd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestNd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestSentRd" layoutX="12.0" layoutY="235.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhotoRdSent" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelNameRdSent" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonCancelSentRd" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequestRd" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestSent4th" layoutX="12.0" layoutY="345.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhoto4thSent" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelName4thSent" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonCancelSent4th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequest4th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupRequestSent5th" layoutX="12.0" layoutY="455.0">
+                     <children>
+                        <Rectangle arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="80.0" stroke="#dae2f8" strokeType="INSIDE" width="276.0" />
+                        <Circle fx:id="circlePhoto5thSent" fill="#40457b" layoutX="54.0" layoutY="40.0" radius="31.0" stroke="#40457b" strokeType="INSIDE" />
+                        <Label fx:id="labelName5thSent" layoutX="102.0" layoutY="9.0" text="Sergiu Breaban" textFill="#40457b">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="buttonCancelSent5th" layoutX="102.0" layoutY="46.0" mnemonicParsing="false" onMouseClicked="#eventButtonCancelRequest5th" prefHeight="25.0" prefWidth="67.0" stylesheets="@../css/PaneExplore.css" text="Cancel" textFill="WHITE">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelGoBackExploreRequestsSent" alignment="CENTER" layoutY="556.0" onMouseClicked="#eventGoBackSentRequests" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoBack.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="labelGoNextExploreRequestsSent" alignment="CENTER" layoutX="265.0" layoutY="555.0" onMouseClicked="#eventGoNextSentRequests" prefHeight="21.0" prefWidth="20.0">
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/ButtonGoNext.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </Pane>
+            <Label fx:id="labelNoNewRequests" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="105.0" prefHeight="17.0" prefWidth="131.0" text="No new requests" textFill="#40457b">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelNoNewUsers" alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="105.0" prefHeight="19.0" prefWidth="149.0" text="No new users to explore" textFill="#40457b">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="statisticsPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+         <children>
+            <TextField layoutX="412.0" layoutY="44.0" opacity="0.0">
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor>
+            </TextField>
+            <Label fx:id="labelExitApplicationStatistics" layoutX="647.0" layoutY="7.0" onMouseClicked="#eventExitApplication" prefHeight="29.0" prefWidth="23.0" />
+            <Label fx:id="labelSearchStatistics" contentDisplay="CENTER" layoutX="22.0" layoutY="40.0" prefHeight="32.0" prefWidth="178.0">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="171.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/SearchTextField2.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <TextField fx:id="textFieldSearchFriendStatistics" layoutX="57.0" layoutY="44.0" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
+            <Button fx:id="buttonGeneratePDFReport" layoutX="521.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate PDF Report" textFill="WHITE" />
+            <Button fx:id="buttonGenerateHTMLReport" layoutX="521.0" layoutY="184.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate HTML Report" textFill="WHITE" />
+            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce a time interval to generate activity report" />
+            <DatePicker fx:id="datePickerStartDate" layoutX="98.0" layoutY="137.0" prefHeight="32.0" prefWidth="174.0" promptText="Start Date" />
+            <DatePicker fx:id="datePickerEndDate" layoutX="98.0" layoutY="184.0" prefHeight="32.0" prefWidth="174.0" promptText="End Date" />
+            <Label fx:id="labelStartDate" layoutX="22.0" layoutY="142.0" stylesheets="@../css/accountUserV2.css" text="Start Date" />
+            <Label fx:id="labelEndDate" layoutX="22.0" layoutY="189.0" stylesheets="@../css/accountUserV2.css" text="End Date" />
+            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get stats about that specific year" />
+            <Label fx:id="labelYear" layoutX="22.0" layoutY="281.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
+            <TextField fx:id="textFieldYear" layoutX="98.0" layoutY="279.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
+            <PieChart fx:id="pieChartMessages" layoutX="14.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
+            <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
+            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a Friend to generate Transcripts" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

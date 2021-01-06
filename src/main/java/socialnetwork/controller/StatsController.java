@@ -16,6 +16,7 @@ import socialnetwork.domain.UserDTO;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.service.FriendshipService;
 import socialnetwork.service.MessageService;
+import socialnetwork.utils.ValidatorDates;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,7 +59,7 @@ public class StatsController {
     private void generateReport(TypeReport typeReport) {
         LocalDate dateStart = datePickerStartDate.getValue();
         LocalDate dateEnd = datePickerEndDate.getValue();
-        if (!validateDates(dateStart, dateEnd)) {
+        if (!ValidatorDates.validateDates(dateStart, dateEnd)) {
             return;
         }
         List<Message> messageList = messageService.getListAllMessagesToUserTimeInterval(selectedUserDTO.getId(), dateStart, dateEnd);
@@ -66,7 +67,7 @@ public class StatsController {
                 selectedUserDTO.getId(), dateStart, dateEnd
         );
         if (messageList.size() == 0) { // No messages in that Date Period
-            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
+            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", "No messages", LocalDateTime.now()));
         }
         try {
             File file = ResourceUtils.getFile("classpath:report.jrxml");
@@ -84,6 +85,8 @@ public class StatsController {
             } else if (typeReport == TypeReport.HTML) {
                 JasperExportManager.exportReportToHtmlFile(jasperPrint, pathToGenerateTo + "Report.html");
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The report has been generated successfully!");
+            alert.show();
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }
@@ -97,19 +100,6 @@ public class StatsController {
         generateReport(TypeReport.HTML);
     }
 
-    private boolean validateDates(LocalDate dateStart, LocalDate dateEnd) {
-        if (dateStart == null || dateEnd == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please introduce the Date Period");
-            alert.show();
-            return false;
-        }
-        if (dateEnd.compareTo(dateStart) < 0) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Please introduce a valid Date Period");
-            alert.show();
-            return false;
-        }
-        return true;
-    }
 
     public void eventShowGraphs() {
         if (textFieldYear.getText().length() >= 4) {

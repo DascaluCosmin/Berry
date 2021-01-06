@@ -1,6 +1,7 @@
-package socialnetwork.repository.database;
+package socialnetwork.repository.database.messages;
 
 import org.postgresql.util.PSQLException;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.User;
 import socialnetwork.domain.messages.ReplyMessage;
 import socialnetwork.repository.Repository;
@@ -19,6 +20,12 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
     private String password;
     private Repository<Long, User> userDBRepository;
 
+    /**
+     * Constructor that creates a new ReplyMessageDBRepository
+     * @param url String, representing the URL of the Data Base
+     * @param username String, representing the Username of the user connecting to the DB
+     * @param password Password, representing the Password of the user connecting to the DB
+     */
     public ReplyMessageDBRepository(String url, String username, String password, Repository<Long, User> userDBRepository) {
         this.url = url;
         this.username = username;
@@ -26,6 +33,12 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         this.userDBRepository = userDBRepository;
     }
 
+    /**
+     * Method that gets one specific ReplyMessage
+     * @param aLong, representing the ID of the ReplyMessage
+     * @return null, if the ReplyMessage doesn't exist
+     *      non-null ReplyMessage, otherwise
+     */
     @Override
     public ReplyMessage findOne(Long aLong) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -41,6 +54,10 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return null;
     }
 
+    /**
+     * Method that gets the list of all ReplyMessage
+     * @return Iterable<ReplyMessage>, representing the list of all ReplyMessage
+     */
     @Override
     public Iterable<ReplyMessage> findAll() {
         List<ReplyMessage> listReplyMessages = new ArrayList<>();
@@ -57,13 +74,19 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return listReplyMessages;
     }
 
-    public Iterable<ReplyMessage> findAll(Long idUserFrom, Long idUserTo) {
+    /**
+     * Method that gets the list of all ReplyMessage between two Users
+     * @param idUserFrom, Long, representing the ID of the First User
+     * @param idUserTo Long, representing the ID of the Second User
+     * @param page non-null ContentPage, representing the page containing the Reply Messages
+     *             null, meaning the command will get all the Reply Messages
+     * @param orderByMostRecent Boolean, representing whether the Reply Messages should be ordered by the most recent
+     * @return Iterable<ReplyMessage>, representing the list of all ReplyMessage between the two Users
+     */
+    public Iterable<ReplyMessage> findAll(Long idUserFrom, Long idUserTo, ContentPage page, Boolean orderByMostRecent) {
         List<ReplyMessage> listReplyMessages = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String command = "SELECT * FROM conversations WHERE " +
-                    "(\"idUserFrom\" = " + idUserFrom + " AND " + "\"idUserTo\" = " + idUserTo +")" + " OR " +
-                    "(\"idUserFrom\" = " + idUserTo + " AND " + "\"idUserTo\" = " + idUserFrom + ")";
-            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            PreparedStatement preparedStatement = connection.prepareStatement(pageToCommand(idUserFrom, idUserTo, page, orderByMostRecent));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 listReplyMessages.add(getReplyMessage(resultSet));
@@ -74,6 +97,13 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return listReplyMessages;
     }
 
+    /**
+     * Method that adds a new ReplyMessage to the Data Base
+     * @param entity ReplyMessage, representing the entity to be added
+     *         entity must be not null
+     * @return null, if the ReplyMessage was added successfully
+     *      non-null ReplyMessage, otherwise
+     */
     @Override
     public ReplyMessage save(ReplyMessage entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -96,6 +126,12 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return entity;
     }
 
+    /**
+     * Method that deletes a ReplyMessage from the Data Base
+     * @param aLong Long, representing the ID of the ReplyMessage to be deleted
+     * @return null, if the ReplyMessage doesn't exist
+     *      non-null ReplyMessage, if the ReplyMessage was deleted successfully
+     */
     @Override
     public ReplyMessage delete(Long aLong) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -112,6 +148,13 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return null;
     }
 
+    /**
+     * Method that updates a ReplyMessage in the Data Base
+     * @param entity ReplyMessage, representing the new ReplyMessage
+     *          entity must not be null
+     * @return null, if the ReplyMessage was updated successfully
+     *      non-null ReplyMessage, otherwise
+     */
     @Override
     public ReplyMessage update(ReplyMessage entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
@@ -132,6 +175,12 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         return entity;
     }
 
+    /**
+     * Method that gets a ReplyMessage from the current position of the Result Set
+     * @param resultSet ResultSet, representing the Result Set
+     * @return ReplyMessage, representing the ReplyMessage built from the current position of the Result Set
+     * @throws SQLException, if a field from the Data Base doesn't exist
+     */
     private ReplyMessage getReplyMessage(ResultSet resultSet) throws SQLException {
         Long idReplyMessage = resultSet.getLong("id");
         Long idUserFrom = resultSet.getLong("idUserFrom");
@@ -144,5 +193,28 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         ReplyMessage replyMessage = new ReplyMessage(userFrom, Arrays.asList(userTo), message, date, null);
         replyMessage.setId(idReplyMessage);
         return replyMessage;
+    }
+
+    /**
+     * Method that gets the specific SQL Command to be run, based on the ContentPage
+     * @param idUserFrom Long, representing the ID of the First User
+     * @param idUserTo Long, representing the ID of the Second User
+     * @param page non-null ContentPage, representing the page containing the Reply Messages
+     *             null, meaning the command will get all the Reply Messages
+     * @param orderByMostRecent Boolean, representing whether the Reply Messages should be ordered by the most recent
+     * @return String, representing SQL Command to be run
+     */
+    private String pageToCommand(Long idUserFrom, Long idUserTo, ContentPage page, Boolean orderByMostRecent) {
+        String command = "SELECT * FROM conversations WHERE " +
+                "(\"idUserFrom\" = " + idUserFrom + " AND " + "\"idUserTo\" = " + idUserTo +")" + " OR " +
+                "(\"idUserFrom\" = " + idUserTo + " AND " + "\"idUserTo\" = " + idUserFrom + ")";
+        if (orderByMostRecent) {
+            command += " ORDER BY id DESC "; // Assume the Reply Messages are never deleted and the ID is auto increment
+            // It's faster than ordering by date, which is a varchar
+        }
+        if (page != null) {
+            command += " LIMIT " + page.getSizePage() + " OFFSET " + (page.getNumberPage() - 1);
+        }
+        return command;
     }
 }

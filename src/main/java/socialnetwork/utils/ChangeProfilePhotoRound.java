@@ -19,10 +19,10 @@ public class ChangeProfilePhotoRound implements ChangeProfilePhoto {
         try {
             FileInputStream fileInputStream = new FileInputStream(pathProfilePhoto);
             Image image = new Image(
-                    fileInputStream, 400, 400, false, false
+                    fileInputStream, 450, 450, false, true
             );
             imageView.setImage(image);
-            Circle clip = new Circle(120, 120, 100);
+            Circle clip = new Circle(80, 55, 47);
             imageView.setClip(clip);
             SnapshotParameters parameters = new SnapshotParameters();
             parameters.setFill(Color.TRANSPARENT);

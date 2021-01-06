@@ -1,3 +1,8 @@
+/**
+ * !!! DEPRECATED !!!
+ * THE APPLICATION IS NO LONGER A CONSOLE APPLICATION, BUT RATHER A GUI APPLICATION
+ */
+
 package socialnetwork.ui;
 
 import socialnetwork.community.Communities;
@@ -170,7 +175,7 @@ public class UI {
                 String textMessage = new ReaderTextMessage().read();
                 User userSender = userReceiver; // The sender is now the receiver
                 userReceiver = messageToRespondTo.getFrom(); // The receiver is now the sender
-                messageService.addMessage(new Message(userSender, Arrays.asList(userReceiver), textMessage, LocalDateTime.now()));
+                messageService.addMessage(new Message(userSender, Arrays.asList(userReceiver), "Subject",textMessage, LocalDateTime.now()));
                 System.out.println("The message has been sent successfully!");
                 break;
             }
@@ -304,7 +309,7 @@ public class UI {
         List<User> listTo = new ArrayList<>();
         recipientsID.stream()
                 .forEach(id -> listTo.add(userService.getUser(id)));
-        messageService.addMessage(new Message(userService.getUser(idUserFrom),listTo, textMessage, LocalDateTime.now()));
+        messageService.addMessage(new Message(userService.getUser(idUserFrom),listTo, "Subject",textMessage, LocalDateTime.now()));
     }
 
     /**

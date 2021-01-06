@@ -1,0 +1,182 @@
+#buttonAddFriendSt {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddFriendSt:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddFriendNd {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddFriendNd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddFriendRd {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddFriendRd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddFriend4th {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddFriend4th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddFriend5th {
+    -fx-background-color: #40457B;
+}
+
+#buttonAddFriend5th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonConfirmFriendSt {
+    -fx-background-color: #40457B;
+}
+
+#buttonConfirmFriendSt:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonConfirmFriendNd {
+    -fx-background-color: #40457B;
+}
+
+#buttonConfirmFriendNd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonConfirmFriendRd {
+    -fx-background-color: #40457B;
+}
+
+#buttonConfirmFriendRd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonConfirmFriend4th {
+    -fx-background-color: #40457B;
+}
+
+#buttonConfirmFriend4th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonConfirmFriend5th {
+    -fx-background-color: #40457B;
+}
+
+#buttonConfirmFriend5th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonDeclineFriendSt {
+    -fx-background-color: #DAE2F8;
+}
+
+#buttonDeclineFriendSt:hover {
+    -fx-background-color: #A3B2DA;
+}
+
+#buttonDeclineFriendNd {
+    -fx-background-color: #DAE2F8;
+}
+
+#buttonDeclineFriendNd:hover {
+    -fx-background-color: #A3B2DA;
+}
+
+
+#buttonDeclineFriendRd {
+    -fx-background-color: #DAE2F8;
+}
+
+#buttonDeclineFriendRd:hover {
+    -fx-background-color: #A3B2DA;
+}
+
+#buttonDeclineFriend4th {
+    -fx-background-color: #DAE2F8;
+}
+
+#buttonDeclineFriend4th:hover {
+    -fx-background-color: #A3B2DA;
+}
+
+#buttonDeclineFriend5th {
+    -fx-background-color: #DAE2F8;
+}
+
+#buttonDeclineFriend5th:hover {
+    -fx-background-color: #A3B2DA;
+}
+
+#buttonShowReceivedRequests {
+    -fx-background-color: #40457B;
+}
+
+#buttonShowReceivedRequests:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowSentRequests {
+    -fx-background-color: #40457B;
+}
+
+#buttonShowSentRequests:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentSt {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentSt:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentNd {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentNd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSentRd {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSentRd:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSent4th {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSent4th:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonCancelSent5th {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonCancelSent5th:hover {
+    -fx-background-color: #333A83;
+}
+

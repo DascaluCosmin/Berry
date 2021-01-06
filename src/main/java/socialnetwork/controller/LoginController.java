@@ -2,19 +2,16 @@ package socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import socialnetwork.domain.ProfilePhotoUser;
-import socialnetwork.domain.User;
-import socialnetwork.domain.UserCredentials;
-import socialnetwork.domain.UserDTO;
+import socialnetwork.domain.*;
 import socialnetwork.service.*;
+import socialnetwork.utils.ViewClass;
+import socialnetwork.utils.passwordEncryption.PasswordCrypt;
 
 import java.io.IOException;
 
@@ -43,6 +40,9 @@ public class LoginController {
     private MessageService messageService;
     private UserCredentialsService userCredentialsService;
     private ReplyMessageService replyMessageService;
+    private TextPostService textPostService;
+    private PhotoPostService photoPostService;
+    private EventsService eventsService;
     private Stage loginStage;
 
     @FXML
@@ -88,6 +88,18 @@ public class LoginController {
         this.replyMessageService = replyMessageService;
     }
 
+    public void setTextPostService(TextPostService textPostService) {
+        this.textPostService = textPostService;
+    }
+
+    public void setPhotoPostService(PhotoPostService photoPostService) {
+        this.photoPostService = photoPostService;
+    }
+
+    public void setEventsService(EventsService eventsService) {
+        this.eventsService = eventsService;
+    }
+
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
@@ -98,7 +110,7 @@ public class LoginController {
         }
         UserCredentials userCredentials = userCredentialsService.findOne(username);
         if (userCredentials != null) {
-            if (userCredentials.getPassword().equals(password)) {
+            if (PasswordCrypt.checkPassword(password, userCredentials.getPassword())) {
                 UserDTO loggedInUser = userService.getUserDTO(userCredentials.getId());
                 initializeAccountUserView(loggedInUser);
             } else {
@@ -120,20 +132,18 @@ public class LoginController {
     private void initializeAccountUserView(UserDTO loggedInUser) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/views/accountUser.fxml"));
-            AnchorPane root = loader.load();
-
+            loader.setLocation(getClass().getResource("/views/accountUserV2.fxml"));
             Stage accountUserStage = new Stage();
-            accountUserStage.setOnCloseRequest(event -> {
-                loginStage.show();
-            });
-            accountUserStage.setScene(new Scene(root));
+            ViewClass viewClass = new ViewClass();
+            viewClass.initView(accountUserStage, loader);
             accountUserStage.setTitle(loggedInUser.getFirstName() + " " + loggedInUser.getLastName() + "'s account");
-            accountUserStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/berryLogo.jpg")));
-            accountUserStage.setResizable(false);
-            AccountUserController accountUserController = loader.getController();
-            accountUserController.setAttributes(friendshipService, userService, friendshipRequestService, profilePhotoUserService,
-                    loggedInUser, accountUserStage, messageService, replyMessageService);
+            AccountUserControllerV2 accountUserControllerV2 = loader.getController();
+            Page loggedInUserPage = new Page(loggedInUser, userService, friendshipService, friendshipRequestService,
+                    profilePhotoUserService, userCredentialsService, replyMessageService, messageService, textPostService,
+                    photoPostService, eventsService);
+            accountUserControllerV2.setUserPage(loggedInUserPage);
+            accountUserControllerV2.setAccountUserStage(accountUserStage);
+            accountUserControllerV2.setLoginStage(loginStage);
             loginStage.hide();
             accountUserStage.show();
             textFieldUsername.clear();
@@ -179,10 +189,18 @@ public class LoginController {
         } else if (password.contains(" ")) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "The password can't contain blank spaces!");
             alert.show();
+        } else if (username.length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The username has to be at least 4 characters long!");
+            alert.show();
+        } else if (password.length() < 4) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The password has to be at least 4 characters long!");
+            alert.show();
         } else {
             User userToBeAdded = userService.addUser(new User(firstName, lastName));
             Long idUser = userToBeAdded.getId();
-            UserCredentials userCredentialsToBeAdded = new UserCredentials(username, password);
+            UserCredentials userCredentialsToBeAdded = new UserCredentials(
+                    username, PasswordCrypt.encryptPassword(password)
+            );
             userCredentialsToBeAdded.setId(idUser);
             if (userCredentialsService.addUserCredentials(userCredentialsToBeAdded) != null) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "The username is already taken! Please choose another one!");

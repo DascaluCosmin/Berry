@@ -1,11 +1,10 @@
 package socialnetwork.service;
 
-import socialnetwork.domain.Friendship;
-import socialnetwork.domain.Tuple;
-import socialnetwork.domain.User;
-import socialnetwork.domain.UserDTO;
+import socialnetwork.domain.*;
 import socialnetwork.domain.validators.ValidationException;
 import socialnetwork.repository.Repository;
+import socialnetwork.repository.database.FriendshipDBRepository;
+import socialnetwork.repository.database.UserDBRepository;
 import socialnetwork.service.validators.ValidatorService;
 import socialnetwork.service.validators.ValidatorUserService;
 import socialnetwork.utils.events.ChangeEventType;
@@ -18,18 +17,18 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UserService implements Observable<UserChangeEvent> {
-    private final Repository<Long, User> repositoryUser;
-    private final Repository<Tuple<Long, Long>, Friendship> friendshipRepository;
+    private final UserDBRepository repositoryUser;
+    private final FriendshipDBRepository friendshipRepository;
     private final ValidatorService<User> validatorUserService = new ValidatorUserService();
     private List<Observer<UserChangeEvent>> observers = new ArrayList<>();
 
     /**
      * Constructor that creates a new UserService
-     * @param repositoryUser Repository<Long, User>, representing the Repository that handles the User data
-     * @param friendshipRepository Repository<Tuple<Long, Long>, Friendship>, representing the Repository
+     * @param repositoryUser UserDBRepository, representing the Repository that handles the User data
+     * @param friendshipRepository FriendshipDBRepository, representing the Repository
      *                             that handles the Friendship data
      */
-    public UserService(Repository<Long, User> repositoryUser, Repository<Tuple<Long, Long>, Friendship> friendshipRepository) {
+    public UserService(UserDBRepository repositoryUser, FriendshipDBRepository friendshipRepository) {
         this.repositoryUser = repositoryUser;
         this.friendshipRepository = friendshipRepository;
     }
@@ -83,6 +82,15 @@ public class UserService implements Observable<UserChangeEvent> {
     }
 
     /**
+     * Method that gets all the existing Users on a specific Page
+     * @param page ContentPage, representing the Page containing the Users
+     * @return Iterable<User>, representing all the existing Users on that Page
+     */
+    public Iterable<User> getAll(ContentPage page) {
+        return repositoryUser.findAll(page);
+    }
+
+    /**
      * Method that gets all the existing Users (in DTO format)
      * @return List<UserDTO>, representing all the existing Users (in DTO format)
      */
@@ -112,6 +120,60 @@ public class UserService implements Observable<UserChangeEvent> {
             friendsUser.add(getUser(id));
         });
         return friendsUser;
+    }
+
+    /**
+     * Method that gets the list of friends of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return Iterable<User>, representing the friends of the User on that Page
+     */
+    public Iterable<User> getAllFriends(Long idUser, ContentPage page) {
+        List<User> friendsUser = new ArrayList<>();
+        friendshipRepository.findAll(idUser, page, true).forEach(ids -> {
+            friendsUser.add(getUser(ids.getId().getRight()));
+        });
+        return friendsUser;
+    }
+
+    /**
+     * Method that gets the list of friends of a User on a specific Page (leaps)
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return List<User>, representing the list of friends of the User on that Page
+     */
+    public List<User> getListAllFriends(Long idUser, ContentPage page) {
+        List<User> friendsUserList = new ArrayList<>();
+        friendshipRepository.findAll(idUser, page, true).forEach(ids -> {
+            friendsUserList.add(getUser(ids.getId().getRight()));
+        });
+        return friendsUserList;
+    }
+
+    /**
+     * Method that gets the list of friends of a User on a specific Page (doesn't leap)
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return List<User>, representing the list of friends of the User on that Page
+     */
+    public List<User> getListAllConsecutiveFriends(Long idUser, ContentPage page) {
+        List<User> friendsUserList = new ArrayList<>();
+        friendshipRepository.findAll(idUser, page, false).forEach(ids -> {
+            friendsUserList.add(getUser(ids.getId().getRight()));
+        });
+        return friendsUserList;
+    }
+
+    /**
+     * Method that gets the list of non-friends of a User on a specific Page
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Users
+     * @return List<User>, representing the non-friends of the User on that Page
+     */
+    public List<User> getListAllNonFriends(Long idUser, ContentPage page) {
+        List<User> listNonFriendUsers = new ArrayList<>();
+        repositoryUser.findAll(idUser, page).forEach(listNonFriendUsers::add);
+        return listNonFriendUsers;
     }
 
     /**

@@ -14,6 +14,7 @@ public class Message extends Entity<Long> {
     private static long idMaxFriendshipRequest = 0;
     private User from;
     private List<User> to;
+    private String subject;
     private String message;
     private LocalDateTime date;
 
@@ -21,13 +22,14 @@ public class Message extends Entity<Long> {
      * Constructor that creates a new Message
      * @param from User, representing the User that sends the Message
      * @param to List<User>, representing the list of Users that receive the Message
-     * @param message String, representing the text of the message
+     * @param message String, representing the text of the Message
      * @param date LocalDateTime, representing the date the Message was sent on
      * @param trash String, representing a placeholder variable
      */
     public Message(User from, List<User> to, String message, LocalDateTime date, String trash) {
         this.from = from;
         this.to = to;
+        this.subject = "";
         this.message = message;
         this.date = date;
         idMaxFriendshipRequest++;
@@ -45,6 +47,7 @@ public class Message extends Entity<Long> {
     public Message(User from, List<User> to, String message, LocalDateTime date, boolean trash) {
         this.from = from;
         this.to = to;
+        this.subject = "";
         this.message = message;
         this.date = date;
         idMaxReplyMessage++;
@@ -55,12 +58,14 @@ public class Message extends Entity<Long> {
      * Constructor that creates a new Message
      * @param from User, representing the User that sends the Message
      * @param to List<User>, representing the list of Users that receive the Message
+     * @param subject String, representing the text of the Message
      * @param message String, representing the text of the message
      * @param date LocalDateTime, representing the date the Message was sent on
      */
-    public Message(User from, List<User> to, String message, LocalDateTime date) {
+    public Message(User from, List<User> to, String subject, String message, LocalDateTime date) {
         this.from = from;
         this.to = to;
+        this.subject = subject;
         this.message = message;
         this.date = date;
         idMaxMessage++;
@@ -79,6 +84,13 @@ public class Message extends Entity<Long> {
      */
     public List<User> getTo() {
         return to;
+    }
+
+    /**
+     * @return String, representing the Subject of the Message
+     */
+    public String getSubject() {
+       return subject;
     }
 
     /**
@@ -123,6 +135,13 @@ public class Message extends Entity<Long> {
      */
     public void setTo(List<User> to) {
         this.to = to;
+    }
+
+    /**
+     * @param subject String, representing the Subject of the Message
+     */
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     /**

@@ -16,7 +16,7 @@
     <title>
         <band height="72">
             <frame>
-                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#4a56e2" uuid="8cb8b3d9-52da-430d-9232-ddd1cf2ef6b3"/>
+                <reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#40457B" uuid="8cb8b3d9-52da-430d-9232-ddd1cf2ef6b3"/>
                 <staticText>
                     <reportElement x="20" y="20" width="515" height="43" forecolor="#FFFFFF" uuid="372f6598-ab66-4215-9f2b-886db4a0ee37"/>
                     <textElement>
@@ -55,7 +55,7 @@
                 <reportElement x="-20" y="20" width="595" height="1" forecolor="#000000" uuid="67a197ae-7db0-4280-bde4-9edd48b69769"/>
             </line>
             <staticText>
-                <reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#4a56e2" backcolor="#E6E6E6" uuid="8df48524-6ab7-4392-8887-f3d3ff08b492">
+                <reportElement mode="Opaque" x="0" y="0" width="185" height="20" forecolor="#40457B" backcolor="#E6E6E6" uuid="8df48524-6ab7-4392-8887-f3d3ff08b492">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="853c2f0c-e582-46dd-a1f5-d32ba7069c44"/>
                 </reportElement>
                 <textElement textAlignment="Center">
@@ -64,7 +64,7 @@
                 <text><![CDATA[Name User]]></text>
             </staticText>
             <staticText>
-                <reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#4a56e2" backcolor="#E6E6E6" uuid="d32a8c42-cb68-4941-8ca9-af03301283eb">
+                <reportElement mode="Opaque" x="185" y="0" width="185" height="20" forecolor="#40457B" backcolor="#E6E6E6" uuid="d32a8c42-cb68-4941-8ca9-af03301283eb">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a50fa0ca-ebae-4bca-b7e5-143d7a6a5627"/>
                 </reportElement>
                 <textElement textAlignment="Center">
@@ -73,7 +73,7 @@
                 <text><![CDATA[Text Message]]></text>
             </staticText>
             <staticText>
-                <reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#4a56e2" backcolor="#E6E6E6" uuid="8c8e4740-93f9-487e-ace3-7260caceb249">
+                <reportElement mode="Opaque" x="370" y="0" width="185" height="20" forecolor="#40457B" backcolor="#E6E6E6" uuid="8c8e4740-93f9-487e-ace3-7260caceb249">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3f74cf14-8cf2-42c2-a0c7-c5772d361aed"/>
                 </reportElement>
                 <textElement textAlignment="Center">
@@ -84,9 +84,9 @@
         </band>
     </columnHeader>
     <detail>
-        <band height="20">
+        <band height="27">
             <line>
-                <reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="41cf34ec-2761-4094-871d-4a78df4f8066"/>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" forecolor="#A2A3B8" uuid="41cf34ec-2761-4094-871d-4a78df4f8066"/>
             </line>
             <textField>
                 <reportElement x="0" y="0" width="185" height="20" uuid="d2fabb12-1eb7-48d2-9272-37026eedcc71">

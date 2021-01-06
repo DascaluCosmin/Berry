@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="403.0" prefWidth="698.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.LoginController" stylesheets="/css/login.css">
+<AnchorPane prefHeight="403.0" prefWidth="698.0" style="-fx-background-color: transparent;" stylesheets="/css/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.LoginController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="47.0" layoutY="36.0" prefHeight="331.0" prefWidth="611.0">
          <graphic>
             <ImageView fitHeight="331.0" fitWidth="662.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/Login.png" />
+                  <Image url="@../images/Group 12.png" />
                </image>
             </ImageView>
          </graphic></Label>
@@ -38,16 +39,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Label fx:id="labelExitSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="-9.0" onMouseClicked="#exitSignup" prefHeight="46.0" prefWidth="53.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Exit.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Label>
-            <Label fx:id="labelSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="214.0" onMouseClicked="#signupEvent" prefHeight="30.0" prefWidth="105.0" text="Signup" textFill="#4a56e2">
+            <Label fx:id="labelSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="214.0" onMouseClicked="#signupEvent" prefHeight="30.0" prefWidth="105.0" text="Signup" textFill="#40457b">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -59,11 +51,23 @@
                   <Font size="18.0" />
                </font>
             </Label>
+            <Label fx:id="labelExitSignup" alignment="CENTER" contentDisplay="CENTER" layoutX="318.0" layoutY="-1.0" onMouseClicked="#exitSignup" prefHeight="30.0" prefWidth="18.0">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ExitSignLighter.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="anchorPaneLogin" layoutX="295.0" layoutY="71.0" prefHeight="275.0" prefWidth="367.0">
          <children>
-            <TextField opacity="0.0" />
+            <TextField opacity="0.0">
+               <cursor>
+                  <Cursor fx:constant="DISAPPEAR" />
+               </cursor></TextField>
             <TextField fx:id="textFieldUsername" layoutX="28.0" layoutY="76.0" prefHeight="30.0" prefWidth="310.0" promptText="Username">
                <font>
                   <Font size="14.0" />
@@ -74,15 +78,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="299.0" layoutY="-9.0" onMouseClicked="#exit" prefHeight="46.0" prefWidth="53.0">
-               <graphic>
-                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Exit.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Label>
-            <Label fx:id="labelLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="205.0" onMouseClicked="#loginEvent" prefHeight="46.0" prefWidth="121.0" text="Login" textFill="#4a56e2">
+            <Label fx:id="labelLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="96.0" layoutY="205.0" onMouseClicked="#loginEvent" prefHeight="46.0" prefWidth="121.0" text="Login" textFill="#40457b">
                <graphic>
                   <ImageView fitHeight="60.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -98,6 +94,14 @@
                   <Font size="10.0" />
                </font>
             </Label>
+            <Label fx:id="labelExit" alignment="CENTER" contentDisplay="CENTER" layoutX="318.0" layoutY="-1.0" onMouseClicked="#exit" prefHeight="30.0" prefWidth="18.0">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ExitSignLighter.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Label>
          </children>
       </AnchorPane>
    </children>

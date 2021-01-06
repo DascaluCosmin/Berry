@@ -1,0 +1,354 @@
+/* SLIDER PANE */
+#labelNbNotifications {
+    -fx-background-color: red;
+}
+
+#labelNbNotifications:hover {
+    -fx-background-color: #d61c1c;
+}
+
+#labelShowStatistics:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowFeedDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowProfileDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowExploreDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowStatisticsDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowDirectDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowEventsDummy {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+
+#labelLogout:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowProfile:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowFeed:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowEvents:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowDirect:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+#labelShowExplore:hover {
+    -fx-background-color: #333A83;
+    -fx-opacity: 0.5;
+}
+
+/* SLIDER PANE */
+
+/* NOTIFICATIONS START */
+
+#buttonDontParticipateNotifications {
+    -fx-background-color: #40457B;
+}
+
+#buttonDontParticipateNotifications:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonParticipateNotifications {
+    -fx-background-color: #40457B;
+
+}
+
+#buttonParticipateNotifications:hover {
+    -fx-background-color: #333A83;
+}
+
+/* NOTIFICATIONS END*/
+
+/* FEED START*/
+
+#textFieldSearchFriend {
+    -fx-text-fill: white;
+    -fx-background-color: #40457B;
+}
+
+#buttonRemoveFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonRemoveFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowPhotosProfileFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotosProfileFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowProfileTextFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowProfileTextFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonStPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdPostProfileFriend {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonShowTextPostsFriends {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowTextPostsFriends:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowPhotoPostsFriends {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotoPostsFriends:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonStTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button4thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button5thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button6thTextPostFriends {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+
+/* FEED END */
+
+/* PROFILE START */
+
+#buttonShowPhotosProfile {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotosProfile:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonChangeProfilePhoto {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonChangeProfilePhoto:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonShowProfileText {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowProfileText:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonAddPhoto {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonAddPhoto:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonWritePost {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonWritePost:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonStPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonNdPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#buttonRdPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button4thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button5thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+#button6thPostProfile {
+    -fx-background-color: white;
+    -fx-background-radius: 15px;
+}
+
+/* PROFILE END */
+
+/* STATISTICS START */
+
+#buttonGeneratePDFReport {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonGeneratePDFReport:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonGenerateHTMLReport {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonGenerateHTMLReport:hover {
+    -fx-background-color: #333A83;
+}
+
+#labelIntroduceYear {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#labelIntroduceTimeInterval {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#labelSearchFriend {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40457B;
+}
+
+#textFieldSearchFriendStatistics {
+    -fx-text-fill: white;
+    -fx-background-color: #40457B;
+}
+
+#labelStartDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelEndDate {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#labelYear {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
+#datePickerStartDate:focused {
+    -fx-background-color: #DAE2F8;
+    -fx-text-fill: #40457B;
+}
+
+#datePickerEndDate:focused {
+    -fx-background-color: #DAE2F8;
+    -fx-text-fill: #40457B;
+}
+
+#textFieldYear:focused {
+    -fx-background-color: #40457B;
+    -fx-text-fill: #DAE2F8;
+}
+
+/* STATISTICS END */

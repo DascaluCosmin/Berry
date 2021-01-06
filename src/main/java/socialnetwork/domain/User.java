@@ -57,6 +57,14 @@ public class User extends Entity<Long>{
         return friends;
     }
 
+    /**
+     * @return String, representing the Full Name (First Name and Last Name) of the User
+     */
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
+
     /** Method that serializes an User
      * @return String, representing the serialization of the User
      */
@@ -73,11 +81,8 @@ public class User extends Entity<Long>{
             }
             contor.getAndIncrement();
         });
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", friends='" + friendsString + '\'' +
-                '}';
+        return "User: ID = " + getId() + " " + ", First Name = " + getFirstName() + ", Last Name = " + getLastName() +
+                ", List Friends = " + friendsString;
     }
 
     /**

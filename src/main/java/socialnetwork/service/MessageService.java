@@ -1,12 +1,10 @@
 package socialnetwork.service;
 
-import socialnetwork.domain.messages.FriendshipRequest;
+import socialnetwork.domain.ContentPage;
 import socialnetwork.domain.messages.Message;
 import socialnetwork.domain.validators.ValidationException;
-import socialnetwork.repository.Repository;
-import socialnetwork.repository.database.MessagesDBRepository;
+import socialnetwork.repository.database.messages.MessagesDBRepository;
 import socialnetwork.service.validators.ValidatorMessageService;
-import socialnetwork.service.validators.ValidatorService;
 import socialnetwork.utils.Constants;
 import socialnetwork.utils.DateConverter;
 
@@ -40,7 +38,7 @@ public class MessageService {
     public Message addMessage(Message messageParam) throws ValidationException {
         validatorMessageService.validateBeforeAdding(messageParam);
         Message message = messagesRepository.save(messageParam);
-        validatorMessageService.validateAdd(message);
+        //validatorMessageService.validateAdd(message);
         return message;
     }
 
@@ -56,11 +54,23 @@ public class MessageService {
     /**
      * Method that gets the list Messages sent to a User
      * @param idUser Long, representing the ID of the User
-     * @return List<Message>, representing the list of messages
+     * @return List<Message>, representing the list of Messages sent to the User
      */
     public List<Message> getListAllMessagesToUser(Long idUser) {
         List<Message> messageList = new ArrayList<>();
         getAllMessagesToUser(idUser).forEach(messageList::add);
+        return messageList;
+    }
+
+    /**
+     * Method that gets the list Messages sent to a User
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Messages
+     * @return List<Message>, representing the list of Messages sent to the User, on that Page
+     */
+    public List<Message> getListAllMessagesToUser(Long idUser, ContentPage page) {
+        List<Message> messageList = new ArrayList<>();
+        messagesRepository.findAll(idUser, page).forEach(messageList::add);
         return messageList;
     }
 
@@ -75,6 +85,24 @@ public class MessageService {
         List<Message> messageList = getListAllMessagesToUser(idUser);
         return messageList
                 .stream()
+                .filter(message -> (startDate.compareTo(message.getDate().toLocalDate()) <= 0) &&
+                        (message.getDate().toLocalDate().compareTo(endDate) <= 0))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Method that gets the list of messages sent to a specific User by a Friend, in an interval of time
+     * @param idUser Long, representing the ID of the User
+     * @param idFriend Long, representing the ID of the Friend
+     * @param startDate LocalDate, representing the start date of the interval
+     * @param endDate LocalDate, representing the end date of the interval
+     * @return List<Message>, representing the list of messages
+     */
+    public List<Message> getListAllMessagesToUserTimeInterval(Long idUser, Long idFriend, LocalDate startDate, LocalDate endDate) {
+        List<Message> messageList = getListAllMessagesToUser(idUser);
+        return messageList
+                .stream()
+                .filter(message -> message.getFrom().getId() == idFriend)
                 .filter(message -> (startDate.compareTo(message.getDate().toLocalDate()) <= 0) &&
                         (message.getDate().toLocalDate().compareTo(endDate) <= 0))
                 .collect(Collectors.toList());

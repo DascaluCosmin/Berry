@@ -150,7 +150,7 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
+      <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
@@ -542,13 +542,13 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0">
+      <Pane fx:id="directPane" layoutX="354.0" layoutY="4.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Button fx:id="buttonComposeMessage" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Compose" textFill="WHITE" />
             <Button fx:id="buttonInbox" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowInbox" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Inbox" textFill="WHITE" />
             <Button fx:id="buttonChat" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowChat" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/PaneDirect.css" text="Chat" textFill="WHITE" />
             <Label fx:id="labelExitApplicationDirect" layoutX="645.0" layoutY="12.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="24.0" />
-            <Pane fx:id="paneChatWrapper" layoutX="123.0" layoutY="78.0" visible="false">
+            <Pane fx:id="paneChatWrapper" layoutX="123.0" layoutY="78.0">
                <children>
                   <Pane fx:id="paneChat" layoutY="31.0" prefHeight="462.0" prefWidth="438.0">
                      <children>
@@ -572,7 +572,7 @@
                               <Font size="19.0" />
                            </font>
                         </Label>
-                        <Rectangle fx:id="rectangleWriteMessageChat" arcHeight="30.0" arcWidth="30.0" fill="#8b8d9f" height="43.0" layoutX="24.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
+                        <Rectangle fx:id="rectangleWriteMessageChat" arcHeight="30.0" arcWidth="30.0" fill="#abaec2" height="43.0" layoutX="24.0" layoutY="400.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
                         <Group fx:id="groupStMessageUser" layoutX="202.0" layoutY="347.0" visible="false">
                            <children>
                               <Rectangle fx:id="rectangleWriteMessageChat1" arcHeight="30.0" arcWidth="30.0" fill="#dae2f8" height="43.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
@@ -684,7 +684,7 @@
                   </Pane>
                </children>
             </Pane>
-            <Pane fx:id="paneInbox" layoutX="14.0" layoutY="51.0" prefHeight="623.0" prefWidth="662.0">
+            <Pane fx:id="paneInbox" layoutX="14.0" layoutY="51.0" prefHeight="623.0" prefWidth="662.0" visible="false">
                <children>
                   <Label fx:id="labelGoBackInbox" alignment="CENTER" layoutX="3.0" layoutY="599.0" onMouseClicked="#eventGoBackInbox" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
@@ -706,7 +706,7 @@
                   </Label>
                   <Group fx:id="groupStMessageInbox" layoutX="46.0" layoutY="31.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -714,7 +714,7 @@
                   </Group>
                   <Group fx:id="groupNdMessageInbox" layoutX="46.0" layoutY="81.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -722,7 +722,7 @@
                   </Group>
                   <Group fx:id="groupRdMessageInbox" layoutX="46.0" layoutY="131.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -730,7 +730,7 @@
                   </Group>
                   <Group fx:id="group4thMessageInbox" layoutX="46.0" layoutY="181.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -738,7 +738,7 @@
                   </Group>
                   <Group fx:id="group5thMessageInbox" layoutX="46.0" layoutY="231.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -746,7 +746,7 @@
                   </Group>
                   <Group fx:id="group6thMessageInbox" layoutX="46.0" layoutY="281.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -754,7 +754,7 @@
                   </Group>
                   <Group fx:id="group7thMessageInbox" layoutX="46.0" layoutY="331.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -762,7 +762,7 @@
                   </Group>
                   <Group fx:id="group8thMessageInbox" layoutX="46.0" layoutY="381.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -770,7 +770,7 @@
                   </Group>
                   <Group fx:id="group9thMessageInbox" layoutX="46.0" layoutY="431.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -778,7 +778,7 @@
                   </Group>
                   <Group fx:id="group10thMessageInbox" layoutX="46.0" layoutY="481.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />
@@ -786,7 +786,7 @@
                   </Group>
                   <Group fx:id="group11thMessageInbox" layoutX="46.0" layoutY="531.0">
                      <children>
-                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#8b8d9f" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
+                        <Rectangle arcHeight="25.0" arcWidth="25.0" fill="#abaec2" height="34.0" stroke="#40457b" strokeType="INSIDE" width="571.0" />
                         <Label layoutX="15.0" layoutY="9.0" prefHeight="17.0" prefWidth="116.0" text="Dascalu Cosmin-Andrei" />
                         <Label layoutX="144.0" layoutY="9.0" prefHeight="17.0" prefWidth="324.0" text="Comanda dumnevoastra este pe drum - Experiderea 1 din 2 - Comanda dumneavoastra" />
                         <Label layoutX="486.0" layoutY="9.0" prefHeight="17.0" prefWidth="73.0" text="5 Jan 2021" />

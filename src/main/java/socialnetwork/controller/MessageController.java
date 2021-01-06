@@ -151,7 +151,7 @@ public class MessageController {
                 User userFrom = userService.getUser(selectedUserDTO.getId());
                 List<User> usersTo = new ArrayList<>();
                 listUsersSelected.forEach(userDTO -> usersTo.add(userService.getUser(userDTO.getId())));
-                Message message = new Message(userFrom, usersTo,textMessage, LocalDateTime.now());
+                Message message = new Message(userFrom, usersTo, "subject",textMessage, LocalDateTime.now());
                 messageService.addMessage(message);
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The message has been sent!");
                 alert.show();
@@ -174,7 +174,7 @@ public class MessageController {
             if (!textMessage.matches("[ ]*")) {
                 User userFrom = userService.getUser(selectedUserDTO.getId());
                 User userTo = messageToReplyTo.getFrom();
-                Message message = new Message(userFrom, Arrays.asList(userTo), textMessage, LocalDateTime.now());
+                Message message = new Message(userFrom, Arrays.asList(userTo), "subject", textMessage, LocalDateTime.now());
                 messageService.addMessage(message);
                 tableViewMessage.getSelectionModel().clearSelection();
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "The messages has been sent!");

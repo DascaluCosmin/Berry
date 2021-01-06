@@ -26,5 +26,6 @@
 }
 
 #textFieldChat {
-    -fx-background-color: #8b8d9f;
+    -fx-background-color: #abaec2;
+    -fx-text-fill: black;
 }

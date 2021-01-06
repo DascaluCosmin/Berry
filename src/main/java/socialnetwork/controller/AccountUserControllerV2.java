@@ -28,6 +28,7 @@ import javafx.util.Duration;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.util.ResourceUtils;
+import org.w3c.dom.Text;
 import socialnetwork.domain.*;
 import socialnetwork.domain.events.Event;
 import socialnetwork.domain.messages.FriendshipRequest;
@@ -409,8 +410,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentSliderLabel.setVisible(true);
         pageTextPostProfile.setToFirstPage();
         pagePhotoPostProfile.setToFirstPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
-        setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+        List<PhotoPost> listPhotoPostsProfile = userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile);
+        labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
+        labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
+        setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
     }
 
     /**
@@ -493,6 +496,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelNoEventsNotifications;
     @FXML
+    Label labelGoBackEventNotifications;
+    @FXML
     Label labelGoNextEventNotifications;
     @FXML
     Button buttonDontParticipateNotifications;
@@ -512,15 +517,15 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         List<Event> listEventsNotificationsOnPage = userPage.getEventsService().getListEventsToNotify(
                 userPage.getUser().getId(), pageEventsNotifications, DAY_GAP
         );
+        labelGoBackEventNotifications.setVisible(pageEventsNotifications.getNumberPage() > 1);
+        labelGoNextEventNotifications.setVisible(pageEventsNotifications.getSizePage() == listEventsNotificationsOnPage.size());
         if (!listEventsNotificationsOnPage.isEmpty()) {
             paneEventsNotifications.setVisible(true);
-            labelGoNextEventNotifications.setVisible(true);
             labelNoEventsNotifications.setVisible(false);
             initializeEvent(listEventsNotificationsOnPage.get(0), groupEventDetailsNotifications, rectanglePhotoEventNotifications);
         } else {
             labelNoEventsNotifications.setVisible(true);
             paneEventsNotifications.setVisible(false);
-            labelGoNextEventNotifications.setVisible(false);
         }
     }
 
@@ -920,6 +925,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
 
     // PROFILE PANE
     @FXML
+    Label labelGoBackProfile;
+    @FXML
+    Label labelGoNextProfile;
+    @FXML
     Button buttonStPostProfile;
     @FXML
     Button buttonNdPostProfile;
@@ -1040,10 +1049,19 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Posts of the User on the next Page
      */
     public void eventGoNextProfile() {
-        pagePhotoPostProfile.nextPage();
-        pageTextPostProfile.nextPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
-        setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+        if (panePhotoPostsProfile.isVisible()) {
+            pagePhotoPostProfile.nextPage();
+            List<PhotoPost> listPhotoPostsProfile = userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile);
+            labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
+            labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
+            setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+        } else if (paneTextPostsProfile.isVisible()){
+            pageTextPostProfile.nextPage();
+            List<TextPost> listTextPostsProfile = userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile);
+            labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
+            labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
+            setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
+        }
     }
 
     /**
@@ -1051,14 +1069,28 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      * It shows the Posts of the User on the previous Page
      */
     public void eventGoBackProfile() {
-        if (pagePhotoPostProfile.getNumberPage() == 1 || pageTextPostProfile.getNumberPage() == 1) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
-            alert.show();
-        } else {
-            pagePhotoPostProfile.previousPage();
-            pageTextPostProfile.previousPage();
-            setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
-            setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+        if (panePhotoPostsProfile.isVisible()) {
+            if (pagePhotoPostProfile.getNumberPage() == 1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+                alert.show();
+            } else {
+                pagePhotoPostProfile.previousPage();
+                List<PhotoPost> listPhotoPostsProfile = userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile);
+                labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
+                labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
+                setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+            }
+        } else if (paneTextPostsProfile.isVisible()) {
+            if (pageTextPostProfile.getNumberPage() == 1) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "You're already on the first Page!");
+                alert.show();
+            } else {
+                pageTextPostProfile.previousPage();
+                List<TextPost> listTextPostsProfile = userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile);
+                labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
+                labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
+                setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
+            }
         }
     }
 
@@ -1068,7 +1100,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowPhotoPaneProfile() {
         pagePhotoPostProfile.setToFirstPage();
-        setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
+        List<PhotoPost> listPhotoPostsProfile = userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile);
+        labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
+        labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
+        setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
         panePhotoPostsProfile.setVisible(true);
         paneTextPostsProfile.setVisible(false);
     }
@@ -1079,7 +1114,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventShowTextPaneProfile() {
         pageTextPostProfile.setToFirstPage();
-        setButtonsTextPosts(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listButtonsProfile);
+        List<TextPost> listTextPostsProfile = userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile);
+        labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
+        labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
+        setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
         paneTextPostsProfile.setVisible(true);
         panePhotoPostsProfile.setVisible(false);
     }
@@ -1329,7 +1367,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         Node rdNode = group.getChildren().get(3);
         if (stNode instanceof Label && ndNode instanceof Label && rdNode instanceof Label) {
             ((Label) stNode).setText(message.getFrom().getFullName());
-            ((Label) ndNode).setText(message.getMessage());
+            ((Label) ndNode).setText(message.getSubject());
             ((Label) rdNode).setText(message.getDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME));
         }
     }
@@ -2212,13 +2250,13 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void initializeEventToBeDiscovered() {
         List<Event> listEventsDiscoverOnPage = userPage.getEventsService().getListEventsDoesntParticipate(userPage.getUser().getId(), pageEventsDiscover);
+        labelGoBackEventDiscover.setVisible(pageEventsDiscover.getNumberPage() > 1);
+        labelGoNextEventDiscover.setVisible(pageEventsDiscover.getSizePage() == listEventsDiscoverOnPage.size());
         if (!listEventsDiscoverOnPage.isEmpty()) {
-            labelGoNextEventDiscover.setVisible(true);
             paneEventsParticipateDetails.setVisible(true);
             initializeEvent(listEventsDiscoverOnPage.get(0), groupEventDetailsParticipate, rectanglePhotoEvent);
         } else {
             labelNoEvents.setVisible(true);
-            labelGoNextEventDiscover.setVisible(false);
             paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setText("There are no new Events");
         }
@@ -2229,6 +2267,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void initializeEventParticipateTo() {
         List<Event> listEventsParticipateOnPage = userPage.getEventsService().getListEventsParticipate(userPage.getUser().getId(), pageEventsParticipate);
+        labelGoBackEventParticipate.setVisible(pageEventsParticipate.getNumberPage() > 1);
+        labelGoNextEventParticipate.setVisible(pageEventsParticipate.getSizePage() == listEventsParticipateOnPage.size());
         if (!listEventsParticipateOnPage.isEmpty()) {
             Event eventToParticipateTo = listEventsParticipateOnPage.get(0);
             if (userPage.getEventsService().getParticipant(eventToParticipateTo, userPage.getUser()).getNotified()) {
@@ -2236,12 +2276,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             } else {
                 buttonSubscribe.setText("Subscribe");
             }
-            labelGoNextEventParticipate.setVisible(true);
             paneEventsParticipateDetails.setVisible(true);
             initializeEvent(eventToParticipateTo, groupEventDetailsParticipate, rectanglePhotoEvent);
         } else {
             labelNoEvents.setVisible(true);
-            labelGoNextEventParticipate.setVisible(false);
             paneEventsParticipateDetails.setVisible(false);
             labelNoEvents.setText("No Events to participate to");
         }
@@ -2530,7 +2568,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 userPage.getUserDTO().getId(), dateStart, dateEnd
         );
         if (messageList.size() == 0) { // No messages in that Date Period
-            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
+            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages","No messages", LocalDateTime.now()));
         }
         try {
             File file = ResourceUtils.getFile("classpath:report2.jrxml");

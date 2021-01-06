@@ -44,7 +44,7 @@ public class MessagesFileRepository extends AbstractFileRepository<Long, Message
         }
         String textMessage = attributes.get(3);
         LocalDateTime data = LocalDateTime.parse(attributes.get(4), Constants.DATE_TIME_FORMATTER);
-        Message message = new Message(userRepository.findOne(idSender), listReceivers,
+        Message message = new Message(userRepository.findOne(idSender), listReceivers, "Subject",
                 textMessage, data);
         message.setId(idMessage);
         return message;

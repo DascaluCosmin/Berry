@@ -67,7 +67,7 @@ public class StatsController {
                 selectedUserDTO.getId(), dateStart, dateEnd
         );
         if (messageList.size() == 0) { // No messages in that Date Period
-            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", LocalDateTime.now()));
+            messageList.add(new Message(new User("No messages", "No messages"), null, "No messages", "No messages", LocalDateTime.now()));
         }
         try {
             File file = ResourceUtils.getFile("classpath:report.jrxml");

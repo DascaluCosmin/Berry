@@ -25,6 +25,8 @@ public class ReplyInboxController {
     private Stage replyInboxStage;
 
     @FXML
+    Label labelSubject;
+    @FXML
     Label labelNameSender;
     @FXML
     Label labelDate;
@@ -62,6 +64,7 @@ public class ReplyInboxController {
      * Method that initializes the View with the Message's content - Sender, Date & Text
      */
     private void initializeMessage() {
+        labelSubject.setText(receivedMessage.getSubject());
         labelNameSender.setText(receivedMessage.getNameFrom());
         labelDate.setText(receivedMessage.getDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME));
         labelMessageText.setText(receivedMessage.getMessage());
@@ -94,7 +97,7 @@ public class ReplyInboxController {
             alert.show();
         } else {
             Message message = new Message(
-                    userPage.getUser(), Collections.singletonList(userFrom), textMessage,LocalDateTime.now()
+                    userPage.getUser(), Collections.singletonList(userFrom), "Subject", textMessage,LocalDateTime.now()
             );
             if (userPage.getMessageService().addMessage(message) == null) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The message has been sent successfully!");

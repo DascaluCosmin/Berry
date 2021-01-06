@@ -104,11 +104,12 @@ public class MessagesDBRepository implements Repository<Long, Message> {
             while (resultSet.next()) {
                 Long idMessage = resultSet.getLong("id");
                 Long idUserFrom = resultSet.getLong("idUserFrom");
+                String subject = resultSet.getString("subject");
                 String textMessage = resultSet.getString("message");
                 LocalDateTime date = LocalDateTime.parse(resultSet.getString("date"), Constants.DATE_TIME_FORMATTER);
                 User userFrom = userRepository.findOne(idUserFrom);
                 User userTo = userRepository.findOne(idUser);
-                Message message = new Message(userFrom, Collections.singletonList(userTo), textMessage, date);
+                Message message = new Message(userFrom, Collections.singletonList(userTo), subject, textMessage, date);
                 message.setId(idMessage);
                 listMessages.add(message);
             }
@@ -254,6 +255,7 @@ public class MessagesDBRepository implements Repository<Long, Message> {
         while (resultSet.next()) {
             Long idMessage = resultSet.getLong("id");
             User userFrom = userRepository.findOne(resultSet.getLong("idUserFrom"));
+            String subject = resultSet.getString("subject");
             String textMessage = resultSet.getString("message");
             LocalDateTime date = LocalDateTime.parse(resultSet.getString("date"), Constants.DATE_TIME_FORMATTER);
             List<User> listUsersTo = new ArrayList<>();
@@ -266,7 +268,7 @@ public class MessagesDBRepository implements Repository<Long, Message> {
                 User userTo = userRepository.findOne(resultSet.getLong("idUserTo"));
                 listUsersTo.add(userTo);
             }
-            Message message = new Message(userFrom, listUsersTo, textMessage, date);
+            Message message = new Message(userFrom, listUsersTo, subject, textMessage, date);
             message.setId(idMessage);
             messageList.add(message);
         }

@@ -276,16 +276,15 @@ public class EventDBRepository implements Repository<Long, Event> {
      * @return String, representing the SQL Command to be run
      */
     private String participationToCommand(Long idUser, ContentPage currentPage, EventParticipationType eventParticipationType) {
-        String subQuery =  "(SELECT \"EventID\" FROM participants WHERE \"UserID\" = " + idUser + ")";
+        String subQueryLimit = " LIMIT " + currentPage.getSizePage() + " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+        String subQuery1 =  "(SELECT \"EventID\" FROM participants WHERE \"UserID\" = " + idUser + subQueryLimit + ")";
+        String subQuery2 =  "(SELECT \"EventID\" FROM participants WHERE \"UserID\" = " + idUser + ")" + subQueryLimit;
         if (eventParticipationType == EventParticipationType.HOST) {
-            return "SELECT * FROM events WHERE \"OrganizerID\" = " + idUser +
-                    " LIMIT " + currentPage.getSizePage() + " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            return "SELECT * FROM events WHERE \"OrganizerID\" = " + idUser + subQueryLimit;
         } else if (eventParticipationType == EventParticipationType.PARTICIPATE) {
-            return "SELECT * FROM events WHERE id IN " + subQuery +
-                    " LIMIT " + currentPage.getSizePage() + " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+            return "SELECT * FROM events WHERE id IN " + subQuery1;
         }
         // EventParticipationType.NO_PARTICIPATE
-        return "SELECT * FROM events WHERE id NOT IN " + subQuery +
-                " LIMIT " + currentPage.getSizePage() + " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+        return "SELECT * FROM events WHERE id NOT IN " + subQuery2;
     }
 }

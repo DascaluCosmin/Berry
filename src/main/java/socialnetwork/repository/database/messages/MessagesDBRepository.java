@@ -152,8 +152,11 @@ public class MessagesDBRepository implements Repository<Long, Message> {
     @Override
     public Message save(Message entity) {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String command = "INSERT INTO messages (\"idUserFrom\", message, date) VALUES " +
-                    "(" + entity.getFrom().getId() + ", '"  + entity.getMessage() + "', '" + entity.getDate().format(Constants.DATE_TIME_FORMATTER) + "') " +
+            String command = "INSERT INTO messages (\"idUserFrom\", subject, message, date) VALUES " +
+                    "(" + entity.getFrom().getId() + ", '" +
+                    entity.getSubject().replace("'", "`") + "', '" +
+                    entity.getMessage().replace("'", "`") + "', '" +
+                    entity.getDate().format(Constants.DATE_TIME_FORMATTER) + "') " +
                     "RETURNING *";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             try {

@@ -38,7 +38,7 @@ public class MessageService {
     public Message addMessage(Message messageParam) throws ValidationException {
         validatorMessageService.validateBeforeAdding(messageParam);
         Message message = messagesRepository.save(messageParam);
-        validatorMessageService.validateAdd(message);
+        //validatorMessageService.validateAdd(message);
         return message;
     }
 

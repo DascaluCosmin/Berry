@@ -47,6 +47,7 @@ import socialnetwork.utils.ViewClass;
 import socialnetwork.utils.events.TextPostEvent;
 import socialnetwork.utils.observer.Observer;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -581,7 +582,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     public void eventParticipateEventNotifications() {
         if (currentEvent != null) {
             if (userPage.getEventsService().addParticipant(currentEvent, userPage.getUser()) != null) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Now you are participating to the Event!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Now you are participating to the Event!");
                 alert.show();
                 initializeNumberNotifications();
                 buttonParticipateNotifications.setVisible(false);
@@ -968,7 +969,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 throw new FileNotFoundException();
             }
             FileInputStream fileInputStream = new FileInputStream(pathToPhoto);
-            Image image = new Image(fileInputStream, 1000, 1000, false, true);
+            Image image = new Image(fileInputStream, 1000, 1000, true, true);
             shape.setFill(new ImagePattern(image));
             if (shape instanceof Rectangle) {
                 ((Rectangle) shape).setArcHeight(45);
@@ -1253,6 +1254,12 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     TextField textFieldChat;
     @FXML
+    TextField textFieldToCompose;
+    @FXML
+    TextField textFieldSubjectCompose;
+    @FXML
+    TextArea textAreaCompose;
+    @FXML
     Group groupStMessageUser;
     @FXML
     Group groupNdMessageUser;
@@ -1312,6 +1319,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Pane paneChat;
     @FXML
     Pane paneInbox;
+    @FXML
+    Pane paneCompose;
 
     /**
      * Method that sets some Circles with the User's Friends' Profile Photos
@@ -1438,6 +1447,17 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
+     * Method linked to the buttonComposeMessage's onMouseClicked
+     * It shows the Compose Pane
+     */
+    public void eventShowCompose() {
+        currentDirectPane.setVisible(false);
+        currentDirectPane = paneCompose;
+        currentDirectPane.setVisible(true);
+        initializeComposeChat();
+    }
+
+    /**
      * Method that initializes the Chat Pane
      */
     private void initializePaneChat() {
@@ -1448,6 +1468,79 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         currentDirectPane = paneChatWrapper;
         currentDirectPane.setVisible(true);
         initializeCurrentFriendsChat();
+    }
+
+    /**
+     * Method linked to the buttonSendCompose' onMouseClicked
+     * It sends a Message to some Users
+     */
+    public void sendMessageCompose() {
+        String usernamesTo = textFieldToCompose.getText();
+        if (usernamesTo.matches("[ ]*")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "The messages has no recipients!");
+            alert.show();
+            textFieldToCompose.clear();
+        }
+        else {
+            List<User> listUsersTo = new ArrayList<>();
+            String invalidUsernames = "";
+            for (String userName : usernamesTo.split(" ")) {
+                UserCredentials userCredentials = userPage.getUserCredentialsService().findOne(userName);
+                if (userCredentials != null) { // The User exists
+                    User userTo = userPage.getUserService().getUser(userCredentials.getId());
+                    if (!listUsersTo.contains(userTo)) {
+                        listUsersTo.add(userTo);
+                    }
+                } else {
+                    invalidUsernames += userName + " ";
+                }
+            }
+            if (invalidUsernames.length() > 0) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "The following usernames were invalid: " + invalidUsernames);
+                alert.show();
+                alert.setWidth(alert.getWidth() * 1.2);
+                alert.setHeight(alert.getHeight() * 1.2);
+                textFieldToCompose.clear();
+            }
+            if (listUsersTo.size() > 0) {
+                String messageSubject = textFieldSubjectCompose.getText();
+                if (messageSubject.matches("[ ]*")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "The subject is empty!");
+                    alert.show();
+                    textFieldSubjectCompose.clear();
+                } else {
+                    String messageText = textAreaCompose.getText();
+                    if (messageText.matches("[ ]*")) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "The message is empty!");
+                        alert.show();
+                        textAreaCompose.clear();
+                    } else {
+                        Message message = new Message(
+                                userPage.getUser(), listUsersTo, messageSubject, messageText, LocalDateTime.now()
+                        );
+                        if (userPage.getMessageService().addMessage(message) == null) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "The message has been sent!");
+                            alert.show();
+                            initializeComposeChat();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR, "Error at sending the message!");
+                            alert.show();
+                            initializeComposeChat();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Method that initializes the Compose Chat
+     * It clears out the Text Fields & Text Area
+     */
+    private void initializeComposeChat() {
+        textFieldToCompose.clear();
+        textFieldSubjectCompose.clear();
+        textAreaCompose.clear();
     }
 
     /**
@@ -2587,14 +2680,23 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
             String pathToGenerateTo = "C:\\Users\\dasco\\" + userPage.getUserDTO().getFullName().replace(' ', '_');
             if (typeReport == TypeReport.PDF) {
-                JasperExportManager.exportReportToPdfFile(jasperPrint, pathToGenerateTo + "Report.pdf");
+                pathToGenerateTo += "Report.pdf";
+                JasperExportManager.exportReportToPdfFile(jasperPrint, pathToGenerateTo);
             } else if (typeReport == TypeReport.HTML) {
+                pathToGenerateTo += "Report.html";
                 JasperExportManager.exportReportToHtmlFile(jasperPrint, pathToGenerateTo + "Report.html");
             }
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "The report has been generated successfully!");
             alert.show();
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    File reportFile = new File(pathToGenerateTo);
+                    Desktop.getDesktop().open(reportFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             textFieldSearchFriendStatistics.clear();
-
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }

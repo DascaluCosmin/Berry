@@ -97,7 +97,8 @@ public class ReplyInboxController {
             alert.show();
         } else {
             Message message = new Message(
-                    userPage.getUser(), Collections.singletonList(userFrom), "Subject", textMessage,LocalDateTime.now()
+                    userPage.getUser(), Collections.singletonList(userFrom),
+                    "Reply to: " + receivedMessage.getSubject(), textMessage,LocalDateTime.now()
             );
             if (userPage.getMessageService().addMessage(message) == null) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The message has been sent successfully!");

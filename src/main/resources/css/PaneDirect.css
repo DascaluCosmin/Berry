@@ -25,7 +25,31 @@
     -fx-background-color: #333A83;
 }
 
+#buttonSendCompose {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonSendCompose:hover {
+    -fx-background-color: #333A83;
+}
+
 #textFieldChat {
-    -fx-background-color: #abaec2;
+    -fx-background-color: #eeeff2;
     -fx-text-fill: black;
+}
+
+#textFieldToCompose {
+    -fx-focus-color: #40457B ;
+    -fx-faint-focus-color: #40457B ;
+}
+
+#textFieldSubjectCompose {
+    -fx-focus-color: #40457B ;
+    -fx-faint-focus-color: #40457B ;
+}
+
+.text-area {
+    -fx-focus-color: #40457B ;
+    -fx-faint-focus-color: #40457B ;
 }

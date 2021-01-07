@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import socialnetwork.config.ApplicationContext;
 import socialnetwork.controller.LoginController;
 import socialnetwork.domain.*;
+import socialnetwork.domain.posts.PostType;
 import socialnetwork.repository.Repository;
 import socialnetwork.repository.database.*;
 import socialnetwork.repository.database.event.EventDBRepository;
@@ -75,6 +76,8 @@ public class MainFX extends Application {
         PhotoPostDBRepository photoPostDBRepository = new PhotoPostDBRepository(url, username, password);
         EventDBRepository eventDBRepository = new EventDBRepository(url, username, password, userRepository);
         ParticipantDBRepository participantDBRepository = new ParticipantDBRepository(url, username, password);
+        PostLikesDBRepository photoPostsLikesRepository = new PostLikesDBRepository(url, username, password, PostType.PHOTO);
+        PostLikesDBRepository textPostsLikesRepository = new PostLikesDBRepository(url, username, password, PostType.TEXT);
 
         // Services
         userService = new UserService(userRepository, friendshipRepository);
@@ -88,6 +91,9 @@ public class MainFX extends Application {
         textPostService = new TextPostService(textPostDBRepository);
         photoPostService = new PhotoPostService(photoPostDBRepository);
         eventsService = new EventsService(eventDBRepository, participantDBRepository);
-        launch(args);
+
+        photoPostsLikesRepository.findAll().forEach(System.out::println);
+        textPostsLikesRepository.findAll().forEach(System.out::println);
+        //launch(args);
     }
 }

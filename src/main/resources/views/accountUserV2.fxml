@@ -222,17 +222,17 @@
             </Pane>
             <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0">
                <children>
-                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
+                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="116.0" text="\@elena4" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserNameNdPost" layoutX="227.0" layoutY="227.0" prefHeight="17.0" prefWidth="59.0" text="\@larisuuuca" textFill="#40457b">
+                  <Label fx:id="labelUserNameNdPost" layoutX="227.0" layoutY="227.0" prefHeight="17.0" prefWidth="116.0" text="\@larisuuuca" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserNameRdPost" layoutX="442.0" layoutY="347.0" prefHeight="17.0" prefWidth="59.0" text="\@carinac" textFill="#40457b">
+                  <Label fx:id="labelUserNameRdPost" layoutX="442.0" layoutY="347.0" prefHeight="17.0" prefWidth="116.0" text="\@carinac" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
@@ -247,7 +247,7 @@
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="271.0" prefHeight="17.0" prefWidth="59.0" text="\@patriburtic" textFill="#40457b">
+                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="95.0" layoutY="271.0" prefHeight="17.0" prefWidth="116.0" text="\@patriburtic" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>

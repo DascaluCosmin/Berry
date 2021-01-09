@@ -1,6 +1,9 @@
 package socialnetwork.domain;
 
 import socialnetwork.service.*;
+import socialnetwork.service.postsServices.PhotoPostService;
+import socialnetwork.service.postsServices.PostLikesService;
+import socialnetwork.service.postsServices.TextPostService;
 
 public class Page {
     private UserDTO userDTO;
@@ -14,6 +17,8 @@ public class Page {
     private TextPostService textPostService;
     private PhotoPostService photoPostService;
     private EventsService eventsService;
+    private PostLikesService photoPostLikesService;
+    private PostLikesService textPostLikesService;
 
     /**
      * Constructor that creates a new Page
@@ -29,12 +34,14 @@ public class Page {
      * @param textPostService TextPostService, representing the Service concerned with the Text Posts data
      * @param photoPostService PhotoPostService, representing the Service concerned with the Photo Posts data
      * @param eventsService EventsService, representing the Service concerned with the Events data
+     * @param photoPostLikesService PostLikesService, representing the Service concerned with the Photo Posts Likes
+     * @param textPostLikesService PostLikesService, representing the Service concerned with the Text Posts Likes
      */
     public Page(UserDTO userDTO, UserService userService, FriendshipService friendshipService,
                 FriendshipRequestService friendshipRequestService, ProfilePhotoUserService profilePhotoUserService,
                 UserCredentialsService userCredentialsService, ReplyMessageService replyMessageService,
                 MessageService messageService, TextPostService textPostService, PhotoPostService photoPostService,
-                EventsService eventsService) {
+                EventsService eventsService, PostLikesService photoPostLikesService, PostLikesService textPostLikesService) {
         this.userDTO = userDTO;
         this.userService = userService;
         this.friendshipService = friendshipService;
@@ -46,6 +53,8 @@ public class Page {
         this.textPostService = textPostService;
         this.photoPostService = photoPostService;
         this.eventsService = eventsService;
+        this.photoPostLikesService = photoPostLikesService;
+        this.textPostLikesService = textPostLikesService;
     }
 
     /**
@@ -139,5 +148,17 @@ public class Page {
         return eventsService;
     }
 
+    /**
+     * @return PostLikesService, representing the Service concerned with the Photo Posts Likes
+     */
+    public PostLikesService getPhotoPostLikesService() {
+        return photoPostLikesService;
+    }
 
+    /**
+     * @return PostLikesService, representing the Service concerned with the Text Posts Likes
+     */
+    public PostLikesService getTextPostLikesService() {
+        return textPostLikesService;
+    }
 }

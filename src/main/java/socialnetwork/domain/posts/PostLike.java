@@ -10,9 +10,17 @@ public class PostLike extends Entity<Tuple<Long, Long>> {
 
     /**
      * Constructor that creates a new PostLike
+     * @param idPost Long, representing the ID of the Post
+     * @param idUser Long, representing the ID of the User
+     */
+    public PostLike(Long idPost, Long idUser) {
+        setId(new Tuple<>(idPost, idUser));
+    }
+
+    /**
+     * Constructor that creates a new PostLike
      */
     public PostLike() {
-
     }
 
     /**

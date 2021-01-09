@@ -222,7 +222,7 @@
             </Pane>
             <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0">
                <children>
-                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="116.0" text="\@elena4" textFill="#40457b">
+                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
@@ -237,7 +237,7 @@
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName5thPost" alignment="CENTER_RIGHT" layoutX="368.0" layoutY="239.0" prefHeight="17.0" prefWidth="59.0" text="\@serju" textFill="#40457b">
+                  <Label fx:id="labelUserName5thPost" alignment="CENTER_RIGHT" layoutX="300.0" layoutY="239.0" prefHeight="17.0" prefWidth="78.0" text="\@serju" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
@@ -247,11 +247,53 @@
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="95.0" layoutY="271.0" prefHeight="17.0" prefWidth="116.0" text="\@patriburtic" textFill="#40457b">
+                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="84.0" layoutY="271.0" prefHeight="17.0" prefWidth="78.0" text="\@patriburtic" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
+                  <Group layoutX="185.0" layoutY="271.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="17" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group layoutX="60.0" layoutY="256.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group layoutX="404.0" layoutY="239.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="13" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
                   <Pane fx:id="panePhotoPostsFriends" layoutX="2.0" prefHeight="570.0" prefWidth="650.0">
                      <children>
                         <Rectangle fx:id="rectangleStPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />

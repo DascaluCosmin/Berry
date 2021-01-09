@@ -10,6 +10,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import socialnetwork.domain.*;
 import socialnetwork.service.*;
+import socialnetwork.service.postsServices.PhotoPostService;
+import socialnetwork.service.postsServices.PostLikesService;
+import socialnetwork.service.postsServices.TextPostService;
 import socialnetwork.utils.ViewClass;
 import socialnetwork.utils.passwordEncryption.PasswordCrypt;
 
@@ -43,6 +46,8 @@ public class LoginController {
     private TextPostService textPostService;
     private PhotoPostService photoPostService;
     private EventsService eventsService;
+    private PostLikesService photoPostLikesService;
+    private PostLikesService textPostLikesService;
     private Stage loginStage;
 
     @FXML
@@ -100,6 +105,14 @@ public class LoginController {
         this.eventsService = eventsService;
     }
 
+    public void setPhotoPostLikesService(PostLikesService photoPostLikesService) {
+        this.photoPostLikesService = photoPostLikesService;
+    }
+
+    public void setTextPostLikesService(PostLikesService textPostLikesService) {
+        this.textPostLikesService = textPostLikesService;
+    }
+
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
@@ -140,7 +153,7 @@ public class LoginController {
             AccountUserControllerV2 accountUserControllerV2 = loader.getController();
             Page loggedInUserPage = new Page(loggedInUser, userService, friendshipService, friendshipRequestService,
                     profilePhotoUserService, userCredentialsService, replyMessageService, messageService, textPostService,
-                    photoPostService, eventsService);
+                    photoPostService, eventsService, photoPostLikesService, textPostLikesService);
             accountUserControllerV2.setUserPage(loggedInUserPage);
             accountUserControllerV2.setAccountUserStage(accountUserStage);
             accountUserControllerV2.setLoginStage(loginStage);

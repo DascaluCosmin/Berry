@@ -1,5 +1,6 @@
 package socialnetwork.repository.database;
 
+import org.postgresql.util.PSQLException;
 import socialnetwork.domain.Entity;
 import socialnetwork.domain.Tuple;
 import socialnetwork.domain.posts.PhotoPost;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostLikesDBRepository implements Repository<Tuple<Long, Long>, PostLike> {
-    private String url;
-    private String username;
-    private String password;
-    private PostType postType;
+    private final String url;
+    private final String username;
+    private final String password;
+    private final PostType postType;
 
     /**
      * Constructor that creates a new PostLikesDBRepository
@@ -84,16 +85,106 @@ public class PostLikesDBRepository implements Repository<Tuple<Long, Long>, Post
         return listPostLikes;
     }
 
+    /**
+     * Method that gets the list of all PostLikes corresponding to a Post
+     * @param idPost Long, representing the ID of the Post
+     * @return Iterable<PostLike>, representing the list of all PostLikes corresponding to the Post
+     */
+    public Iterable<PostLike> findAll(Long idPost) {
+        List<PostLike> listPostLikes = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "";
+            if (postType == PostType.PHOTO) {
+                command = "SELECT * FROM \"photoPosts_Likes\" WHERE \"PhotoPostID\" = " + idPost;
+            } else if (postType == PostType.TEXT) {
+                command = "SELECT * FROM \"textPosts_Likes\" WHERE \"TextPostID\" = " + idPost;
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                listPostLikes.add(getPostLike(resultSet));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return listPostLikes;
+    }
+
+    /**
+     * Method that adds a new PostLike to the Data Base
+     * @param entity PostLike, representing the entity to be added
+     *         entity must be not null
+     * @return null, if the PostLike was added successfully
+     *      non-null PostLike, otherwise
+     */
     @Override
     public PostLike save(PostLike entity) {
-        return null;
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "";
+            if (postType == PostType.PHOTO) {
+                command = "INSERT INTO \"photoPosts_Likes\" (\"PhotoPostID\", \"UserID\") VALUES " +
+                        "(" + entity.getId().getLeft() + ", " + entity.getId().getRight() + ") " +
+                        "RETURNING *";
+            } else if (postType == PostType.TEXT) {
+                command = "INSERT INTO \"textPosts_Likes\" (\"TextPostID\", \"UserID\") VALUES " +
+                        "(" + entity.getId().getLeft() + ", " + entity.getId().getRight() + ") " +
+                        "RETURNING *";
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return null;
+                }
+            } catch (PSQLException ignored) {
+                return entity;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return entity;
     }
 
+    /**
+     * Method that deletes a PostLike from the Data Base
+     * @param tuple Tuple<Long, Long>, representing the IDs of the Post and User, representing the PostLike
+     *                      to be deleted
+     * @return null, if the PostLike doesn't exist
+     *      non-null PostLike, if the PostLike was deleted successfully
+     */
     @Override
-    public PostLike delete(Tuple<Long, Long> longLongTuple) {
+    public PostLike delete(Tuple<Long, Long> tuple) {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String command = "";
+            if (postType == PostType.PHOTO) {
+                command = "DELETE FROM \"photoPosts_Likes\" WHERE \"PhotoPostID\" = " + tuple.getLeft() +
+                        " AND \"UserID\" = " + tuple.getRight() + " " +
+                        "RETURNING *";
+            } else if (postType == PostType.TEXT) {
+                command = "DELETE FROM \"textPosts_Likes\" WHERE \"TextPostID\" = " + tuple.getLeft() +
+                        " AND \"UserID\" = " + tuple.getRight() + " " +
+                        "RETURNING *";
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(command);
+            try {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return getPostLike(resultSet);
+                }
+            } catch (PSQLException e) {
+                return null;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return null;
     }
 
+    /**
+     * Note: a PostLike can't be updated - either add, either delete it.
+     * @param entity PostLike, representing the new PostLike
+     * @return null - a PostLike can't be updated
+     */
     @Override
     public PostLike update(PostLike entity) {
         return null;

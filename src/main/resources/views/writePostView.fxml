@@ -16,8 +16,8 @@
             </ImageView>
          </graphic>
       </Label>
-      <TextArea fx:id="textAreaPost" layoutX="127.0" layoutY="123.0" prefHeight="150.0" prefWidth="355.0" stylesheets="@../css/writePostView.css" />
-      <Button fx:id="buttonPost" layoutX="391.0" layoutY="283.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="92.0" stylesheets="@../css/writePostView.css" text="Post" textFill="WHITE" onMouseClicked="#eventPost"/>
+      <TextArea fx:id="textAreaPost" layoutX="127.0" layoutY="123.0" prefHeight="150.0" prefWidth="355.0" stylesheets="@../css/writePostView.css" wrapText="true" />
+      <Button fx:id="buttonPost" layoutX="391.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#eventPost" prefHeight="27.0" prefWidth="92.0" stylesheets="@../css/writePostView.css" text="Post" textFill="WHITE" />
       <Label fx:id="labelExit" layoutX="489.0" layoutY="97.0" onMouseClicked="#eventExitView" prefHeight="18.0" prefWidth="26.0">
          <graphic>
             <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">

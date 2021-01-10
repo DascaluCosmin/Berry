@@ -71,6 +71,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     private List<Group> listGroupsBerryPostFriend;
     private List<Group> listGroupsNbBerriesPostFriendProfile;
     private List<Group> listGroupsBerryPostFriendProfile;
+    private List<Group> listGroupsNbBerriesPostProfile;
     private Page userPage;
     private Stage accountUserStage;
     private Stage loginStage;
@@ -123,6 +124,10 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         ));
         listGroupsBerryPostFriendProfile = new ArrayList<>(Arrays.asList(
                 groupBerryStPostFriendProfile, groupBerryNdPostFriendProfile, groupBerryRdPostFriendProfile
+        ));
+        listGroupsNbBerriesPostProfile = new ArrayList<>(Arrays.asList(
+                groupNbBerriesStPostProfile, groupNbBerriesNdPostProfile, groupNbBerriesRdPostProfile,
+                groupNbBerries4thPostProfile, groupNbBerries5thPostProfile, groupNbBerries6thPostProfile
         ));
         listRectanglesProfile = new ArrayList<>(Arrays.asList(
                 rectangleStPhoto, rectangleNdPhoto, rectangleRdPhoto,
@@ -430,7 +435,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextPhotoPostsFriends.setVisible(true);
         labelGoBackTextPostsFriends.setVisible(false);
         labelGoNextTextPostsFriends.setVisible(false);
-        buttonRemoveFriend.setVisible(false);
+        labelRemoveFriend.setVisible(false);
         pagePhotoPostsFeedFriends.setToFirstPage();
         pageTextPostsFeedFriends.setToFirstPage();
         initializeFeedPane();
@@ -454,6 +459,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
         labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
         setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+        setLabelPostLikes(listPhotoPostsProfile, listGroupsNbBerriesPostProfile);
     }
 
     /**
@@ -691,7 +697,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Label labelNbBerries6thPostFriend;
     @FXML
-    Button buttonRemoveFriend;
+    Label labelRemoveFriend;
     @FXML
     Button buttonStTextPostFriends;
     @FXML
@@ -740,6 +746,18 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Group groupBerryNdPostFriendProfile;
     @FXML
     Group groupBerryRdPostFriendProfile;
+    @FXML
+    Group groupNbBerriesStPostProfile;
+    @FXML
+    Group groupNbBerriesNdPostProfile;
+    @FXML
+    Group groupNbBerriesRdPostProfile;
+    @FXML
+    Group groupNbBerries4thPostProfile;
+    @FXML
+    Group groupNbBerries5thPostProfile;
+    @FXML
+    Group groupNbBerries6thPostProfile;
     @FXML
     Pane paneFriendsProfile;
     @FXML
@@ -799,6 +817,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Circle circleProfilePhotoFriend;
 
+
     /**
      * Method that initializes the Photo Posts of the Users' Friends
      * It sets the Photo Posts and the corresponding labels
@@ -853,6 +872,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                     labelNumberPostsFriend.setVisible(true);
                     labelNumberPhotosFriend.setVisible(true);
                     labelFriendRealName.setText(friendUser.getFullName());
+                    labelRemoveFriend.setVisible(true);
                     labelNumberFriendsFriend.setText(userPage.getFriendshipService().getNumberFriends(friendUser.getId()) + " Friends");
                     labelNumberPhotosFriend.setText(userPage.getPhotoPostService().getNumberPhotoPosts(friendUser.getId()) + " Photos");
                     labelNumberPostsFriend.setText(userPage.getTextPostService().getNumberTextPosts(friendUser.getId()) + " Posts");
@@ -867,6 +887,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 }
             }
         } else if (usernameUser.length() == 0) {
+            labelRemoveFriend.setVisible(false);
             labelFriendRealName.setVisible(false);
             labelNumberFriendsFriend.setVisible(false);
             labelNumberPostsFriend.setVisible(false);
@@ -1068,7 +1089,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     /**
-     * Method linked to the buttonRemoveFriend's onMouseClicked event
+     * Method linked to the labelRemoveFriend's onMouseClicked event
      * It asks the User whether to to remove the Friend or not
      */
     public void eventButtonRemoveFriend() {
@@ -1202,7 +1223,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             if (userPage.getPhotoPostService().addPhotoPost(photoPost) == null) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "The photo was added successfully!");
                 alert.show();
-                setRectanglesPhoto(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listRectanglesProfile);
+                List<PhotoPost> listPhotoPostsProfile = userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile);
+                setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+                setLabelPostLikes(listPhotoPostsProfile, listGroupsNbBerriesPostProfile);
                 numberPhotos++;
                 labelNumberPhotos.setText(numberPhotos + " Photos");
             } else {
@@ -1231,6 +1254,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         writePostStage.setOnHiding(event -> {
             // When closing (hiding) the Write Post Stage, we want the number of Posts to be updated
             numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
+            setLabelPostLikes(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listGroupsNbBerriesPostProfile);
         });
         writePostStage.show();
     }
@@ -1246,12 +1270,14 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
             labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
             setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+            setLabelPostLikes(listPhotoPostsProfile, listGroupsNbBerriesPostProfile);
         } else if (paneTextPostsProfile.isVisible()){
             pageTextPostProfile.nextPage();
             List<TextPost> listTextPostsProfile = userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile);
             labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
             labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
             setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
+            setLabelPostLikes(listTextPostsProfile, listGroupsNbBerriesPostProfile);
         }
     }
 
@@ -1270,6 +1296,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
                 labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
                 setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+                setLabelPostLikes(listPhotoPostsProfile, listGroupsNbBerriesPostProfile);
             }
         } else if (paneTextPostsProfile.isVisible()) {
             if (pageTextPostProfile.getNumberPage() == 1) {
@@ -1281,6 +1308,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
                 labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
                 setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
+                setLabelPostLikes(listTextPostsProfile, listGroupsNbBerriesPostProfile);
             }
         }
     }
@@ -1295,6 +1323,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoBackProfile.setVisible(pagePhotoPostProfile.getNumberPage() > 1);
         labelGoNextProfile.setVisible(pagePhotoPostProfile.getSizePage() == listPhotoPostsProfile.size());
         setRectanglesPhoto(listPhotoPostsProfile, listRectanglesProfile);
+        setLabelPostLikes(listPhotoPostsProfile, listGroupsNbBerriesPostProfile);
         panePhotoPostsProfile.setVisible(true);
         paneTextPostsProfile.setVisible(false);
     }
@@ -1309,6 +1338,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoBackProfile.setVisible(pageTextPostProfile.getNumberPage() > 1);
         labelGoNextProfile.setVisible(pageTextPostProfile.getSizePage() == listTextPostsProfile.size());
         setButtonsTextPosts(listTextPostsProfile, listButtonsProfile);
+        setLabelPostLikes(listTextPostsProfile, listGroupsNbBerriesPostProfile);
         paneTextPostsProfile.setVisible(true);
         panePhotoPostsProfile.setVisible(false);
     }
@@ -1903,11 +1933,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     public void eventGoBackFriendChat() {
         pagePossibleFriendChat.previousPage();
-        if (pagePossibleFriendChat.getNumberPage() == 1) {
-            labelGoBackFriendChat.setVisible(false);
-        } else {
-            labelGoBackFriendChat.setVisible(true);
-        }
+        labelGoBackFriendChat.setVisible(pagePossibleFriendChat.getNumberPage() != 1);
         initializeCurrentFriendsChat();
     }
 

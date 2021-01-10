@@ -160,9 +160,17 @@
          </children></Pane>
       <Pane fx:id="feedPane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0">
          <children>
+            <Label fx:id="labelRemoveFriend" layoutX="206.0" layoutY="12.0" onMouseClicked="#eventButtonRemoveFriend" prefHeight="31.0" prefWidth="27.0" visible="false">
+               <graphic>
+                  <ImageView fx:id="imageViewRemoveFriend" fitHeight="27.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/unfriend.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
-            <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
-            <TextField fx:id="textFieldTrash" layoutX="299.0" layoutY="16.0" opacity="0.0">
+            <TextField fx:id="textFieldTrash" layoutX="198.0" layoutY="16.0" opacity="0.0" prefHeight="25.0" prefWidth="4.0">
                <cursor>
                   <Cursor fx:constant="DISAPPEAR" />
                </cursor></TextField>
@@ -176,6 +184,8 @@
                </graphic>
             </Label>
             <TextField fx:id="textFieldSearchFriend" layoutX="63.0" layoutY="16.0" onKeyTyped="#eventSearchFriend" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
+            <Button fx:id="buttonShowPhotoPostsFriends" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+            <Button fx:id="buttonShowTextPostsFriends" layoutX="574.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
             <Pane fx:id="paneFriendsProfile" layoutX="17.0" layoutY="63.0" prefHeight="613.0" prefWidth="650.0" visible="false">
                <children>
                   <Label fx:id="labelNumberFriendsFriend" layoutX="221.0" layoutY="250.0" text="# Friends" textFill="#40457b" />
@@ -189,17 +199,17 @@
                   <Circle fx:id="circleProfilePhotoFriend" fill="WHITE" layoutX="325.0" layoutY="99.0" radius="119.0" stroke="#40457B" strokeType="INSIDE" />
                   <Pane fx:id="paneFriendsProfilePhotos" layoutX="22.0" layoutY="276.0" prefHeight="301.0" prefWidth="619.0">
                      <children>
-                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="-15.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="204.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="421.0" layoutY="14.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleStPhotoFriendFeed" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="282.0" layoutX="-17.0" layoutY="10.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoFriendFeed" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="282.0" layoutX="202.0" layoutY="9.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoFriendFeed" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="282.0" layoutX="417.0" layoutY="10.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
                      </children></Pane>
                   <Pane fx:id="paneFriendsProfilePosts" layoutX="22.0" layoutY="276.0" prefHeight="301.0" prefWidth="611.0" visible="false">
                      <children>
-                        <Button fx:id="buttonStPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="-15.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                        <Button fx:id="buttonNdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="204.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                        <Button fx:id="buttonRdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="421.0" layoutY="14.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonStPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="-17.0" layoutY="9.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonNdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="9.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                        <Button fx:id="buttonRdPostProfileFriend" alignment="CENTER" contentDisplay="CENTER" layoutX="417.0" layoutY="9.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
                      </children></Pane>
-                  <Label fx:id="labelGoNextProfileFriend" alignment="CENTER" layoutX="630.0" layoutY="586.0" onMouseClicked="#eventGoNextFriend" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoNextProfileFriend" alignment="CENTER" layoutX="631.0" layoutY="586.0" onMouseClicked="#eventGoNextFriend" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -208,7 +218,7 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <Label fx:id="labelGoBackProfileFriend" alignment="CENTER" layoutX="3.0" layoutY="586.0" onMouseClicked="#eventGoBackFriend" prefHeight="21.0" prefWidth="20.0">
+                  <Label fx:id="labelGoBackProfileFriend" alignment="CENTER" layoutX="-1.0" layoutY="586.0" onMouseClicked="#eventGoBackFriend" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -216,50 +226,216 @@
                            </image>
                         </ImageView>
                      </graphic></Label>
-                  <Button fx:id="buttonShowPhotosProfileFriend" layoutX="249.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
-                  <Button fx:id="buttonShowProfileTextFriend" layoutX="349.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+                  <Group fx:id="groupNbBerriesStPostFriendProfile" layoutX="113.0" layoutY="568.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupNbBerriesNdPostFriendProfile" layoutX="331.0" layoutY="568.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupNbBerriesRdPostFriendProfile" layoutX="546.0" layoutY="568.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerryStPostFriendProfile" layoutX="141.0" layoutY="556.0">
+                     <children>
+                        <Button fx:id="buttonBerryStPostFriendProfile" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerryNdPostFriendProfile" layoutX="360.0" layoutY="556.0">
+                     <children>
+                        <Button fx:id="buttonBerryNdPostFriendProfile" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerryRdPostFriendProfile" layoutX="575.0" layoutY="556.0">
+                     <children>
+                        <Button fx:id="buttonBerryRdPostFriendProfile" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
                </children>
             </Pane>
             <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0">
                <children>
-                  <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
+                  <Label fx:id="labelUserNameStPost" layoutX="29.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserNameNdPost" layoutX="227.0" layoutY="227.0" prefHeight="17.0" prefWidth="59.0" text="\@larisuuuca" textFill="#40457b">
+                  <Group fx:id="groupNbBerriesStPostFriend" layoutX="118.0" layoutY="256.0">
+                     <children>
+                        <Label fx:id="labelNbBerriesStPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="120" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelUserNameNdPost" layoutX="247.0" layoutY="227.0" prefHeight="17.0" prefWidth="59.0" text="\@larisuuca" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserNameRdPost" layoutX="442.0" layoutY="347.0" prefHeight="17.0" prefWidth="59.0" text="\@carinac" textFill="#40457b">
+                  <Group fx:id="groupNbBerriesNdPostFriend" layoutX="336.0" layoutY="228.0">
+                     <children>
+                        <Label fx:id="labelNbBerriesNdPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelUserNameRdPost" layoutX="463.0" layoutY="347.0" prefHeight="17.0" prefWidth="59.0" text="\@patri" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName5thPost" alignment="CENTER_RIGHT" layoutX="368.0" layoutY="239.0" prefHeight="17.0" prefWidth="59.0" text="\@serju" textFill="#40457b">
+                  <Group fx:id="groupNbBerriesRdPostFriend" layoutX="551.0" layoutY="347.0">
+                     <children>
+                        <Label fx:id="labelNbBerriesRdPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelUserName4thPost" layoutX="29.0" layoutY="570.0" prefHeight="17.0" prefWidth="59.0" text="\@patri" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName6thPost" alignment="CENTER_RIGHT" layoutX="583.0" layoutY="355.0" prefHeight="17.0" prefWidth="59.0" text="\@mariafl" textFill="#40457b">
+                  <Group fx:id="groupNbBerries4thPostFriend" layoutX="118.0" layoutY="570.0">
+                     <children>
+                        <Label fx:id="labelNbBerries4thPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelUserName5thPost" layoutX="247.0" layoutY="570.0" prefHeight="17.0" prefWidth="59.0" text="\@patri" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelUserName4thPost" alignment="CENTER_RIGHT" layoutX="149.0" layoutY="271.0" prefHeight="17.0" prefWidth="59.0" text="\@patriburtic" textFill="#40457b">
+                  <Group fx:id="groupNbBerries5thPostFriend" layoutX="336.0" layoutY="570.0">
+                     <children>
+                        <Label fx:id="labelNbBerries5thPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Label fx:id="labelUserName6thPost" layoutX="463.0" layoutY="570.0" prefHeight="17.0" prefWidth="59.0" text="\@patri" textFill="#40457b">
                      <font>
                         <Font name="Ebrima Bold" size="9.0" />
                      </font>
                   </Label>
+                  <Group fx:id="groupNbBerries6thPostFriend" layoutX="551.0" layoutY="570.0">
+                     <children>
+                        <Label fx:id="labelNbBerries6thPostFriend" alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                           <font>
+                              <Font name="Ebrima" size="9.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
                   <Pane fx:id="panePhotoPostsFriends" layoutX="2.0" prefHeight="570.0" prefWidth="650.0">
                      <children>
-                        <Rectangle fx:id="rectangleStPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleNdPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangleRdPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangle4thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangle5thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                        <Rectangle fx:id="rectangle6thPhotoPostFriends" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleStPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleNdPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangleRdPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle4thPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle5thPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                        <Rectangle fx:id="rectangle6thPhotoPostFriends" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
                      </children>
                   </Pane>
                   <Pane fx:id="paneTextPostsFriends" prefHeight="570.0" prefWidth="650.0" visible="false">
@@ -272,8 +448,6 @@
                         <Button fx:id="buttonRdTextPostFriends" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="1.0" mnemonicParsing="false" prefHeight="346.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
                      </children>
                   </Pane>
-                  <Button fx:id="buttonShowPhotoPostsFriends" layoutX="253.0" layoutY="578.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
-                  <Button fx:id="buttonShowTextPostsFriends" layoutX="353.0" layoutY="578.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
                   <Label fx:id="labelGoBackPhotoPostsFriends" alignment="CENTER" layoutX="4.0" layoutY="587.0" onMouseClicked="#eventGoBackPhotoPostsFriends" prefHeight="21.0" prefWidth="20.0">
                      <graphic>
                         <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
@@ -310,6 +484,126 @@
                         </ImageView>
                      </graphic>
                   </Label>
+                  <Group fx:id="groupBerryStPostFriend" layoutX="146.0" layoutY="244.0">
+                     <children>
+                        <Button fx:id="buttonBerryStPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerryNdPostFriend" layoutX="365.0" layoutY="216.0">
+                     <children>
+                        <Button fx:id="buttonBerryNdPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerryRdPostFriend" layoutX="580.0" layoutY="335.0">
+                     <children>
+                        <Button fx:id="buttonBerryRdPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerry4thPostFriend" layoutX="146.0" layoutY="558.0">
+                     <children>
+                        <Button fx:id="buttonBerry4thPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerry5thPostFriend" layoutX="365.0" layoutY="558.0">
+                     <children>
+                        <Button fx:id="buttonBerry5thPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+                  <Group fx:id="groupBerry6thPostFriend" layoutX="580.0" layoutY="558.0">
+                     <children>
+                        <Button fx:id="buttonBerry6thPostFriend" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" stylesheets="@../css/accountUserV2.css" text="Berry" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="56.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Group>
+               </children>
+            </Pane>
+            <Pane fx:id="paneFriendsFeed1" layoutX="12.0" layoutY="10.0" visible="false">
+               <children>
+                  <Pane fx:id="panePhotoPostsFriends1" layoutY="51.0" prefHeight="613.0" prefWidth="670.0">
+                     <children>
+                        <Rectangle fx:id="rectanglePhotoFriendFeed" arcHeight="35.0" arcWidth="35.0" fill="WHITE" height="410.0" layoutX="145.0" layoutY="94.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle fx:id="rectanglePhotoFriendFeedUp" arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="52.0" layoutX="145.0" layoutY="-4.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle arcHeight="1.0" arcWidth="1.0" fill="#dae2f8" height="26.0" layoutX="137.0" layoutY="-7.0" stroke="#dae2f8" strokeType="INSIDE" width="402.0" />
+                        <Label fx:id="labelUsernameFriendFeed" layoutX="147.0" layoutY="68.0" text="\@patri" textFill="#40457b">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="149.0" layoutY="504.0" prefHeight="17.0" prefWidth="26.0" text="157" textFill="#40457b" />
+                        <Rectangle fx:id="rectanglePhotoFriendFeedDown" arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="52.0" layoutX="145.0" layoutY="547.0" rotate="180.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle arcHeight="1.0" arcWidth="1.0" fill="#dae2f8" height="34.0" layoutX="109.0" layoutY="579.0" stroke="#dae2f8" strokeType="INSIDE" width="458.0" />
+                        <Button fx:id="buttonBerry" layoutX="460.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Berry" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="20.0" fitWidth="17.0" layoutX="525.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="179.0" layoutY="503.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Button fx:id="buttonShowPhotoPostsFriends1" layoutX="440.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+                  <Button fx:id="buttonShowTextPostsFriends1" layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
                </children>
             </Pane>
          </children>
@@ -317,45 +611,129 @@
       <Pane fx:id="profilePane" layoutX="354.0" layoutY="5.0" prefHeight="679.0" prefWidth="684.0" visible="false">
          <children>
             <Label fx:id="labelExitApplicationProfile" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
-            <Button fx:id="buttonChangeProfilePhoto" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Change Profile Photo" textFill="WHITE" />
-            <Button fx:id="buttonWritePost" layoutX="363.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Write Post" textFill="WHITE" />
-            <Button fx:id="buttonAddPhoto" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Add Photo" textFill="WHITE" />
-            <Pane fx:id="panePhotoPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0">
+            <Button fx:id="buttonChangeProfilePhoto" layoutX="27.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventChangeProfilePhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Change Profile Photo" textFill="WHITE" visible="false" />
+            <Button fx:id="buttonWritePost" layoutX="21.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventWritePost" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Write Post" textFill="WHITE" />
+            <Button fx:id="buttonAddPhoto" layoutX="162.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventAddPhoto" prefHeight="32.0" prefWidth="129.0" stylesheets="@../css/accountUserV2.css" text="Add Photo" textFill="WHITE" />
+            <Group fx:id="groupNbBerriesStPostProfile" layoutX="49.0" layoutY="317.0">
                <children>
-                  <Rectangle fx:id="rectangleStPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="256.0" layoutX="8.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle4thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="282.0" layoutX="8.0" layoutY="288.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle5thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="314.0" layoutX="227.0" layoutY="256.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleRdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="347.0" layoutX="442.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangleNdPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="228.0" layoutX="227.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-                  <Rectangle fx:id="rectangle6thPhoto" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="198.0" layoutX="442.0" layoutY="372.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
-               </children>
-            </Pane>
-            <Pane fx:id="paneTextPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0" visible="false">
-               <children>
-                  <Button fx:id="buttonStPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" mnemonicParsing="false" prefHeight="256.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="button6thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="372.0" mnemonicParsing="false" prefHeight="198.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="button4thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="289.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="buttonNdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" mnemonicParsing="false" prefHeight="228.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="button5thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="256.0" mnemonicParsing="false" prefHeight="314.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="buttonRdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="443.0" layoutY="1.0" mnemonicParsing="false" prefHeight="346.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
-               </children>
-            </Pane>
-            <Button fx:id="buttonShowPhotosProfile" layoutX="266.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
-            <Button fx:id="buttonShowProfileText" layoutX="366.0" layoutY="640.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
-            <Label fx:id="labelGoNextProfile" alignment="CENTER" layoutX="649.0" layoutY="649.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
-               <graphic>
-                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="120" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/ButtonGoNext.png" />
+                        <Image url="@../images/berryLike.png" />
                      </image>
                   </ImageView>
-               </graphic>
-            </Label>
+               </children>
+            </Group>
+            <Group fx:id="groupNbBerriesNdPostProfile" layoutX="265.0" layoutY="289.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/berryLike.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group fx:id="groupNbBerriesRdPostProfile" layoutX="483.0" layoutY="408.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/berryLike.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group fx:id="groupNbBerries4thPostProfile" layoutX="49.0" layoutY="631.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/berryLike.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group fx:id="groupNbBerries5thPostProfile" layoutX="265.0" layoutY="631.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/berryLike.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Group fx:id="groupNbBerries6thPostProfile" layoutX="483.0" layoutY="631.0">
+               <children>
+                  <Label alignment="CENTER_RIGHT" layoutX="-19.0" prefHeight="17.0" prefWidth="23.0" text="24" textFill="#40457b">
+                     <font>
+                        <Font name="Ebrima" size="9.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="7.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/berryLike.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
             <Label fx:id="labelGoBackProfile" alignment="CENTER" layoutX="17.0" layoutY="649.0" onMouseClicked="#eventGoBackProfile" prefHeight="21.0" prefWidth="20.0">
                <graphic>
                   <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ButtonGoBack.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Pane fx:id="panePhotoPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0">
+               <children>
+                  <Rectangle fx:id="rectangleStPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="256.0" layoutX="5.0" layoutY="-2.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle4thPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="282.0" layoutX="5.0" layoutY="286.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle5thPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="314.0" layoutX="224.0" layoutY="254.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleRdPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="347.0" layoutX="439.0" layoutY="-2.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangleNdPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="228.0" layoutX="224.0" layoutY="-2.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+                  <Rectangle fx:id="rectangle6thPhoto" arcHeight="45.0" arcWidth="45.0" fill="WHITE" height="198.0" layoutX="439.0" layoutY="370.0" stroke="#40457B" strokeType="INSIDE" width="200.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="paneTextPostsProfile" layoutX="17.0" layoutY="63.0" prefHeight="570.0" prefWidth="650.0" visible="false">
+               <children>
+                  <Button fx:id="buttonStPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="256.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button6thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="439.0" layoutY="369.0" mnemonicParsing="false" prefHeight="198.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button4thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="285.0" mnemonicParsing="false" prefHeight="282.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="buttonNdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="224.0" layoutY="-3.0" mnemonicParsing="false" prefHeight="228.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="button5thPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="224.0" layoutY="253.0" mnemonicParsing="false" prefHeight="314.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="buttonRdPostProfile" alignment="CENTER" contentDisplay="CENTER" layoutX="439.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="346.0" prefWidth="200.0" stylesheets="@../css/accountUserV2.css" text="Text" textAlignment="CENTER" wrapText="true" />
+               </children>
+            </Pane>
+            <Button fx:id="buttonShowPhotosProfile" layoutX="505.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+            <Button fx:id="buttonShowProfileText" layoutX="574.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfile" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
+            <Label fx:id="labelGoNextProfile" alignment="CENTER" layoutX="649.0" layoutY="649.0" onMouseClicked="#eventGoNextProfile" prefHeight="21.0" prefWidth="20.0">
+               <graphic>
+                  <ImageView fitHeight="21.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ButtonGoNext.png" />
                      </image>
                   </ImageView>
                </graphic>

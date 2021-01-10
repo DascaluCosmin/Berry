@@ -94,13 +94,15 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
      * @param postUserType PostUserType, representing the Type of the User posting
      *                USER - meaning the USER posted
      *                FRIEND - meaning the FRIEND of the User posted
+     * @param isLeaping Boolean, representing the way the Photo Posts are determined
+     *                  (pageNumber - 1) * pageSize or pageNumber - 1
      * @return Iterable<PhotoPost>, representing the list of Photo Posts of the User on that Page
      *      in descending order by Date
      */
-    public Iterable<PhotoPost> findAll(Long idUser, ContentPage currentPage, PostUserType postUserType) {
+    public Iterable<PhotoPost> findAll(Long idUser, ContentPage currentPage, PostUserType postUserType, Boolean isLeaping) {
         List<PhotoPost> photoPostList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(postUserTypeToCommand(idUser, currentPage, postUserType));
+            PreparedStatement preparedStatement = connection.prepareStatement(postUserTypeToCommand(idUser, currentPage, postUserType, isLeaping));
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 photoPostList.add(getPhotoPost(resultSet));
@@ -216,12 +218,20 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
      * @param postUserType PostUserType, representing the Type of the User posting
      *                USER - meaning the USER posted
      *                FRIEND - meaning the FRIEND of the User posted
+     * @param isLeaping Boolean, representing the way the Photo Posts are determined
+     *                  (pageNumber - 1) * pageSize or pageNumber - 1
      * @return String, representing the SQL Command to be run
      */
-    private String postUserTypeToCommand(Long idUser, ContentPage currentPage, PostUserType postUserType) {
+    private String postUserTypeToCommand(Long idUser, ContentPage currentPage, PostUserType postUserType, Boolean isLeaping) {
         String subQuery = "(SELECT \"idRight\" FROM friendships WHERE \"idLeft\" = " + idUser + ")";
-        String limitQuery =  " LIMIT " + currentPage.getSizePage() +
-                " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+        String limitQuery =  "";
+        if (isLeaping) {
+            limitQuery = " LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1) * currentPage.getSizePage();
+        } else {
+            limitQuery = " LIMIT " + currentPage.getSizePage() +
+                    " OFFSET " + (currentPage.getNumberPage() - 1);
+        }
         if (postUserType == PostUserType.USER) {
             return "SELECT * FROM \"photoPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC" + limitQuery;
         }

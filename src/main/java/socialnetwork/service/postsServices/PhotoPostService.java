@@ -68,7 +68,7 @@ public class PhotoPostService {
      */
     public List<PhotoPost> getListPhotoPosts(Long idUser, ContentPage page) {
         List<PhotoPost> photoPostList = new ArrayList<>();
-        photoPostDBRepository.findAll(idUser, page, PostUserType.USER).forEach(photoPostList::add);
+        photoPostDBRepository.findAll(idUser, page, PostUserType.USER, true).forEach(photoPostList::add);
         return photoPostList;
     }
 
@@ -80,7 +80,19 @@ public class PhotoPostService {
      */
     public List<PhotoPost> getListPhotoPostsFriends(Long idUser, ContentPage page) {
         List<PhotoPost> photoPostListFriends = new ArrayList<>();
-        photoPostDBRepository.findAll(idUser, page, PostUserType.FRIEND).forEach(photoPostListFriends::add);
+        photoPostDBRepository.findAll(idUser, page, PostUserType.FRIEND, true).forEach(photoPostListFriends::add);
+        return photoPostListFriends;
+    }
+
+    /**
+     * Method that gets the list of Photo Posts of a User's friends, on a specific Page, in consecutive order
+     * @param idUser Long, representing the ID of the User
+     * @param page ContentPage, representing the Page containing the Photo Posts
+     * @return List<PhotoPost>, representing the list of Photo Posts of the User's friends, on that Page
+     */
+    public List<PhotoPost> getListPhotoPostsFriendsConsecutive(Long idUser, ContentPage page) {
+        List<PhotoPost> photoPostListFriends = new ArrayList<>();
+        photoPostDBRepository.findAll(idUser, page, PostUserType.FRIEND, false).forEach(photoPostListFriends::add);
         return photoPostListFriends;
     }
 

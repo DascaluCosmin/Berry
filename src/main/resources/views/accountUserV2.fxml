@@ -162,7 +162,7 @@
          <children>
             <Label fx:id="labelExitApplicationFeed" layoutX="647.0" layoutY="11.0" onMouseClicked="#eventExitApplication" prefHeight="23.0" prefWidth="23.0" />
             <Button fx:id="buttonRemoveFriend" layoutX="504.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#eventButtonRemoveFriend" prefHeight="32.0" prefWidth="131.0" stylesheets="@../css/accountUserV2.css" text="Remove Friend" textFill="WHITE" visible="false" />
-            <TextField fx:id="textFieldTrash" layoutX="299.0" layoutY="16.0" opacity="0.0">
+            <TextField fx:id="textFieldTrash" layoutX="198.0" layoutY="16.0" opacity="0.0" prefHeight="25.0" prefWidth="4.0">
                <cursor>
                   <Cursor fx:constant="DISAPPEAR" />
                </cursor></TextField>
@@ -220,7 +220,7 @@
                   <Button fx:id="buttonShowProfileTextFriend" layoutX="349.0" layoutY="577.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPaneProfileFriend" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
                </children>
             </Pane>
-            <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0">
+            <Pane fx:id="paneFriendsFeed" layoutX="12.0" layoutY="61.0" prefHeight="613.0" prefWidth="670.0" visible="false">
                <children>
                   <Label fx:id="labelUserNameStPost" layoutX="8.0" layoutY="256.0" prefHeight="17.0" prefWidth="59.0" text="\@elena4" textFill="#40457b">
                      <font>
@@ -352,6 +352,42 @@
                         </ImageView>
                      </graphic>
                   </Label>
+               </children>
+            </Pane>
+            <Pane fx:id="paneFriendsFeed1" layoutX="12.0" layoutY="10.0">
+               <children>
+                  <Pane fx:id="panePhotoPostsFriends1" layoutY="51.0" prefHeight="613.0" prefWidth="670.0">
+                     <children>
+                        <Rectangle fx:id="rectanglePhotoFriendFeed" arcHeight="35.0" arcWidth="35.0" fill="WHITE" height="410.0" layoutX="145.0" layoutY="94.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle fx:id="rectanglePhotoFriendFeedUp" arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="52.0" layoutX="145.0" layoutY="-4.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle arcHeight="1.0" arcWidth="1.0" fill="#dae2f8" height="26.0" layoutX="137.0" layoutY="-7.0" stroke="#dae2f8" strokeType="INSIDE" width="402.0" />
+                        <Label fx:id="labelUsernameFriendFeed" layoutX="147.0" layoutY="68.0" text="\@patri" textFill="#40457b">
+                           <font>
+                              <Font name="System Bold" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" layoutX="149.0" layoutY="504.0" prefHeight="17.0" prefWidth="26.0" text="157" textFill="#40457b" />
+                        <Rectangle fx:id="rectanglePhotoFriendFeedDown" arcHeight="35.0" arcWidth="35.0" fill="#40457b" height="52.0" layoutX="145.0" layoutY="547.0" rotate="180.0" stroke="#40457b" strokeType="INSIDE" width="380.0" />
+                        <Rectangle arcHeight="1.0" arcWidth="1.0" fill="#dae2f8" height="34.0" layoutX="109.0" layoutY="579.0" stroke="#dae2f8" strokeType="INSIDE" width="458.0" />
+                        <Button fx:id="buttonBerry" layoutX="460.0" layoutY="489.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="86.0" stylesheets="@../css/accountUserV2.css" text="Berry" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <ImageView fitHeight="20.0" fitWidth="17.0" layoutX="525.0" layoutY="496.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="20.0" fitWidth="23.0" layoutX="179.0" layoutY="503.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/berryLike.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Button fx:id="buttonShowPhotoPostsFriends1" layoutX="440.0" mnemonicParsing="false" onMouseClicked="#eventShowPhotoPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Photos" textFill="WHITE" />
+                  <Button fx:id="buttonShowTextPostsFriends1" layoutX="530.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#eventShowTextPostsFriends" prefHeight="32.0" prefWidth="59.0" stylesheets="@../css/accountUserV2.css" text="Posts" textFill="WHITE" />
                </children>
             </Pane>
          </children>

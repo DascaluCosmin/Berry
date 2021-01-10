@@ -121,6 +121,15 @@
     -fx-background-color: #333A83;
 }
 
+#buttonShowPhotoPostsFriends1 {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowPhotosProfileFriend1:hover {
+    -fx-background-color: #333A83;
+}
+
 #buttonShowProfileTextFriend {
     -fx-background-color: #40457B;
     -fx-background-radius: 6px;
@@ -129,6 +138,16 @@
 #buttonShowProfileTextFriend:hover {
     -fx-background-color: #333A83;
 }
+
+#buttonShowTextPostsFriends1 {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonShowTextPostsFriends1:hover {
+    -fx-background-color: #333A83;
+}
+
 
 #buttonStPostProfileFriend {
     -fx-background-color: white;
@@ -193,6 +212,14 @@
     -fx-background-radius: 15px;
 }
 
+#buttonBerry {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerry:hover {
+    -fx-background-color: #333A83;
+}
 
 /* FEED END */
 

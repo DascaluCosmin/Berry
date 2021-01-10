@@ -185,6 +185,20 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
                 initializeConversation();
             }
         });
+        panePhotoPostsFriends1.setOnScroll((ScrollEvent e) -> {
+            System.out.println("here");
+            if (e.getDeltaY() < 0) {
+                if (pagePhotoPostsFeedFriends1.getNumberPage() > 1) {
+                    pagePhotoPostsFeedFriends1.previousPage();
+                    initializePhotoPostsFriends1();
+                }
+            } else {
+                if (!noMorePhotoPostsFeedFriends) {
+                    pagePhotoPostsFeedFriends1.nextPage();
+                    initializePhotoPostsFriends1();
+                }
+            }
+        });
         for(int i = 0; i < listGroupMessagesInbox.size(); i++) {
             Group currentGroup = listGroupMessagesInbox.get(i);
             int finalI = i;
@@ -284,16 +298,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
      */
     private void initializeFeedPane() {
         pagePhotoPostsFeedFriends.setToFirstPage();
+        pagePhotoPostsFeedFriends1.setToFirstPage();
         textFieldSearchFriend.clear();
-        panePhotoPostsFriends.setVisible(true);
-        paneTextPostsFriends.setVisible(false);
-        paneFriendsFeed.setVisible(true);
-        paneFriendsProfile.setVisible(false);
-        labelGoBackPhotoPostsFriends.setVisible(true);
-        labelGoNextPhotoPostsFriends.setVisible(true);
-        labelGoBackTextPostsFriends.setVisible(false);
-        labelGoNextTextPostsFriends.setVisible(false);
-        initializePhotoPostsFriends();
+        panePhotoPostsFriends1.setVisible(true);
+        paneFriendsFeed1.setVisible(true);
+        initializePhotoPostsFriends1();
     }
 
     /**
@@ -598,6 +607,9 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     }
 
     // FEED PANE
+    private Boolean noMorePhotoPostsFeedFriends = false;
+
+    private final ContentPage pagePhotoPostsFeedFriends1 = new ContentPage(2, 1);
     private final ContentPage pagePhotoPostsFeedFriends = new ContentPage(6, 1);
     private final ContentPage pageTextPostsFeedFriends = new ContentPage(6, 1);
 
@@ -623,6 +635,8 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     Label labelGoBackProfileFriend;
     @FXML
     Label labelGoNextProfileFriend;
+    @FXML
+    Label labelUsernameFriendFeed;
     @FXML
     Label labelUserNameStPost;
     @FXML
@@ -654,11 +668,15 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Pane paneFriendsFeed;
     @FXML
+    Pane paneFriendsFeed1;
+    @FXML
     Pane paneFriendsProfilePosts;
     @FXML
     Pane paneFriendsProfilePhotos;
     @FXML
     Pane panePhotoPostsFriends;
+    @FXML
+    Pane panePhotoPostsFriends1;
     @FXML
     Pane paneTextPostsFriends;
     @FXML
@@ -680,6 +698,12 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
     @FXML
     Rectangle rectangleRdPhotoFriendFeed;
     @FXML
+    Rectangle rectanglePhotoFriendFeedUp;
+    @FXML
+    Rectangle rectanglePhotoFriendFeed;
+    @FXML
+    Rectangle rectanglePhotoFriendFeedDown;
+    @FXML
     Button buttonStPostProfileFriend;
     @FXML
     Button buttonNdPostProfileFriend;
@@ -698,6 +722,28 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         labelGoNextPhotoPostsFriends.setVisible(pagePhotoPostsFeedFriends.getSizePage() == listPhotoPostsFriends.size());
         setRectanglesPhoto(listPhotoPostsFriends, listRectanglesFeedFriends);
         setLabelsUserNames(listPhotoPostsFriends, listLabelsFeedFriends);
+    }
+
+    /**
+     * Method that initializes the Photo Posts of the Users' Friends
+     * It sets the Photo Posts and the corresponding labels
+     */
+    private void initializePhotoPostsFriends1() {
+        List<PhotoPost> listPhotoPostsFriends = userPage.getPhotoPostService().getListPhotoPostsFriendsConsecutive(userPage.getUser().getId(), pagePhotoPostsFeedFriends1);
+        rectanglePhotoFriendFeedUp.setVisible(pagePhotoPostsFeedFriends1.getNumberPage() > 1);
+        System.out.println(listPhotoPostsFriends.size());
+        if (pagePhotoPostsFeedFriends1.getSizePage() - 1 >= listPhotoPostsFriends.size()) {
+            noMorePhotoPostsFeedFriends = true;
+        } else {
+            noMorePhotoPostsFeedFriends = false;
+        }
+        rectanglePhotoFriendFeedDown.setVisible(pagePhotoPostsFeedFriends1.getSizePage() == listPhotoPostsFriends.size());
+        if (listPhotoPostsFriends.size() > 0) {
+            //PhotoPost currentPhotoPost = listPhotoPostsFriends.get(0);
+            setRectanglesPhoto(Collections.singletonList(listPhotoPostsFriends.get(0)), Collections.singletonList(rectanglePhotoFriendFeed));
+            setLabelsUserNames(Collections.singletonList(listPhotoPostsFriends.get(0)), Collections.singletonList(labelUsernameFriendFeed));
+            setLabelPostLikes(Collections.singletonList(userPage.getPhotoPostLikesService().getNumberOfLikes()))
+        }
     }
 
     /**
@@ -1195,6 +1241,19 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         for (int i = 0; i < listPosts.size(); i++) {
             Long userID = listPosts.get(i).getUserID();
             listLabels.get(i).setText("@" + userPage.getUserCredentialsService().findOne(userID).getUsername());
+        }
+    }
+
+    /**
+     * Method that sets some Labels corresponding to the number of Likes
+     * @param listNumberLikes List<Integer>, representing the number of Likes
+     * @param listLabels List<Label>, representing the Labels to be set
+     */
+    private void setLabelPostLikes(List<Integer> listNumberLikes, List<Label> listLabels) {
+        // First, reset the Labels
+        listLabels.forEach(label -> label.setText(""));
+        for (int i = 0; i < listNumberLikes.size(); i++) {
+            listLabels.get(i).setText(listNumberLikes.get(i).toString());
         }
     }
 

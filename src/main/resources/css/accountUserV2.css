@@ -148,6 +148,86 @@
     -fx-background-color: #333A83;
 }
 
+#buttonBerryStPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryStPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerryNdPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryNdPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerryRdPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryRdPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerry4thPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerry4thPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerry5thPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerry5thPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerry6thPostFriend {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerry6thPostFriend:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerryStPostFriendProfile {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryStPostFriendProfile:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerryNdPostFriendProfile {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryNdPostFriendProfile:hover {
+    -fx-background-color: #333A83;
+}
+
+#buttonBerryRdPostFriendProfile {
+    -fx-background-color: #40457B;
+    -fx-background-radius: 6px;
+}
+
+#buttonBerryRdPostFriendProfile:hover {
+    -fx-background-color: #333A83;
+}
 
 #buttonStPostProfileFriend {
     -fx-background-color: white;

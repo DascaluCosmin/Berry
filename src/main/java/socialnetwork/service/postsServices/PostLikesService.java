@@ -43,7 +43,7 @@ public class PostLikesService {
      * @return non-null PostLike, if the Like was deleted successfully
      *      null, otherwise
      */
-    public PostLike unlikePhotoPost(Post post, User user) {
+    public PostLike unlikePost(Post post, User user) {
         return postLikesRepository.delete(new Tuple<>(post.getId(), user.getId()));
     }
 
@@ -75,9 +75,9 @@ public class PostLikesService {
     /**
      * Method that gets the number of Likes of a Post
      * @param post Post, representing the liked Post
-     * @return int, representing the number of Likes
+     * @return Integer, representing the number of Likes
      */
-    public int getNumberOfLikes(Post post) {
+    public Integer getNumberOfLikes(Post post) {
         return getListLikes(post).size();
     }
 }

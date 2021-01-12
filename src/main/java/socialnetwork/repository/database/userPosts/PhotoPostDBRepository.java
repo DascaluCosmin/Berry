@@ -75,7 +75,7 @@ public class PhotoPostDBRepository implements Repository<Long, PhotoPost> {
     public Iterable<PhotoPost> findAll(Long idUser) {
         List<PhotoPost> photoPostList = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            String command = "SELECT * FROM \"photoPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC";
+            String command = "SELECT * FROM \"photoPosts\" WHERE \"UserID\" = " + idUser + " ORDER BY \"Date\" DESC, id ASC";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {

@@ -528,7 +528,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             currentPane.setVisible(true);
             currentSliderLabel.setVisible(false);
             pageEventsNotifications.setToFirstPage();
-            labelHeaderEventNotifications.setText(HEADER_EVENT_NOTIFICATIONS_ST_PART + DAY_GAP + HEADER_EVENT_NOTIFICATIONS_ND_PART);
+            //labelHeaderEventNotifications.setText(HEADER_EVENT_NOTIFICATIONS_ST_PART + DAY_GAP + HEADER_EVENT_NOTIFICATIONS_ND_PART);
             initializeEventNotification();
         }
     }
@@ -3031,7 +3031,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             pieChart.setData(pieChartData);
             pieChart.setClockwise(true);
             pieChart.setStartAngle(180);
-            pieChart.setLabelLineLength(15);
+            pieChart.setLabelLineLength(20);
             pieChart.setTitle(entitiesString.substring(0, 1).toUpperCase() + entitiesString.substring(1) + " in " + year);
         }
     }

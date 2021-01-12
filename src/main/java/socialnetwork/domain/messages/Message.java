@@ -112,11 +112,11 @@ public class Message extends Entity<Long> {
     }
 
     public String getFirstNameFrom() {
-        return getFrom().getLastName();
+        return getFrom().getFirstName();
     }
 
     public String getLastNameFrom() {
-        return getFrom().getFirstName();
+        return getFrom().getLastName();
     }
 
     public String getNameFrom() {

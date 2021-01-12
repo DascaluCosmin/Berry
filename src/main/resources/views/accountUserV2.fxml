@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.Group?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="679.0" prefWidth="1100.0" style="-fx-background-color: transparent" stylesheets="/css/accountUserV2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
    <children>
@@ -107,7 +99,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" layoutX="148.0" layoutY="18.0" text="Events taking place in less than 3 Days" textFill="#40457b">
+            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="194.0" layoutY="18.0" prefHeight="34.0" prefWidth="324.0" text="Your upcoming events" textAlignment="CENTER" textFill="#40457b">
                <font>
                   <Font size="23.0" />
                </font></Label>
@@ -916,7 +908,7 @@
                   <TextField fx:id="textFieldEventLocation" layoutX="212.0" layoutY="343.0" promptText="Location" />
                   <TextField fx:id="textFieldEventOrganization" layoutX="212.0" layoutY="381.0" promptText="Organization" />
                   <TextField fx:id="textFieldEventCategory" layoutX="212.0" layoutY="420.0" promptText="Category" />
-                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" />
+                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" wrapText="true" />
                   <Label layoutX="213.0" layoutY="232.0" text="*" textFill="#cf1e1e" />
                   <Label layoutX="205.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
                   <Label layoutX="329.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
@@ -953,7 +945,7 @@
                         </Group>
                         <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
                         <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" />
-                        <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Choose a Friend to Chat with" textFill="WHITE">
+                        <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Chat" textFill="WHITE">
                            <font>
                               <Font size="19.0" />
                            </font>
@@ -1586,8 +1578,8 @@
             <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get stats about that specific year" />
             <Label fx:id="labelYear" layoutX="22.0" layoutY="281.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
             <TextField fx:id="textFieldYear" layoutX="98.0" layoutY="279.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
-            <PieChart fx:id="pieChartMessages" layoutX="14.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
-            <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
+            <PieChart fx:id="pieChartMessages" layoutX="12.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
+            <PieChart fx:id="pieChartFriendships" layoutX="348.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
             <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a Friend to generate Transcripts" />
          </children>
       </Pane>

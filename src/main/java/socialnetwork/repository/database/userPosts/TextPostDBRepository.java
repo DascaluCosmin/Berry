@@ -125,7 +125,7 @@ public class TextPostDBRepository implements Repository<Long, TextPost> {
             String command = "INSERT INTO \"textPosts\" (\"UserID\", \"Date\", \"Text\") VALUES " +
                     "(" + entity.getUserID() + ", " +
                     "'" + entity.getPostDate() + "', " +
-                    "'" + entity.getText() + "') " +
+                    "'" + entity.getText().replace("'", "`") + "') " +
                     "RETURNING *";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             try {

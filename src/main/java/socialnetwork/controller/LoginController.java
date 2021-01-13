@@ -50,6 +50,9 @@ public class LoginController {
     private PostLikesService textPostLikesService;
     private Stage loginStage;
 
+    /**
+     * Method that initializes the View
+     */
     @FXML
     public void initialize() {
         passwordField.setOnKeyPressed(event -> {
@@ -61,58 +64,102 @@ public class LoginController {
         });
     }
 
+    /**
+     * @param loginStage Stage, representing the Login Stage
+     */
     public void setLoginStage(Stage loginStage) {
         this.loginStage = loginStage;
     }
 
+    /**
+     * @param userService UserService, representing the Service handling the User Data
+     */
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * @param friendshipService FriendshipService, representing the Service handling the Friendships Data
+     */
     public void setFriendshipService(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
     }
 
+    /**
+     * @param friendshipRequestService FriendshipRequestService, representing the Service handling the Friendship
+     *                                 Requests data
+     */
     public void setFriendshipRequestService(FriendshipRequestService friendshipRequestService) {
         this.friendshipRequestService = friendshipRequestService;
     }
 
+    /**
+     * @param profilePhotoUserService ProfilePhotoUserService, representing the Service handling the Profile Photo User data
+     */
     public void setProfilePhotoUserService(ProfilePhotoUserService profilePhotoUserService) {
         this.profilePhotoUserService = profilePhotoUserService;
     }
 
+    /**
+     * @param messageService MessageService, representing the Service handling the Message data
+     */
     public void setMessageService(MessageService messageService) {
         this.messageService = messageService;
     }
 
+    /**
+     * @param userCredentialsService UserCredentialsService, representing the Service handling the User Credentials data
+     */
     public void setUserCredentialsService(UserCredentialsService userCredentialsService) {
         this.userCredentialsService = userCredentialsService;
     }
 
+    /**
+     * @param replyMessageService ReplyMessageService, representing the Service handling the Reply Message data
+     */
     public void setReplyMessageService(ReplyMessageService replyMessageService) {
         this.replyMessageService = replyMessageService;
     }
 
+    /**
+     * @param textPostService TextPostService, representing the Service handling the Text Posts data
+     */
     public void setTextPostService(TextPostService textPostService) {
         this.textPostService = textPostService;
     }
 
+    /**
+     * @param photoPostService PhotoPostService, representing the Service handling the Photo Posts data
+     */
     public void setPhotoPostService(PhotoPostService photoPostService) {
         this.photoPostService = photoPostService;
     }
 
+    /**
+     * @param eventsService EventsService, representing the Service handling the Events data
+     */
     public void setEventsService(EventsService eventsService) {
         this.eventsService = eventsService;
     }
 
+    /**
+     * @param photoPostLikesService PostLikesService, representing the Service handling the Photo Post Likes data
+     */
     public void setPhotoPostLikesService(PostLikesService photoPostLikesService) {
         this.photoPostLikesService = photoPostLikesService;
     }
 
+    /**
+     * @param textPostLikesService PostLikesService, representing the Service handling the Text Post Likes data
+     */
     public void setTextPostLikesService(PostLikesService textPostLikesService) {
         this.textPostLikesService = textPostLikesService;
     }
 
+    /**
+     * Event handler - tries to log in the User
+     * @throws IOException
+     */
     public void loginEvent() throws IOException {
         String username = textFieldUsername.getText();
         String password = passwordField.getText();
@@ -138,10 +185,17 @@ public class LoginController {
         passwordField.clear();
     }
 
+    /**
+     * Method that exits the Application
+     */
     public void exit() {
         System.exit(0);
     }
 
+    /**
+     * Method that initializes the Account User View
+     * @param loggedInUser UserDTO, representing the logged in User
+     */
     private void initializeAccountUserView(UserDTO loggedInUser) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -166,6 +220,9 @@ public class LoginController {
         }
     }
 
+    /**
+     * Event handler - creates a new Account
+     */
     public void eventCreateAccount() {
         anchorPaneLogin.setVisible(false);
         anchorPaneSignup.setVisible(true);
@@ -173,6 +230,9 @@ public class LoginController {
         passwordField.clear();
     }
 
+    /**
+     * Event handler - exits the Sign Up Form
+     */
     public void exitSignup() {
         anchorPaneSignup.setVisible(false);
         anchorPaneLogin.setVisible(true);
@@ -182,6 +242,9 @@ public class LoginController {
         passwordFieldSignup.clear();
     }
 
+    /**
+     * Event handler - signs up a new User
+     */
     public void signupEvent() {
         String firstName = textFieldFirstname.getText();
         String lastName = textFieldLastname.getText();
@@ -233,6 +296,11 @@ public class LoginController {
         passwordFieldSignup.clear();
     }
 
+    /**
+     * Event handler - logs in the User
+     * @param keyCode KeyCode, representing the pressed Key
+     * @throws IOException
+     */
     private void escapeKeyPressed(KeyCode keyCode) throws IOException {
         if (keyCode == KeyCode.ENTER) {
             loginEvent();

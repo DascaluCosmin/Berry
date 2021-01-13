@@ -109,7 +109,7 @@ public class ReplyMessageDBRepository implements Repository<Long, ReplyMessage> 
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String command = "INSERT INTO conversations (\"idUserFrom\", \"idUserTo\", message, date) " +
                     "VALUES (" + entity.getFrom().getId() + ", " + entity.getTo().get(0).getId() +
-                    ", '" + entity.getMessage() + "', '" + entity.getDate().format(Constants.DATE_TIME_FORMATTER) + "') " +
+                    ", '" + entity.getMessage().replace("'", "`") + "', '" + entity.getDate().format(Constants.DATE_TIME_FORMATTER) + "') " +
                     "RETURNING *";
             PreparedStatement preparedStatement = connection.prepareStatement(command);
             try {

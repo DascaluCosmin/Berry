@@ -107,7 +107,7 @@
                   <Font size="23.0" />
                </font>
             </Label>
-            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" layoutX="148.0" layoutY="18.0" text="Events taking place in less than 3 Days" textFill="#40457b">
+            <Label fx:id="labelHeaderEventNotifications" alignment="CENTER" contentDisplay="CENTER" layoutX="194.0" layoutY="18.0" prefHeight="34.0" prefWidth="324.0" text="Your upcoming events" textAlignment="CENTER" textFill="#40457b">
                <font>
                   <Font size="23.0" />
                </font></Label>
@@ -916,7 +916,7 @@
                   <TextField fx:id="textFieldEventLocation" layoutX="212.0" layoutY="343.0" promptText="Location" />
                   <TextField fx:id="textFieldEventOrganization" layoutX="212.0" layoutY="381.0" promptText="Organization" />
                   <TextField fx:id="textFieldEventCategory" layoutX="212.0" layoutY="420.0" promptText="Category" />
-                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" />
+                  <TextArea fx:id="textAreaEventDescription" layoutX="178.0" layoutY="457.0" prefHeight="80.0" prefWidth="324.0" promptText="Description" wrapText="true" />
                   <Label layoutX="213.0" layoutY="232.0" text="*" textFill="#cf1e1e" />
                   <Label layoutX="205.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
                   <Label layoutX="329.0" layoutY="297.0" text="*" textFill="#cf1e1e" />
@@ -953,7 +953,7 @@
                         </Group>
                         <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#40457b" height="43.0" layoutX="24.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="388.0" />
                         <Circle fx:id="circlePhotoFriendChat" fill="WHITE" layoutX="57.0" layoutY="42.0" radius="17.0" stroke="WHITE" strokeType="INSIDE" />
-                        <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Choose a Friend to Chat with" textFill="WHITE">
+                        <Label fx:id="labelNameFriendChat" layoutX="90.0" layoutY="28.0" text="Chat" textFill="WHITE">
                            <font>
                               <Font size="19.0" />
                            </font>
@@ -1578,17 +1578,17 @@
             <TextField fx:id="textFieldSearchFriendStatistics" layoutX="57.0" layoutY="44.0" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
             <Button fx:id="buttonGeneratePDFReport" layoutX="521.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate PDF Report" textFill="WHITE" />
             <Button fx:id="buttonGenerateHTMLReport" layoutX="521.0" layoutY="184.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate HTML Report" textFill="WHITE" />
-            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce a time interval to generate activity report" />
+            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce an interval of time to generate activity report" />
             <DatePicker fx:id="datePickerStartDate" layoutX="98.0" layoutY="137.0" prefHeight="32.0" prefWidth="174.0" promptText="Start Date" />
             <DatePicker fx:id="datePickerEndDate" layoutX="98.0" layoutY="184.0" prefHeight="32.0" prefWidth="174.0" promptText="End Date" />
             <Label fx:id="labelStartDate" layoutX="22.0" layoutY="142.0" stylesheets="@../css/accountUserV2.css" text="Start Date" />
             <Label fx:id="labelEndDate" layoutX="22.0" layoutY="189.0" stylesheets="@../css/accountUserV2.css" text="End Date" />
-            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get stats about that specific year" />
+            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get statistics" />
             <Label fx:id="labelYear" layoutX="22.0" layoutY="281.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
             <TextField fx:id="textFieldYear" layoutX="98.0" layoutY="279.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
-            <PieChart fx:id="pieChartMessages" layoutX="14.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
-            <PieChart fx:id="pieChartFriendships" layoutX="350.0" layoutY="328.0" prefHeight="347.0" prefWidth="324.0" />
-            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a Friend to generate Transcripts" />
+            <PieChart fx:id="pieChartMessages" layoutX="12.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
+            <PieChart fx:id="pieChartFriendships" layoutX="348.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
+            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a friend to generate transcripts" />
          </children>
       </Pane>
    </children>

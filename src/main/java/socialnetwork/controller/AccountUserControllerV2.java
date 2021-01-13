@@ -528,7 +528,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             currentPane.setVisible(true);
             currentSliderLabel.setVisible(false);
             pageEventsNotifications.setToFirstPage();
-            labelHeaderEventNotifications.setText(HEADER_EVENT_NOTIFICATIONS_ST_PART + DAY_GAP + HEADER_EVENT_NOTIFICATIONS_ND_PART);
+            //labelHeaderEventNotifications.setText(HEADER_EVENT_NOTIFICATIONS_ST_PART + DAY_GAP + HEADER_EVENT_NOTIFICATIONS_ND_PART);
             initializeEventNotification();
         }
     }
@@ -1254,7 +1254,11 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
         writePostStage.setOnHiding(event -> {
             // When closing (hiding) the Write Post Stage, we want the number of Posts to be updated
             numberPosts = userPage.getTextPostService().getNumberTextPosts(userPage.getUser().getId());
-            setLabelPostLikes(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listGroupsNbBerriesPostProfile);
+            if (paneTextPostsProfile.isVisible()) {
+                setLabelPostLikes(userPage.getTextPostService().getListTextPosts(userPage.getUser().getId(), pageTextPostProfile), listGroupsNbBerriesPostProfile);
+            } else if (panePhotoPostsProfile.isVisible()) {
+                setLabelPostLikes(userPage.getPhotoPostService().getListPhotoPosts(userPage.getUser().getId(), pagePhotoPostProfile), listGroupsNbBerriesPostProfile);
+            }
         });
         writePostStage.show();
     }
@@ -1376,7 +1380,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             Tooltip tooltip = new Tooltip("Posted on " +
                     currentPhotoPost.getPostDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME)
             );
-            tooltip.setShowDelay(Duration.seconds(2));
+            tooltip.setShowDelay(Duration.seconds(0.8));
             Tooltip.install(currentRectangle, tooltip);
         }
     }
@@ -1398,7 +1402,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             Tooltip tooltip = new Tooltip("Posted on " +
                     currentTextPost.getPostDate().format(Constants.DATE_TIME_FORMATTER_MONTH_NAME)
             );
-            tooltip.setShowDelay(Duration.seconds(2));
+            tooltip.setShowDelay(Duration.seconds(1));
             Tooltip.install(currentButton, tooltip);
         }
     }
@@ -2939,7 +2943,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(messageList);
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("UserReport", userPage.getUserDTO().getFullName() + "'s Report");
-            parameters.put("StatisticsFriendsMessages", "You befriended " + friendshipList.size() +
+            parameters.put("StatisticsFriendsMessages", "You became friends with " + friendshipList.size() +
                     " people and received " + messageList.size() + " messages");
             parameters.put("DatePeriodReport", "Date Period: " + dateStart + " - " + dateEnd);
             if (searchedFriend != null) {
@@ -3031,7 +3035,7 @@ public class AccountUserControllerV2  implements Observer<TextPostEvent> {
             pieChart.setData(pieChartData);
             pieChart.setClockwise(true);
             pieChart.setStartAngle(180);
-            pieChart.setLabelLineLength(15);
+            pieChart.setLabelLineLength(20);
             pieChart.setTitle(entitiesString.substring(0, 1).toUpperCase() + entitiesString.substring(1) + " in " + year);
         }
     }

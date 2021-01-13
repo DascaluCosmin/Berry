@@ -101,7 +101,7 @@ public class ReplyInboxController {
                     "Reply to: " + receivedMessage.getSubject(), textMessage,LocalDateTime.now()
             );
             if (userPage.getMessageService().addMessage(message) == null) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The message has been sent successfully!");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "The message has been sent!");
                 alert.show();
                 replyInboxStage.close();
             } else {

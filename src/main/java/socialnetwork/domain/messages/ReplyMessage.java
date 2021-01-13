@@ -56,6 +56,9 @@ public class ReplyMessage extends Message {
         return messageString;
     }
 
+    /**
+     * @return String, representing a serialization of the Reply Message
+     */
     public String toStringFormatted() {
         return getFormattedDate() + "\t|\t" + getFirstNameFrom() + " " + getLastNameFrom() + ": " + getMessage();
     }

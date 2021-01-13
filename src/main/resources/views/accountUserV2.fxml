@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="679.0" prefWidth="1100.0" style="-fx-background-color: transparent" stylesheets="/css/accountUserV2.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="socialnetwork.controller.AccountUserControllerV2">
    <children>
@@ -1570,17 +1578,17 @@
             <TextField fx:id="textFieldSearchFriendStatistics" layoutX="57.0" layoutY="44.0" prefHeight="25.0" prefWidth="131.0" promptText="Search Friend" stylesheets="@../css/accountUserV2.css" />
             <Button fx:id="buttonGeneratePDFReport" layoutX="521.0" layoutY="137.0" mnemonicParsing="false" onMouseClicked="#generatePDFReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate PDF Report" textFill="WHITE" />
             <Button fx:id="buttonGenerateHTMLReport" layoutX="521.0" layoutY="184.0" mnemonicParsing="false" onMouseClicked="#generateHTMLReport" prefHeight="31.0" prefWidth="142.0" stylesheets="@../css/accountUserV2.css" text="Generate HTML Report" textFill="WHITE" />
-            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce a time interval to generate activity report" />
+            <Label fx:id="labelIntroduceTimeInterval" layoutX="22.0" layoutY="103.0" prefHeight="28.0" prefWidth="518.0" stylesheets="@../css/accountUserV2.css" text="A2. Introduce an interval of time to generate activity report" />
             <DatePicker fx:id="datePickerStartDate" layoutX="98.0" layoutY="137.0" prefHeight="32.0" prefWidth="174.0" promptText="Start Date" />
             <DatePicker fx:id="datePickerEndDate" layoutX="98.0" layoutY="184.0" prefHeight="32.0" prefWidth="174.0" promptText="End Date" />
             <Label fx:id="labelStartDate" layoutX="22.0" layoutY="142.0" stylesheets="@../css/accountUserV2.css" text="Start Date" />
             <Label fx:id="labelEndDate" layoutX="22.0" layoutY="189.0" stylesheets="@../css/accountUserV2.css" text="End Date" />
-            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get stats about that specific year" />
+            <Label fx:id="labelIntroduceYear" layoutX="22.0" layoutY="242.0" prefHeight="28.0" prefWidth="507.0" stylesheets="@../css/accountUserV2.css" text="B. Introduce a year to get statistics" />
             <Label fx:id="labelYear" layoutX="22.0" layoutY="281.0" prefHeight="20.0" prefWidth="36.0" stylesheets="@../css/accountUserV2.css" text="Year" />
             <TextField fx:id="textFieldYear" layoutX="98.0" layoutY="279.0" onKeyTyped="#eventShowGraphs" prefHeight="25.0" prefWidth="167.0" promptText="Year Pie Chart" />
             <PieChart fx:id="pieChartMessages" layoutX="12.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
             <PieChart fx:id="pieChartFriendships" layoutX="348.0" layoutY="315.0" prefHeight="360.0" prefWidth="324.0" />
-            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a Friend to generate Transcripts" />
+            <Label fx:id="labelSearchFriend" layoutX="22.0" layoutY="8.0" prefHeight="28.0" prefWidth="432.0" stylesheets="@../css/accountUserV2.css" text="A1. Search for a friend to generate transcripts" />
          </children>
       </Pane>
    </children>

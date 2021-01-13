@@ -1,3 +1,12 @@
+/**
+ *
+ *
+ *  THIS CONTROLLER IS DEPRECATED. CHECK THE VERSION 2 OF THE ACCOUNT USER CONTROLLER
+ *
+ *
+ */
+
+
 package socialnetwork.controller;
 
 import javafx.collections.FXCollections;
@@ -29,6 +38,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  THIS CONTROLLER IS DEPRECATED. CHECK THE VERSION 2 OF THE ACCOUNT USER CONTROLLER
+ */
 public class AccountUserController implements Observer<FriendshipChangeEvent>{
     private ObservableList<UserDTO> model = FXCollections.observableArrayList();
     private UserService userService;

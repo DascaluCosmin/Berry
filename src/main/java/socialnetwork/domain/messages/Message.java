@@ -107,18 +107,30 @@ public class Message extends Entity<Long> {
         return date;
     }
 
+    /**
+     * @return String, representing the Date in String format
+     */
     public String getFormattedDate() {
-        return getDate().format(Constants.DATE_TIME_FORMATTER);
+        return getDate().format(Constants.DATE_TIME_FORMATTER_SHORTER);
     }
 
+    /**
+     * @return String, representing the First Name of the User who sends the message
+     */
     public String getFirstNameFrom() {
         return getFrom().getFirstName();
     }
 
+    /**
+     * @return String, representing the Last Name of the User who sends the message
+     */
     public String getLastNameFrom() {
         return getFrom().getLastName();
     }
 
+    /**
+     * @return String, representing the Full Name of the User who sends the message
+     */
     public String getNameFrom() {
         return getFirstNameFrom() + " " + getLastNameFrom();
     }
